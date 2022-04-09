@@ -163,16 +163,12 @@ class Counter:
         解析 url
         :param types: 获取类型: url、host
         :param url: https://xxxx.test.xxxx.com/#/goods/listShop
-        :return: 最终返回 ${{MerchantHost}}/#/goods/listShop
+        :return: 最终返回 ${{host}}/#/goods/listShop
         """
         for i in self.url:
             host = None
-            if "merchant.test.feng-go.com" in i:
-                host = "${{MerchantHost}}"
-            elif "cms.test.hunshehui.cn" in i:
-                host = "${{CMSHost}}"
-            elif "work.test.feng-go.com" in i:
-                host = "${{WorkHost}}"
+            if "https://www.wanandroid.com" in i:
+                host = "${{host}}"
             if types == 'host':
                 # 返回域名
                 return host
@@ -210,5 +206,5 @@ class Counter:
 
 
 addons = [
-    Counter(["http://work.test.feng-go.com", "http://cms.test.hunshehui.cn/"])
+    Counter(["https://www.wanandroid.com"])
 ]

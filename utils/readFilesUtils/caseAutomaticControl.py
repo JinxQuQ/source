@@ -170,15 +170,17 @@ class TestCaseAutomaticGeneration:
         file_path = get_all_files(ConfigHandler.data_path)
 
         for file in file_path:
-            # 判断用例需要用的文件夹路径是否存在，不存在则创建
-            self.mk_dir(file)
-            yaml_case_process = GetYamlData(file).get_yaml_data()
-            write_testcase_file(
-                allure_epic=self.allure_epic(yaml_case_process), allure_feature=self.allure_feature(yaml_case_process),
-                class_title=self.get_test_class_title(file), func_title=self.func_title(file),
-                case_path=self.get_case_path(file)[0], yaml_path=self.yaml_path(file),
-                file_name=self.get_case_path(file)[1], allure_story=self.allure_story(yaml_case_process)
-                )
+            # 判断代理拦截的yaml文件，不生成test_case代码
+            if 'proxy_data.yaml' not in file:
+                # 判断用例需要用的文件夹路径是否存在，不存在则创建
+                self.mk_dir(file)
+                yaml_case_process = GetYamlData(file).get_yaml_data()
+                write_testcase_file(
+                    allure_epic=self.allure_epic(yaml_case_process), allure_feature=self.allure_feature(yaml_case_process),
+                    class_title=self.get_test_class_title(file), func_title=self.func_title(file),
+                    case_path=self.get_case_path(file)[0], yaml_path=self.yaml_path(file),
+                    file_name=self.get_case_path(file)[1], allure_story=self.allure_story(yaml_case_process)
+                    )
 
 
 if __name__ == '__main__':

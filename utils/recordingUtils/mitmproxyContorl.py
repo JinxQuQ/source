@@ -155,8 +155,11 @@ class Counter:
         if 'token' in header:
             headers['token'] = header['token']
         # Content-Type
-        headers['Content-Type'] = header['Content-Type']
-        return headers
+        try:
+            headers['Content-Type'] = header['Content-Type']
+            return headers
+        except KeyError:
+            pass
 
     def host_handle(self, url: str, types='url') -> str:
         """

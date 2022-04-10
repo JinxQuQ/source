@@ -9,9 +9,10 @@ from config.setting import ConfigHandler
 from utils.readFilesUtils.yamlControl import GetYamlData
 from utils.logUtils.logControl import ERROR
 from utils.otherUtils.allureDate.allure_report_data import CaseCount
-from utils.timesUtils.timeControl import NowTime
+from utils.timesUtils.timeControl import now_time
 from utils.otherUtils.localIpControl import get_host_ip
 from utils import project_name, tester_name
+
 
 class WeChatSend:
     """
@@ -112,7 +113,7 @@ class WeChatSend:
                                     >非相关负责人员可忽略此消息。
                                     >测试报告，点击查看>>[测试报告入口](http://{6}:9999/index.html)""" \
             .format(project_name, tester_name, self.RATE, self.PASS, self.FAILED,
-                    self.BROKEN, self.SKIP, NowTime(), get_host_ip())
+                    self.BROKEN, self.SKIP, now_time(), get_host_ip())
 
         WeChatSend().send_markdown(text)
 

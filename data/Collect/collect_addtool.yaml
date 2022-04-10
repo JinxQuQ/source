@@ -54,13 +54,15 @@ collect_addtool_02:
     dependence_case_data:
     assert:
       # 断言接口状态码
-      jsonpath: $.errorCode
-      type: ==
-      value: -1001
-      AssertType:
-    errorMsg:
-      jsonpath: $.errorMsg
-      type: ==
-      value: '请先登录！'
-      AssertType:
+      errorCode:
+      # 断言接口状态码
+        jsonpath: $.errorCode
+        type: ==
+        value: -1001
+        AssertType:
+      errorMsg:
+        jsonpath: $.errorMsg
+        type: ==
+        value: '请先登录！'
+        AssertType:
     sql:

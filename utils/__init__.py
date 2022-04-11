@@ -3,21 +3,18 @@
 # @Time   : 2021/12/14 22:06
 # @Author : 余少琪
 
-import datetime
 import os
-from config.setting import get_current_system, ConfigHandler
+import datetime
+from config.setting import ConfigHandler
 from utils.readFilesUtils.yamlControl import GetYamlData
 
 
-def sys_slash():
-    # 判断系统路径
-    slash = '\\'
-
-    # 判断当前操作系统
-    if get_current_system() == 'Linux' or get_current_system() == "Darwin":
-        slash = '/'
-
-    return slash
+def get_os_sep():
+    """
+    判断不同的操作系统的路径
+    :return: windows 返回 "\", linux 返回 "/"
+    """
+    return os.sep
 
 
 def sql_switch() -> bool:
@@ -142,5 +139,9 @@ project_name = configPath['ProjectName'][0]
 tester_name = configPath['TesterName']
 
 
+def get_os_sep():
+    print(os.sep)
+
+
 if __name__ == '__main__':
-    allure_attach('1111', '222.txt', '22')
+    get_os_sep()

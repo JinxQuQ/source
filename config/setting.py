@@ -4,26 +4,10 @@
 # @Author : 余少琪
 
 import os
-import platform
-
-
-def get_current_system():
-    """
-    获取当前操作系统
-    :return:
-    """
-
-    platform_system = platform.system()
-    return platform_system
 
 
 class ConfigHandler:
-    _SLASH = '\\'
-
-    # 判断当前操作系统
-    if get_current_system() == 'Linux' or get_current_system() == "Darwin":
-
-        _SLASH = '/'
+    _SLASH = os.sep
 
     # 项目路径
     root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

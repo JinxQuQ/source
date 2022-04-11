@@ -88,7 +88,7 @@ class FeiShuTalkChatBot(object):
                                 {
                                     "tag": "a",
                                     "text": "测试报告",
-                                    "href": "http://192.168.0.72:8080/job/helper_test_adverte/allure/#"
+                                    "href": "https://192.168.xx.72:8080/job/helper_test_adverte/allure/#"
                                 },
                                 {
                                     "tag": "at",

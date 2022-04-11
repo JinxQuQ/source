@@ -32,8 +32,9 @@ class Counter:
         :return:
         """
         # 存放需要过滤的接口
-        filter_url_type = ['.css', '.js', '.map', '.ico', '.png', '.woff', '.map3', '.jpeg']
+        filter_url_type = ['.css', '.js', '.map', '.ico', '.png', '.woff', '.map3', '.jpeg', '.jpg']
         url = flow.request.url
+
         # 判断过滤掉含 filter_url_type 中后缀的 url
         if any(i in url for i in filter_url_type) is False:
             # 存放测试用例
@@ -46,8 +47,8 @@ class Counter:
                 case_id = self.get_case_id(url) + str(self.counter)
                 cases = {
                     case_id: {
-                        "host": self.host_handle(url, types='host'),
-                        "url": self.host_handle(url),
+                        "host": self.host_handle(url),
+                        "url": self.url_path_handle(url),
                         "method": method,
                         "detail": None,
                         "headers": header,
@@ -59,15 +60,11 @@ class Counter:
                         "assert": self.response_code_handler(response),
                         "sql": None
                     }
-
                 }
                 # 判断如果请求参数时拼接在url中，提取url中参数，转换成字典
                 if "?" in url:
                     cases[case_id]['url'] = self.get_url_handler(url)[1]
                     cases[case_id]['data'] = self.get_url_handler(url)[0]
-
-                # 处理请求头中需要的数据
-                self.request_headers(flow.request.headers, cases)
 
                 ctx.log.info("=" * 100)
                 ctx.log.info(cases)
@@ -77,6 +74,7 @@ class Counter:
                     self.yaml_cases(cases)
                 except FileNotFoundError:
                     os.makedirs(self.file)
+
                 self.counter += 1
 
     @classmethod
@@ -94,8 +92,12 @@ class Counter:
     def filter_url(self, url: str) -> bool:
         """过滤url"""
         for i in self.url:
+            # 判断当前拦截的url地址，是否是addons中配置的host
+
             if i in url:
+                # 如果是，则返回True
                 return True
+        # 否则返回 False
         return False
 
     @classmethod
@@ -120,17 +122,6 @@ class Counter:
             return 'json'
 
     @classmethod
-    def request_headers(cls, headers, cases: dict) -> dict:
-        # 公司业务: 请求头中包含了 X-Shop-Id、X-Sub-Biz-Type, 其他项目可注释此段代码
-        if 'X-Shop-Id' in headers:
-            cases['headers']['X-Shop-Id'] = headers['X-Shop-Id']
-        if 'X-Biz-Type' in headers:
-            cases['headers']['X-Biz-Type'] = headers['X-Biz-Type']
-        if 'X-Sub-Biz-Type' in headers:
-            cases['headers']['X-Sub-Biz-Type'] = headers['X-Sub-Biz-Type']
-        return cases
-
-    @classmethod
     def data_handle(cls, dict_str) -> Any:
         # 处理接口请求、响应的数据，如null、true格式问题
         try:
@@ -150,34 +141,47 @@ class Counter:
 
     @classmethod
     def token_handle(cls, header) -> dict:
-        # token 处理
+        """
+        提取请求头参数
+        :param header:
+        :return:
+        """
+        # 这里是将所有请求头的数据，全部都拦截出来了
+        # 如果公司只需要部分参数，可以在这里加判断过滤
         headers = {}
-        if 'token' in header:
-            headers['token'] = header['token']
-        # Content-Type
-        try:
-            headers['Content-Type'] = header['Content-Type']
-            return headers
-        except KeyError:
-            pass
+        for k, v in header.items():
+            headers[k] = v
+        return headers
 
-    def host_handle(self, url: str, types='url') -> str:
+    def host_handle(self, url: str) -> tuple:
         """
         解析 url
-        :param types: 获取类型: url、host
         :param url: https://xxxx.test.xxxx.com/#/goods/listShop
-        :return: 最终返回 ${{host}}/#/goods/listShop
+        :return: https://xxxx.test.xxxx.com/
         """
+        host = None
+        # 循环遍历需要过滤的hosts数据
         for i in self.url:
-            host = None
-            if "https://www.wanandroid.com" in i:
-                host = "${{host}}"
-            if types == 'host':
-                # 返回域名
-                return host
-            elif types == 'url':
-                # 返回接口地址
-                return url.split(i)[-1]
+            # 这里主要是判断，如果我们conf.py中有配置这个域名，则用例中展示 ”${{host}}“，动态获取用例host
+            # 大家可以在这里改成自己公司的host地址
+            if 'https://www.wanandroid.com' in url:
+                host = '${{host}}'
+            elif i in url:
+                host = i
+        return host
+
+    def url_path_handle(self, url: str):
+        """
+        解析 url_path
+        :param url: https://xxxx.test.xxxx.com/shopList/json
+        :return: /shopList/json
+        """
+        url_path = None
+        # 循环需要拦截的域名
+        for path in self.url:
+            if path in url:
+                url_path = url.split(path)[-1]
+        return url_path
 
     def yaml_cases(self, data: dict) -> None:
         """
@@ -187,21 +191,26 @@ class Counter:
         """
         with open(self.file, "a", encoding="utf-8") as f:
             yaml.dump(data, f, Dumper=yaml.RoundTripDumper, allow_unicode=True)
+            f.write('\n')
 
-    @classmethod
-    def get_url_handler(cls, url: str) -> tuple:
+    def get_url_handler(self, url: str) -> tuple:
         """
         将 url 中的参数 转换成字典
         :param url: /trade?tradeNo=&outTradeId=11
         :return: {“outTradeId”: 11}
         """
-        query = urlparse(url).query
-        # 将字符串转换为字典
-        params = parse_qs(query)
-        # 所得的字典的value都是以列表的形式存在，如请求url中的参数值为空，则字典中不会有该参数
-        result = {key: params[key][0] for key in params}
-        url = url[0:url.rfind('?')]
-        return result, url
+        result = None
+        url_path = None
+        for i in self.url:
+            if i in url:
+                query = urlparse(url).query
+                # 将字符串转换为字典
+                params = parse_qs(query)
+                # 所得的字典的value都是以列表的形式存在，如请求url中的参数值为空，则字典中不会有该参数
+                result = {key: params[key][0] for key in params}
+                url = url[0:url.rfind('?')]
+                url_path = url.split(i)[-1]
+        return result, url_path
 
 
 # 1、本机需要设置代理，默认端口为: 8080
@@ -210,4 +219,4 @@ class Counter:
 
 addons = [
     Counter(["https://www.wanandroid.com"])
-]
+    ]

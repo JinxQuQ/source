@@ -2,133 +2,139 @@
   "f7ac3e784786a3c7712b5a828aed2b59" : {
     "statistic" : {
       "failed" : 0,
-      "broken" : 0,
+      "broken" : 1,
       "skipped" : 0,
-      "passed" : 1,
+      "passed" : 0,
       "unknown" : 0,
       "total" : 1
     },
     "items" : [ {
-      "uid" : "57510778a0a2e198",
-      "status" : "passed",
+      "uid" : "792c7f6b98b6031f",
+      "status" : "broken",
+      "statusDetails" : "requests.exceptions.SSLError: HTTPSConnectionPool(host='www.wanandroid.com', port=443): Max retries exceeded with url: /user/login (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1129)')))",
       "time" : {
-        "start" : 1649559929223,
-        "stop" : 1649559929466,
-        "duration" : 243
+        "start" : 1649684233473,
+        "stop" : 1649684233473,
+        "duration" : 0
       }
     } ]
   },
   "6833f022406a30478c7b5e3e02fa3010" : {
     "statistic" : {
       "failed" : 0,
-      "broken" : 0,
+      "broken" : 1,
       "skipped" : 0,
-      "passed" : 1,
+      "passed" : 0,
       "unknown" : 0,
       "total" : 1
     },
     "items" : [ {
-      "uid" : "3e102e3c20ebde8f",
-      "status" : "passed",
+      "uid" : "c0d81beed4b7de70",
+      "status" : "broken",
+      "statusDetails" : "requests.exceptions.SSLError: HTTPSConnectionPool(host='www.wanandroid.com', port=443): Max retries exceeded with url: /user/login (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1129)')))",
       "time" : {
-        "start" : 1649559928001,
-        "stop" : 1649559928230,
-        "duration" : 229
+        "start" : 1649684230871,
+        "stop" : 1649684230871,
+        "duration" : 0
       }
     } ]
   },
   "861b367cbdba90c7b0ad8b5862c9ea7c" : {
     "statistic" : {
       "failed" : 0,
-      "broken" : 0,
+      "broken" : 1,
       "skipped" : 0,
-      "passed" : 1,
+      "passed" : 0,
       "unknown" : 0,
       "total" : 1
     },
     "items" : [ {
-      "uid" : "3a67b3c86350914a",
-      "status" : "passed",
+      "uid" : "1c8a7d7cb856898",
+      "status" : "broken",
+      "statusDetails" : "requests.exceptions.SSLError: HTTPSConnectionPool(host='www.wanandroid.com', port=443): Max retries exceeded with url: /user/login (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1129)')))",
       "time" : {
-        "start" : 1649559926298,
-        "stop" : 1649559926445,
-        "duration" : 147
+        "start" : 1649684228100,
+        "stop" : 1649684228100,
+        "duration" : 0
       }
     } ]
   },
   "ac817ddc0dcc5c0fb36d5991e43d3c55" : {
     "statistic" : {
       "failed" : 0,
-      "broken" : 0,
+      "broken" : 1,
       "skipped" : 0,
-      "passed" : 1,
+      "passed" : 0,
       "unknown" : 0,
       "total" : 1
     },
     "items" : [ {
-      "uid" : "75ff1611b6fa7d5c",
-      "status" : "passed",
+      "uid" : "c5b83dbee0af5105",
+      "status" : "broken",
+      "statusDetails" : "requests.exceptions.SSLError: HTTPSConnectionPool(host='www.wanandroid.com', port=443): Max retries exceeded with url: /user/login (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1129)')))",
       "time" : {
-        "start" : 1649559927032,
-        "stop" : 1649559927401,
-        "duration" : 369
-      }
-    } ]
-  },
-  "7a79f04cd478ab96b4e3403bc5cb9b64" : {
-    "statistic" : {
-      "failed" : 0,
-      "broken" : 0,
-      "skipped" : 0,
-      "passed" : 1,
-      "unknown" : 0,
-      "total" : 1
-    },
-    "items" : [ {
-      "uid" : "7ca23a1faea45a25",
-      "status" : "passed",
-      "time" : {
-        "start" : 1649559926466,
-        "stop" : 1649559926809,
-        "duration" : 343
+        "start" : 1649684229923,
+        "stop" : 1649684229923,
+        "duration" : 0
       }
     } ]
   },
   "a89bc2e4b5872074bfcf6030fb832d39" : {
     "statistic" : {
       "failed" : 0,
-      "broken" : 0,
+      "broken" : 1,
       "skipped" : 0,
-      "passed" : 1,
+      "passed" : 0,
       "unknown" : 0,
       "total" : 1
     },
     "items" : [ {
-      "uid" : "2b806246284d3c0a",
-      "status" : "passed",
+      "uid" : "c19c5e1edb0a7b00",
+      "status" : "broken",
+      "statusDetails" : "requests.exceptions.SSLError: HTTPSConnectionPool(host='www.wanandroid.com', port=443): Max retries exceeded with url: /user/login (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1129)')))",
       "time" : {
-        "start" : 1649559929734,
-        "stop" : 1649559929893,
-        "duration" : 159
+        "start" : 1649684234661,
+        "stop" : 1649684234661,
+        "duration" : 0
+      }
+    } ]
+  },
+  "7a79f04cd478ab96b4e3403bc5cb9b64" : {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 1,
+      "skipped" : 0,
+      "passed" : 0,
+      "unknown" : 0,
+      "total" : 1
+    },
+    "items" : [ {
+      "uid" : "b7b8b219ccde7e7",
+      "status" : "broken",
+      "statusDetails" : "requests.exceptions.SSLError: HTTPSConnectionPool(host='www.wanandroid.com', port=443): Max retries exceeded with url: /user/login (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1129)')))",
+      "time" : {
+        "start" : 1649684228522,
+        "stop" : 1649684228522,
+        "duration" : 0
       }
     } ]
   },
   "f793f825d1b5bb348a84ff6e78a215d5" : {
     "statistic" : {
       "failed" : 0,
-      "broken" : 0,
-      "skipped" : 1,
+      "broken" : 1,
+      "skipped" : 0,
       "passed" : 0,
       "unknown" : 0,
       "total" : 1
     },
     "items" : [ {
-      "uid" : "85bca245fb4853cb",
-      "status" : "skipped",
-      "statusDetails" : "Skipped",
+      "uid" : "7311825cff5ef06c",
+      "status" : "broken",
+      "statusDetails" : "requests.exceptions.SSLError: HTTPSConnectionPool(host='www.wanandroid.com', port=443): Max retries exceeded with url: /user/login (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1129)')))",
       "time" : {
-        "start" : 1649559926821,
-        "stop" : 1649559926821,
+        "start" : 1649684228949,
+        "stop" : 1649684228949,
         "duration" : 0
       }
     } ]
@@ -136,152 +142,160 @@
   "112ba6cd5147d71baaef4374c26f990a" : {
     "statistic" : {
       "failed" : 0,
-      "broken" : 0,
+      "broken" : 1,
       "skipped" : 0,
-      "passed" : 1,
+      "passed" : 0,
       "unknown" : 0,
       "total" : 1
     },
     "items" : [ {
-      "uid" : "b4ab8b8b82d361f8",
-      "status" : "passed",
+      "uid" : "cdaa6b9e5d6caa78",
+      "status" : "broken",
+      "statusDetails" : "requests.exceptions.SSLError: HTTPSConnectionPool(host='www.wanandroid.com', port=443): Max retries exceeded with url: /user/login (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1129)')))",
       "time" : {
-        "start" : 1649559926115,
-        "stop" : 1649559926286,
-        "duration" : 171
+        "start" : 1649684225876,
+        "stop" : 1649684225876,
+        "duration" : 0
       }
     } ]
   },
   "d5cfe401b56baa0794a57e98fc4c71e0" : {
     "statistic" : {
       "failed" : 0,
-      "broken" : 0,
+      "broken" : 1,
       "skipped" : 0,
-      "passed" : 1,
+      "passed" : 0,
       "unknown" : 0,
       "total" : 1
     },
     "items" : [ {
-      "uid" : "46f9d9b460aa1757",
-      "status" : "passed",
+      "uid" : "f844c2ea1414db2b",
+      "status" : "broken",
+      "statusDetails" : "requests.exceptions.SSLError: HTTPSConnectionPool(host='www.wanandroid.com', port=443): Max retries exceeded with url: /user/login (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1129)')))",
       "time" : {
-        "start" : 1649559928971,
-        "stop" : 1649559929209,
-        "duration" : 238
+        "start" : 1649684232939,
+        "stop" : 1649684232939,
+        "duration" : 0
       }
     } ]
   },
   "5599d85172da83494736ea6c42876b09" : {
     "statistic" : {
       "failed" : 0,
-      "broken" : 0,
+      "broken" : 1,
       "skipped" : 0,
-      "passed" : 1,
+      "passed" : 0,
       "unknown" : 0,
       "total" : 1
     },
     "items" : [ {
-      "uid" : "c66b7519f6329015",
-      "status" : "passed",
+      "uid" : "7d113dacbf3ab85e",
+      "status" : "broken",
+      "statusDetails" : "requests.exceptions.SSLError: HTTPSConnectionPool(host='www.wanandroid.com', port=443): Max retries exceeded with url: /user/login (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1129)')))",
       "time" : {
-        "start" : 1649559928717,
-        "stop" : 1649559928962,
-        "duration" : 245
+        "start" : 1649684232445,
+        "stop" : 1649684232445,
+        "duration" : 0
       }
     } ]
   },
   "29bb5630211c63b072106cf409889012" : {
     "statistic" : {
       "failed" : 0,
-      "broken" : 0,
+      "broken" : 1,
       "skipped" : 0,
-      "passed" : 1,
+      "passed" : 0,
       "unknown" : 0,
       "total" : 1
     },
     "items" : [ {
-      "uid" : "b63e7cc670156e",
-      "status" : "passed",
+      "uid" : "4a1afd172f291fd2",
+      "status" : "broken",
+      "statusDetails" : "requests.exceptions.SSLError: HTTPSConnectionPool(host='www.wanandroid.com', port=443): Max retries exceeded with url: /user/login (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1129)')))",
       "time" : {
-        "start" : 1649559928488,
-        "stop" : 1649559928706,
-        "duration" : 218
+        "start" : 1649684231857,
+        "stop" : 1649684231857,
+        "duration" : 0
       }
     } ]
   },
   "8dc337090b769ee2123d6c056f9f9f43" : {
     "statistic" : {
       "failed" : 0,
-      "broken" : 0,
+      "broken" : 1,
       "skipped" : 0,
-      "passed" : 1,
+      "passed" : 0,
       "unknown" : 0,
       "total" : 1
     },
     "items" : [ {
-      "uid" : "59f1e2b6eab4d8fe",
-      "status" : "passed",
+      "uid" : "992aa30d7d7a851",
+      "status" : "broken",
+      "statusDetails" : "requests.exceptions.SSLError: HTTPSConnectionPool(host='www.wanandroid.com', port=443): Max retries exceeded with url: /user/login (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1129)')))",
       "time" : {
-        "start" : 1649559926837,
-        "stop" : 1649559927020,
-        "duration" : 183
+        "start" : 1649684229440,
+        "stop" : 1649684229440,
+        "duration" : 0
       }
     } ]
   },
   "8b626a79e00764aef9a6bf05440ab837" : {
     "statistic" : {
       "failed" : 0,
-      "broken" : 0,
+      "broken" : 1,
       "skipped" : 0,
-      "passed" : 1,
+      "passed" : 0,
       "unknown" : 0,
       "total" : 1
     },
     "items" : [ {
-      "uid" : "eddf8eb3810680e6",
-      "status" : "passed",
+      "uid" : "bca0a8abb3a00eb9",
+      "status" : "broken",
+      "statusDetails" : "requests.exceptions.SSLError: HTTPSConnectionPool(host='www.wanandroid.com', port=443): Max retries exceeded with url: /user/login (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1129)')))",
       "time" : {
-        "start" : 1649559929482,
-        "stop" : 1649559929722,
-        "duration" : 240
+        "start" : 1649684234036,
+        "stop" : 1649684234036,
+        "duration" : 0
       }
     } ]
   },
   "50546d53f6058092b6fcaac1ce4c98ab" : {
     "statistic" : {
       "failed" : 0,
-      "broken" : 0,
+      "broken" : 1,
       "skipped" : 0,
-      "passed" : 1,
+      "passed" : 0,
       "unknown" : 0,
       "total" : 1
     },
     "items" : [ {
-      "uid" : "9c0b82b73252fa2b",
-      "status" : "passed",
+      "uid" : "9f76c7bad160b196",
+      "status" : "broken",
+      "statusDetails" : "requests.exceptions.SSLError: HTTPSConnectionPool(host='www.wanandroid.com', port=443): Max retries exceeded with url: /user/login (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1129)')))",
       "time" : {
-        "start" : 1649559927415,
-        "stop" : 1649559927992,
-        "duration" : 577
+        "start" : 1649684230393,
+        "stop" : 1649684230393,
+        "duration" : 0
       }
     } ]
   },
   "0a418be200242c6d48da8179c0f08d8b" : {
     "statistic" : {
       "failed" : 0,
-      "broken" : 0,
+      "broken" : 1,
       "skipped" : 0,
-      "passed" : 1,
+      "passed" : 0,
       "unknown" : 0,
       "total" : 1
     },
     "items" : [ {
-      "uid" : "92b4c3c2c500ead6",
-      "status" : "passed",
+      "uid" : "6ac15cf2d34b0665",
+      "status" : "broken",
+      "statusDetails" : "requests.exceptions.SSLError: HTTPSConnectionPool(host='www.wanandroid.com', port=443): Max retries exceeded with url: /user/login (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1129)')))",
       "time" : {
-        "start" : 1649559928240,
-        "stop" : 1649559928479,
-        "duration" : 239
+        "start" : 1649684231301,
+        "stop" : 1649684231301,
+        "duration" : 0
       }
     } ]
   }

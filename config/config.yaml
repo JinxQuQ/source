@@ -1,10 +1,10 @@
 ProjectName:
-  - 余少琪的框架
+  - 七月的框架
   -
 
 Env: 测试环境
 # 测试人员名称，作用于自动生成代码的作者，以及发送企业微信、钉钉通知的测试负责人
-TesterName: 余少琪
+TesterName: 七月
 
 # 域名1
 host: https://www.wanandroid.com

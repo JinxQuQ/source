@@ -1,0 +1,626 @@
+{
+  "uid" : "eb085dc6652a44c7",
+  "name" : "正常删除收藏网站",
+  "fullName" : "test_case.Collect.test_collect_delete_tool.TestCollectDeleteTool#test_collect_delete_tool",
+  "historyId" : "7a79f04cd478ab96b4e3403bc5cb9b64",
+  "time" : {
+    "start" : 1649666391624,
+    "stop" : 1649666392055,
+    "duration" : 431
+  },
+  "description" : "\n        :param :\n        :return:\n        ",
+  "descriptionHtml" : "<pre><code>    :param :\n    :return:\n</code></pre>\n",
+  "status" : "passed",
+  "flaky" : false,
+  "beforeStages" : [ {
+    "name" : "write_case_process",
+    "time" : {
+      "start" : 1649666388211,
+      "stop" : 1649666391152,
+      "duration" : 2941
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "hasContent" : false,
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false
+  }, {
+    "name" : "clear_report",
+    "time" : {
+      "start" : 1649666385911,
+      "stop" : 1649666386014,
+      "duration" : 103
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "hasContent" : false,
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false
+  }, {
+    "name" : "_session_faker",
+    "time" : {
+      "start" : 1649666385741,
+      "stop" : 1649666385911,
+      "duration" : 170
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "hasContent" : false,
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false
+  }, {
+    "name" : "case_skip",
+    "time" : {
+      "start" : 1649666391623,
+      "stop" : 1649666391623,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "hasContent" : false,
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false
+  }, {
+    "name" : "work_login_init",
+    "time" : {
+      "start" : 1649666386014,
+      "stop" : 1649666388211,
+      "duration" : 2197
+    },
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "请求URL: https://www.wanandroid.com/user/login",
+      "time" : {
+        "start" : 1649666388176,
+        "stop" : 1649666388176,
+        "duration" : 0
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "hasContent" : false,
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "请求方式: POST",
+      "time" : {
+        "start" : 1649666388176,
+        "stop" : 1649666388176,
+        "duration" : 0
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "hasContent" : false,
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "请求头: ",
+      "time" : {
+        "start" : 1649666388176,
+        "stop" : 1649666388179,
+        "duration" : 3
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "c4713365c7e11a3a",
+        "name" : "请求头: ",
+        "source" : "c4713365c7e11a3a.json",
+        "type" : "application/json",
+        "size" : 84
+      } ],
+      "parameters" : [ ],
+      "hasContent" : true,
+      "stepsCount" : 0,
+      "attachmentsCount" : 1,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "请求数据: ",
+      "time" : {
+        "start" : 1649666388179,
+        "stop" : 1649666388191,
+        "duration" : 12
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "f71915add4ca0465",
+        "name" : "请求数据: ",
+        "source" : "f71915add4ca0465.json",
+        "type" : "application/json",
+        "size" : 71
+      } ],
+      "parameters" : [ ],
+      "hasContent" : true,
+      "stepsCount" : 0,
+      "attachmentsCount" : 1,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "依赖数据: ",
+      "time" : {
+        "start" : 1649666388191,
+        "stop" : 1649666388192,
+        "duration" : 1
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "720149586ddd868e",
+        "name" : "依赖数据: ",
+        "source" : "720149586ddd868e.json",
+        "type" : "application/json",
+        "size" : 6
+      } ],
+      "parameters" : [ ],
+      "hasContent" : true,
+      "stepsCount" : 0,
+      "attachmentsCount" : 1,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "预期数据: ",
+      "time" : {
+        "start" : 1649666388192,
+        "stop" : 1649666388194,
+        "duration" : 2
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "8eceb186f70aa654",
+        "name" : "预期数据: ",
+        "source" : "8eceb186f70aa654.json",
+        "type" : "application/json",
+        "size" : 193
+      } ],
+      "parameters" : [ ],
+      "hasContent" : true,
+      "stepsCount" : 0,
+      "attachmentsCount" : 1,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "响应耗时(s): 0.645794",
+      "time" : {
+        "start" : 1649666388194,
+        "stop" : 1649666388194,
+        "duration" : 0
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "hasContent" : false,
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "响应结果: ",
+      "time" : {
+        "start" : 1649666388194,
+        "stop" : 1649666388195,
+        "duration" : 1
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "449985bbdcc7564b",
+        "name" : "响应结果: ",
+        "source" : "449985bbdcc7564b.json",
+        "type" : "application/json",
+        "size" : 290
+      } ],
+      "parameters" : [ ],
+      "hasContent" : true,
+      "stepsCount" : 0,
+      "attachmentsCount" : 1,
+      "shouldDisplayMessage" : false
+    } ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "hasContent" : true,
+    "stepsCount" : 8,
+    "attachmentsCount" : 5,
+    "shouldDisplayMessage" : false
+  } ],
+  "testStage" : {
+    "description" : "\n        :param :\n        :return:\n        ",
+    "status" : "passed",
+    "steps" : [ {
+      "name" : "请求URL: https://www.wanandroid.com/lg/collect/addtool/json",
+      "time" : {
+        "start" : 1649666391809,
+        "stop" : 1649666391809,
+        "duration" : 0
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "hasContent" : false,
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "请求方式: POST",
+      "time" : {
+        "start" : 1649666391809,
+        "stop" : 1649666391809,
+        "duration" : 0
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "hasContent" : false,
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "请求头: ",
+      "time" : {
+        "start" : 1649666391809,
+        "stop" : 1649666391811,
+        "duration" : 2
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "75303152cf9cb983",
+        "name" : "请求头: ",
+        "source" : "75303152cf9cb983.json",
+        "type" : "application/json",
+        "size" : 312
+      } ],
+      "parameters" : [ ],
+      "hasContent" : true,
+      "stepsCount" : 0,
+      "attachmentsCount" : 1,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "请求数据: ",
+      "time" : {
+        "start" : 1649666391811,
+        "stop" : 1649666391814,
+        "duration" : 3
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "4719442e29700b4e",
+        "name" : "请求数据: ",
+        "source" : "4719442e29700b4e.json",
+        "type" : "application/json",
+        "size" : 122
+      } ],
+      "parameters" : [ ],
+      "hasContent" : true,
+      "stepsCount" : 0,
+      "attachmentsCount" : 1,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "依赖数据: ",
+      "time" : {
+        "start" : 1649666391814,
+        "stop" : 1649666391826,
+        "duration" : 12
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "884a85cbd424b641",
+        "name" : "依赖数据: ",
+        "source" : "884a85cbd424b641.json",
+        "type" : "application/json",
+        "size" : 6
+      } ],
+      "parameters" : [ ],
+      "hasContent" : true,
+      "stepsCount" : 0,
+      "attachmentsCount" : 1,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "预期数据: ",
+      "time" : {
+        "start" : 1649666391826,
+        "stop" : 1649666391828,
+        "duration" : 2
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "8156a8b63110d638",
+        "name" : "预期数据: ",
+        "source" : "8156a8b63110d638.json",
+        "type" : "application/json",
+        "size" : 90
+      } ],
+      "parameters" : [ ],
+      "hasContent" : true,
+      "stepsCount" : 0,
+      "attachmentsCount" : 1,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "响应耗时(s): 0.167056",
+      "time" : {
+        "start" : 1649666391828,
+        "stop" : 1649666391828,
+        "duration" : 0
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "hasContent" : false,
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "响应结果: ",
+      "time" : {
+        "start" : 1649666391829,
+        "stop" : 1649666391831,
+        "duration" : 2
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "bc73cfb005a50c89",
+        "name" : "响应结果: ",
+        "source" : "bc73cfb005a50c89.json",
+        "type" : "application/json",
+        "size" : 225
+      } ],
+      "parameters" : [ ],
+      "hasContent" : true,
+      "stepsCount" : 0,
+      "attachmentsCount" : 1,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "请求URL: https://www.wanandroid.com/lg/collect/deletetool/json",
+      "time" : {
+        "start" : 1649666392018,
+        "stop" : 1649666392018,
+        "duration" : 0
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "hasContent" : false,
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "请求方式: POST",
+      "time" : {
+        "start" : 1649666392018,
+        "stop" : 1649666392018,
+        "duration" : 0
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "hasContent" : false,
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "请求头: ",
+      "time" : {
+        "start" : 1649666392018,
+        "stop" : 1649666392021,
+        "duration" : 3
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "167d550e5b112913",
+        "name" : "请求头: ",
+        "source" : "167d550e5b112913.json",
+        "type" : "application/json",
+        "size" : 312
+      } ],
+      "parameters" : [ ],
+      "hasContent" : true,
+      "stepsCount" : 0,
+      "attachmentsCount" : 1,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "请求数据: ",
+      "time" : {
+        "start" : 1649666392021,
+        "stop" : 1649666392024,
+        "duration" : 3
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "5e8989fa433edd97",
+        "name" : "请求数据: ",
+        "source" : "5e8989fa433edd97.json",
+        "type" : "application/json",
+        "size" : 37
+      } ],
+      "parameters" : [ ],
+      "hasContent" : true,
+      "stepsCount" : 0,
+      "attachmentsCount" : 1,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "依赖数据: ",
+      "time" : {
+        "start" : 1649666392024,
+        "stop" : 1649666392026,
+        "duration" : 2
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "12cbaf58d850f6b2",
+        "name" : "依赖数据: ",
+        "source" : "12cbaf58d850f6b2.json",
+        "type" : "application/json",
+        "size" : 142
+      } ],
+      "parameters" : [ ],
+      "hasContent" : true,
+      "stepsCount" : 0,
+      "attachmentsCount" : 1,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "预期数据: ",
+      "time" : {
+        "start" : 1649666392026,
+        "stop" : 1649666392029,
+        "duration" : 3
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "8d7f157bddb9ba61",
+        "name" : "预期数据: ",
+        "source" : "8d7f157bddb9ba61.json",
+        "type" : "application/json",
+        "size" : 90
+      } ],
+      "parameters" : [ ],
+      "hasContent" : true,
+      "stepsCount" : 0,
+      "attachmentsCount" : 1,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "响应耗时(s): 0.14627",
+      "time" : {
+        "start" : 1649666392029,
+        "stop" : 1649666392030,
+        "duration" : 1
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ ],
+      "parameters" : [ ],
+      "hasContent" : false,
+      "stepsCount" : 0,
+      "attachmentsCount" : 0,
+      "shouldDisplayMessage" : false
+    }, {
+      "name" : "响应结果: ",
+      "time" : {
+        "start" : 1649666392030,
+        "stop" : 1649666392033,
+        "duration" : 3
+      },
+      "status" : "passed",
+      "steps" : [ ],
+      "attachments" : [ {
+        "uid" : "e9b66fa7661bc9eb",
+        "name" : "响应结果: ",
+        "source" : "e9b66fa7661bc9eb.json",
+        "type" : "application/json",
+        "size" : 48
+      } ],
+      "parameters" : [ ],
+      "hasContent" : true,
+      "stepsCount" : 0,
+      "attachmentsCount" : 1,
+      "shouldDisplayMessage" : false
+    } ],
+    "attachments" : [ {
+      "uid" : "a9b08e03e53075ca",
+      "name" : "log",
+      "source" : "a9b08e03e53075ca.txt",
+      "type" : "text/plain",
+      "size" : 2126
+    } ],
+    "parameters" : [ ],
+    "hasContent" : true,
+    "stepsCount" : 16,
+    "attachmentsCount" : 11,
+    "shouldDisplayMessage" : false
+  },
+  "afterStages" : [ {
+    "name" : "clear_report::0",
+    "time" : {
+      "start" : 1649666396518,
+      "stop" : 1649666396518,
+      "duration" : 0
+    },
+    "status" : "passed",
+    "steps" : [ ],
+    "attachments" : [ ],
+    "parameters" : [ ],
+    "hasContent" : false,
+    "stepsCount" : 0,
+    "attachmentsCount" : 0,
+    "shouldDisplayMessage" : false
+  } ],
+  "labels" : [ {
+    "name" : "story",
+    "value" : "删除收藏网站接口"
+  }, {
+    "name" : "feature",
+    "value" : "收藏模块"
+  }, {
+    "name" : "epic",
+    "value" : "开发平台接口"
+  }, {
+    "name" : "parentSuite",
+    "value" : "test_case.Collect"
+  }, {
+    "name" : "suite",
+    "value" : "test_collect_delete_tool"
+  }, {
+    "name" : "subSuite",
+    "value" : "TestCollectDeleteTool"
+  }, {
+    "name" : "host",
+    "value" : "LAPTOP-8FNP3JVN"
+  }, {
+    "name" : "thread",
+    "value" : "65484-MainThread"
+  }, {
+    "name" : "framework",
+    "value" : "pytest"
+  }, {
+    "name" : "language",
+    "value" : "cpython3"
+  }, {
+    "name" : "package",
+    "value" : "test_case.Collect.test_collect_delete_tool"
+  }, {
+    "name" : "resultFormat",
+    "value" : "allure2"
+  } ],
+  "parameters" : [ {
+    "name" : "in_data",
+    "value" : "{'method': 'POST', 'is_run': None, 'url': 'https://www.wanandroid.com/lg/collect/deletetool/json', 'detail': '正常删除收藏网站', 'headers': {'Content-Type': 'multipart/form-data;', 'cookie': 'login_cookie'}, 'requestType': 'DATE', 'data': {'id': 111}, 'dependence_case': True, 'dependence_case_data': [{'case_id': 'collect_addtool_01', 'dependent_data': [{'dependent_type': 'response', 'jsonpath': '$.data.id', 'replace_key': '$.data.id'}]}], 'sql': None, 'assert': {'errorCode': {'jsonpath': '$.errorCode', 'type': '==', 'value': 0, 'AssertType': None}}}"
+  } ],
+  "links" : [ ],
+  "hidden" : false,
+  "retry" : false,
+  "extra" : {
+    "severity" : "normal",
+    "retries" : [ ],
+    "categories" : [ ],
+    "tags" : [ ]
+  },
+  "source" : "eb085dc6652a44c7.json",
+  "parameterValues" : [ "{'method': 'POST', 'is_run': None, 'url': 'https://www.wanandroid.com/lg/collect/deletetool/json', 'detail': '正常删除收藏网站', 'headers': {'Content-Type': 'multipart/form-data;', 'cookie': 'login_cookie'}, 'requestType': 'DATE', 'data': {'id': 111}, 'dependence_case': True, 'dependence_case_data': [{'case_id': 'collect_addtool_01', 'dependent_data': [{'dependent_type': 'response', 'jsonpath': '$.data.id', 'replace_key': '$.data.id'}]}], 'sql': None, 'assert': {'errorCode': {'jsonpath': '$.errorCode', 'type': '==', 'value': 0, 'AssertType': None}}}" ]
+}

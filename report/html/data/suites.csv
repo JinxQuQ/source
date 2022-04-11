@@ -1,41 +1,5 @@
 "Status","Name","Duration in ms","Description"
-"passed","test_case.UserInfo.test_get_user_info.TestGetUserInfo#test_get_user_info","200","
-        :param :
-        :return:
-        "
-"passed","test_case.Login.test_login.TestLogin#test_login","275","
-        :param :
-        :return:
-        "
-"passed","test_case.Login.test_login.TestLogin#test_login","262","
-        :param :
-        :return:
-        "
-"passed","test_case.Login.test_login.TestLogin#test_login","249","
-        :param :
-        :return:
-        "
 "skipped","test_case.Collect.test_collect_delete_tool.TestCollectDeleteTool#test_collect_delete_tool","0","
-        :param :
-        :return:
-        "
-"passed","test_case.Collect.test_collect_tool_list.TestCollectToolList#test_collect_tool_list","227","
-        :param :
-        :return:
-        "
-"passed","test_case.Login.test_login.TestLogin#test_login","586","
-        :param :
-        :return:
-        "
-"passed","test_case.Collect.test_collect_update_tool.TestCollectUpdateTool#test_collect_update_tool","446","
-        :param :
-        :return:
-        "
-"passed","test_case.Login.test_login.TestLogin#test_login","234","
-        :param :
-        :return:
-        "
-"passed","test_case.Login.test_login.TestLogin#test_login","281","
         :param :
         :return:
         "
@@ -43,19 +7,55 @@
         :param :
         :return:
         "
-"passed","test_case.Login.test_login.TestLogin#test_login","257","
+"passed","test_case.Login.test_login.TestLogin#test_login","350","
         :param :
         :return:
         "
-"passed","test_case.Collect.test_collect_addtool.TestCollectAddtool#test_collect_addtool","167","
+"passed","test_case.Collect.test_collect_update_tool.TestCollectUpdateTool#test_collect_update_tool","482","
         :param :
         :return:
         "
-"passed","test_case.Collect.test_collect_delete_tool.TestCollectDeleteTool#test_collect_delete_tool","449","
+"passed","test_case.Login.test_login.TestLogin#test_login","322","
         :param :
         :return:
         "
-"passed","test_case.Login.test_login.TestLogin#test_login","264","
+"passed","test_case.Collect.test_collect_tool_list.TestCollectToolList#test_collect_tool_list","246","
+        :param :
+        :return:
+        "
+"passed","test_case.Login.test_login.TestLogin#test_login","324","
+        :param :
+        :return:
+        "
+"passed","test_case.UserInfo.test_get_user_info.TestGetUserInfo#test_get_user_info","211","
+        :param :
+        :return:
+        "
+"passed","test_case.Collect.test_collect_addtool.TestCollectAddtool#test_collect_addtool","212","
+        :param :
+        :return:
+        "
+"passed","test_case.Collect.test_collect_delete_tool.TestCollectDeleteTool#test_collect_delete_tool","431","
+        :param :
+        :return:
+        "
+"passed","test_case.Login.test_login.TestLogin#test_login","360","
+        :param :
+        :return:
+        "
+"passed","test_case.Login.test_login.TestLogin#test_login","333","
+        :param :
+        :return:
+        "
+"passed","test_case.Login.test_login.TestLogin#test_login","667","
+        :param :
+        :return:
+        "
+"passed","test_case.Login.test_login.TestLogin#test_login","357","
+        :param :
+        :return:
+        "
+"passed","test_case.Login.test_login.TestLogin#test_login","365","
         :param :
         :return:
         "

@@ -7,7 +7,7 @@ import os
 from config.setting import ConfigHandler
 from utils import write_testcase_file
 from utils.readFilesUtils.yamlControl import GetYamlData
-from utils import sys_slash
+from utils import get_os_sep
 from utils.readFilesUtils.get_all_files_path import get_all_files
 
 
@@ -54,7 +54,7 @@ class TestCaseAutomaticGeneration:
         :return: from lib.test_demo import DateDemo
         """
         lib_path = self.file_name(file_path)
-        i = lib_path.split(sys_slash())
+        i = lib_path.split(get_os_sep())
         # 判断多层目录下的导报结构
         if len(i) > 1:
             package_path = "from lib"
@@ -78,10 +78,10 @@ class TestCaseAutomaticGeneration:
         """
 
         # 这里通过“\\” 符号进行分割，提取出来文件名称
-        path = self.file_name(file_path).split(sys_slash())
+        path = self.file_name(file_path).split(get_os_sep())
         # 判断生成的 testcase 文件名称，需要以test_ 开头
         case_name = path[-1] = path[-1].replace(path[-1], "test_" + path[-1])
-        new_name = sys_slash().join(path)
+        new_name = get_os_sep().join(path)
         return ConfigHandler.case_path + new_name, case_name
 
     @classmethod
@@ -170,15 +170,17 @@ class TestCaseAutomaticGeneration:
         file_path = get_all_files(ConfigHandler.data_path)
 
         for file in file_path:
-            # 判断用例需要用的文件夹路径是否存在，不存在则创建
-            self.mk_dir(file)
-            yaml_case_process = GetYamlData(file).get_yaml_data()
-            write_testcase_file(
-                allure_epic=self.allure_epic(yaml_case_process), allure_feature=self.allure_feature(yaml_case_process),
-                class_title=self.get_test_class_title(file), func_title=self.func_title(file),
-                case_path=self.get_case_path(file)[0], yaml_path=self.yaml_path(file),
-                file_name=self.get_case_path(file)[1], allure_story=self.allure_story(yaml_case_process)
-                )
+            # 判断代理拦截的yaml文件，不生成test_case代码
+            if 'proxy_data.yaml' not in file:
+                # 判断用例需要用的文件夹路径是否存在，不存在则创建
+                self.mk_dir(file)
+                yaml_case_process = GetYamlData(file).get_yaml_data()
+                write_testcase_file(
+                    allure_epic=self.allure_epic(yaml_case_process), allure_feature=self.allure_feature(yaml_case_process),
+                    class_title=self.get_test_class_title(file), func_title=self.func_title(file),
+                    case_path=self.get_case_path(file)[0], yaml_path=self.yaml_path(file),
+                    file_name=self.get_case_path(file)[1], allure_story=self.allure_story(yaml_case_process)
+                    )
 
 
 if __name__ == '__main__':

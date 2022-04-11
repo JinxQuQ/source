@@ -105,7 +105,7 @@ class DingTalkSendMsg(object):
                f" ![screenshot](https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png)\n" \
                f" > ###### 测试报告 [详情](http://{get_host_ip()}:9999/index.html) \n"
         DingTalkSendMsg().send_markdown(
-            title="【婚奢汇自动化通知】",
+            title="【接口自动化通知】",
             msg=text,
             mobiles=[18867507063]
         )

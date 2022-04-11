@@ -19,7 +19,8 @@ class LogHandler(object):
         'crit': logging.CRITICAL
     }
 
-    def __init__(self, filename, level='info', when='D', backCount=3, fmt='[%(asctime)s] %(filename)s->%(funcName)s line:%(lineno)d [%(levelname)s]%(message)s'):
+    def __init__(self, filename, level='info', when='D', backCount=3, fmt="%(levelname)-8s%(asctime)s  "
+                                                                          "%(name)s:%(filename)s:%(lineno)d %(message)s"):
         self.logger = logging.getLogger(filename)
 
         self.log_colors_config = {

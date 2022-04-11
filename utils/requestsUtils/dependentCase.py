@@ -69,46 +69,50 @@ class DependentCase:
         """
 
         _dependent_type = case_data[YAMLDate.DEPENDENCE_CASE.value]
+        _dependence_case_dates = case_data[YAMLDate.DEPENDENCE_CASE_DATA.value]
         # 判断是否有依赖
         if _dependent_type is True:
             # 读取依赖相关的用例数据
-            _dependence_case_dates = case_data[YAMLDate.DEPENDENCE_CASE_DATA.value]
             jsonpath_dates = {}
             # 循环所有需要依赖的数据
-            for dependence_case_data in _dependence_case_dates:
-                dependent_data = dependence_case_data['dependent_data']
-                for i in dependent_data:
+            try:
+                for dependence_case_data in _dependence_case_dates:
+                    dependent_data = dependence_case_data['dependent_data']
+                    for i in dependent_data:
 
-                    _case_id = dependence_case_data[YAMLDate.CASE_ID.value]
-                    _jsonpath = i[YAMLDate.JSONPATH.value]
-                    _request_data = case_data[YAMLDate.DATA.value]
-                    _replace_key = i[YAMLDate.REPLACE_KEY.value]
+                        _case_id = dependence_case_data[YAMLDate.CASE_ID.value]
+                        _jsonpath = i[YAMLDate.JSONPATH.value]
+                        _request_data = case_data[YAMLDate.DATA.value]
+                        _replace_key = i[YAMLDate.REPLACE_KEY.value]
 
-                    # 判断依赖数据类型, 依赖 response 中的数据
-                    if i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.RESPONSE.value:
-                        res = RequestControl().http_request(cls.get_cache(_case_id))
-                        jsonpath_data = cls.jsonpath_data(res[0], _jsonpath)
-                        cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
-                                        jsonpath_data=jsonpath_data, case_data=case_data)
+                        # 判断依赖数据类型, 依赖 response 中的数据
+                        if i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.RESPONSE.value:
+                            res = RequestControl().http_request(cls.get_cache(_case_id))
+                            jsonpath_data = cls.jsonpath_data(res[0], _jsonpath)
+                            cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
+                                            jsonpath_data=jsonpath_data, case_data=case_data)
 
-                    # 判断依赖数据类型, 依赖 request 中的数据
-                    elif i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.REQUEST.value:
-                        jsonpath_data = cls.jsonpath_data(case_data, _jsonpath)
-                        jsonpath_dates[_replace_key] = jsonpath_data[0]
-                        cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
-                                        jsonpath_data=jsonpath_data, case_data=case_data)
+                        # 判断依赖数据类型, 依赖 request 中的数据
+                        elif i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.REQUEST.value:
+                            jsonpath_data = cls.jsonpath_data(case_data, _jsonpath)
+                            jsonpath_dates[_replace_key] = jsonpath_data[0]
+                            cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
+                                            jsonpath_data=jsonpath_data, case_data=case_data)
 
-                    # 判断依赖数据类型，依赖 sql中的数据
-                    elif i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.SQL_DATA.value:
-                        res = RequestControl().http_request(cls.get_cache(_case_id))
-                        jsonpath_data = cls.jsonpath_data(res[1], _jsonpath)
-                        jsonpath_dates[_replace_key] = jsonpath_data[0]
-                        cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
-                                        jsonpath_data=jsonpath_data, case_data=case_data)
-                    else:
-                        raise ValueError("依赖的dependent_type不正确，只支持request、response、sql依赖\n"
-                                         f"当前填写内容: {i[YAMLDate.DEPENDENT_TYPE.value]}")
-            return jsonpath_dates
+                        # 判断依赖数据类型，依赖 sql中的数据
+                        elif i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.SQL_DATA.value:
+                            res = RequestControl().http_request(cls.get_cache(_case_id))
+                            jsonpath_data = cls.jsonpath_data(res[1], _jsonpath)
+                            jsonpath_dates[_replace_key] = jsonpath_data[0]
+                            cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
+                                            jsonpath_data=jsonpath_data, case_data=case_data)
+                        else:
+                            raise ValueError("依赖的dependent_type不正确，只支持request、response、sql依赖\n"
+                                             f"当前填写内容: {i[YAMLDate.DEPENDENT_TYPE.value]}")
+                return jsonpath_dates
+            except TypeError:
+                raise TypeError("当 dependence_case 设置为 True 时，dependence_case_dates不能为空！")
+
         else:
             return False
 

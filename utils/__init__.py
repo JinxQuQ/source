@@ -10,6 +10,7 @@ from utils.readFilesUtils.yamlControl import GetYamlData
 
 
 def sys_slash():
+
     # 判断系统路径
     slash = '\\'
 

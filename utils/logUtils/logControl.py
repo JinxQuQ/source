@@ -19,8 +19,7 @@ class LogHandler(object):
         'crit': logging.CRITICAL
     }
 
-    def __init__(self, filename, level='info', when='D', backCount=3, fmt='%%(levelname)-8s%(asctime)s '
-                                                                          '%(name)s:%(filename)s:%(lineno)d %(message)s'):
+    def __init__(self, filename, level='info', when='D', backCount=3, fmt='[%(asctime)s] %(filename)s->%(funcName)s line:%(lineno)d [%(levelname)s]%(message)s'):
         self.logger = logging.getLogger(filename)
 
         self.log_colors_config = {
@@ -67,4 +66,4 @@ ERROR = LogHandler(ConfigHandler.error_log_path, level='error')
 WARNING = LogHandler(ConfigHandler.warning_log_path, level='warning')
 
 if __name__ == '__main__':
-    INFO.logger.info("测试")
+    ERROR.logger.error("测试")

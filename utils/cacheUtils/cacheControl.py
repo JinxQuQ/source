@@ -10,8 +10,13 @@ from config.setting import ConfigHandler
 
 class Cache:
     """ 设置、读取缓存 """
-    def __init__(self, filename: str) -> None:
-        self.path = ConfigHandler().cache_path + filename
+    def __init__(self, filename: [str, bool]) -> None:
+        # 如果filename不为空，则操作指定文件内容
+        if filename:
+            self.path = ConfigHandler().cache_path + filename
+        # 如果filename为None，则操作所有文件内容
+        else:
+            self.path = ConfigHandler().cache_path
 
     def set_cache(self, key, value):
         """
@@ -50,6 +55,7 @@ class Cache:
         :return:
         """
         cache_path = ConfigHandler().cache_path
+
         # 列出目录下所有文件，生成一个list
         list_dir = os.listdir(cache_path)
         for i in list_dir:
@@ -58,4 +64,4 @@ class Cache:
 
 
 if __name__ == '__main__':
-    Cache('cache').set_cache('test', 333)
+    Cache(filename=None).clean_all_cache()

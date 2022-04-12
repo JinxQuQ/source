@@ -8,7 +8,7 @@ import allure
 import requests
 from typing import Any
 from utils import sql_switch
-from requests_toolbelt import MultipartEncoder
+from allure import MultipartEncoder
 from utils.logUtils.logDecoratorl import log_decorator
 from utils.mysqlUtils.mysqlControl import MysqlDB
 from Enums.requestType_enum import RequestType

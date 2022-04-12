@@ -1,0 +1,22 @@
+INFO     C:\Users\hzxy\Desktop\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 新增收藏网址接口
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=f6b76424de474667ad43aa99d8b8640f', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=78BF61B7D49E31E5B06D90803A314FF7;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址2229', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12596, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址2229', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+INFO     C:\Users\hzxy\Desktop\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常删除收藏网站
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=76e217b5ee4c4de8bf1bc74286c50d8d', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=78BF61B7D49E31E5B06D90803A314FF7;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/deletetool/json
+请求内容: {'id': '12596'}
+依赖测试用例: [{'case_id': 'collect_addtool_01', 'dependent_data': [{'dependent_type': 'response', 'jsonpath': '$.data.id', 'replace_key': '$.data.id'}]}]
+接口响应内容: {'data': None, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================

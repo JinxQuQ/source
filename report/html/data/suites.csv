@@ -1,61 +1,61 @@
-"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"broken","Mon Apr 11 21:37:11 CST 2022","Mon Apr 11 21:37:11 CST 2022","0","test_case.Login","test_login","TestLogin","","","test_login[登录密码为空]","
+"Status","Name","Duration in ms","Description"
+"passed","test_case.Login.test_login.TestLogin#test_login","269","
         :param :
         :return:
         "
-"broken","Mon Apr 11 21:37:12 CST 2022","Mon Apr 11 21:37:12 CST 2022","0","test_case.Login","test_login","TestLogin","","","test_login[输入手机号码小于11位]","
+"passed","test_case.UserInfo.test_get_user_info.TestGetUserInfo#test_get_user_info","188","
         :param :
         :return:
         "
-"broken","Mon Apr 11 21:37:08 CST 2022","Mon Apr 11 21:37:08 CST 2022","0","test_case.Collect","test_collect_addtool","TestCollectAddtool","","","test_collect_addtool[未登录状态下新增收藏网址]","
+"passed","test_case.Login.test_login.TestLogin#test_login","296","
         :param :
         :return:
         "
-"broken","Mon Apr 11 21:37:08 CST 2022","Mon Apr 11 21:37:08 CST 2022","0","test_case.Collect","test_collect_delete_tool","TestCollectDeleteTool","","","test_collect_delete_tool[正常删除不存在的ID数据（接口未完成此功能，跳过该条用例）]","
+"skipped","test_case.Collect.test_collect_delete_tool.TestCollectDeleteTool#test_collect_delete_tool","0","
         :param :
         :return:
         "
-"broken","Mon Apr 11 21:37:09 CST 2022","Mon Apr 11 21:37:09 CST 2022","0","test_case.Collect","test_collect_tool_list","TestCollectToolList","","","test_collect_tool_list[查看收藏网址列表接口]","
+"passed","test_case.Collect.test_collect_delete_tool.TestCollectDeleteTool#test_collect_delete_tool","414","
         :param :
         :return:
         "
-"broken","Mon Apr 11 21:37:13 CST 2022","Mon Apr 11 21:37:13 CST 2022","0","test_case.Login","test_login","TestLogin","","","test_login[手机号码为空]","
+"passed","test_case.Login.test_login.TestLogin#test_login","294","
         :param :
         :return:
         "
-"broken","Mon Apr 11 21:37:09 CST 2022","Mon Apr 11 21:37:09 CST 2022","0","test_case.Collect","test_collect_update_tool","TestCollectUpdateTool","","","test_collect_update_tool[编辑收藏网址]","
+"passed","test_case.Collect.test_collect_addtool.TestCollectAddtool#test_collect_addtool","196","
         :param :
         :return:
         "
-"broken","Mon Apr 11 21:37:08 CST 2022","Mon Apr 11 21:37:08 CST 2022","0","test_case.Collect","test_collect_delete_tool","TestCollectDeleteTool","","","test_collect_delete_tool[正常删除收藏网站]","
+"passed","test_case.Login.test_login.TestLogin#test_login","315","
         :param :
         :return:
         "
-"broken","Mon Apr 11 21:37:11 CST 2022","Mon Apr 11 21:37:11 CST 2022","0","test_case.Login","test_login","TestLogin","","","test_login[输入非1开头的手机号码]","
+"passed","test_case.Login.test_login.TestLogin#test_login","295","
         :param :
         :return:
         "
-"broken","Mon Apr 11 21:37:12 CST 2022","Mon Apr 11 21:37:12 CST 2022","0","test_case.Login","test_login","TestLogin","","","test_login[输入手机号码大于于11位]","
+"passed","test_case.Collect.test_collect_tool_list.TestCollectToolList#test_collect_tool_list","271","
         :param :
         :return:
         "
-"broken","Mon Apr 11 21:37:05 CST 2022","Mon Apr 11 21:37:05 CST 2022","0","test_case.Collect","test_collect_addtool","TestCollectAddtool","","","test_collect_addtool[新增收藏网址接口]","
+"passed","test_case.Login.test_login.TestLogin#test_login","287","
         :param :
         :return:
         "
-"broken","Mon Apr 11 21:37:10 CST 2022","Mon Apr 11 21:37:10 CST 2022","0","test_case.Login","test_login","TestLogin","","","test_login[输入错误的密码]","
+"passed","test_case.Collect.test_collect_update_tool.TestCollectUpdateTool#test_collect_update_tool","532","
         :param :
         :return:
         "
-"broken","Mon Apr 11 21:37:10 CST 2022","Mon Apr 11 21:37:10 CST 2022","0","test_case.Login","test_login","TestLogin","","","test_login[正常登录]","
+"passed","test_case.Login.test_login.TestLogin#test_login","326","
         :param :
         :return:
         "
-"broken","Mon Apr 11 21:37:14 CST 2022","Mon Apr 11 21:37:14 CST 2022","0","test_case.Login","test_login","TestLogin","","","test_login[手机号码首位包含空格]","
+"passed","test_case.Login.test_login.TestLogin#test_login","715","
         :param :
         :return:
         "
-"broken","Mon Apr 11 21:37:14 CST 2022","Mon Apr 11 21:37:14 CST 2022","0","test_case.UserInfo","test_get_user_info","TestGetUserInfo","","","test_get_user_info[正常获取个人身份信息]","
+"passed","test_case.Collect.test_collect_addtool.TestCollectAddtool#test_collect_addtool","177","
         :param :
         :return:
         "

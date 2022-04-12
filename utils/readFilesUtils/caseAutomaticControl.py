@@ -12,7 +12,7 @@ from utils.readFilesUtils.get_all_files_path import get_all_files
 
 
 class TestCaseAutomaticGeneration:
-    """自动生成自动化测试中的page代码"""
+    """自动生成自动化测试中的test_case代码"""
 
     # TODO 自动生成测试代码
     def __init__(self):

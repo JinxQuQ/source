@@ -24,7 +24,7 @@ class RequestControl:
 
     @classmethod
     def _check_params(cls, response, yaml_data, headers, cookie) -> Any:
-        """ 抽离出通用模块，判断request中的一些参数校验 """
+        """ 抽离出通用模块，判断 http_request 方法中的一些数据校验 """
         # 判断响应码不等于200时，打印文本格式信息
         if response.status_code != 200:
             return response.text, {"sql": None}, yaml_data
@@ -93,6 +93,11 @@ class RequestControl:
 
     @classmethod
     def upload_file(cls, yaml_data):
+        """
+        判断处理上传文件
+        :param yaml_data:
+        :return:
+        """
         # 处理上传多个文件的情况
         _files = []
         file_data = {}
@@ -112,6 +117,12 @@ class RequestControl:
     @log_decorator(True)
     @execution_duration(3000)
     def http_request(self, yaml_data, **kwargs):
+        """
+        请求封装
+        :param yaml_data: 从yaml文件中读取出来的所有数据
+        :param kwargs:
+        :return:
+        """
         from utils.requestsUtils.dependentCase import DependentCase
         _is_run = yaml_data[YAMLDate.IS_RUN.value]
         _method = yaml_data[YAMLDate.METHOD.value]

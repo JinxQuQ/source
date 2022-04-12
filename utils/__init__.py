@@ -17,7 +17,7 @@ def get_os_sep():
     return os.sep
 
 
-def sql_switch() -> bool:
+def sql_switch():
     """获取数据库开关"""
     switch = GetYamlData(ConfigHandler.config_path) \
         .get_yaml_data()['MySqlDB']["switch"]
@@ -138,10 +138,3 @@ configPath = GetYamlData(ConfigHandler.config_path).get_yaml_data()
 project_name = configPath['ProjectName'][0]
 tester_name = configPath['TesterName']
 
-
-def get_os_sep():
-    print(os.sep)
-
-
-if __name__ == '__main__':
-    get_os_sep()

@@ -1,0 +1,1442 @@
+%(levelname)-8s2022-04-09 00:44:32,359 C:\work\Study\pytest-auto-api2\logs\info.log:run.py:22 
+                             _    _         _      _____         _
+              __ _ _ __ (_)  / \  _   _| |_ __|_   _|__  ___| |_
+             / _` | '_ \| | / _ \| | | | __/ _ \| |/ _ \/ __| __|
+            | (_| | |_) | |/ ___ \ |_| | || (_) | |  __/\__ \ |_
+             \__,_| .__/|_/_/   \_\__,_|\__\___/|_|\___||___/\__|
+                  |_|
+                  开始执行余少琪的框架项目...
+                
+%(levelname)-8s2022-04-09 00:44:35,642 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=5a63084532954230aa584b4cfaf96bf5'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 21, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:44:37,278 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 新增收藏网址接口
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=51cc6ac84d6440cf98f13192b4d7936e', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=74892F328128F86895343BAA36AD9B8B;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址1479', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12384, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址1479', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:44:37,436 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 未登录状态下新增收藏网址
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=71548c3532cc4adb8caa1c7d3c35381b'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址8970', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'errorCode': -1001, 'errorMsg': '请先登录！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:44:37,603 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 新增收藏网址接口
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=391789ee69b34b7a827de00c27c22322', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=74892F328128F86895343BAA36AD9B8B;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址1131', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12385, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址1131', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:44:37,772 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常删除收藏网站
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=bdc4c713dc2747d6a7d6014c47b6db17', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=74892F328128F86895343BAA36AD9B8B;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/deletetool/json
+请求内容: {'id': '12385'}
+依赖测试用例: [{'case_id': 'collect_addtool_01', 'dependent_data': [{'dependent_type': 'response', 'jsonpath': '$.data.id', 'replace_key': '$.data.id'}]}]
+接口响应内容: {'data': None, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:44:37,950 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 查看收藏网址列表接口
+请求方式: GET
+请求头:   {'Content-Type': 'multipart/form-data;', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=74892F328128F86895343BAA36AD9B8B;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/usertools/json
+请求内容: None
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': [{'desc': '', 'icon': '', 'id': 12349, 'link': '111', 'name': '11', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12350, 'link': 'http://www.baidu.com', 'name': '网站测试', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12351, 'link': '1', 'name': '1', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12352, 'link': '222', 'name': '11', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12353, 'link': '222', 'name': '11', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12354, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址[4, 3, 8, 9]', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12355, 'link': '222', 'name': '', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12356, 'link': '222', 'name': '', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12357, 'link': '222', 'name': '自动化', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12358, 'link': '11', 'name': '编辑的网址', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12359, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7017', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12360, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址6', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12361, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址335', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12362, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址3559', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12364, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4823', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12366, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址3770', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12367, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12368, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4496', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12370, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址6623', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12371, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12372, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址99', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12374, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4035', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12375, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12376, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址9718', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12378, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4486', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12379, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12380, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址9547', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12382, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址8698', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12383, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12384, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址1479', 'order': 0, 'userId': 129462, 'visible': 1}], 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:44:38,140 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 新增收藏网址接口
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=fe31f6c4743e49529502dcfa528c0252', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=74892F328128F86895343BAA36AD9B8B;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址1131', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12386, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址1131', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:44:38,301 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 编辑收藏网址
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=2ee8c501765348adba0e955b3a104ccf', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=74892F328128F86895343BAA36AD9B8B;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'id': '12386', 'name': '自动化编辑网址名称', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: [{'case_id': 'collect_addtool_01', 'dependent_data': [{'dependent_type': 'response', 'jsonpath': '$.data.id', 'replace_key': '$.data.id'}]}]
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12387, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:44:38,897 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=1a263ced540042e19411a963e31d287e'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 21, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:44:39,125 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 输入错误的密码
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=24a97cf29b304f9a80f073bd07dbddcf'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:44:39,391 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 登录密码为空
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=e23237f3004342468ee0c4ac00e61be4'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': 'None'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:44:39,632 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 输入非1开头的手机号码
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=9ca7c78c19834aaca8595e69a8f2f7e6'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '28800000001', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:44:39,907 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 输入手机号码小于11位
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=4c38e7bcabe04b95b5a2ad9705f63f8c'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '1880000000', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:44:40,147 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 输入手机号码大于于11位
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=64bff9e8b0a2462db41fda53540b405e'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000000', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:44:40,391 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 手机号码为空
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=867eff22d938412ab292fb0d5c316750'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': 'None', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:44:40,610 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 手机号码首位包含空格
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=082a97188fe4434cb3ee6ada3cebdaeb'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': ' 18867507063 ', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:44:40,754 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常获取个人身份信息
+请求方式: GET
+请求头:   {'Content-Type': 'multipart/form-data;', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=74892F328128F86895343BAA36AD9B8B;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/user/lg/userinfo/json
+请求内容: None
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'coinInfo': {'coinCount': 21, 'level': 1, 'nickname': '', 'rank': '102829', 'userId': 129462, 'username': '1**00000001'}, 'userInfo': {'admin': False, 'chapterTops': [], 'coinCount': 21, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:44:40,777 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 14
+%(levelname)-8s2022-04-09 00:44:40,785 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 8.17 s
+%(levelname)-8s2022-04-09 00:44:40,785 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 100.00 %
+%(levelname)-8s2022-04-09 00:47:54,622 C:\work\Study\pytest-auto-api2\logs\info.log:run.py:22 
+                             _    _         _      _____         _
+              __ _ _ __ (_)  / \  _   _| |_ __|_   _|__  ___| |_
+             / _` | '_ \| | / _ \| | | | __/ _ \| |/ _ \/ __| __|
+            | (_| | |_) | |/ ___ \ |_| | || (_) | |  __/\__ \ |_
+             \__,_| .__/|_/_/   \_\__,_|\__\___/|_|\___||___/\__|
+                  |_|
+                  开始执行余少琪的框架项目...
+                
+%(levelname)-8s2022-04-09 00:47:57,668 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=e176fd96c2ea4b658726650f89947f27'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 21, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:47:59,114 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 新增收藏网址接口
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=19b40962ca5145a8be8e4908f2db19b4', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=0234D2EC2FD194BD7044ADF022654C07;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址767', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12388, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址767', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:47:59,273 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 未登录状态下新增收藏网址
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=13d7d0d39789464aa7ca34299e181722'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址1874', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'errorCode': -1001, 'errorMsg': '请先登录！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:47:59,460 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 新增收藏网址接口
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=e0d7a394057147ecb27c1349c79fe168', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=0234D2EC2FD194BD7044ADF022654C07;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址7722', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12389, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7722', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:47:59,638 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常删除收藏网站
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=6bf3560a1e3f425db0bce6cc9bf113f5', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=0234D2EC2FD194BD7044ADF022654C07;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/deletetool/json
+请求内容: {'id': '12389'}
+依赖测试用例: [{'case_id': 'collect_addtool_01', 'dependent_data': [{'dependent_type': 'response', 'jsonpath': '$.data.id', 'replace_key': '$.data.id'}]}]
+接口响应内容: {'data': None, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:47:59,844 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 查看收藏网址列表接口
+请求方式: GET
+请求头:   {'Content-Type': 'multipart/form-data;', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=0234D2EC2FD194BD7044ADF022654C07;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/usertools/json
+请求内容: None
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': [{'desc': '', 'icon': '', 'id': 12349, 'link': '111', 'name': '11', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12350, 'link': 'http://www.baidu.com', 'name': '网站测试', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12351, 'link': '1', 'name': '1', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12352, 'link': '222', 'name': '11', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12353, 'link': '222', 'name': '11', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12354, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址[4, 3, 8, 9]', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12355, 'link': '222', 'name': '', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12356, 'link': '222', 'name': '', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12357, 'link': '222', 'name': '自动化', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12358, 'link': '11', 'name': '编辑的网址', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12359, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7017', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12360, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址6', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12361, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址335', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12362, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址3559', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12364, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4823', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12366, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址3770', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12367, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12368, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4496', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12370, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址6623', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12371, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12372, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址99', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12374, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4035', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12375, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12376, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址9718', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12378, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4486', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12379, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12380, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址9547', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12382, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址8698', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12383, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12384, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址1479', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12386, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址1131', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12387, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12388, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址767', 'order': 0, 'userId': 129462, 'visible': 1}], 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:48:00,039 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 新增收藏网址接口
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=5c8afc1cd8954801b05aa7ef72ffe48e', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=0234D2EC2FD194BD7044ADF022654C07;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址7722', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12390, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7722', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:48:00,207 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 编辑收藏网址
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=827753f67097400fa9738bbcca05ff58', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=0234D2EC2FD194BD7044ADF022654C07;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'id': '12390', 'name': '自动化编辑网址名称', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: [{'case_id': 'collect_addtool_01', 'dependent_data': [{'dependent_type': 'response', 'jsonpath': '$.data.id', 'replace_key': '$.data.id'}]}]
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12391, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:48:00,799 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=0c5f58acc8134f1eb956e2f28e59abff'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 21, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:48:01,055 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 输入错误的密码
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=db62d7b5e3a84d08b5a8f1e1e41e7342'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:48:01,297 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 登录密码为空
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=ed0f87a75c0d4d85b451608d3111a12d'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': 'None'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:48:01,548 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 输入非1开头的手机号码
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=92bc6c06664347b4833272d7b540234c'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '28800000001', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:48:01,788 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 输入手机号码小于11位
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=703cfda21070477b819fca0f25e4aad6'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '1880000000', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:48:02,041 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 输入手机号码大于于11位
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=39486bc8e7b340f6b125c3bd28240284'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000000', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:48:02,303 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 手机号码为空
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=cb9b38b1aa6a48e5a03f4c186b14f034'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': 'None', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:48:02,542 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 手机号码首位包含空格
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=cf6ce708eda8446b949eba0fc2880332'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': ' 18867507063 ', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:48:02,701 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常获取个人身份信息
+请求方式: GET
+请求头:   {'Content-Type': 'multipart/form-data;', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=0234D2EC2FD194BD7044ADF022654C07;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/user/lg/userinfo/json
+请求内容: None
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'coinInfo': {'coinCount': 21, 'level': 1, 'nickname': '', 'rank': '102829', 'userId': 129462, 'username': '1**00000001'}, 'userInfo': {'admin': False, 'chapterTops': [], 'coinCount': 21, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 00:48:02,719 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 14
+%(levelname)-8s2022-04-09 00:48:02,720 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 7.95 s
+%(levelname)-8s2022-04-09 00:48:02,720 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 100.00 %
+%(levelname)-8s2022-04-09 14:05:22,339 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=8a691122e4e74c8d8fa2ed60f76e1c5a'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 21, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 14:05:23,831 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常获取个人身份信息
+请求方式: GET
+请求头:   {'Content-Type': 'multipart/form-data;', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=14646B29080E506C276592CF4A3640E9;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/user/lg/userinfo/json
+请求内容: None
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'coinInfo': {'coinCount': 21, 'level': 1, 'nickname': '', 'rank': '102829', 'userId': 129462, 'username': '1**00000001'}, 'userInfo': {'admin': False, 'chapterTops': [], 'coinCount': 21, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 14:05:23,836 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 1
+%(levelname)-8s2022-04-09 14:05:23,838 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 3.19 s
+%(levelname)-8s2022-04-09 14:05:23,838 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 100.00 %
+%(levelname)-8s2022-04-09 14:05:48,378 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=f4e8afd6db3b425f855f2388d054c591'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 21, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 14:05:49,845 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 0
+%(levelname)-8s2022-04-09 14:05:49,847 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 2.90 s
+%(levelname)-8s2022-04-09 14:05:49,847 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 0.00 %
+%(levelname)-8s2022-04-09 14:06:53,924 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=110cd00f6cb74cc0aa2003cd6d7030aa'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 21, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 14:06:55,406 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常获取个人身份信息
+请求方式: GET
+请求头:   {'Content-Type': 'multipart/form-data;', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=5F85A2DAE033D22028B88D7289EE6240;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/user/lg/userinfo/json
+请求内容: None
+依赖测试用例: None
+接口响应内容: {'data': {'coinInfo': {'coinCount': 21, 'level': 1, 'nickname': '', 'rank': '102829', 'userId': 129462, 'username': '1**00000001'}, 'userInfo': {'admin': False, 'chapterTops': [], 'coinCount': 21, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 14:06:55,413 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 1
+%(levelname)-8s2022-04-09 14:06:55,432 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 2.96 s
+%(levelname)-8s2022-04-09 14:06:55,432 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 100.00 %
+%(levelname)-8s2022-04-09 14:08:08,009 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=156f1b08963b498dbf5f2c1bd5c2fce1'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 21, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 14:08:09,512 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 0
+%(levelname)-8s2022-04-09 14:08:09,516 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 3.01 s
+%(levelname)-8s2022-04-09 14:08:09,516 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 0.00 %
+%(levelname)-8s2022-04-09 14:10:44,099 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=8ace9e2e59a8476c9d225da63acb9e79'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 21, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 14:10:45,592 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 0
+%(levelname)-8s2022-04-09 14:10:45,594 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 3.00 s
+%(levelname)-8s2022-04-09 14:10:45,595 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 0.00 %
+%(levelname)-8s2022-04-09 14:11:20,433 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=42cabaeabe6947d5a705174a5eaaaabd'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 21, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 14:11:21,935 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 0
+%(levelname)-8s2022-04-09 14:11:21,937 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 2.99 s
+%(levelname)-8s2022-04-09 14:11:21,937 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 0.00 %
+%(levelname)-8s2022-04-09 14:12:11,550 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=7acad3058bfa4592a6d7db860fbbb1c9'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 21, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 14:12:13,003 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常获取个人身份信息
+请求方式: GET
+请求头:   {'Content-Type': 'multipart/form-data;', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=08046862DC567A8A0D7F5F26CD0986D9;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/user/lg/userinfo/json
+请求内容: None
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'coinInfo': {'coinCount': 21, 'level': 1, 'nickname': '', 'rank': '102829', 'userId': 129462, 'username': '1**00000001'}, 'userInfo': {'admin': False, 'chapterTops': [], 'coinCount': 21, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-09 14:12:13,009 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 1
+%(levelname)-8s2022-04-09 14:12:13,011 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 3.04 s
+%(levelname)-8s2022-04-09 14:12:13,011 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 100.00 %
+%(levelname)-8s2022-04-10 10:47:08,566 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=17a7f81231184cb8b7cfbc9f17bef3c6'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:47:11,649 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常获取个人身份信息
+请求方式: GET
+请求头:   {'Content-Type': 'multipart/form-data;', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=EA00092B191EBB02CE71D29A14E400EF;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/user/lg/userinfo/json
+请求内容: None
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'coinInfo': {'coinCount': 33, 'level': 1, 'nickname': '', 'rank': '29684', 'userId': 129462, 'username': '1**00000001'}, 'userInfo': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:47:11,658 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 1
+%(levelname)-8s2022-04-10 10:47:11,659 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 4.65 s
+%(levelname)-8s2022-04-10 10:47:11,660 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 100.00 %
+%(levelname)-8s2022-04-10 10:47:30,481 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=364517b05b154a0298653202112002ff'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:47:33,543 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常获取个人身份信息
+请求方式: GET
+请求头:   {'Content-Type': 'multipart/form-data;', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=915BF3CD181B0D899DA65478655C8268;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/user/lg/userinfo/json
+请求内容: None
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'coinInfo': {'coinCount': 33, 'level': 1, 'nickname': '', 'rank': '29684', 'userId': 129462, 'username': '1**00000001'}, 'userInfo': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:47:33,548 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 1
+%(levelname)-8s2022-04-10 10:47:33,549 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 4.46 s
+%(levelname)-8s2022-04-10 10:47:33,549 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 100.00 %
+%(levelname)-8s2022-04-10 10:49:01,408 C:\work\Study\pytest-auto-api2\logs\info.log:run.py:22 
+                             _    _         _      _____         _
+              __ _ _ __ (_)  / \  _   _| |_ __|_   _|__  ___| |_
+             / _` | '_ \| | / _ \| | | | __/ _ \| |/ _ \/ __| __|
+            | (_| | |_) | |/ ___ \ |_| | || (_) | |  __/\__ \ |_
+             \__,_| .__/|_/_/   \_\__,_|\__\___/|_|\___||___/\__|
+                  |_|
+                  开始执行余少琪的框架项目...
+                
+%(levelname)-8s2022-04-10 10:49:04,583 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=9cbc93c5bfbc4446ab463d0ae6ef6c85'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:49:08,119 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 新增收藏网址接口
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=29df79be74a74445a0cff358e1ddcaa5', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=5265FF6F69676B2917D3F30DE2D4039D;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址9195', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12420, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址9195', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:49:08,309 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 未登录状态下新增收藏网址
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=2cbd44d3eb864bdba7846809c6120ad9'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址8770', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'errorCode': -1001, 'errorMsg': '请先登录！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:49:08,734 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 新增收藏网址接口
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=f4a69e89b6b14d05a30290c38d4458c2', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=5265FF6F69676B2917D3F30DE2D4039D;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址7983', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12421, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7983', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:49:08,893 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常删除收藏网站
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=9400fc6828aa4a5997f9db5342b499c8', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=5265FF6F69676B2917D3F30DE2D4039D;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/deletetool/json
+请求内容: {'id': '12421'}
+依赖测试用例: [{'case_id': 'collect_addtool_01', 'dependent_data': [{'dependent_type': 'response', 'jsonpath': '$.data.id', 'replace_key': '$.data.id'}]}]
+接口响应内容: {'data': None, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:49:09,123 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 查看收藏网址列表接口
+请求方式: GET
+请求头:   {'Content-Type': 'multipart/form-data;', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=5265FF6F69676B2917D3F30DE2D4039D;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/usertools/json
+请求内容: None
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': [{'desc': '', 'icon': '', 'id': 12349, 'link': '111', 'name': '11', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12350, 'link': 'http://www.baidu.com', 'name': '网站测试', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12351, 'link': '1', 'name': '1', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12352, 'link': '222', 'name': '11', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12353, 'link': '222', 'name': '11', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12354, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址[4, 3, 8, 9]', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12355, 'link': '222', 'name': '', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12356, 'link': '222', 'name': '', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12357, 'link': '222', 'name': '自动化', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12358, 'link': '11', 'name': '编辑的网址', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12359, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7017', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12360, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址6', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12361, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址335', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12362, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址3559', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12364, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4823', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12366, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址3770', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12367, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12368, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4496', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12370, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址6623', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12371, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12372, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址99', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12374, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4035', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12375, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12376, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址9718', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12378, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4486', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12379, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12380, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址9547', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12382, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址8698', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12383, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12384, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址1479', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12386, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址1131', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12387, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12388, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址767', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12390, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7722', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12391, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12394, 'link': '11', 'name': '111', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12395, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址8084', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12397, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址2194', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12398, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12399, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址5458', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12401, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4709', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12402, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12403, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址6393', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12405, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址6658', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12406, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12407, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址5673', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12409, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址5201', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12410, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12412, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7486', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12414, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7345', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12415, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12416, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址3654', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12418, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址717', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12419, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12420, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址9195', 'order': 0, 'userId': 129462, 'visible': 1}], 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:49:09,292 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 新增收藏网址接口
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=a00a94f7875a4193a2c7f4f63803f68e', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=5265FF6F69676B2917D3F30DE2D4039D;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址7983', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12422, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7983', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:49:09,488 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 编辑收藏网址
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=4384fdc0b1f74ca3a25d6d2adb837ac9', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=5265FF6F69676B2917D3F30DE2D4039D;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'id': '12422', 'name': '自动化编辑网址名称', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: [{'case_id': 'collect_addtool_01', 'dependent_data': [{'dependent_type': 'response', 'jsonpath': '$.data.id', 'replace_key': '$.data.id'}]}]
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12423, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:49:10,111 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=b088ee3f8b074eb9b9bb939ed5089abf'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:49:10,372 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 输入错误的密码
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=40df8e867cd54cba936da6f7946aaf39'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:49:10,614 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 登录密码为空
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=2357e0dfcb30461a83cb1750835e75b0'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': 'None'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:49:10,871 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 输入非1开头的手机号码
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=68f0f0a5aab541b192d8003f11bfa6e0'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '28800000001', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:49:11,141 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 输入手机号码小于11位
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=391ebe1e629d4578a7acdb5dfb4cb57c'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '1880000000', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:49:11,427 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 输入手机号码大于于11位
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=3ecd3114a0214c2eae827a5ed60ce6f3'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000000', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:49:11,689 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 手机号码为空
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=bcea3784735944a5a04c11665fe45f96'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': 'None', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:49:11,958 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 手机号码首位包含空格
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=3eae6866b9694d4b9c73ff18ff2587d4'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': ' 18867507063 ', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:49:12,169 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常获取个人身份信息
+请求方式: GET
+请求头:   {'Content-Type': 'multipart/form-data;', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=5265FF6F69676B2917D3F30DE2D4039D;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/user/lg/userinfo/json
+请求内容: None
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'coinInfo': {'coinCount': 33, 'level': 1, 'nickname': '', 'rank': '29684', 'userId': 129462, 'username': '1**00000001'}, 'userInfo': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:49:12,193 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 13
+%(levelname)-8s2022-04-10 10:49:12,196 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 10.49 s
+%(levelname)-8s2022-04-10 10:49:12,196 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 93.33 %
+%(levelname)-8s2022-04-10 10:51:51,669 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=297b6c71904247a8965611d46423c958'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:51:54,775 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 新增收藏网址接口
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=addd0dd42db842438bbb06da69970eba', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=EB39601E200E3E64970BC1579C01E798;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址9302', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12424, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址9302', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:51:54,960 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 未登录状态下新增收藏网址
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=2977f47f27fa4f26a7602c4c189c5862'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址8113', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'errorCode': -1001, 'errorMsg': '请先登录！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:51:55,133 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 1
+%(levelname)-8s2022-04-10 10:51:55,134 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 5.11 s
+%(levelname)-8s2022-04-10 10:51:55,134 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 50.00 %
+%(levelname)-8s2022-04-10 10:53:16,544 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=786ee9983dfa4e2eb9707b1c9e10be64'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:53:26,111 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 新增收藏网址接口
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=81485baccc494afd810d0dee60c0a583', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=6D7860CBF545EE2CDDA29AA975046B85;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址4272', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12425, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4272', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:53:54,416 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 未登录状态下新增收藏网址
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=325cb881a45f4d6ebe303278d6e8b29d'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址728', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'errorCode': -1001, 'errorMsg': '请先登录！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:55:09,593 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=261375b94ebf4a7c9ef98805e2d37305'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:55:12,663 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 新增收藏网址接口
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=5b3253913ad2402d8067d375ef130edc', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=8F745075668001DCDA3D1C64C11DE61E;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址5654', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12426, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址5654', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:55:12,828 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 未登录状态下新增收藏网址
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=ed16a0ce60d3446c8a00dde4f77bcae9'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址445', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'errorCode': -1001, 'errorMsg': '请先登录！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:55:12,999 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 1
+%(levelname)-8s2022-04-10 10:55:13,000 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 5.01 s
+%(levelname)-8s2022-04-10 10:55:13,001 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 50.00 %
+%(levelname)-8s2022-04-10 10:55:57,592 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=52b565600c834d97a28b7c4c09cf92e4'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:56:02,409 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 新增收藏网址接口
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=2220b653b5fb4be1b5db60ba3e2ecd7d', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=9EFEB76ACD13BFD5D0D430F6B4FBE1E0;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址9137', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12427, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址9137', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:57:59,168 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 未登录状态下新增收藏网址
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=620ed095095d4500b1e91d2eefe61cc7'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址7193', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'errorCode': -1001, 'errorMsg': '请先登录！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:58:27,949 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=be49cfdbdc7d45279de30a8ea161f04c'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:58:30,987 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 新增收藏网址接口
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=33f53b9f40b547a8a15c1bbdf276e2c2', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=C0C5F49A55CE2258BD0253860720C66E;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址5640', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12429, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址5640', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:58:31,143 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 未登录状态下新增收藏网址
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=4fdc9ee2f9c14b30be253ff1b6f46cf9'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址7584', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'errorCode': -1001, 'errorMsg': '请先登录！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:58:31,311 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 1
+%(levelname)-8s2022-04-10 10:58:31,312 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 5.03 s
+%(levelname)-8s2022-04-10 10:58:31,312 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 50.00 %
+%(levelname)-8s2022-04-10 10:59:44,098 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=af36db5e4d334129af87654bee2c225c'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 10:59:48,928 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 未登录状态下新增收藏网址
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=39906fe6259948cb991470b9699333bf'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址5264', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'errorCode': -1001, 'errorMsg': '请先登录！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:00:02,093 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 0
+%(levelname)-8s2022-04-10 11:00:02,094 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 20.18 s
+%(levelname)-8s2022-04-10 11:00:02,095 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 0.00 %
+%(levelname)-8s2022-04-10 11:00:08,328 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=10f1e426b13c44f1949649ff353177a6'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:00:12,210 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 未登录状态下新增收藏网址
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=1e11be1cc00e4a97b607bdd4685adf95'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址6955', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'errorCode': -1001, 'errorMsg': '请先登录！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:00:12,391 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 0
+%(levelname)-8s2022-04-10 11:00:12,398 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 5.71 s
+%(levelname)-8s2022-04-10 11:00:12,398 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 0.00 %
+%(levelname)-8s2022-04-10 11:00:40,610 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=b369b1663433464386f5038258c85023'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:00:45,352 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 未登录状态下新增收藏网址
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=b05f97cb3f184caabc0cd374a05453be'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址6903', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'errorCode': -1001, 'errorMsg': '请先登录！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:02:42,421 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=fd16f77a91d44b62855c8bd5b834703b'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:02:45,397 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 未登录状态下新增收藏网址
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=7d2080eb351244959676ecb604bae7c0'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址9841', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'errorCode': -1001, 'errorMsg': '请先登录！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:02:45,562 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 0
+%(levelname)-8s2022-04-10 11:02:45,564 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 4.67 s
+%(levelname)-8s2022-04-10 11:02:45,564 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 0.00 %
+%(levelname)-8s2022-04-10 11:03:50,174 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=bb707bb766fa4fdf935398a608ccf9f3'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:03:53,174 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 未登录状态下新增收藏网址
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=8365df80add646f083045c9884926c18'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址1608', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'errorCode': -1001, 'errorMsg': '请先登录！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:03:53,354 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 0
+%(levelname)-8s2022-04-10 11:03:53,355 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 4.76 s
+%(levelname)-8s2022-04-10 11:03:53,356 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 0.00 %
+%(levelname)-8s2022-04-10 11:04:31,862 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=a9efa9da93414782845f819f1f91338e'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:04:34,750 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 未登录状态下新增收藏网址
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=52d1a766a57247aeae9bc11088460e1a'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址2284', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'errorCode': -1001, 'errorMsg': '请先登录！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:04:34,756 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 1
+%(levelname)-8s2022-04-10 11:04:34,757 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 4.39 s
+%(levelname)-8s2022-04-10 11:04:34,757 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 100.00 %
+%(levelname)-8s2022-04-10 11:04:48,669 C:\work\Study\pytest-auto-api2\logs\info.log:run.py:22 
+                             _    _         _      _____         _
+              __ _ _ __ (_)  / \  _   _| |_ __|_   _|__  ___| |_
+             / _` | '_ \| | / _ \| | | | __/ _ \| |/ _ \/ __| __|
+            | (_| | |_) | |/ ___ \ |_| | || (_) | |  __/\__ \ |_
+             \__,_| .__/|_/_/   \_\__,_|\__\___/|_|\___||___/\__|
+                  |_|
+                  开始执行余少琪的框架项目...
+                
+%(levelname)-8s2022-04-10 11:04:51,566 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=dca9d4dc39d74707acf9e76e34bf1df8'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:04:53,038 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 未登录状态下新增收藏网址
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=d89e5089c2084b3d9cf9a213ff03e85a'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址8622', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'errorCode': -1001, 'errorMsg': '请先登录！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:04:53,436 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 查看收藏网址列表接口
+请求方式: GET
+请求头:   {'Content-Type': 'multipart/form-data;', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=0DEE268AFC53D7A72AACF46FCF6F6056;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/usertools/json
+请求内容: None
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': [{'desc': '', 'icon': '', 'id': 12349, 'link': '111', 'name': '11', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12350, 'link': 'http://www.baidu.com', 'name': '网站测试', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12351, 'link': '1', 'name': '1', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12352, 'link': '222', 'name': '11', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12353, 'link': '222', 'name': '11', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12354, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址[4, 3, 8, 9]', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12355, 'link': '222', 'name': '', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12356, 'link': '222', 'name': '', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12357, 'link': '222', 'name': '自动化', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12358, 'link': '11', 'name': '编辑的网址', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12359, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7017', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12360, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址6', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12361, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址335', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12362, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址3559', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12364, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4823', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12366, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址3770', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12367, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12368, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4496', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12370, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址6623', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12371, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12372, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址99', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12374, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4035', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12375, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12376, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址9718', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12378, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4486', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12379, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12380, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址9547', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12382, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址8698', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12383, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12384, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址1479', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12386, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址1131', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12387, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12388, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址767', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12390, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7722', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12391, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12394, 'link': '11', 'name': '111', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12395, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址8084', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12397, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址2194', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12398, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12399, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址5458', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12401, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4709', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12402, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12403, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址6393', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12405, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址6658', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12406, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12407, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址5673', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12409, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址5201', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12410, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12412, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7486', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12414, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7345', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12415, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12416, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址3654', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12418, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址717', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12419, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12420, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址9195', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12422, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7983', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12423, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12424, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址9302', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12425, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4272', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12426, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址5654', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12427, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址9137', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12429, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址5640', 'order': 0, 'userId': 129462, 'visible': 1}], 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:04:54,192 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=4522b8f1e82f44d4badb7337a3025355'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:04:54,463 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 输入错误的密码
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=8d062482fcf540ddb0d51da6bc6320db'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:04:54,706 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 登录密码为空
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=07239f266a594c52b8961765352a2cc5'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': 'None'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:04:54,953 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 输入非1开头的手机号码
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=bc63eebade8e46babb62e110177d6aa7'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '28800000001', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:04:55,211 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 输入手机号码小于11位
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=5a67b2db938c4a379f249a7a46ebac69'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '1880000000', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:04:55,473 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 输入手机号码大于于11位
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=9cf895dcfa0e44b68e4cb2ba401f755f'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000000', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:04:55,695 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 手机号码为空
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=538fd4e326144b42b537e721a3419b8c'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': 'None', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:04:55,928 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 手机号码首位包含空格
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=024b229b0665431d8038374cfc841a18'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': ' 18867507063 ', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:04:56,092 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常获取个人身份信息
+请求方式: GET
+请求头:   {'Content-Type': 'multipart/form-data;', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=0DEE268AFC53D7A72AACF46FCF6F6056;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/user/lg/userinfo/json
+请求内容: None
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'coinInfo': {'coinCount': 33, 'level': 1, 'nickname': '', 'rank': '29684', 'userId': 129462, 'username': '1**00000001'}, 'userInfo': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:04:56,114 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 11
+%(levelname)-8s2022-04-10 11:04:56,115 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 7.20 s
+%(levelname)-8s2022-04-10 11:04:56,116 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 85.71 %
+%(levelname)-8s2022-04-10 11:05:21,566 C:\work\Study\pytest-auto-api2\logs\info.log:run.py:22 
+                             _    _         _      _____         _
+              __ _ _ __ (_)  / \  _   _| |_ __|_   _|__  ___| |_
+             / _` | '_ \| | / _ \| | | | __/ _ \| |/ _ \/ __| __|
+            | (_| | |_) | |/ ___ \ |_| | || (_) | |  __/\__ \ |_
+             \__,_| .__/|_/_/   \_\__,_|\__\___/|_|\___||___/\__|
+                  |_|
+                  开始执行余少琪的框架项目...
+                
+%(levelname)-8s2022-04-10 11:05:24,715 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=b38a74385ed34f72922a2eadd154a9d9'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:05:26,285 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 新增收藏网址接口
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=536c715adb9048a3b0eae8c2e7e2bd70', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=6845A2BF57FF1BC89CA9D422F6AF2982;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址7242', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12433, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7242', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:05:26,444 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 未登录状态下新增收藏网址
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=75bfe38d684a4ceea7503c291d66095e'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址7887', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'errorCode': -1001, 'errorMsg': '请先登录！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:05:26,650 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 新增收藏网址接口
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=35ffa9405add4213ba80a455e899ccfc', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=6845A2BF57FF1BC89CA9D422F6AF2982;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址5303', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12434, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址5303', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:05:26,808 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常删除收藏网站
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=38f8ca7d41b3497a9ab4de6d11ce33a5', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=6845A2BF57FF1BC89CA9D422F6AF2982;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/deletetool/json
+请求内容: {'id': '12434'}
+依赖测试用例: [{'case_id': 'collect_addtool_01', 'dependent_data': [{'dependent_type': 'response', 'jsonpath': '$.data.id', 'replace_key': '$.data.id'}]}]
+接口响应内容: {'data': None, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:05:27,017 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 查看收藏网址列表接口
+请求方式: GET
+请求头:   {'Content-Type': 'multipart/form-data;', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=6845A2BF57FF1BC89CA9D422F6AF2982;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/usertools/json
+请求内容: None
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': [{'desc': '', 'icon': '', 'id': 12349, 'link': '111', 'name': '11', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12350, 'link': 'http://www.baidu.com', 'name': '网站测试', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12351, 'link': '1', 'name': '1', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12352, 'link': '222', 'name': '11', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12353, 'link': '222', 'name': '11', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12354, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址[4, 3, 8, 9]', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12355, 'link': '222', 'name': '', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12356, 'link': '222', 'name': '', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12357, 'link': '222', 'name': '自动化', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12358, 'link': '11', 'name': '编辑的网址', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12359, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7017', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12360, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址6', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12361, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址335', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12362, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址3559', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12364, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4823', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12366, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址3770', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12367, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12368, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4496', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12370, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址6623', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12371, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12372, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址99', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12374, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4035', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12375, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12376, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址9718', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12378, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4486', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12379, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12380, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址9547', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12382, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址8698', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12383, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12384, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址1479', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12386, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址1131', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12387, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12388, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址767', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12390, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7722', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12391, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12394, 'link': '11', 'name': '111', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12395, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址8084', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12397, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址2194', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12398, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12399, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址5458', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12401, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4709', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12402, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12403, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址6393', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12405, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址6658', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12406, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12407, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址5673', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12409, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址5201', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12410, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12412, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7486', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12414, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7345', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12415, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12416, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址3654', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12418, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址717', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12419, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12420, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址9195', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12422, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7983', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12423, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12424, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址9302', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12425, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址4272', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12426, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址5654', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12427, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址9137', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12429, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址5640', 'order': 0, 'userId': 129462, 'visible': 1}, {'desc': '', 'icon': '', 'id': 12433, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址7242', 'order': 0, 'userId': 129462, 'visible': 1}], 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:05:27,210 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 新增收藏网址接口
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=7e1de414a1ad41d0b8faab3961010054', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=6845A2BF57FF1BC89CA9D422F6AF2982;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'name': '自动化生成收藏网址5303', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12435, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化生成收藏网址5303', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:05:27,400 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 编辑收藏网址
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=5c98d6c79ffc4bc29b9f8c1bb615c8dd', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=6845A2BF57FF1BC89CA9D422F6AF2982;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求内容: {'id': '12435', 'name': '自动化编辑网址名称', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+依赖测试用例: [{'case_id': 'collect_addtool_01', 'dependent_data': [{'dependent_type': 'response', 'jsonpath': '$.data.id', 'replace_key': '$.data.id'}]}]
+接口响应内容: {'data': {'desc': '', 'icon': '', 'id': 12436, 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2', 'name': '自动化编辑网址名称', 'order': 0, 'userId': 129462, 'visible': 1}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:05:27,991 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常登录
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=cd6c04d2657b4880803381350b971fbc'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '123456'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:05:28,229 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 输入错误的密码
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=639e278de5ce4ac6a69098189725ca88'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:05:28,476 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 登录密码为空
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=e27d26b8e99a4946876f385eeb768eae'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000001', 'password': 'None'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:05:28,706 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 输入非1开头的手机号码
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=83b5ca33b17a414ab4b9250978963b2b'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '28800000001', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:05:28,961 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 输入手机号码小于11位
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=0d8424a909214b359c79ea483ed812d1'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '1880000000', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:05:29,207 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 输入手机号码大于于11位
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=63843bda23684736b635c4e85e4e1d54'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': '18800000000', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:05:29,466 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 手机号码为空
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=96f720f02bad44678434f0b759894e53'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': 'None', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:05:29,721 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 手机号码首位包含空格
+请求方式: POST
+请求头:   {'Content-Type': 'multipart/form-data; boundary=bf6bc9f5762f49b284aeb1c09b854a37'}
+请求路径: https://www.wanandroid.com/user/login
+请求内容: {'username': ' 18867507063 ', 'password': '12345'}
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': None, 'errorCode': -1, 'errorMsg': '账号密码不匹配！'}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:05:29,892 C:\work\Study\pytest-auto-api2\logs\info.log:logDecoratorl.py:36 
+=================================================================================
+测试标题: 正常获取个人身份信息
+请求方式: GET
+请求头:   {'Content-Type': 'multipart/form-data;', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=6845A2BF57FF1BC89CA9D422F6AF2982;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;'}
+请求路径: https://www.wanandroid.com/user/lg/userinfo/json
+请求内容: None
+依赖测试用例: 暂无依赖用例数据
+接口响应内容: {'data': {'coinInfo': {'coinCount': 33, 'level': 1, 'nickname': '', 'rank': '29684', 'userId': 129462, 'username': '1**00000001'}, 'userInfo': {'admin': False, 'chapterTops': [], 'coinCount': 33, 'collectIds': [], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}}, 'errorCode': 0, 'errorMsg': ''}
+数据库断言数据: {'sql': None}
+=================================================================================
+%(levelname)-8s2022-04-10 11:05:29,913 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:128 成功用例数: 14
+%(levelname)-8s2022-04-10 11:05:29,914 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:132 用例执行时长: 8.08 s
+%(levelname)-8s2022-04-10 11:05:29,915 C:\work\Study\pytest-auto-api2\logs\info.log:conftest.py:136 用例成功率: 100.00 %

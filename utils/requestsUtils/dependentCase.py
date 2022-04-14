@@ -89,7 +89,7 @@ class DependentCase:
                         # 判断依赖数据类型, 依赖 response 中的数据
                         if i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.RESPONSE.value:
                             res = RequestControl().http_request(cls.get_cache(_case_id))
-                            jsonpath_data = cls.jsonpath_data(res[0], _jsonpath)
+                            jsonpath_data = cls.jsonpath_data(res['response_data'], _jsonpath)
                             cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
                                             jsonpath_data=jsonpath_data, case_data=case_data)
 
@@ -103,7 +103,7 @@ class DependentCase:
                         # 判断依赖数据类型，依赖 sql中的数据
                         elif i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.SQL_DATA.value:
                             res = RequestControl().http_request(cls.get_cache(_case_id))
-                            jsonpath_data = cls.jsonpath_data(res[1], _jsonpath)
+                            jsonpath_data = cls.jsonpath_data(res['sql_data'], _jsonpath)
                             jsonpath_dates[_replace_key] = jsonpath_data[0]
                             cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
                                             jsonpath_data=jsonpath_data, case_data=case_data)

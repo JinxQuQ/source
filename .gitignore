@@ -4,6 +4,7 @@
 /.settings/
 /.vscode/
 /bin/
+/report/
 
 .classpath
 .project

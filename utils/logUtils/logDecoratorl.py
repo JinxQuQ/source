@@ -23,26 +23,26 @@ def log_decorator(switch: bool):
                 # 判断日志开关为开启状态
                 if switch:
                     if res is not None:
-                        _dependent_case = res[2]['dependence_case']
+                        _dependent_case = res['yaml_data']['dependence_case']
                         # 判断如果有依赖数据，则展示
                         if _dependent_case is True:
-                            _dependent_case = res[2]['dependence_case_data']
+                            _dependent_case = res['yaml_data']['dependence_case_data']
                         else:
                             _dependent_case = "暂无依赖用例数据"
 
-                        _is_run = res[2]['is_run']
+                        _is_run = res['yaml_data']['is_run']
                         # 判断正常打印的日志，控制台输出绿色
                         if _is_run is None or _is_run is True:
                             INFO.logger.info(
                                 f"\n=================================================================================\n"
-                                f"测试标题: {res[2]['detail']}\n"
-                                f"请求方式: {res[2]['method']}\n"
-                                f"请求头:   {res[3]}\n"
-                                f"请求路径: {res[2]['url']}\n"
-                                f"请求内容: {res[2]['data']}\n"
+                                f"测试标题: {res['yaml_data']['detail']}\n"
+                                f"请求方式: {res['yaml_data']['method']}\n"
+                                f"请求头:   {res['yaml_data']}\n"
+                                f"请求路径: {res['yaml_data']['url']}\n"
+                                f"请求内容: {res['yaml_data']['data']}\n"
                                 f"依赖测试用例: {_dependent_case}\n"
-                                f"接口响应内容: {res[0]}\n"
-                                f"数据库断言数据: {res[1]}\n"
+                                f"接口响应内容: {res['response_data']}\n"
+                                f"数据库断言数据: {res['sql_data']}\n"
                                 "================================================================================="
                             )
                         else:
@@ -50,14 +50,14 @@ def log_decorator(switch: bool):
                             WARNING.logger.warning(
                                 f"\n=================================================================================\n"
                                 "该条用例跳过执行.\n"
-                                f"测试标题: {res[2]['detail']}\n"
-                                f"请求方式: {res[2]['method']}\n"
-                                f"请求头:   {res[2]['headers']}\n"
-                                f"请求路径: {res[2]['url']}\n"
-                                f"请求内容: {res[2]['data']}\n"
+                                f"测试标题: {res['yaml_data']['detail']}\n"
+                                f"请求方式: {res['yaml_data']['method']}\n"
+                                f"请求头:   {res['yaml_data']['headers']}\n"
+                                f"请求路径: {res['yaml_data']['url']}\n"
+                                f"请求内容: {res['yaml_data']['data']}\n"
                                 f"依赖测试用例: {_dependent_case}\n"
-                                f"接口响应内容: {res[0]}\n"
-                                f"数据库断言数据: {res[1]}\n"
+                                f"接口响应内容: {res['response_data']}\n"
+                                f"数据库断言数据: {res['sql_data']}\n"
                                 "================================================================================="
                             )
                     return res

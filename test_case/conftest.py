@@ -68,9 +68,9 @@ def work_login_init():
     login_yaml = CaseData(ConfigHandler.data_path + 'Login/login.yaml').case_process()[0]
     res = RequestControl().http_request(login_yaml)
     # 判断登录接口如果没有跳过
-    if res[0] is not False:
+    if res['response_data'] is not False:
         # 处理cookie格式
-        response_cookie = res[4]
+        response_cookie = res['cookie']
         cookies = ''
         for k, v in response_cookie.items():
             _cookie = k + "=" + v + ";"

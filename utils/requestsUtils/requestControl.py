@@ -25,14 +25,18 @@ class RequestControl:
     @classmethod
     def _check_params(cls, response, yaml_data, headers, cookie) -> Any:
         """ 抽离出通用模块，判断 http_request 方法中的一些数据校验 """
+        _res_time = response.elapsed.total_seconds()
         # 判断响应码不等于200时，打印文本格式信息
         if response.status_code != 200:
-            return response.text, {"sql": None}, yaml_data
+            return {"response_data": response.text, "sql_data": {"sql": None},
+                    "yaml_data": yaml_data, "res_time": _res_time}
             # 判断 sql 不是空的话，获取数据库的数据，并且返回
         if sql_switch() and yaml_data['sql'] is not None:
             sql_data = MysqlDB().assert_execution(sql=yaml_data['sql'], resp=response.json())
-            return response.json(), sql_data, yaml_data, headers, cookie
-        return response.json(), {"sql": None}, yaml_data, headers, cookie
+            return {"response_data": response.json(), "sql_data": sql_data, "yaml_data": yaml_data,
+                    "headers": headers, "cookie": cookie, "res_time": _res_time}
+        return {"response_data": response.json(), "sql_data": {"sql": None}, "yaml_data": yaml_data,
+                "headers": headers, "cookie": cookie, "res_time": _res_time}
 
     @classmethod
     def case_token(cls, header) -> None:
@@ -115,7 +119,7 @@ class RequestControl:
         return yaml_data, multipart
 
     @log_decorator(True)
-    @execution_duration(3000)
+    @execution_duration(100)
     def http_request(self, yaml_data, **kwargs):
         """
         请求封装
@@ -167,13 +171,15 @@ class RequestControl:
             allure_step("请求数据: ", _data)
             allure_step("依赖数据: ", _dependent_data)
             allure_step("预期数据: ", _assert)
-            allure_step_no(f"响应耗时(s): {res.elapsed.total_seconds()}")
+            _res_time = res.elapsed.total_seconds()
+            allure_step_no(f"响应耗时(s): {_res_time}")
             if res.status_code != 200:
                 allure_step("响应结果: ", res.text)
             else:
                 allure_step("响应结果: ", res.json())
             cookie = res.cookies.get_dict()
+
             return self._check_params(res, yaml_data, _headers, cookie)
         else:
-            # 用例跳过执行的话，所有数据都返回 False
-            return False, False, yaml_data
+            # 用例跳过执行的话，响应数据和sql数据为空
+            return {"response_data": False, "sql_data": False, "yaml_data": yaml_data, "res_time": 0.00}

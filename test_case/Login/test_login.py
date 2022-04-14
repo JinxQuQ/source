@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time   : 2022-04-10 10:46:09
-# @Author : 余少琪
+# @Time   : 2022-04-14 23:41:18
+# @Author : 七月
 
 
 import allure
@@ -28,7 +28,8 @@ class TestLogin:
         """
 
         res = RequestControl().http_request(in_data)
-        Assert(in_data['assert']).assert_equality(response_data=res[0], sql_data=res[1])
+        Assert(in_data['assert']).assert_equality(response_data=res['response_data'], 
+                                                  sql_data=res['sql_data'])
 
 
 if __name__ == '__main__':

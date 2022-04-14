@@ -7,7 +7,6 @@ import re
 import datetime
 import jsonpath
 from faker import Faker
-import random
 from utils.logUtils.logControl import ERROR
 
 
@@ -124,7 +123,3 @@ def sql_regular(value, res=None):
         value = sql_json_list(value, res)
 
     return value
-
-
-if __name__ == '__main__':
-    pass

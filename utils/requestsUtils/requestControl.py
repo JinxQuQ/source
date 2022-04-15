@@ -119,7 +119,7 @@ class RequestControl:
         return yaml_data, multipart
 
     @log_decorator(True)
-    @execution_duration(100)
+    @execution_duration(3000)
     def http_request(self, yaml_data, **kwargs):
         """
         请求封装

@@ -7,7 +7,7 @@ import os
 import pytest
 import time
 import allure
-from utils.requestsUtils.requestControl import RequestControl
+import requests
 from config.setting import ConfigHandler
 from utils.readFilesUtils.get_yaml_data_analysis import CaseData
 from utils.cacheUtils.cacheControl import Cache
@@ -58,28 +58,30 @@ def write_case_process():
     Cache('case_process').set_caches(case_data)
 
 
-@pytest.fixture(scope="session", autouse=True)
-@pytest.mark.skip()
-def work_login_init():
-    """
-    获取平台端的token信息
-    :return:
-    """
-    login_yaml = CaseData(ConfigHandler.data_path + 'Login/login.yaml').case_process()[0]
-    res = RequestControl().http_request(login_yaml)
-    # 判断登录接口如果没有跳过
-    if res['response_data'] is not False:
-        # 处理cookie格式
-        response_cookie = res['cookie']
-        cookies = ''
-        for k, v in response_cookie.items():
-            _cookie = k + "=" + v + ";"
-            cookies += _cookie
-        # 将登录接口中的cookie写入缓存中
-        Cache('login_cookie').set_caches(cookies)
+# @pytest.fixture(scope="session", autouse=True)
+# def work_login_init():
+#     """
+#     获取登录的cookie
+#     :return:
+#     """
+#     url = "https://www.wanandroid.com/user/login"
+#     data = {
+#         "username": 18800000001,
+#         "password": 123456
+#     }
+#     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+#     # 请求登录接口
+#     res = requests.post(url=url, data=data, verify=True, headers=headers)
+#     response_cookie = res.cookies
+#
+#     cookies = ''
+#     for k, v in response_cookie.items():
+#         _cookie = k + "=" + v + ";"
+#         # 拿到登录的cookie内容，cookie拿到的是字典类型，转换成对应的格式
+#         cookies += _cookie
+#         # 将登录接口中的cookie写入缓存中，其中login_cookie是缓存名称
+#         Cache('login_cookie').set_caches(cookies)
 
-    else:
-        WARNING.logger.warning("登录用例设置的是不执行，无法获取到token信息")
 
 
 def pytest_collection_modifyitems(items):

@@ -172,7 +172,7 @@ class CaseData:
             _dependence_case_data = case_data['dependence_case_data']
             return _dependence_case_data
         except KeyError:
-            raise KeyError(f"用例中未找到 dependence_case. 用例ID: {case_id}")
+            raise KeyError(f"用例中未找到 dependence_case_data. 用例ID: {case_id}")
 
     @classmethod
     def get_case_dates(cls, case_id: str, case_data: dict) -> dict:
@@ -216,3 +216,8 @@ class CaseData:
                 return None
         except KeyError:
             raise KeyError(f"用例中未找到 sql 参数. 用例ID: {case_id}")
+
+
+if __name__ == '__main__':
+    a= CaseData(r'C:\Users\hzxy\Desktop\pytest-auto-api2\data\Collect\collect_delete_tool.yaml').case_process()
+    print(a)

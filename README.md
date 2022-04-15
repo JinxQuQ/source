@@ -44,7 +44,7 @@
 
 加微信的朋友，需备注是从Gitee上看到的加的好友，加上之后，会将你们拉入一个自动化测试微信交流群
 
-![img.png](image/img.png)
+![img.png](image/wechat.png)
 
 ## 目录结构
 
@@ -144,7 +144,13 @@
 
 ## 安装教程
 
-输入如下命令，安装本框架的所有第三方库依赖
+首先，执行本框架之后，需要搭建好 python、jdk、 allure环境
+搭建python教程：[http://c.biancheng.net/view/4161.html](http://c.biancheng.net/view/4161.html)
+搭建jdk环境：[https://www.cnblogs.com/zll-wyf/p/15095664.html](https://www.cnblogs.com/zll-wyf/p/15095664.html)
+安装allure：[https://blog.csdn.net/m0_49225959/article/details/117194318](https://blog.csdn.net/m0_49225959/article/details/117194318)
+
+
+如上环境如都搭建好，则安装本框架的所有第三方库依赖，执行如下命令
 
     pip install -r requirements.txt
 
@@ -153,13 +159,21 @@
 这里非常感谢一位安卓的朋友，给我推荐了开源的接口文件，框架中会针对开源接口中的登录、个人信息、收藏（新增、查看、修改、删除）等功能，编写结果自动化案例
 下方是接口文档地址，大家可以自行查看（因为开源的接口，里面有些逻辑性的功能，如修改被删除的网址接口并没有过多的做判断，
 因此用例中只写了一些基础的场景，仅供大家参考。）
-[https://wanandroid.com/blog/show/](https://wanandroid.com/blog/show/)
+[https://wanandroid.com/blog/show/2](https://wanandroid.com/blog/show/2)
 
 ## 如何创建用例
 
+### 创建用例步骤
+1、在data文件夹下方创建相关的yaml用例
+2、写完之后，需要执行 utils\readFilesUtils\caseAutomaticControl.py 这个文件，生成自动化代码
+3、执行caseAutomaticControl.py文件之后，会发现，在test_case层新增该条用例的对应代码，可直接执行该用例调试
+4、当所有接口都编写好之后，可以直接运行run.py主程序，执行所有自动化接口
+
+下面我们来看一下，如何创建用例
+
 ### 用例中相关字段的介绍
 
-![img.png](image/case_datas.png)
+![img.png](image/case_data.png)
 
 上方截图，就是一个用例中需要维护的相关字段，下面我会对每个字段的作用，做出解释。
 
@@ -172,89 +186,89 @@
 ![img.png](image/conf.png)
 
 域名配置好之后，我们来编写测试用例，在 data 文件下面，创建一个名称为
-spu_apply_list.yaml 的用例文件，内容如下
+collect_tool_list.yaml 的用例文件，请求/lg/collect/usertools/json这个收藏网址列表接口，所有接口的详细信息，可以在接口文档中查看，下方不在做赘述
+
+接口文档：[https://wanandroid.com/blog/show/2](https://wanandroid.com/blog/show/2)
 
     # 公共参数
     case_common:
-      allureEpic: 电商平台端
-      allureFeature: 审核中心
-      allureStory: 商品审核列表
+      allureEpic: 开发平台接口
+      allureFeature: 收藏模块
+      allureStory: 收藏网址列表接口
     
-    
-    spu_apply_list_01:
-      host: ${{host}}
-      url: /api/v1/work/spu/approval/spuList
-      method: GET
-      detail: 查看商品审核列表
-      headers:
-        Content-Type: application/json;charset=UTF-8
-        token: work_login_init
-      # 请求的数据，是 params 还是 json、或者file
-      requestType: params
-      # 是否执行，空或者 true 都会执行
-      is_run: False
-      data:
-        spuType: 1
-        pageNum: 1
-        pageSize: 10
+    collect_tool_list_01:
+        host: ${{host}}
+        url: /lg/collect/usertools/json
+        method: GET
+        detail: 查看收藏网址列表接口
+        headers:
+          Content-Type: multipart/form-data;
+          # 这里cookie的值，写的是存入缓存的名称
+          cookie: login_cookie
+        # 请求的数据，是 params 还是 json、或者file、date
+        requestType: date
+        # 是否执行，空或者 true 都会执行
+        is_run:
+        data:
+          pageNum: 1
+          pageSize: 10
         # 是否有依赖业务，为空或者false则表示没有
-      dependence_case:
-      # 依赖的数据
-      dependence_case_data:
-      assert:
-        code:
-          jsonpath: $.code
-          type: ==
-          value: 200
-          AssertType:
-      sql:
+        dependence_case: False
+            # 依赖的数据
+        dependence_case_data:
+        assert:
+          # 断言接口状态码
+          errorCode:
+            jsonpath: $.errorCode
+            type: ==
+            value: 0
+            AssertType:
+        sql:
 
-get请求我们 requestType 写的是params，这样发送请求时，我们会将请求参数拼接中url中，最终像服务端发送请求的地址格式会为：
+get请求我们 requestType 写的是 params ，这样发送请求时，我们会将请求参数拼接中url中，最终像服务端发送请求的地址格式会为：
 
-    ${{host}}/api/v1/work/spu/approval/spuList?supType=1&pageNum=1&pageSize=10
+    如: ${{host}}/lg/collect/usertools/json?pageNum=1&pageSize=10
 
 ### 如何发送post请求
 
     # 公共参数
     case_common:
-      allureEpic: 盲盒APP
-      allureFeature: 登录模块
-      allureStory: 获取登录验证码
+      allureEpic: 开发平台接口
+      allureFeature: 收藏模块
+      allureStory: 收藏网址接口
     
-    send_sms_code_01:
+    collect_addtool_01:
         host: ${{host}}
-        url: /mobile/sendSmsCode
+        url: /lg/collect/addtool/json
         method: POST
-        detail: 正常获取登录验证码
+        detail: 新增收藏网址接口
         headers:
-          appId: '23132'
-          masterAppId: masterAppId
-          Content-Type: application/json;charset=UTF-8
-        # 请求的数据，是 params 还是 json、或者file
-        requestType: json
+          Content-Type: multipart/form-data;
+          # 这里cookie的值，写的是存入缓存的名称
+          cookie: login_cookie
+        # 请求的数据，是 params 还是 json、或者file、date
+        requestType: date
         # 是否执行，空或者 true 都会执行
         is_run:
         data:
-          phoneNumber: "180xxxx9278"
-          # 是否有依赖业务，为空或者false则表示没有
+          name: 自动化生成收藏网址${{random_int}}
+          link: https://gitee.com/yu_xiao_qi/pytest-auto-api2
+        # 是否有依赖业务，为空或者false则表示没有
         dependence_case: False
             # 依赖的数据
         dependence_case_data:
         assert:
-          code:
-            jsonpath: $.code
+          # 断言接口状态码
+          errorCode:
+            jsonpath: $.errorCode
             type: ==
-            value: '00000'
+            value: 0
             AssertType:
-          success:
-            jsonpath: $.success
-            type: ==
-            value: true
-            AssertType:
-    
         sql:
-        
-这里post请求，我们需要请求的数据格式是json格式的，那么requestType 则填写为json格式。包括 PUT/DELETE/HEAD 请求的数据格式都是一样的，唯一不同的就是需要配置 reuqestType，如果需要请求的参数是json格式，则requestType我们就填写json，如果是url拼接的形式，我们就填写 params
+            
+这里post请求，我们需要请求的数据格式是json格式的，那么requestType 则填写为json格式。
+包括 PUT/DELETE/HEAD 请求的数据格式都是一样的，唯一不同的就是需要配置 reuqestType，
+如果需要请求的参数是json格式，则requestType我们就填写json，如果是url拼接的形式，我们就填写 params
 
 ### 如何测试上传文件接口
 
@@ -265,16 +279,37 @@ get请求我们 requestType 写的是params，这样发送请求时，我们会�
     # 是否执行，空或者 true 都会执行
     is_run:
     data:
-      file: 
-         # file 直接写文件名称
-         files:排入水体名.png
+      file:
+         file_name: 排入水体名.png
 
-      # 是否有依赖业务，为空或者false则表示没有
-    dependence_case: False
 
 在yaml文件中，我们需要注意两个地方，主要是用例中的requestType、和 filename 字段：
 1、requestType: 上传文件，我们需要更改成 file
-2、filename 参数名称: 上传文件，我们只需要填写files文件夹下的文件名称即可，程序在发送请求时，会去识别文件
+2、file: 如果是文件上传的话，就不需要要有file，然后我们上传的文件写在file下方
+3、file_name: 首先，这个file_name是我们公司接口定义的上传文件的参数，排入水体名.png 这个是我们放在Files这个文件夹下方的文件名称
+程序在执行的时候，会判断如果你的requestType为 file的时候，则会去执行file下方的参数，然后取到文件名称直接去执行用例
+
+### 上传文件接口，即需要上传文件，又需要上传其他参数
+    requestType: file
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      file:
+         file_name: 排入水体名.png
+      data:
+         is_upload: 0
+      params:
+         collect: false
+
+上方的这个案例，请求参数即上传了文件，又上传了其他参数
+
+1、file： 这里下方上传的是文件参数
+2、data： 这个data下方是该接口，除了文件参数，还需要上传其他的参数，这个参数会以json的方式传给服务端（如果没有其他参数，可以不用写这个）
+3、params： 这个是除了文件参数以外的，上传的其他参数，这个参数是拼接在url后方的
+
+![img.png](image/files_up.png)
+
+为了方便大家理解，上方将该参数，以postman的形式上传
 
 ### 多业务逻辑，如何编写测试用例
 
@@ -427,15 +462,68 @@ get请求我们 requestType 写的是params，这样发送请求时，我们会�
 
 首先，为了防止重复请求调用登录接口，pytest中的 conftest.py 提供了热加载机制，看上方截图中的代码，我们需要在 conftest.py 提前编写好登录的代码。
 
-![img.png](image/conftest.png)
 
 如上方代码所示，我们会先去读取login.yaml文件中的用例，然后执行获取到响应中的token，然后 编写 Cache('work_login_init').set_caches(token)，将token写入缓存中，其中 work_login_init 是缓存名称。
 
 编写好之后，我们会在 requestControl.py 文件中，读取缓存中的token，如果该条用例需要依赖token，则直接进行内容替换。
+![img.png](image/conftest_token.png)
 
-![img.png](image/token.png)
+    @pytest.fixture(scope="session", autouse=True)
+    def work_login_init():
+        """
+        获取登录的cookie
+        :return:
+        """
+        url = "https://www.wanandroid.com/user/login"
+        data = {
+            "username": 18800000001,
+            "password": 123456
+        }
+        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+        # 请求登录接口
+        res = requests.post(url=url, data=data, verify=True, headers=headers)
+        token = res['response']['token']
+        Cache("work_login_init").set_caches(token)
 
 这里在编写用例的时候，token 填写我们所编写的缓存名称即可。
+![img.png](image/token.png)
+
+### 用例中依赖cookie如何设计
+
+![img.png](image/cookie.png)
+
+首先我们在conftest.py中编写获取cookie的方法
+
+    @pytest.fixture(scope="session", autouse=True)
+    def work_login_init():
+        """
+        获取登录的cookie
+        :return:
+        """
+        url = "https://www.wanandroid.com/user/login"
+        data = {
+            "username": 18800000001,
+            "password": 123456
+        }
+        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+        # 请求登录接口
+        res = requests.post(url=url, data=data, verify=True, headers=headers)
+        response_cookie = res.cookies
+    
+        cookies = ''
+        for k, v in response_cookie.items():
+            _cookie = k + "=" + v + ";"
+            # 拿到登录的cookie内容，cookie拿到的是字典类型，转换成对应的格式
+            cookies += _cookie
+            # 将登录接口中的cookie写入缓存中，其中login_cookie是缓存名称
+            Cache('login_cookie').set_caches(cookies) 
+
+和token一样，我们如果用例的请求头中依赖cookie, cookie中的值，直接写我们存入缓存中的名称即可
+
+        headers:
+          Content-Type: multipart/form-data;
+          # 这里cookie的值，写的是存入缓存的名称
+          cookie: login_cookie
 
 ### 用例中如何生成随机数据
 

@@ -13,7 +13,7 @@ from Enums.yamlData_enum import YAMLDate
 class DependentCase:
 
     @classmethod
-    def get_cache(cls, case_id: str) -> str:
+    def get_cache(cls, case_id: str) -> dict:
         """
         获取缓存用例池中的数据，通过 case_id 提取
         :param case_id:
@@ -95,7 +95,8 @@ class DependentCase:
 
                         # 判断依赖数据类型, 依赖 request 中的数据
                         elif i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.REQUEST.value:
-                            jsonpath_data = cls.jsonpath_data(case_data, _jsonpath)
+                            data = cls.get_cache(_case_id)
+                            jsonpath_data = cls.jsonpath_data(data, _jsonpath)
                             jsonpath_dates[_replace_key] = jsonpath_data[0]
                             cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
                                             jsonpath_data=jsonpath_data, case_data=case_data)

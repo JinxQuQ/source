@@ -84,6 +84,17 @@ class Context:
             .get_yaml_data()['host']
         return host
 
+    @property
+    def app_host(self) -> str:
+        """获取app的host"""
+        from utils.readFilesUtils.yamlControl import GetYamlData
+        from config.setting import ConfigHandler
+
+        # 从配置文件conf.yaml 文件中获取到域名，然后使用正则替换
+        host = GetYamlData(ConfigHandler.config_path) \
+            .get_yaml_data()['app_host']
+        return host
+
 
 def regular(target):
     """

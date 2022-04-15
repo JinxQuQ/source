@@ -16,4 +16,6 @@ class DependentType(Enum):
     REQUEST = 'request'
     # 依赖sql中的数据
     SQL_DATA = 'sqlData'
+    # 依赖存入缓存中的数据
+    CACHE = "cache"
 

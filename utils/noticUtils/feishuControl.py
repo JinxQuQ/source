@@ -6,7 +6,7 @@ import time
 import urllib3
 import datetime
 
-from config.setting import ConfigHandler
+from common.setting import ConfigHandler
 from utils.readFilesUtils.yamlControl import GetYamlData
 from utils.otherUtils.allureDate.allure_report_data import CaseCount
 

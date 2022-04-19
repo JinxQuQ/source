@@ -4,7 +4,7 @@
 # @Author : 余少琪
 
 import json
-from config.setting import ConfigHandler
+from common.setting import ConfigHandler
 from utils.readFilesUtils.get_all_files_path import get_all_files
 
 

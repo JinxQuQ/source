@@ -4,7 +4,7 @@
 # @Author : 余少琪
 
 import os
-from config.setting import ConfigHandler
+from common.setting import ConfigHandler
 from utils import write_testcase_file
 from utils.readFilesUtils.yamlControl import GetYamlData
 from utils import get_os_sep
@@ -158,7 +158,7 @@ class TestCaseAutomaticGeneration:
         """
         生成动态 yaml 路径, 主要处理业务分层场景
         :param file_path: 如业务有多个层级, 则获取到每一层/test_demo/DateDemo.py
-        :return: Login/config.yaml
+        :return: Login/common.yaml
         """
         i = len(self.case_date_path())
         # 兼容 linux 和 window 操作路径

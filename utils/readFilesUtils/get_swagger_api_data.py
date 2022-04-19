@@ -1,7 +1,7 @@
 # coding=utf-8
 
 import json
-from config.setting import ConfigHandler
+from common.setting import ConfigHandler
 
 
 # TODO: 从swagger导出json文件，转成yaml格式的测试用例

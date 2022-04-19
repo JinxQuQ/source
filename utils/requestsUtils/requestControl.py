@@ -13,7 +13,7 @@ from utils.logUtils.logDecoratorl import log_decorator
 from utils.mysqlUtils.mysqlControl import MysqlDB
 from Enums.requestType_enum import RequestType
 from Enums.yamlData_enum import YAMLDate
-from config.setting import ConfigHandler
+from common.setting import ConfigHandler
 from utils.cacheUtils.cacheControl import Cache
 from utils.logUtils.runTimeDecoratorl import execution_duration
 from utils.otherUtils.allureDate.allure_tools import allure_step, allure_step_no, allure_attach
@@ -40,18 +40,35 @@ class RequestControl:
 
     @classmethod
     def case_token(cls, header) -> None:
-        try:
-            # 判断用例是否依赖token
-            _token = header['cookie']
-            # 如果依赖则从缓存中读取对应得token信息
+        def case_header_dependent(header_name):
+            """
+            判断header中依赖的数据，为token、cookie、Authorization
+            :param header_name:
+            :return:
+            """
             try:
-                # 判断如果没有缓存数据，则直接取用例中的数据
-                cache = Cache(_token).get_cache()
-                header['cookie'] = cache
-            except FileNotFoundError:
+                # 判断用例是否依赖token
+                _token = header[header_name]
+                # 如果依赖则从缓存中读取对应得token信息
+                try:
+                    # 判断如果没有缓存数据，则直接取用例中的数据
+                    cache = Cache(_token).get_cache()
+                    header[header_name] = cache
+                except FileNotFoundError:
+                    pass
+            except KeyError:
                 pass
-        except KeyError:
-            pass
+        """
+        针对不同的请求头，进行处理
+        :param header: 
+        :return: 
+        """
+        if 'token' in header:
+            case_header_dependent(header_name='token')
+        if 'cookie' in header:
+            case_header_dependent(header_name='cookie')
+        if 'Authorization' in header:
+            case_header_dependent(header_name='Authorization')
 
     @classmethod
     def file_data_exit(cls, yaml_data, file_data):
@@ -151,8 +168,11 @@ class RequestControl:
                                        headers=_headers,  **kwargs)
 
             elif _requestType == RequestType.PARAMS.value:
-                _data, _headers = self.multipart_in_headers(_data, _headers)
-                res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], params=_data,
+                # url 拼接的方式传参
+                params_data = "?"
+                for k, v in _data.items():
+                    params_data += (k + "=" + v + "&")
+                res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value] + params_data[:-1],
                                        headers=_headers, **kwargs)
             # 判断上传文件
             elif _requestType == RequestType.FILE.value:

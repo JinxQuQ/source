@@ -6,7 +6,7 @@
 import pymysql
 from warnings import filterwarnings
 from utils.logUtils.logControl import ERROR
-from config.setting import ConfigHandler
+from common.setting import ConfigHandler
 from utils.readFilesUtils.regularControl import sql_regular
 from utils.readFilesUtils.yamlControl import GetYamlData
 from utils import sql_switch

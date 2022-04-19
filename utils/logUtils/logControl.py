@@ -6,7 +6,7 @@
 import logging
 import colorlog
 from logging import handlers
-from config.setting import ConfigHandler
+from common.setting import ConfigHandler
 
 
 class LogHandler(object):

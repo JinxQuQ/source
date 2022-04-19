@@ -7,7 +7,7 @@ import json
 
 import xlrd
 from xlutils.copy import copy
-from config.setting import ConfigHandler
+from common.setting import ConfigHandler
 
 
 def get_excel_data(sheet_name: str, case_name: any) -> list:

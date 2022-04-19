@@ -29,7 +29,7 @@ class ConfigHandler:
 
     warning_log_path = os.path.join(root_path, 'logs' + _SLASH + 'warning.log')
 
-    config_path = os.path.join(root_path, 'config' + _SLASH + 'config.yaml')
+    config_path = os.path.join(root_path, 'common' + _SLASH + 'config.yaml')
 
     file_path = os.path.join(root_path, 'Files' + _SLASH)
 

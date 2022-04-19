@@ -28,7 +28,7 @@ DingTalk:
 MySqlDB:
   switch: False
   host:
-  user: dev
+  user:
   password:
   db:
 

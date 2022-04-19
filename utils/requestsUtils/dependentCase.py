@@ -103,6 +103,7 @@ class DependentCase:
 
                         # 判断依赖数据类型，依赖 sql中的数据
                         elif i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.SQL_DATA.value:
+
                             res = RequestControl().http_request(cls.get_cache(_case_id))
                             jsonpath_data = cls.jsonpath_data(res['sql_data'], _jsonpath)
                             jsonpath_dates[_replace_key] = jsonpath_data[0]

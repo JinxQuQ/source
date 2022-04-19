@@ -5,7 +5,7 @@
 
 import os
 import datetime
-from config.setting import ConfigHandler
+from common.setting import ConfigHandler
 from utils.readFilesUtils.yamlControl import GetYamlData
 
 
@@ -101,7 +101,7 @@ def write_testcase_file(allure_epic, allure_feature, class_title,
 
 import allure
 import pytest
-from config.setting import ConfigHandler
+from common.setting import ConfigHandler
 from utils.readFilesUtils.get_yaml_data_analysis import CaseData
 from utils.assertUtils.assertControl import Assert
 from utils.requestsUtils.requestControl import RequestControl

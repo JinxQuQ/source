@@ -5,7 +5,7 @@
 
 import os
 from typing import Any
-from config.setting import ConfigHandler
+from common.setting import ConfigHandler
 
 
 class Cache:

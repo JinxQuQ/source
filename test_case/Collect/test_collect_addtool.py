@@ -6,7 +6,7 @@
 
 import allure
 import pytest
-from config.setting import ConfigHandler
+from common.setting import ConfigHandler
 from utils.readFilesUtils.get_yaml_data_analysis import CaseData
 from utils.assertUtils.assertControl import Assert
 from utils.requestsUtils.requestControl import RequestControl

@@ -37,7 +37,8 @@ class CaseData:
                     'dependence_case': self.get_dependence_case(key, values),
                     'dependence_case_data': self.get_dependence_case_data(key, values),
                     "sql": self.get_sql(key, values),
-                    "assert": self.get_assert(key, values)
+                    "assert": self.get_assert(key, values),
+                    "setup_sql": self.setup_sql(key, values)
                 }
                 if case_id_switch is True:
                     case_lists.append({key: case_date})
@@ -163,16 +164,20 @@ class CaseData:
             raise KeyError(f"用例中未找到 dependence_case. 用例ID: {case_id}")
 
     @classmethod
-    def get_dependence_case_data(cls, case_id: str, case_data: dict) -> str:
+    def get_dependence_case_data(cls, case_id: str, case_data: dict) -> dict:
         """
         获取依赖的用例
         :return:
         """
-        try:
-            _dependence_case_data = case_data['dependence_case_data']
-            return _dependence_case_data
-        except KeyError:
-            raise KeyError(f"用例中未找到 dependence_case_data. 用例ID: {case_id}")
+        # 判断如果该用例有依赖，则返回依赖数据，否则返回None
+        if cls.get_dependence_case(case_id=case_id, case_data=case_data):
+            try:
+                _dependence_case_data = case_data['dependence_case_data']
+                return _dependence_case_data
+            except KeyError:
+                raise KeyError(f"用例中未找到 dependence_case_data. 用例ID: {case_id}")
+        else:
+            return {"dependence_case_data": None}
 
     @classmethod
     def get_case_dates(cls, case_id: str, case_data: dict) -> dict:
@@ -204,7 +209,7 @@ class CaseData:
     @classmethod
     def get_sql(cls, case_id: str, case_data: dict):
         """
-        获取测试用例中的sql
+        获取测试用例中的断言sql
         :return:
         """
         try:
@@ -217,7 +222,14 @@ class CaseData:
         except KeyError:
             raise KeyError(f"用例中未找到 sql 参数. 用例ID: {case_id}")
 
-
-if __name__ == '__main__':
-    a= CaseData(r'C:\Users\hzxy\Desktop\pytest-auto-api2\data\Collect\collect_delete_tool.yaml').case_process()
-    print(a)
+    @classmethod
+    def setup_sql(cls, case_id: str, case_data: dict):
+        """
+        获取前置sql，比如该条用例中需要从数据库中读取sql作为用例参数，则需填写setup_sql
+        :return:
+        """
+        try:
+            _setup_sql = case_data['setup_sql']
+            return _setup_sql
+        except KeyError:
+            return None

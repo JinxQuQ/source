@@ -115,6 +115,20 @@ class MysqlDB(object):
                 ERROR.logger.error("数据库连接失败，失败原因{0}".format(e))
                 raise
 
+        def setup_sql_data(self, sql: list) -> dict:
+            """
+            处理前置请求sql
+            :param sql:
+            :return:
+            """
+            data = {}
+            if isinstance(sql, list):
+                for i in sql:
+                    sql_date = self.query(sql=i)[0]
+                    for key, value in sql_date.items():
+                        data[key] = value
+                return data
+
 
 if __name__ == '__main__':
     pass

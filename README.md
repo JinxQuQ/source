@@ -456,7 +456,62 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
           # 提取接口响应的code码
           - dependent_type: response
             jsonpath: $.code
-            replace_key: $.data.code            
+            replace_key: $.data.code 
+
+### 请求用例时参数需要从数据库中提取
+
+![img.png](Files/image/img.png)
+
+如上图所示，用例中的 dependent_type 需要填写成 sqlData。
+当你的依赖类型为 sqlData 数据库的数据时，那么下方就需要再加一个 setup_sql 的参数，下方填写需要用到的sql语句
+
+
+    ApplyVerifyCode_01:
+        host: ${{host}}
+        url: /api/v1/merchant/apply/verifyCode
+        method: GET
+        detail: 校验已经审核通过的供应商手机号码
+        headers:
+          Content-Type: application/json;charset=UTF-8
+        # 请求的数据，是 params 还是 json、或者file、date
+        requestType: params
+        # 是否执行，空或者 true 都会执行
+        is_run:
+        data:
+          mobile: 18811111111
+          authCode: 123456
+          # 是否有依赖业务，为空或者false则表示没有
+        dependence_case: True
+            # 依赖的数据
+        dependence_case_data:
+          - case_id: ApplyVerifyCode_01
+            dependent_data:
+              - dependent_type: sqlData
+                jsonpath: $.username
+                replace_key: $.data.mobile
+    
+        assert:
+          code:
+            jsonpath: $.code
+            type: ==
+            value: 200
+            AssertType:
+          applyId:
+            jsonpath: $.data[0].applyId
+            type: ==
+            value: $.applyId
+            AssertType: SQL
+          applyStatus:
+            jsonpath: $.data[0].applyStatus
+            type: ==
+            value: $.applyStatus
+            AssertType: SQL
+    
+        sql:
+          - select a.apply_id as applyId, a.to_status as applyStatus, a.sub_biz_type as subBizType, a.operator_name as operatorName, a.operator_user_id as operatorUserId, b.apply_type as applyType from test_obp_midware.apply_operate_log as a inner join test_obp_midware.apply as b on a.apply_id = b.id where b.id = $json($.data[0].applyId)$ order by a.id desc limit 1;
+        setup_sql:
+         - SELECT * FROM test_obp_user.user_biz_info where user_id = '300000405'
+
 
 ### 用例中需要依赖登录的token，如何设计
 
@@ -466,6 +521,7 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
 如上方代码所示，我们会先去读取login.yaml文件中的用例，然后执行获取到响应中的token，然后 编写 Cache('work_login_init').set_caches(token)，将token写入缓存中，其中 work_login_init 是缓存名称。
 
 编写好之后，我们会在 requestControl.py 文件中，读取缓存中的token，如果该条用例需要依赖token，则直接进行内容替换。
+
 ![img.png](Files/image/conftest_token.png)
 
     @pytest.fixture(scope="session", autouse=True)

@@ -171,7 +171,7 @@ class RequestControl:
                 # url 拼接的方式传参
                 params_data = "?"
                 for k, v in _data.items():
-                    params_data += (k + "=" + v + "&")
+                    params_data += (k + "=" + str(v) + "&")
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value] + params_data[:-1],
                                        headers=_headers, **kwargs)
             # 判断上传文件

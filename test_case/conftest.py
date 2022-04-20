@@ -15,6 +15,7 @@ from utils.readFilesUtils.get_all_files_path import get_all_files
 from utils.logUtils.logControl import WARNING, INFO, ERROR
 from Enums.yamlData_enum import YAMLDate
 from utils.otherUtils.allureDate.allure_tools import allure_step, allure_step_no
+from utils.readFilesUtils.caseAutomaticControl import TestCaseAutomaticGeneration
 
 
 @pytest.fixture(scope="session", autouse=True)

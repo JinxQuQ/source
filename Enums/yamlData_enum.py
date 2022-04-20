@@ -41,6 +41,8 @@ class YAMLDate(Enum):
     DEPENDENT_TYPE = 'dependent_type'
     # 用例描述
     DETAIL = 'detail'
+    # 前置sql
+    SETUP_SQL = 'setup_sql'
 
 
 

@@ -8,6 +8,7 @@ from utils.cacheUtils.cacheControl import Cache
 from utils.requestsUtils.requestControl import RequestControl
 from Enums.dependentType_enum import DependentType
 from Enums.yamlData_enum import YAMLDate
+from utils.mysqlUtils.mysqlControl import MysqlDB
 
 
 class DependentCase:
@@ -71,6 +72,7 @@ class DependentCase:
         _dependent_type = case_data[YAMLDate.DEPENDENCE_CASE.value]
         # 获取依赖用例数据
         _dependence_case_dates = case_data[YAMLDate.DEPENDENCE_CASE_DATA.value]
+        _setup_sql = case_data[YAMLDate.SETUP_SQL.value]
         # 判断是否有依赖
         if _dependent_type is True:
             # 读取依赖相关的用例数据
@@ -103,12 +105,15 @@ class DependentCase:
 
                         # 判断依赖数据类型，依赖 sql中的数据
                         elif i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.SQL_DATA.value:
-
-                            res = RequestControl().http_request(cls.get_cache(_case_id))
-                            jsonpath_data = cls.jsonpath_data(res['sql_data'], _jsonpath)
-                            jsonpath_dates[_replace_key] = jsonpath_data[0]
-                            cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
-                                            jsonpath_data=jsonpath_data, case_data=case_data)
+                            if _setup_sql is not None:
+                                sql_data = MysqlDB().setup_sql_data(sql=_setup_sql)
+                                jsonpath_data = cls.jsonpath_data(obj=sql_data, expr=_jsonpath)
+                                jsonpath_dates[_replace_key] = jsonpath_data[0]
+                                cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
+                                                jsonpath_data=jsonpath_data, case_data=case_data)
+                            else:
+                                raise ValueError("当前用例需要获取sql数据，setup_sql中需要填写对应的sql语句。\n"
+                                                 "case_id: {0}".format(_case_id))
                         else:
                             raise ValueError("依赖的dependent_type不正确，只支持request、response、sql依赖\n"
                                              f"当前填写内容: {i[YAMLDate.DEPENDENT_TYPE.value]}")

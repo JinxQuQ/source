@@ -131,6 +131,6 @@ def sql_regular(value, res=None):
         pattern = re.compile(r'\$json\(' + i.replace('$', "\$").replace('[', '\[') + r'\)\$')
         key = str(sql_json(i, res))
         value = re.sub(pattern, key, value, count=1)
-        value = sql_json_list(value, res)
+    # value = sql_regular(value, res)
 
     return value

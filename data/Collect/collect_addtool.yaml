@@ -12,7 +12,7 @@ collect_addtool_01:
     headers:
       Content-Type: multipart/form-data;
       # 这里cookie的值，写的是存入缓存的名称
-      cookie: $cache{login_cookie}
+      cookie: login_cookie
     # 请求的数据，是 params 还是 json、或者file、date
     requestType: date
     # 是否执行，空或者 true 都会执行

@@ -16,7 +16,7 @@ class AllureFileClean:
         """ 获取所有 allure 报告中执行用例的情况"""
         # 将所有数据都收集到files中
         files = []
-        for i in get_all_files(ConfigHandler.report_path):
+        for i in get_all_files(ConfigHandler.report_path + '/html/data/test-cases'):
             with open(i, 'r', encoding='utf-8') as fp:
                 date = json.load(fp)
                 files.append(date)
@@ -85,8 +85,3 @@ class CaseCount:
             return pass_rate
         except ZeroDivisionError:
             return 0.00
-
-
-if __name__ == '__main__':
-    data = CaseCount().pass_count()
-    print(data)

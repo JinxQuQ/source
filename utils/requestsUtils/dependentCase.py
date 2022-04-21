@@ -80,6 +80,7 @@ class DependentCase:
             # 循环所有需要依赖的数据
             try:
                 for dependence_case_data in _dependence_case_dates:
+
                     dependent_data = dependence_case_data['dependent_data']
                     for i in dependent_data:
 
@@ -118,8 +119,11 @@ class DependentCase:
                             raise ValueError("依赖的dependent_type不正确，只支持request、response、sql依赖\n"
                                              f"当前填写内容: {i[YAMLDate.DEPENDENT_TYPE.value]}")
                 return jsonpath_dates
+            except KeyError as e:
+                raise KeyError(f"dependence_case_data依赖用例中，未找到 {e} 参数，请检查是否填写"
+                               f"如已填写，请检查是否存在yaml缩进问题")
             except TypeError:
-                raise TypeError("当 dependence_case 设置为 True 时，dependence_case_dates不能为空！")
+                raise TypeError("dependence_case_data下的所有内容均不能为空！请检查相关数据是否填写，如已填写，请检查缩进问题")
 
         else:
             return False

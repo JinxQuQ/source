@@ -8,6 +8,7 @@ import datetime
 import jsonpath
 from faker import Faker
 from utils.logUtils.logControl import ERROR
+from utils.cacheUtils.cacheControl import Cache
 
 
 class Context:
@@ -131,6 +132,24 @@ def sql_regular(value, res=None):
         pattern = re.compile(r'\$json\(' + i.replace('$', "\$").replace('[', '\[') + r'\)\$')
         key = str(sql_json(i, res))
         value = re.sub(pattern, key, value, count=1)
-    # value = sql_regular(value, res)
 
+    return value
+
+
+def cache_regular(value):
+    """
+    通过正则的方式，读取缓存中的内容
+    例：$cache{login_init}
+    :param value:
+    :return:
+    """
+    # 正则获取 $cache{login_init}中的值 --> login_init
+    regular_data = re.findall(r"\$cache\{(.*?)\}", value)
+
+    # 拿到的是一个list，循环数据
+    for i in regular_data:
+        pattern = re.compile(r'\$cache\{' + i.replace('$', "\$").replace('[', '\[') + r'\}')
+        cache_data = Cache(i).get_cache()
+        # 使用sub方法，替换已经拿到的内容
+        value = re.sub(pattern, cache_data, value)
     return value

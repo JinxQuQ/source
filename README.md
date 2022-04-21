@@ -460,7 +460,7 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
 
 ### 请求用例时参数需要从数据库中提取
 
-![img.png](Files/image/img.png)
+![img.png](Files/image/img2.png)
 
 如上图所示，用例中的 dependent_type 需要填写成 sqlData。
 当你的依赖类型为 sqlData 数据库的数据时，那么下方就需要再加一个 setup_sql 的参数，下方填写需要用到的sql语句
@@ -542,7 +542,7 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
         Cache("work_login_init").set_caches(token)
 
 这里在编写用例的时候，token 填写我们所编写的缓存名称即可。
-![img.png](Files/image/token.png)
+![img.png](Files/image/img.png)
 
 ### 用例中依赖cookie如何设计
 
@@ -579,7 +579,7 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
         headers:
           Content-Type: multipart/form-data;
           # 这里cookie的值，写的是存入缓存的名称
-          cookie: login_cookie
+          cookie: $cache{login_cookie}
 
 ### 用例中如何生成随机数据
 

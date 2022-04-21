@@ -15,7 +15,6 @@ from utils.readFilesUtils.get_all_files_path import get_all_files
 from utils.logUtils.logControl import WARNING, INFO, ERROR
 from Enums.yamlData_enum import YAMLDate
 from utils.otherUtils.allureDate.allure_tools import allure_step, allure_step_no
-from utils.readFilesUtils.caseAutomaticControl import TestCaseAutomaticGeneration
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -40,7 +39,7 @@ def write_case_process():
     """
     case_data = {}
     # 循环拿到所有存放用例的文件路径
-    for i in get_all_files(ConfigHandler.data_path):
+    for i in get_all_files(file_path=ConfigHandler.data_path, yaml_data_switch=True):
         # 循环读取文件中的数据
         case_process = CaseData(i).case_process(case_id_switch=True)
         # 转换数据类型

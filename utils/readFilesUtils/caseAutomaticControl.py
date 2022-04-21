@@ -36,8 +36,12 @@ class TestCaseAutomaticGeneration:
         """
         i = len(self.case_date_path())
         yaml_path = file[i:]
+        file_name = None
         # 路径转换
-        file_name = yaml_path.replace('.yaml', '.py')
+        if '.yaml' in yaml_path:
+            file_name = yaml_path.replace('.yaml', '.py')
+        elif '.yml' in yaml_path:
+            file_name = yaml_path.replace('.yml', '.py')
         return file_name
 
     def lib_page_path(self, file_path: str) -> str:
@@ -120,31 +124,49 @@ class TestCaseAutomaticGeneration:
         return _FILE_NAME
 
     @classmethod
-    def allure_epic(cls, case_data: dict) -> str:
+    def allure_epic(cls, case_data: dict, file_path) -> str:
         """
         用于 allure 报告装饰器中的内容 @allure.epic("项目名称")
+        :param file_path: 用例路径
         :param case_data: 用例数据
         :return:
         """
-        return case_data['case_common']['allureEpic']
+        try:
+            return case_data['case_common']['allureEpic']
+        except KeyError:
+            raise KeyError("用例中未找到 allureEpic 参数值，请检查新增的用例中是否填写对应的参数内容"
+                           " 如已填写，可能是 yaml 参数缩进不正确\n"
+                           f"用例路径: {file_path}")
 
     @classmethod
-    def allure_feature(cls, case_data: dict) -> str:
+    def allure_feature(cls, case_data: dict, file_path) -> str:
         """
         用于 allure 报告装饰器中的内容 @allure.feature("模块名称")
+        :param file_path:
         :param case_data:
         :return:
         """
-        return case_data['case_common']['allureFeature']
+        try:
+            return case_data['case_common']['allureFeature']
+        except KeyError:
+            raise KeyError("用例中未找到 allureFeature 参数值，请检查新增的用例中是否填写对应的参数内容"
+                           " 如已填写，可能是 yaml 参数缩进不正确\n"
+                           f"用例路径: {file_path}")
 
     @classmethod
-    def allure_story(cls, case_data: dict) -> str:
+    def allure_story(cls, case_data: dict, file_path) -> str:
         """
         用于 allure 报告装饰器中的内容  @allure.story("测试功能")
+        :param file_path:
         :param case_data:
         :return:
         """
-        return case_data['case_common']['allureStory']
+        try:
+            return case_data['case_common']['allureStory']
+        except KeyError:
+            raise KeyError("用例中未找到 allureStory 参数值，请检查新增的用例中是否填写对应的参数内容"
+                           " 如已填写，可能是 yaml 参数缩进不正确\n"
+                           f"用例路径: {file_path}")
 
     def mk_dir(self, file_path: str) -> None:
         """ 判断生成自动化代码的文件夹路径是否存在，如果不存在，则自动创建 """
@@ -167,7 +189,7 @@ class TestCaseAutomaticGeneration:
 
     def get_case_automatic(self) -> None:
         """ 自动生成 测试代码"""
-        file_path = get_all_files(ConfigHandler.data_path)
+        file_path = get_all_files(file_path=ConfigHandler.data_path, yaml_data_switch=True)
 
         for file in file_path:
             # 判断代理拦截的yaml文件，不生成test_case代码
@@ -176,10 +198,12 @@ class TestCaseAutomaticGeneration:
                 self.mk_dir(file)
                 yaml_case_process = GetYamlData(file).get_yaml_data()
                 write_testcase_file(
-                    allure_epic=self.allure_epic(yaml_case_process), allure_feature=self.allure_feature(yaml_case_process),
+                    allure_epic=self.allure_epic(case_data=yaml_case_process, file_path=file),
+                    allure_feature=self.allure_feature(yaml_case_process, file_path=file),
                     class_title=self.get_test_class_title(file), func_title=self.func_title(file),
                     case_path=self.get_case_path(file)[0], yaml_path=self.yaml_path(file),
-                    file_name=self.get_case_path(file)[1], allure_story=self.allure_story(yaml_case_process)
+                    file_name=self.get_case_path(file)[1],
+                    allure_story=self.allure_story(case_data=yaml_case_process, file_path=file)
                     )
 
 

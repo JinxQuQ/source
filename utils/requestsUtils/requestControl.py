@@ -39,38 +39,6 @@ class RequestControl:
                 "headers": headers, "cookie": cookie, "res_time": _res_time}
 
     @classmethod
-    def case_token(cls, header) -> None:
-        def case_header_dependent(header_name):
-            """
-            判断header中依赖的数据，为token、cookie、Authorization
-            :param header_name:
-            :return:
-            """
-            try:
-                # 判断用例是否依赖token
-                _token = header[header_name]
-                # 如果依赖则从缓存中读取对应得token信息
-                try:
-                    # 判断如果没有缓存数据，则直接取用例中的数据
-                    cache = Cache(_token).get_cache()
-                    header[header_name] = cache
-                except FileNotFoundError:
-                    pass
-            except KeyError:
-                pass
-        """
-        针对不同的请求头，进行处理
-        :param header: 
-        :return: 
-        """
-        if 'token' in header:
-            case_header_dependent(header_name='token')
-        if 'cookie' in header:
-            case_header_dependent(header_name='cookie')
-        if 'Authorization' in header:
-            case_header_dependent(header_name='Authorization')
-
-    @classmethod
     def file_data_exit(cls, yaml_data, file_data):
         """判断上传文件时，data参数是否存在"""
         # 兼容又要上传文件，又要上传其他类型参数
@@ -154,7 +122,6 @@ class RequestControl:
         _sql = yaml_data[YAMLDate.SQL.value]
         _assert = yaml_data[YAMLDate.ASSERT.value]
         _dependent_data = yaml_data[YAMLDate.DEPENDENCE_CASE_DATA.value]
-        self.case_token(_headers)
         res = None
 
         # 判断用例是否执行

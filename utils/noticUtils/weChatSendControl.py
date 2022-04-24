@@ -111,7 +111,7 @@ class WeChatSend:
                                     >时　间：<font color=\"comment\">{7}</font>
                                     >
                                     >非相关负责人员可忽略此消息。
-                                    >测试报告，点击查看>>[测试报告入口](http://{6}:9999/index.html)""" \
+                                    >测试报告，点击查看>>[测试报告入口](http://{8}:9999/index.html)""" \
             .format(project_name, tester_name, self.RATE, self.PASS, self.FAILED,
                     self.BROKEN, self.SKIP, now_time(), get_host_ip())
 

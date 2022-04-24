@@ -40,6 +40,7 @@ class RequestControl:
 
     @classmethod
     # 本段代码主要是用于兼容旧版本的用户，2022-04-21后拉取代码的使用者，可以直接删除此代码
+    # 对应调用这个函数的地方记得也要删除
     def case_token(cls, header) -> None:
         def case_header_dependent(header_name):
             """
@@ -61,8 +62,8 @@ class RequestControl:
                 pass
         """
         针对不同的请求头，进行处理
-        :param header: 
-        :return: 
+        :param header:
+        :return:
         """
         if 'token' in header:
             case_header_dependent(header_name='token')
@@ -185,7 +186,7 @@ class RequestControl:
                 _data, _headers = self.multipart_in_headers(_data, _headers)
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], data=_data, headers=_headers,
                                        **kwargs)
-            allure.dynamic.title(_detail)
+
             allure_step_no(f"请求URL: {yaml_data[YAMLDate.URL.value]}")
             allure_step_no(f"请求方式: {_method}")
             allure_step("请求头: ", _headers)

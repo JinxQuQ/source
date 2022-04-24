@@ -1,4 +1,5 @@
 ##ignore this file##
+venv
 /target/
 /.idea/
 /.settings/

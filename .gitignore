@@ -1,5 +1,4 @@
 ##ignore this file##
-/venv/
 /target/
 /.idea/
 /.settings/
@@ -20,7 +19,7 @@
 *.class
 *.dll
 *.exe
-*.pyc
+*.q
 *.o
 *.so
 # compression file

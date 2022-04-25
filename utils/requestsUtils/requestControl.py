@@ -91,7 +91,7 @@ class RequestControl:
         return multipart
 
     @classmethod
-    def multipart_in_headers(cls, request_data, header):
+    def multipart_in_headers1(cls, request_data, header):
         """ 判断处理header为 Content-Type: multipart/form-data"""
 
         if "multipart/form-data" in str(header.values()):
@@ -99,7 +99,8 @@ class RequestControl:
             if request_data:
                 # 当 Content-Type 为 "multipart/form-data"时，需要将数据类型转换成 str
                 for k, v in request_data.items():
-                    request_data[k] = str(v)
+                    if not isinstance(v, str):
+                        request_data[k] = str(v)
                 request_data = MultipartEncoder(request_data)
                 header['Content-Type'] = request_data.content_type
 

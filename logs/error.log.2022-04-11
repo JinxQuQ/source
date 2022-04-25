@@ -1,0 +1,2 @@
+ERROR   2022-04-11 21:37:16,299  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:129 异常用例数: 15
+ERROR   2022-04-11 21:37:16,305  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:130 失败用例数: 0

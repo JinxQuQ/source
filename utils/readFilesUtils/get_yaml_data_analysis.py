@@ -5,7 +5,6 @@
 
 from utils import sql_switch
 from utils.readFilesUtils.yamlControl import GetCaseData
-from utils.readFilesUtils.regularControl import cache_regular
 
 
 class CaseData:
@@ -41,13 +40,13 @@ class CaseData:
                     "assert": self.get_assert(key, values),
                     "setup_sql": self.setup_sql(values)
                 }
-                new_case_data = cache_regular(str(case_date))
+
                 if case_id_switch is True:
-                    case_lists.append({key: eval(new_case_data)})
+                    case_lists.append({key: case_date})
                 else:
                     # 正则处理，如果用例中有需要读取缓存中的数据，则优先读取缓存
 
-                    case_lists.append(eval(new_case_data))
+                    case_lists.append(case_date)
         return case_lists
 
     def get_case_host(self, case_id: str, case_data: dict) -> str:

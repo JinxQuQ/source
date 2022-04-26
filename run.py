@@ -32,7 +32,7 @@ def run():
         )
 
         pytest.main(['-s', '-W', 'ignore:Module already imported:pytest.PytestWarning',
-                     '--alluredir', './report/tmp'])
+                     '--alluredir', './report/tmp', "--clean-alluredir"])
         """
                    --reruns: 失败重跑次数
                    --count: 重复执行次数

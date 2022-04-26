@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time   : 2022-04-21 11:51:44
+# @Time   : 2022-04-26 16:51:06
 # @Author : 七月
 
 
@@ -10,6 +10,7 @@ from common.setting import ConfigHandler
 from utils.readFilesUtils.get_yaml_data_analysis import CaseData
 from utils.assertUtils.assertControl import Assert
 from utils.requestsUtils.requestControl import RequestControl
+from utils.readFilesUtils.regularControl import cache_regular
 
 
 TestData = CaseData(ConfigHandler.data_path + r'UserInfo/get_user_info.yaml').case_process()
@@ -26,8 +27,9 @@ class TestGetUserInfo:
         :param :
         :return:
         """
-
-        res = RequestControl().http_request(in_data)
+        
+        request_data = cache_regular(str(in_data))
+        res = RequestControl().http_request(eval(request_data))
         Assert(in_data['assert']).assert_equality(response_data=res['response_data'], 
                                                   sql_data=res['sql_data'])
 

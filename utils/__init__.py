@@ -32,4 +32,3 @@ def get_notification_type():
 configPath = GetYamlData(ConfigHandler.config_path).get_yaml_data()
 project_name = configPath['ProjectName'][0]
 tester_name = configPath['TesterName']
-

@@ -36,7 +36,7 @@ def get_excel_data(sheet_name: str, case_name: any) -> list:
     return res_list
 
 
-def set_excelData(sheetIndex: int) -> tuple:
+def set_excel_data(sheet_index: int) -> tuple:
     """
     excel 写入
     :return:
@@ -45,7 +45,7 @@ def set_excelData(sheetIndex: int) -> tuple:
     work_book = xlrd.open_workbook(excel_dire, formatting_info=True)
     work_book_new = copy(work_book)
 
-    work_sheet_new = work_book_new.get_sheet(sheetIndex)
+    work_sheet_new = work_book_new.get_sheet(sheet_index)
     return work_book_new, work_sheet_new
 
 

@@ -36,13 +36,6 @@ class ConfigHandler:
     # 测试报告路径
     report_path = os.path.join(root_path, 'report')
 
-    # lib 存放po文件
-    lib_path = os.path.join(root_path, "lib" + _SLASH)
-
-    # temp_path = os.path.join(root_path, 'report' + _SLASH + 'tmp')
-    # if not os.path.exists(temp_path):
-    #     os.mkdir(temp_path)
-
 
 if __name__ == '__main__':
     print(ConfigHandler.cache_path)

@@ -44,6 +44,7 @@ class TestCaseAutomaticGeneration:
             file_name = yaml_path.replace('.yml', '.py')
         return file_name
 
+<<<<<<< HEAD
     def get_package_path(self, file_path: str) -> str:
         """
         根据不同的层级，获取 test_case 中需要依赖的包
@@ -66,6 +67,8 @@ class TestCaseAutomaticGeneration:
         elif len(i) == 1:
             return f"from lib.{i[0][:-3]} import {i[0][:-3]}"
 
+=======
+>>>>>>> b1a3ca63a079ce086c3a36b4a341cac479a606c9
     def get_case_path(self, file_path: str) -> tuple:
         """
         根据 yaml 中的用例，生成对应 testCase 层代码的路径
@@ -105,6 +108,17 @@ class TestCaseAutomaticGeneration:
 
         return _CLASS_NAME
 
+    @classmethod
+    def error_message(cls, param_name, file_path):
+        """
+        用例中填写不正确的相关提示
+        :return:
+        """
+        msg = f"用例中未找到 {param_name} 参数值，请检查新增的用例中是否填写对应的参数内容" \
+              "如已填写，可能是 yaml 参数缩进不正确\n" \
+              f"用例路径: {file_path}"
+        return msg
+
     def func_title(self, file_path: str) -> str:
         """
         函数名称
@@ -126,9 +140,10 @@ class TestCaseAutomaticGeneration:
         try:
             return case_data['case_common']['allureEpic']
         except KeyError:
-            raise KeyError("用例中未找到 allureEpic 参数值，请检查新增的用例中是否填写对应的参数内容"
-                           " 如已填写，可能是 yaml 参数缩进不正确\n"
-                           f"用例路径: {file_path}")
+            raise KeyError(cls.error_message(
+                param_name="allureEpic",
+                file_path=file_path
+            ))
 
     @classmethod
     def allure_feature(cls, case_data: dict, file_path) -> str:
@@ -141,9 +156,10 @@ class TestCaseAutomaticGeneration:
         try:
             return case_data['case_common']['allureFeature']
         except KeyError:
-            raise KeyError("用例中未找到 allureFeature 参数值，请检查新增的用例中是否填写对应的参数内容"
-                           " 如已填写，可能是 yaml 参数缩进不正确\n"
-                           f"用例路径: {file_path}")
+            raise KeyError(cls.error_message(
+                param_name="allureFeature",
+                file_path=file_path
+            ))
 
     @classmethod
     def allure_story(cls, case_data: dict, file_path) -> str:
@@ -156,9 +172,10 @@ class TestCaseAutomaticGeneration:
         try:
             return case_data['case_common']['allureStory']
         except KeyError:
-            raise KeyError("用例中未找到 allureStory 参数值，请检查新增的用例中是否填写对应的参数内容"
-                           " 如已填写，可能是 yaml 参数缩进不正确\n"
-                           f"用例路径: {file_path}")
+            raise KeyError(cls.error_message(
+                param_name="allureStory",
+                file_path=file_path
+            ))
 
     def mk_dir(self, file_path: str) -> None:
         """ 判断生成自动化代码的文件夹路径是否存在，如果不存在，则自动创建 """

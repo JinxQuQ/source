@@ -72,3 +72,4 @@ collect_delete_tool_02:
         value: 0
         AssertType:
     sql:
+      -

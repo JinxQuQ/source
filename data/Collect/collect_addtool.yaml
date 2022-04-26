@@ -21,6 +21,7 @@ collect_addtool_01:
       name: 自动化生成收藏网址${{random_int}}
       link: https://gitee.com/yu_xiao_qi/pytest-auto-api2
       # 是否有依赖业务，为空或者false则表示没有
+
     dependence_case: False
         # 依赖的数据
     dependence_case_data:
@@ -32,6 +33,7 @@ collect_addtool_01:
         value: 0
         AssertType:
     sql:
+
 
 collect_addtool_02:
     host: ${{host}}

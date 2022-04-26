@@ -1,5 +1,4 @@
 ##ignore this file##
-venv
 /target/
 /.idea/
 /.settings/
@@ -20,6 +19,7 @@ venv
 *.class
 *.dll
 *.exe
+*.q
 *.o
 *.so
 # compression file

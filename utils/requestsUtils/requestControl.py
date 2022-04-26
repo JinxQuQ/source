@@ -100,7 +100,9 @@ class RequestControl:
             if request_data:
                 # 当 Content-Type 为 "multipart/form-data"时，需要将数据类型转换成 str
                 for k, v in request_data.items():
-                    request_data[k] = str(v)
+                    if not isinstance(v, str):
+                        request_data[k] = str(v)
+
                 request_data = MultipartEncoder(request_data)
                 header['Content-Type'] = request_data.content_type
 

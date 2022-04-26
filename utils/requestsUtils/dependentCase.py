@@ -68,6 +68,7 @@ class DependentCase:
         判断是否有数据依赖
         :return:
         """
+
         # 获取用例中的dependent_type值，判断该用例是否需要执行依赖
         _dependent_type = case_data[YAMLDate.DEPENDENCE_CASE.value]
         # 获取依赖用例数据

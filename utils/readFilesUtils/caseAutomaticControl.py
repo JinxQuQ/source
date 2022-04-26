@@ -5,7 +5,7 @@
 
 import os
 from common.setting import ConfigHandler
-from utils import write_testcase_file
+from utils.readFilesUtils.testcase_template import write_testcase_file
 from utils.readFilesUtils.yamlControl import GetYamlData
 from utils import get_os_sep
 from utils.readFilesUtils.get_all_files_path import get_all_files
@@ -43,14 +43,6 @@ class TestCaseAutomaticGeneration:
         elif '.yml' in yaml_path:
             file_name = yaml_path.replace('.yml', '.py')
         return file_name
-
-    def lib_page_path(self, file_path: str) -> str:
-        """
-        根据 yaml中的用例数据，生成对应分成中 lib 层代码路径
-        :param file_path: yaml用例路径
-        :return: D:\\Project\\lib\\DateDemo.py
-        """
-        return ConfigHandler.lib_path + self.file_name(file_path)
 
     def get_package_path(self, file_path: str) -> str:
         """
@@ -104,7 +96,7 @@ class TestCaseAutomaticGeneration:
         :return: sup_apply_list --> SupApplyList
         """
         # 提取文件名称
-        _FILE_NAME = os.path.split(self.lib_page_path(file_path))[1][:-3]
+        _FILE_NAME = os.path.split(self.file_name(file_path))[1][:-3]
         _NAME = _FILE_NAME.split("_")
         # 将文件名称格式，转换成类名称: sup_apply_list --> SupApplyList
         for i in range(len(_NAME)):
@@ -113,6 +105,17 @@ class TestCaseAutomaticGeneration:
 
         return _CLASS_NAME
 
+    @classmethod
+    def error_message(cls, param_name, file_path):
+        """
+        用例中填写不正确的相关提示
+        :return:
+        """
+        msg = f"用例中未找到 {param_name} 参数值，请检查新增的用例中是否填写对应的参数内容" \
+              "如已填写，可能是 yaml 参数缩进不正确\n" \
+              f"用例路径: {file_path}"
+        return msg
+
     def func_title(self, file_path: str) -> str:
         """
         函数名称
@@ -120,7 +123,7 @@ class TestCaseAutomaticGeneration:
         :return:
         """
 
-        _FILE_NAME = os.path.split(self.lib_page_path(file_path))[1][:-3]
+        _FILE_NAME = os.path.split(self.file_name(file_path))[1][:-3]
         return _FILE_NAME
 
     @classmethod
@@ -134,9 +137,10 @@ class TestCaseAutomaticGeneration:
         try:
             return case_data['case_common']['allureEpic']
         except KeyError:
-            raise KeyError("用例中未找到 allureEpic 参数值，请检查新增的用例中是否填写对应的参数内容"
-                           " 如已填写，可能是 yaml 参数缩进不正确\n"
-                           f"用例路径: {file_path}")
+            raise KeyError(cls.error_message(
+                param_name="allureEpic",
+                file_path=file_path
+            ))
 
     @classmethod
     def allure_feature(cls, case_data: dict, file_path) -> str:
@@ -149,9 +153,10 @@ class TestCaseAutomaticGeneration:
         try:
             return case_data['case_common']['allureFeature']
         except KeyError:
-            raise KeyError("用例中未找到 allureFeature 参数值，请检查新增的用例中是否填写对应的参数内容"
-                           " 如已填写，可能是 yaml 参数缩进不正确\n"
-                           f"用例路径: {file_path}")
+            raise KeyError(cls.error_message(
+                param_name="allureFeature",
+                file_path=file_path
+            ))
 
     @classmethod
     def allure_story(cls, case_data: dict, file_path) -> str:
@@ -164,9 +169,10 @@ class TestCaseAutomaticGeneration:
         try:
             return case_data['case_common']['allureStory']
         except KeyError:
-            raise KeyError("用例中未找到 allureStory 参数值，请检查新增的用例中是否填写对应的参数内容"
-                           " 如已填写，可能是 yaml 参数缩进不正确\n"
-                           f"用例路径: {file_path}")
+            raise KeyError(cls.error_message(
+                param_name="allureStory",
+                file_path=file_path
+            ))
 
     def mk_dir(self, file_path: str) -> None:
         """ 判断生成自动化代码的文件夹路径是否存在，如果不存在，则自动创建 """

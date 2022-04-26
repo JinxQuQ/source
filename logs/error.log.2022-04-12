@@ -1,8 +1,0 @@
-ERROR   2022-04-11 16:39:56,564  C:\Users\hzxy\Desktop\pytest-auto-api2\logs\error.log:conftest.py:129 异常用例数: 0
-ERROR   2022-04-11 16:39:56,565  C:\Users\hzxy\Desktop\pytest-auto-api2\logs\error.log:conftest.py:130 失败用例数: 0
-ERROR   2022-04-12 16:18:17,776  C:\Users\hzxy\Desktop\pytest-auto-api2\logs\error.log:conftest.py:129 异常用例数: 0
-ERROR   2022-04-12 16:18:17,779  C:\Users\hzxy\Desktop\pytest-auto-api2\logs\error.log:conftest.py:130 失败用例数: 3
-ERROR   2022-04-12 16:25:53,002  C:\Users\hzxy\Desktop\pytest-auto-api2\logs\error.log:conftest.py:129 异常用例数: 0
-ERROR   2022-04-12 16:25:53,003  C:\Users\hzxy\Desktop\pytest-auto-api2\logs\error.log:conftest.py:130 失败用例数: 0
-ERROR   2022-04-12 16:31:05,699  C:\Users\hzxy\Desktop\pytest-auto-api2\logs\error.log:conftest.py:129 异常用例数: 0
-ERROR   2022-04-12 16:31:05,701  C:\Users\hzxy\Desktop\pytest-auto-api2\logs\error.log:conftest.py:130 失败用例数: 0

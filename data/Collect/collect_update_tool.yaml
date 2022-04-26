@@ -30,6 +30,7 @@ collect_update_tool_01:
           - dependent_type: response
             jsonpath: $.data.id
             replace_key: $.data.id
+
     assert:
       # 断言接口状态码
       errorCode:

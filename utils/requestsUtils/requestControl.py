@@ -17,6 +17,7 @@ from common.setting import ConfigHandler
 from utils.cacheUtils.cacheControl import Cache
 from utils.logUtils.runTimeDecoratorl import execution_duration
 from utils.otherUtils.allureDate.allure_tools import allure_step, allure_step_no, allure_attach
+from utils.readFilesUtils.regularControl import cache_regular
 
 
 class RequestControl:
@@ -40,6 +41,7 @@ class RequestControl:
 
     @classmethod
     # 本段代码主要是用于兼容旧版本的用户，2022-04-21后拉取代码的使用者，可以直接删除此代码
+    # 对应调用这个函数的地方记得也要删除
     def case_token(cls, header) -> None:
         def case_header_dependent(header_name):
             """
@@ -61,8 +63,8 @@ class RequestControl:
                 pass
         """
         针对不同的请求头，进行处理
-        :param header: 
-        :return: 
+        :param header:
+        :return:
         """
         if 'token' in header:
             case_header_dependent(header_name='token')
@@ -98,7 +100,9 @@ class RequestControl:
             if request_data:
                 # 当 Content-Type 为 "multipart/form-data"时，需要将数据类型转换成 str
                 for k, v in request_data.items():
-                    request_data[k] = str(v)
+                    if not isinstance(v, str):
+                        request_data[k] = str(v)
+
                 request_data = MultipartEncoder(request_data)
                 header['Content-Type'] = request_data.content_type
 
@@ -145,6 +149,8 @@ class RequestControl:
         :param kwargs:
         :return:
         """
+        re_data = cache_regular(str(yaml_data))
+        yaml_data = eval(re_data)
         from utils.requestsUtils.dependentCase import DependentCase
         _is_run = yaml_data[YAMLDate.IS_RUN.value]
         _method = yaml_data[YAMLDate.METHOD.value]
@@ -185,7 +191,7 @@ class RequestControl:
                 _data, _headers = self.multipart_in_headers(_data, _headers)
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], data=_data, headers=_headers,
                                        **kwargs)
-            allure.dynamic.title(_detail)
+
             allure_step_no(f"请求URL: {yaml_data[YAMLDate.URL.value]}")
             allure_step_no(f"请求方式: {_method}")
             allure_step("请求头: ", _headers)

@@ -8,6 +8,7 @@ import jsonpath
 from utils import sql_switch
 from utils.logUtils.logControl import ERROR, WARNING
 from Enums.assertType_enum import AssertType
+from utils.assertUtils.assert_type import *
 
 
 class Assert:
@@ -35,31 +36,40 @@ class Assert:
 
     @staticmethod
     def _assert_type(key: any, types: str, value: any):
-        """
-
-        :param key:
-        :param types:
-        :param value:
-        :return:
-        """
-        try:
-            if types == AssertType.EQUAL.value:
-                assert key == value
-            elif types == AssertType.NOTEQUAL.value:
-                assert key != value
-            elif types.upper() == AssertType.IN.value:
-                assert key in value
-            elif types.upper() == AssertType.NO_TIN.value:
-                assert key not in value
-
-            else:
-                raise ValueError(f"断言失败，目前不支持{types}断言类型，如需新增断言类型，请联系管理员")
-            # 正常断言的数据，需要则开启
-            # INFO.logger.info("断言成功, 预期值:{}, 断言类型{}, 实际值{}".format(value, types, key))
-
-        except AssertionError:
-            ERROR.logger.error("断言失败, 预期值:{}, 断言类型{}, 实际值{}".format(value, types, key))
-            raise
+        if str(types) == AssertType.equals.value:
+            equals(check_value=key, expect_value=value)
+        elif str(types) == AssertType.less_than.value:
+            less_than(check_value=key, expect_value=value)
+        elif str(types) == AssertType.less_than_or_equals.value:
+            less_than_or_equals(check_value=key, expect_value=value)
+        elif str(types) == AssertType.greater_than.value:
+            greater_than(check_value=key, expect_value=value)
+        elif str(types) == AssertType.greater_than_or_equals.value:
+            greater_than_or_equals(check_value=key, expect_value=value)
+        elif str(types) == AssertType.not_equals.value:
+            not_equals(check_value=key, expect_value=value)
+        elif str(types) == AssertType.string_equals.value:
+            string_equals(check_value=key, expect_value=value)
+        elif str(types) == AssertType.length_equals.value:
+            length_equals(check_value=key, expect_value=value)
+        elif str(types) == AssertType.length_greater_than.value:
+            length_greater_than(check_value=key, expect_value=value)
+        elif str(types) == AssertType.length_greater_than_or_equals.value:
+            length_greater_than_or_equals(check_value=key, expect_value=value)
+        elif str(types) == AssertType.length_less_than.value:
+            length_less_than(check_value=key, expect_value=value)
+        elif str(types) == AssertType.length_less_than_or_equals.value:
+            length_less_than_or_equals(check_value=key, expect_value=value)
+        elif str(types) == AssertType.contains.value:
+            contains(check_value=key, expect_value=value)
+        elif str(types) == AssertType.contained_by.value:
+            contained_by(check_value=key, expect_value=value)
+        elif str(types) == AssertType.startswith.value:
+            startswith(check_value=key, expect_value=value)
+        elif str(types) == AssertType.endswith.value:
+            endswith(check_value=key, expect_value=value)
+        else:
+            raise ValueError(f"断言失败，目前不支持{types}断言类型，如需新增断言类型，请联系管理员")
 
     def sql_switch_handle(self, sql_data, assert_value, key, values, resp_data) -> None:
         """

@@ -44,7 +44,6 @@ class TestCaseAutomaticGeneration:
             file_name = yaml_path.replace('.yml', '.py')
         return file_name
 
-<<<<<<< HEAD
     def get_package_path(self, file_path: str) -> str:
         """
         根据不同的层级，获取 test_case 中需要依赖的包
@@ -67,8 +66,6 @@ class TestCaseAutomaticGeneration:
         elif len(i) == 1:
             return f"from lib.{i[0][:-3]} import {i[0][:-3]}"
 
-=======
->>>>>>> b1a3ca63a079ce086c3a36b4a341cac479a606c9
     def get_case_path(self, file_path: str) -> tuple:
         """
         根据 yaml 中的用例，生成对应 testCase 层代码的路径

@@ -49,8 +49,8 @@ class GetYamlData:
         with open(self.fileDir, 'w', encoding='utf-8') as f:
             flag = 0
             for line in lines:
-                if key in line and '#' not in line:
-                    left_str = line.split(":")[0]
+                left_str = line.split(":")[0]
+                if key == left_str and '#' not in line:
                     newline = "{0}: {1}".format(left_str, value)
                     line = newline
                     f.write('%s\n' % line)

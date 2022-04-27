@@ -100,14 +100,13 @@ class DingTalkSendMsg(object):
         # 发送钉钉通知
         text = f"#### {project_name}自动化通知  \n\n>Python脚本任务: {project_name}\n\n>环境: TEST\n\n>" \
                f"执行人: {tester_name}\n\n>执行结果: {self.Process.pass_rate()}% \n\n>总用例数: {self.Process.total_count()} " \
-               f"\n\n>成功用例数: {self.Process.pass_rate()}" \
+               f"\n\n>成功用例数: {self.Process.pass_count()}" \
                f" \n\n>失败用例数: {self.Process.failed_count()} \n\n>跳过用例数: {self.Process.skipped_count()}" \
                f" ![screenshot](https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png)\n" \
                f" > ###### 测试报告 [详情](http://{get_host_ip()}:9999/index.html) \n"
         DingTalkSendMsg().send_markdown(
             title="【接口自动化通知】",
-            msg=text,
-            mobiles=[18867507063]
+            msg=text
         )
 
 

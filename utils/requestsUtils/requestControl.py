@@ -29,7 +29,8 @@ class RequestControl:
         _res_time = response.elapsed.total_seconds()
         # 判断响应码不等于200时，打印文本格式信息
         if response.status_code != 200:
-            return {"response_data": response.text, "sql_data": {"sql": None},
+            text = cls.text_encode(response.text)
+            return {"response_data": text, "sql_data": {"sql": None},
                     "yaml_data": yaml_data, "res_time": _res_time}
             # 判断 sql 不是空的话，获取数据库的数据，并且返回
         if sql_switch() and yaml_data['sql'] is not None:
@@ -118,6 +119,11 @@ class RequestControl:
         return multipart, params
 
     @classmethod
+    def text_encode(cls, text):
+        """unicode 解码"""
+        return text.encode("utf-8").decode("unicode_escape")
+
+    @classmethod
     def upload_file(cls, yaml_data):
         """
         判断处理上传文件
@@ -201,7 +207,9 @@ class RequestControl:
             _res_time = res.elapsed.total_seconds()
             allure_step_no(f"响应耗时(s): {_res_time}")
             if res.status_code != 200:
-                allure_step("响应结果: ", res.text)
+                text = self.text_encode(res.text)
+                allure_step("响应结果: ", text)
+                allure_step("响应结果: ", text)
             else:
                 allure_step("响应结果: ", res.json())
             cookie = res.cookies.get_dict()

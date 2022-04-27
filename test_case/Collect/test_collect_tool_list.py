@@ -26,7 +26,6 @@ class TestCollectToolList:
         :param :
         :return:
         """
-
         res = RequestControl().http_request(in_data)
         Assert(in_data['assert']).assert_equality(response_data=res['response_data'], 
                                                   sql_data=res['sql_data'])

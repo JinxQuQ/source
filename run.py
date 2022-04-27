@@ -14,6 +14,7 @@ from utils.noticUtils.dingtalkControl import DingTalkSendMsg
 from utils.noticUtils.sendmailControl import SendEmail
 from Enums.notificationType_enum import NotificationType
 from utils.noticUtils.feishuControl import FeiShuTalkChatBot
+from utils.readFilesUtils.caseAutomaticControl import TestCaseAutomaticGeneration
 
 
 def run():
@@ -30,6 +31,8 @@ def run():
                   开始执行{}项目...
                 """.format(project_name)
         )
+        # 判断现有的测试用例，如果未生成测试代码，则自动生成
+        TestCaseAutomaticGeneration().get_case_automatic()
 
         pytest.main(['-s', '-W', 'ignore:Module already imported:pytest.PytestWarning',
                      '--alluredir', './report/tmp', "--clean-alluredir"])
@@ -46,7 +49,7 @@ def run():
                    """
 
         os.system(r"allure generate ./report/tmp -o ./report/html --clean")
-        # 判断通知类型
+        # 判断通知类型，根据配置发送不同的报告通知
         if get_notification_type() == NotificationType.DEFAULT.value:
             pass
         elif get_notification_type() == NotificationType.DING_TALK.value:

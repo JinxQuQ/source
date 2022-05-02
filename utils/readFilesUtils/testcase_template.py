@@ -12,6 +12,11 @@ from utils.readFilesUtils.yamlControl import GetYamlData
 from common.setting import ConfigHandler
 
 
+def write_case(case_path, page):
+    with open(case_path, 'w', encoding="utf-8") as f:
+        f.write(page)
+
+
 def write_testcase_file(allure_epic, allure_feature, class_title,
                         func_title, case_path, yaml_path, file_name, allure_story):
     """
@@ -26,8 +31,10 @@ def write_testcase_file(allure_epic, allure_feature, class_title,
         :param yaml_path: yaml 文件路径
         :return:
         """
-    author = GetYamlData(ConfigHandler.config_path).get_yaml_data()['TesterName']
+    conf_data = GetYamlData(ConfigHandler.config_path).get_yaml_data()
+    author = conf_data['TesterName']
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    real_time_update_test_cases = conf_data['real_time_update_test_cases']
 
     page = f'''#!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -66,6 +73,10 @@ class Test{class_title}:
 if __name__ == '__main__':
     pytest.main(['{file_name}', '-s', '-W', 'ignore:Module already imported:pytest.PytestWarning'])
 '''
-    if not os.path.exists(case_path):
-        with open(case_path, 'w', encoding="utf-8") as f:
-            f.write(page)
+    if real_time_update_test_cases:
+        write_case(case_path=case_path, page=page)
+    elif real_time_update_test_cases is False:
+        if not os.path.exists(case_path):
+            write_case(case_path=case_path, page=page)
+    else:
+        raise ValueError("real_time_update_test_cases 配置不正确，只能配置 True 或者 False")

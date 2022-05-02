@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time   : 2022-04-26 17:45:07
+# @Time   : 2022-05-02 23:55:51
 # @Author : 七月
 
 
@@ -26,6 +26,7 @@ class TestCollectToolList:
         :param :
         :return:
         """
+
         res = RequestControl().http_request(in_data)
         Assert(in_data['assert']).assert_equality(response_data=res['response_data'], 
                                                   sql_data=res['sql_data'])

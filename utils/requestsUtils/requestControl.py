@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time   : 2022/3/28 12:52
 # @Author : 余少琪
-
+import json.decoder
 import random
 import allure
 import requests
@@ -26,19 +26,16 @@ class RequestControl:
     @classmethod
     def _check_params(cls, response, yaml_data, headers, cookie) -> Any:
         """ 抽离出通用模块，判断 http_request 方法中的一些数据校验 """
-        _res_time = response.elapsed.total_seconds()
-        # 判断响应码不等于200时，打印文本格式信息
-        if response.status_code != 200:
-            text = cls.text_encode(response.text)
-            return {"response_data": text, "sql_data": {"sql": None},
-                    "yaml_data": yaml_data, "res_time": _res_time}
-            # 判断 sql 不是空的话，获取数据库的数据，并且返回
-        if sql_switch() and yaml_data['sql'] is not None:
-            sql_data = MysqlDB().assert_execution(sql=yaml_data['sql'], resp=response.json())
-            return {"response_data": response.json(), "sql_data": sql_data, "yaml_data": yaml_data,
-                    "headers": headers, "cookie": cookie, "res_time": _res_time}
-        return {"response_data": response.json(), "sql_data": {"sql": None}, "yaml_data": yaml_data,
-                "headers": headers, "cookie": cookie, "res_time": _res_time}
+        # 判断数据库开关，开启状态，则返回对应的数据
+        cls.sql_switch(response, yaml_data, headers, cookie)
+        try:
+            res = response.json()
+            return {"response_data": res, "sql_data": {"sql": None}, "yaml_data": yaml_data,
+                    "headers": headers, "cookie": cookie, "res_time": cls.response_elapsed_total_seconds(response)}
+        except json.decoder.JSONDecodeError:
+            res = response.text
+            return {"response_data": res, "sql_data": {"sql": None},
+                    "yaml_data": yaml_data, "res_time": cls.response_elapsed_total_seconds(response)}
 
     @classmethod
     # 本段代码主要是用于兼容旧版本的用户，2022-04-21后拉取代码的使用者，可以直接删除此代码
@@ -73,6 +70,15 @@ class RequestControl:
             case_header_dependent(header_name='cookie')
         if 'Authorization' in header:
             case_header_dependent(header_name='Authorization')
+
+    @classmethod
+    def sql_switch(cls, response, yaml_data, headers, cookie):
+        """数据库开关为开启状态，判断"""
+        # 判断 sql 不是空的话，获取数据库的数据，并且返回
+        if sql_switch() and yaml_data['sql'] is not None:
+            sql_data = MysqlDB().assert_execution(sql=yaml_data['sql'], resp=response.json())
+            return {"response_data": response.json(), "sql_data": sql_data, "yaml_data": yaml_data,
+                    "headers": headers, "cookie": cookie, "res_time": cls.response_elapsed_total_seconds(response)}
 
     @classmethod
     def file_data_exit(cls, yaml_data, file_data):
@@ -122,6 +128,11 @@ class RequestControl:
     def text_encode(cls, text):
         """unicode 解码"""
         return text.encode("utf-8").decode("unicode_escape")
+
+    @classmethod
+    def response_elapsed_total_seconds(cls, res):
+        """获取接口响应时长"""
+        return res.elapsed.total_seconds()
 
     @classmethod
     def upload_file(cls, yaml_data):
@@ -181,12 +192,14 @@ class RequestControl:
                                        headers=_headers,  **kwargs)
 
             elif _requestType == RequestType.PARAMS.value:
-                # url 拼接的方式传参
-                params_data = "?"
-                for k, v in _data.items():
-                    params_data += (k + "=" + str(v) + "&")
-                res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value] + params_data[:-1],
-                                       headers=_headers, **kwargs)
+                url = yaml_data[YAMLDate.URL.value]
+                if _data is not None:
+                    # url 拼接的方式传参
+                    params_data = "?"
+                    for k, v in _data.items():
+                        params_data += (k + "=" + str(v) + "&")
+                    url = yaml_data[YAMLDate.URL.value] + params_data[:-1]
+                res = requests.request(method=_method, url=url, headers=_headers, **kwargs)
             # 判断上传文件
             elif _requestType == RequestType.FILE.value:
                 multipart = self.upload_file(yaml_data)
@@ -204,16 +217,14 @@ class RequestControl:
             allure_step("请求数据: ", _data)
             allure_step("依赖数据: ", _dependent_data)
             allure_step("预期数据: ", _assert)
-            _res_time = res.elapsed.total_seconds()
-            allure_step_no(f"响应耗时(s): {_res_time}")
-            if res.status_code != 200:
-                text = self.text_encode(res.text)
-                allure_step("响应结果: ", text)
-                allure_step("响应结果: ", text)
-            else:
+            allure_step_no(f"响应耗时(s): {self.response_elapsed_total_seconds(res)}")
+            try:
                 allure_step("响应结果: ", res.json())
-            cookie = res.cookies.get_dict()
+            except json.decoder.JSONDecodeError:
+                res = self.text_encode(res.text)
+                allure_step("响应结果: ", res)
 
+            cookie = res.cookies.get_dict()
             return self._check_params(res, yaml_data, _headers, cookie)
         else:
             # 用例跳过执行的话，响应数据和sql数据为空

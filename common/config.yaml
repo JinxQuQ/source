@@ -24,7 +24,7 @@ DingTalk:
   webhook: https://oapi.dingtalk.com/robot/send?access_token=a59902a7e811f93ffe301d8326b07a2acc8aa2a864e7d61ee9fc076481ced2a6
   secret: SECdea6489dfcc3b9259da943c5ae38d3530696f2fa83ac72a9ee716e9511675b9b
 
-# 数据库相关配置
+# 数据库配置
 MySqlDB:
   switch: False
   host:

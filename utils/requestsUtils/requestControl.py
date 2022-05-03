@@ -27,15 +27,21 @@ class RequestControl:
     def _check_params(cls, response, yaml_data, headers, cookie) -> Any:
         """ 抽离出通用模块，判断 http_request 方法中的一些数据校验 """
         # 判断数据库开关，开启状态，则返回对应的数据
-        cls.sql_switch(response, yaml_data, headers, cookie)
-        try:
-            res = response.json()
-            return {"response_data": res, "sql_data": {"sql": None}, "yaml_data": yaml_data,
+        if sql_switch() and yaml_data['sql'] is not None:
+            sql_data = MysqlDB().assert_execution(sql=yaml_data['sql'], resp=response.json())
+            return {"response_data": response.json(), "sql_data": sql_data, "yaml_data": yaml_data,
                     "headers": headers, "cookie": cookie, "res_time": cls.response_elapsed_total_seconds(response)}
-        except json.decoder.JSONDecodeError:
-            res = response.text
-            return {"response_data": res, "sql_data": {"sql": None},
-                    "yaml_data": yaml_data, "res_time": cls.response_elapsed_total_seconds(response)}
+
+        # 数据库关闭走的逻辑
+        else:
+            try:
+                res = response.json()
+                return {"response_data": res, "sql_data": {"sql": None}, "yaml_data": yaml_data,
+                        "headers": headers, "cookie": cookie, "res_time": cls.response_elapsed_total_seconds(response)}
+            except json.decoder.JSONDecodeError:
+                res = response.text
+                return {"response_data": res, "sql_data": {"sql": None},
+                        "yaml_data": yaml_data, "res_time": cls.response_elapsed_total_seconds(response)}
 
     @classmethod
     # 本段代码主要是用于兼容旧版本的用户，2022-04-21后拉取代码的使用者，可以直接删除此代码
@@ -70,15 +76,6 @@ class RequestControl:
             case_header_dependent(header_name='cookie')
         if 'Authorization' in header:
             case_header_dependent(header_name='Authorization')
-
-    @classmethod
-    def sql_switch(cls, response, yaml_data, headers, cookie):
-        """数据库开关为开启状态，判断"""
-        # 判断 sql 不是空的话，获取数据库的数据，并且返回
-        if sql_switch() and yaml_data['sql'] is not None:
-            sql_data = MysqlDB().assert_execution(sql=yaml_data['sql'], resp=response.json())
-            return {"response_data": response.json(), "sql_data": sql_data, "yaml_data": yaml_data,
-                    "headers": headers, "cookie": cookie, "res_time": cls.response_elapsed_total_seconds(response)}
 
     @classmethod
     def file_data_exit(cls, yaml_data, file_data):

@@ -36,5 +36,3 @@ get_user_info_01:
         value: '18800000001'
         AssertType:
     sql:
-      - SELECT  AES_DECRYPT(FROM_BASE64 ( contact_mobile ),UNHEX(SUBSTR( SHA1( 'hkiqAXU6Ur5fixGHaO4Lb2V2ggausYwW' ), 1, 32 ))) as contactMobile, account_holder as accountHolder, attribute, ban_status as banStatus, bank_account as bankAccount, bank_name as bankName, biz_type as bizType, contact ,contact_mobile as contactMobile, corporate_id_number as corporateIdNumber, corporate_name as corporateName, deposit_bank as depositBank, (UNIX_TIMESTAMP(gmt_create) * 1000) as gmtCreate , (UNIX_TIMESTAMP(gmt_modified) * 1000) as gmtModified, id, `name`, `status`, supplier_type as supplierType, taxpayer_type as taxpayerType from test_obp_supplier.supplier where id = 237
-

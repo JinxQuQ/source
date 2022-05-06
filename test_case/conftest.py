@@ -37,6 +37,7 @@ def write_case_process():
     获取所有用例，写入用例池中
     :return:
     """
+
     case_data = {}
     # 循环拿到所有存放用例的文件路径
     for i in get_all_files(file_path=ConfigHandler.data_path, yaml_data_switch=True):

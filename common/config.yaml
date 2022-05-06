@@ -50,5 +50,5 @@ FeiShuTalk:
 
 # 实时更新用例内容，False时，已生成的代码不会在做变更
 # 设置为True的时候，修改yaml文件的用例，代码中的内容会实时更新
-real_time_update_test_cases: False
+real_time_update_test_cases: True
 

@@ -48,9 +48,11 @@ from common.setting import ConfigHandler
 from utils.readFilesUtils.get_yaml_data_analysis import CaseData
 from utils.assertUtils.assertControl import Assert
 from utils.requestsUtils.requestControl import RequestControl
+from utils.readFilesUtils.regularControl import regular
 
 
 TestData = CaseData(ConfigHandler.data_path + r'{yaml_path}').case_process()
+re_data = regular(str(TestData))
 
 
 @allure.epic("{allure_epic}")
@@ -58,7 +60,7 @@ TestData = CaseData(ConfigHandler.data_path + r'{yaml_path}').case_process()
 class Test{class_title}:
 
     @allure.story("{allure_story}")
-    @pytest.mark.parametrize('in_data', TestData, ids=[i['detail'] for i in TestData])
+    @pytest.mark.parametrize('in_data', eval(re_data), ids=[i['detail'] for i in TestData])
     def test_{func_title}(self, in_data, case_skip):
         """
         :param :

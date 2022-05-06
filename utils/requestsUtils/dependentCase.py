@@ -9,6 +9,7 @@ from utils.requestsUtils.requestControl import RequestControl
 from Enums.dependentType_enum import DependentType
 from Enums.yamlData_enum import YAMLDate
 from utils.mysqlUtils.mysqlControl import MysqlDB
+from utils.readFilesUtils.regularControl import regular
 
 
 class DependentCase:
@@ -92,7 +93,8 @@ class DependentCase:
 
                         # 判断依赖数据类型, 依赖 response 中的数据
                         if i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.RESPONSE.value:
-                            res = RequestControl().http_request(cls.get_cache(_case_id))
+                            re_data = regular(str(cls.get_cache(_case_id)))
+                            res = RequestControl().http_request(eval(re_data))
                             jsonpath_data = cls.jsonpath_data(res['response_data'], _jsonpath)
                             cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
                                             jsonpath_data=jsonpath_data, case_data=case_data)

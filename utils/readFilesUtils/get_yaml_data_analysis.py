@@ -4,7 +4,7 @@
 # @Author : 余少琪
 
 from utils import sql_switch
-from utils.readFilesUtils.yamlControl import GetCaseData
+from utils.readFilesUtils.yamlControl import GetYamlData
 
 
 class CaseData:
@@ -21,7 +21,7 @@ class CaseData:
         :param case_id_switch: 判断数据清洗，是否需要清洗出 case_id, 主要用于兼容用例池中的数据
         :return:
         """
-        dates = GetCaseData(self.filePath).get_yaml_case_data()
+        dates = GetYamlData(self.filePath).get_yaml_data()
         case_lists = []
         for key, values in dates.items():
             # 公共配置中的数据，与用例数据不同，需要单独处理

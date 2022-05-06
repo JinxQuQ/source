@@ -124,7 +124,7 @@ class RequestControl:
     @classmethod
     def text_encode(cls, text):
         """unicode 解码"""
-        return text.encode("utf-8").decode("unicode_escape")
+        return text.encode("utf-8").decode("utf-8")
 
     @classmethod
     def response_elapsed_total_seconds(cls, res):

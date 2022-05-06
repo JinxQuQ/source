@@ -77,14 +77,12 @@ def length_less_than_or_equals(check_value, expect_value):
 
 def contains(check_value, expect_value):
     """判断期望结果内容包含在实际结果中"""
-    assert isinstance(check_value, (list, tuple, dict, basestring, str))
-    assert expect_value in check_value
+    assert str(expect_value) in str(check_value)
 
 
 def contained_by(check_value, expect_value):
     """判断实际结果包含在期望结果中"""
-    assert isinstance(expect_value, (list, tuple, dict, basestring))
-    assert check_value in expect_value
+    assert str(check_value) in str(expect_value)
 
 
 def startswith(check_value, expect_value):

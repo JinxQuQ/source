@@ -97,24 +97,6 @@ class Context:
         return host
 
 
-def regular(target):
-    """
-    使用正则替换请求数据
-    :return:
-    """
-    try:
-        regular_pattern = r'\${{(.*?)}}'
-        while re.findall(regular_pattern, target):
-            key = re.search(regular_pattern, target).group(1)
-
-            target = re.sub(regular_pattern, str(getattr(Context(), key)), target, 1)
-        return target
-
-    except AttributeError:
-        ERROR.logger.error("未找到对应的替换的数据, 请检查数据是否正确", target)
-        raise
-
-
 def sql_json(js_path, res):
     return jsonpath.jsonpath(res, js_path)[0]
 
@@ -153,3 +135,25 @@ def cache_regular(value):
         # 使用sub方法，替换已经拿到的内容
         value = re.sub(pattern, cache_data, value)
     return value
+
+
+def regular(target):
+    """
+    使用正则替换请求数据
+    :return:
+    """
+    try:
+        regular_pattern = r'\${{(.*?)}}'
+        while re.findall(regular_pattern, target):
+            key = re.search(regular_pattern, target).group(1)
+            value_data = getattr(Context(), key)
+            if isinstance(value_data, (int, float)):
+                regular_pattern = r'\'\${{(.*?)}}\''
+                target = re.sub(regular_pattern, str(value_data), target, 1)
+            else:
+                target = re.sub(regular_pattern, str(value_data), target, 1)
+        return target
+
+    except AttributeError:
+        ERROR.logger.error("未找到对应的替换的数据, 请检查数据是否正确", target)
+        raise

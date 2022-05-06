@@ -88,3 +88,4 @@ class GetCaseData(GetYamlData):
             raise yaml.parser.ParserError("yaml格式不正确, 请检查下方对应路径中的文件内容 {0}".format(e))
         except yaml.scanner.ScannerError as e:
             raise yaml.scanner.ScannerError("yaml格式不正确, 请检查下方对应路径中的文件内容 {0}".format(e))
+

@@ -1,0 +1,14 @@
+ERROR   2022-05-06 11:31:35,589  D:\works\pytest-auto-api2\logs\error.log:conftest.py:130 异常用例数: 6
+ERROR   2022-05-06 11:31:35,589  D:\works\pytest-auto-api2\logs\error.log:conftest.py:131 失败用例数: 0
+ERROR   2022-05-06 11:33:14,904  D:\works\pytest-auto-api2\logs\error.log:conftest.py:130 异常用例数: 6
+ERROR   2022-05-06 11:33:14,904  D:\works\pytest-auto-api2\logs\error.log:conftest.py:131 失败用例数: 0
+ERROR   2022-05-06 11:37:00,964  D:\works\pytest-auto-api2\logs\error.log:conftest.py:130 异常用例数: 0
+ERROR   2022-05-06 11:37:00,965  D:\works\pytest-auto-api2\logs\error.log:conftest.py:131 失败用例数: 2
+ERROR   2022-05-06 11:44:50,656  D:\works\pytest-auto-api2\logs\error.log:conftest.py:130 异常用例数: 0
+ERROR   2022-05-06 11:44:50,659  D:\works\pytest-auto-api2\logs\error.log:conftest.py:131 失败用例数: 0
+ERROR   2022-05-06 15:08:37,971  D:\works\pytest-auto-api2\logs\error.log:conftest.py:131 异常用例数: 0
+ERROR   2022-05-06 15:08:37,972  D:\works\pytest-auto-api2\logs\error.log:conftest.py:132 失败用例数: 0
+ERROR   2022-05-06 15:14:33,594  D:\works\pytest-auto-api2\logs\error.log:conftest.py:131 异常用例数: 1
+ERROR   2022-05-06 15:14:33,594  D:\works\pytest-auto-api2\logs\error.log:conftest.py:132 失败用例数: 0
+ERROR   2022-05-06 15:14:54,512  D:\works\pytest-auto-api2\logs\error.log:conftest.py:131 异常用例数: 0
+ERROR   2022-05-06 15:14:54,513  D:\works\pytest-auto-api2\logs\error.log:conftest.py:132 失败用例数: 0

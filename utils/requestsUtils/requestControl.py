@@ -220,8 +220,11 @@ class RequestControl:
             except json.decoder.JSONDecodeError:
                 res = self.text_encode(res.text)
                 allure_step("响应结果: ", res)
+            try:
+                cookie = res.cookies.get_dict()
+            except:
+                cookie = None
 
-            cookie = res.cookies.get_dict()
             return self._check_params(res, yaml_data, _headers, cookie)
         else:
             # 用例跳过执行的话，响应数据和sql数据为空

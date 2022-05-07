@@ -10,7 +10,7 @@ collect_addtool_01:
     method: POST
     detail: 新增收藏网址接口
     headers:
-      Content-Type: multipart/form-data;
+#      Content-Type: multipart/form-data;
       # 这里cookie的值，写的是存入缓存的名称
       cookie: $cache{login_cookie}
     # 请求的数据，是 params 还是 json、或者file、date

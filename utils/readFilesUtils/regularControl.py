@@ -73,7 +73,7 @@ class Context:
     def random_int(self):
         """随机生成 0 - 9999 的数字"""
         numbers = self.f.random_int()
-        return numbers
+        return str(numbers)
 
     @property
     def host(self) -> str:
@@ -148,8 +148,8 @@ def regular(target):
             key = re.search(regular_pattern, target).group(1)
             value_data = getattr(Context(), key)
             if isinstance(value_data, (int, float)):
-                regular_pattern = r'\'\${{(.*?)}}\''
-                target = re.sub(regular_pattern, str(value_data), target, 1)
+                regular_int_pattern = r'\'\${{(.*?)}}\''
+                target = re.sub(regular_int_pattern, str(value_data), target, 1)
             else:
                 target = re.sub(regular_pattern, str(value_data), target, 1)
         return target

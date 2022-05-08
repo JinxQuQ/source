@@ -32,10 +32,16 @@ class ConfigHandler:
     config_path = os.path.join(root_path, 'common' + _SLASH + 'config.yaml')
 
     file_path = os.path.join(root_path, 'Files' + _SLASH)
-
     # 测试报告路径
     report_path = os.path.join(root_path, 'report')
+    # 测试报告中的test_case路径
+    report_html_test_case_path = os.path.join(root_path, 'report' + _SLASH +
+                                              "html" + _SLASH + 'data' + _SLASH + "test-cases" + _SLASH)
+
+    # 测试报告中的attachments路径
+    report_html_attachments_path = os.path.join(root_path, 'report' + _SLASH +
+                                                "html" + _SLASH + 'data' + _SLASH + "attachments" + _SLASH)
 
 
 if __name__ == '__main__':
-    print(ConfigHandler.cache_path)
+    print(ConfigHandler.report_html_test_case_path)

@@ -1,0 +1,24 @@
+ERROR   2022-05-02 22:43:37,007  C:\work\Study\pytest-auto-api2\logs\error.log:assertControl.py:125 JsonPath值获取失败$.message
+ERROR   2022-05-02 22:52:23,730  C:\work\Study\pytest-auto-api2\logs\error.log:runTimeDecoratorl.py:24 
+=================================================================================
+测试用例执行时间较长，请关注.
+函数运行时间:4073 ms
+测试用例相关数据: {'response_data': {'data': {'admin': False, 'chapterTops': [], 'coinCount': 550, 'collectIds': [-1, -1, -1, -1, 21630, -1, -1, -1, -1], 'email': '', 'icon': '', 'id': 129462, 'nickname': '18800000001', 'password': '', 'publicName': '18800000001', 'token': '', 'type': 0, 'username': '18800000001'}, 'errorCode': 0, 'errorMsg': ''}, 'sql_data': {'sql': None}, 'yaml_data': {'method': 'POST', 'is_run': None, 'url': 'https://www.wanandroid.com/user/login', 'detail': '正常登录', 'headers': {'Content-Type': 'multipart/form-data; boundary=941a3dd201d64673a17df9e6aecf7356'}, 'requestType': 'DATE', 'data': {'username': '18800000001', 'password': '123456'}, 'dependence_case': False, 'dependence_case_data': {'dependence_case_data': None}, 'sql': None, 'assert': {'errorCode': {'jsonpath': '$.errorCode', 'type': '==', 'value': 0, 'AssertType': None}, 'username': {'jsonpath': '$.data.username', 'type': '==', 'value': '18800000001', 'AssertType': None}}, 'setup_sql': None}, 'headers': {'Content-Type': 'multipart/form-data; boundary=941a3dd201d64673a17df9e6aecf7356'}, 'cookie': {'loginUserName_wanandroid_com': '18800000001', 'token_pass_wanandroid_com': '5d9b90bcb70640183e09d1e755ead823', 'JSESSIONID': '53010446444AC79570ED67B7B9287E0D', 'loginUserName': '18800000001', 'token_pass': '5d9b90bcb70640183e09d1e755ead823'}, 'res_time': 0.609263}
+=================================================================================
+ERROR   2022-05-02 22:55:40,465  C:\work\Study\pytest-auto-api2\logs\error.log:assertControl.py:125 JsonPath值获取失败$.message
+ERROR   2022-05-02 22:58:04,376  C:\work\Study\pytest-auto-api2\logs\error.log:assertControl.py:125 JsonPath值获取失败$.message
+ERROR   2022-05-02 23:42:20,573  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:130 异常用例数: 0
+ERROR   2022-05-02 23:42:20,573  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:131 失败用例数: 0
+ERROR   2022-05-03 11:49:50,931  C:\work\Study\pytest-auto-api2\logs\error.log:assertControl.py:125 JsonPath值获取失败$.code
+ERROR   2022-05-03 11:50:35,763  C:\work\Study\pytest-auto-api2\logs\error.log:assertControl.py:125 JsonPath值获取失败$.code
+ERROR   2022-05-03 11:54:01,662  C:\work\Study\pytest-auto-api2\logs\error.log:assertControl.py:125 JsonPath值获取失败$.brand_name
+ERROR   2022-05-03 11:58:26,006  C:\work\Study\pytest-auto-api2\logs\error.log:assertControl.py:125 JsonPath值获取失败$.brand_name
+ERROR   2022-05-03 12:00:05,173  C:\work\Study\pytest-auto-api2\logs\error.log:assertControl.py:125 JsonPath值获取失败$.brand_name
+ERROR   2022-05-03 12:00:27,994  C:\work\Study\pytest-auto-api2\logs\error.log:assertControl.py:125 JsonPath值获取失败$.brand_name
+ERROR   2022-05-03 12:00:57,989  C:\work\Study\pytest-auto-api2\logs\error.log:assertControl.py:125 JsonPath值获取失败$.brand_name
+ERROR   2022-05-03 12:50:08,631  C:\work\Study\pytest-auto-api2\logs\error.log:mysqlControl.py:69 数据库连接失败，失败原因(1146, "Table 'test_obp_supplier.supplier' doesn't exist")
+ERROR   2022-05-03 12:50:08,632  C:\work\Study\pytest-auto-api2\logs\error.log:mysqlControl.py:115 数据库连接失败，失败原因'NoneType' object is not subscriptable
+ERROR   2022-05-03 12:50:08,854  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:130 异常用例数: 0
+ERROR   2022-05-03 12:50:08,854  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:131 失败用例数: 1
+ERROR   2022-05-03 12:52:03,257  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:130 异常用例数: 0
+ERROR   2022-05-03 12:52:03,258  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:131 失败用例数: 0

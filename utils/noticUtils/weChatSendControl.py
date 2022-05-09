@@ -96,6 +96,28 @@ class WeChatSend:
         else:
             raise TypeError("图文类型的参数必须是字典类型")
 
+    def _upload_file(self, file):
+        """
+        先将文件上传到临时媒体库
+        """
+        key = self.curl.split("key=")[1]
+        url = f"https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media?key={key}&type=file"
+        data = {"file": open(file, "rb")}
+        res = requests.post(url, files=data).json()
+        return res['media_id']
+
+    def send_file_msg(self, file):
+        """
+        发送文件类型的消息
+        @return:
+        """
+
+        _data = {"msgtype": "file", "file": {"media_id": self._upload_file(file)}}
+        res = requests.post(url=self.curl, json=_data, headers=self.headers)
+        if res.json()['errcode'] != 0:
+            ERROR.logger.error(res.json())
+            raise ValueError(f"企业微信「file类型」消息发送失败")
+
     def send_wechat_notification(self):
         # 发送企业微信通知
         text = """【{0}自动化通知】
@@ -116,7 +138,3 @@ class WeChatSend:
                     self.BROKEN, self.SKIP, now_time(), get_host_ip())
 
         WeChatSend().send_markdown(text)
-
-
-if __name__ == '__main__':
-    WeChatSend().send_wechat_notification()

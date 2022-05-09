@@ -8,8 +8,11 @@
 
 import xlwings
 import json
+import shutil
+import os
 from utils.readFilesUtils.get_all_files_path import get_all_files
 from common.setting import ConfigHandler
+from utils.noticUtils.weChatSendControl import WeChatSend
 
 
 class ErrorTestCase:
@@ -160,9 +163,16 @@ class ErrorTestCase:
 class ErrorCaseExcel:
     """ 收集运行失败的用例，整理成excel报告 """
     def __init__(self):
+        _excel_template = ConfigHandler.excel_template + "自动化异常测试用例.xlsx"
+        self._file_path = ConfigHandler.file_path + "自动化异常测试用例.xlsx"
+        if os.path.exists(self._file_path):
+            os.remove(self._file_path)
+
+        shutil.copyfile(src=_excel_template, dst=self._file_path)
+
         # 打开程序（只打开不新建
-        self.app = xlwings.App(visible=True, add_book=False)
-        self.wb = self.app.books.open(ConfigHandler.file_path + "data2.xls")
+        self.app = xlwings.App(visible=False, add_book=False)
+        self.wb = self.app.books.open(self._file_path)
 
         # 选取工作表：
         self.sheet = self.wb.sheets['异常用例']  # 或通过索引选取
@@ -229,8 +239,13 @@ class ErrorCaseExcel:
         self.sheet.range(position).value = value
 
     def write_case(self):
+        """
+        用例中写入失败用例数据
+        @return:
+        """
 
         dates = self.case_data.get_error_case_data()
+        # 判断有数据才进行写入
         if len(dates) > 0:
             num = 2
             for date in dates:
@@ -248,6 +263,11 @@ class ErrorCaseExcel:
                 self.write_excel_content(position="K" + str(num), value=str(self.case_data.get_case_time(date)))
                 self.write_excel_content(position="L" + str(num), value=str(self.case_data.get_response(date)))
                 num += 1
+            self.wb.save()
+            self.wb.close()
+            self.app.quit()
+            # 有数据才发送企业微信
+            WeChatSend().send_file_msg(self._file_path)
 
 
 if __name__ == '__main__':

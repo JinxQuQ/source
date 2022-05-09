@@ -6,7 +6,7 @@
 import os
 import traceback
 import pytest
-from utils import project_name
+from utils import project_name, get_excel_report_switch
 from utils.logUtils.logControl import INFO
 from utils import get_notification_type
 from utils.noticUtils.weChatSendControl import WeChatSend
@@ -15,6 +15,7 @@ from utils.noticUtils.sendmailControl import SendEmail
 from Enums.notificationType_enum import NotificationType
 from utils.noticUtils.feishuControl import FeiShuTalkChatBot
 from utils.readFilesUtils.caseAutomaticControl import TestCaseAutomaticGeneration
+from utils.otherUtils.allureDate.error_case_excel import ErrorCaseExcel
 
 
 def run():
@@ -56,6 +57,8 @@ def run():
             DingTalkSendMsg().send_ding_notification()
         elif get_notification_type() == NotificationType.WECHAT.value:
             WeChatSend().send_wechat_notification()
+            if get_excel_report_switch():
+                ErrorCaseExcel().write_case()
         elif get_notification_type() == NotificationType.EMAIL.value:
             SendEmail().send_main()
         elif get_notification_type() == NotificationType.FEI_SHU.value:

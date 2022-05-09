@@ -7,6 +7,8 @@ import os
 from common.setting import ConfigHandler
 from utils.readFilesUtils.yamlControl import GetYamlData
 
+conf = GetYamlData(ConfigHandler.config_path).get_yaml_data()
+
 
 def get_os_sep():
     """
@@ -18,17 +20,21 @@ def get_os_sep():
 
 def sql_switch():
     """获取数据库开关"""
-    switch = GetYamlData(ConfigHandler.config_path) \
-        .get_yaml_data()['MySqlDB']["switch"]
+    switch = conf['MySqlDB']["switch"]
     return switch
 
 
 def get_notification_type():
     # 获取报告通知类型，是发送钉钉还是企业邮箱
-    date = GetYamlData(ConfigHandler.config_path).get_yaml_data()['NotificationType']
+    date = conf['NotificationType']
     return date
 
 
-configPath = GetYamlData(ConfigHandler.config_path).get_yaml_data()
-project_name = configPath['ProjectName'][0]
-tester_name = configPath['TesterName']
+def get_excel_report_switch():
+    """获取excel报告开关"""
+    excel_report_switch = conf['excel_report']
+    return excel_report_switch
+
+
+project_name = conf['ProjectName'][0]
+tester_name = conf['TesterName']

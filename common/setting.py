@@ -42,6 +42,8 @@ class ConfigHandler:
     report_html_attachments_path = os.path.join(root_path, 'report' + _SLASH +
                                                 "html" + _SLASH + 'data' + _SLASH + "attachments" + _SLASH)
 
+    excel_template = os.path.join(root_path, 'utils' + _SLASH + 'otherUtils' + _SLASH + "allureDate" + _SLASH)
+
 
 if __name__ == '__main__':
-    print(ConfigHandler.report_html_test_case_path)
+    print(ConfigHandler.excel_template)

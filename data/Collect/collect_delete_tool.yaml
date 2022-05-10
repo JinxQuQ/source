@@ -20,6 +20,7 @@ collect_delete_tool_01:
     data:
       id: 111
       # 是否有依赖业务，为空或者false则表示没有
+      test:
     dependence_case: True
     # 依赖的数据
     dependence_case_data:
@@ -28,6 +29,9 @@ collect_delete_tool_01:
           - dependent_type: response
             jsonpath: $.data.id
             replace_key: $.data.id
+          - dependent_type: response
+            jsonpath: $.data
+            replace_key: $.data.test
 
     assert:
       # 断言接口状态码

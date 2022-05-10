@@ -11,7 +11,7 @@ from utils.logUtils.logControl import ERROR
 from utils.otherUtils.allureDate.allure_report_data import CaseCount
 from utils.timesUtils.timeControl import now_time
 from utils.otherUtils.localIpControl import get_host_ip
-from utils import project_name, tester_name
+from utils.otherUtils.get_conf_data import project_name, tester_name
 
 
 class WeChatSend:

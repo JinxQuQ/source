@@ -7,7 +7,7 @@ import random
 import allure
 import requests
 from typing import Any
-from utils import sql_switch
+from utils.otherUtils.get_conf_data import sql_switch
 from requests_toolbelt import MultipartEncoder
 from utils.logUtils.logDecoratorl import log_decorator
 from utils.mysqlUtils.mysqlControl import MysqlDB
@@ -38,7 +38,7 @@ class RequestControl:
                 res = response.json()
                 return {"response_data": res, "sql_data": {"sql": None}, "yaml_data": yaml_data,
                         "headers": headers, "cookie": cookie, "res_time": cls.response_elapsed_total_seconds(response)}
-            except json.decoder.JSONDecodeError:
+            except:
                 res = response.text
                 return {"response_data": res, "sql_data": {"sql": None},
                         "yaml_data": yaml_data, "res_time": cls.response_elapsed_total_seconds(response)}
@@ -182,7 +182,6 @@ class RequestControl:
         if _is_run is True or _is_run is None:
             # 处理多业务逻辑
             DependentCase().get_dependent_data(yaml_data)
-
             if _requestType == RequestType.JSON.value:
                 _data, _headers = self.multipart_in_headers(_data, _headers)
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], json=_data,

@@ -14,7 +14,7 @@ from dingtalkchatbot.chatbot import DingtalkChatbot, FeedLink
 from common.setting import ConfigHandler
 from utils.otherUtils.localIpControl import get_host_ip
 from utils.otherUtils.allureDate.allure_report_data import CaseCount
-from utils import project_name, tester_name
+from utils.otherUtils.get_conf_data import project_name, tester_name
 
 
 class DingTalkSendMsg(object):

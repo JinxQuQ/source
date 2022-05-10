@@ -9,7 +9,7 @@ from utils.logUtils.logControl import ERROR
 from common.setting import ConfigHandler
 from utils.readFilesUtils.regularControl import sql_regular
 from utils.readFilesUtils.yamlControl import GetYamlData
-from utils import sql_switch
+from utils.otherUtils.get_conf_data import sql_switch
 
 
 # 忽略 Mysql 告警信息

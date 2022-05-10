@@ -6,9 +6,9 @@
 import os
 import traceback
 import pytest
-from utils import project_name, get_excel_report_switch
+from utils.otherUtils.get_conf_data import project_name, get_excel_report_switch
 from utils.logUtils.logControl import INFO
-from utils import get_notification_type
+from utils.otherUtils.get_conf_data import get_notification_type
 from utils.noticUtils.weChatSendControl import WeChatSend
 from utils.noticUtils.dingtalkControl import DingTalkSendMsg
 from utils.noticUtils.sendmailControl import SendEmail

@@ -5,7 +5,7 @@
 
 
 import jsonpath
-from utils import sql_switch
+from utils.otherUtils.get_conf_data import sql_switch
 from utils.logUtils.logControl import ERROR, WARNING
 from Enums.assertType_enum import AssertType
 from utils.assertUtils.assert_type import *

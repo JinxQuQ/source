@@ -50,7 +50,7 @@
 
 
     ├── Cache                          // 存放缓存文件
-    ├── config                         // 配置
+    ├── common                         // 配置
     │   ├── conf.yaml                  // 公共配置
     │   ├── setting.py                 // 环境路径存放区域
     ├── data                           // 测试用例数据
@@ -81,6 +81,7 @@
     │       └── allureDate             // allure封装
     │           └── allure_report_data.py // allure报告数据清洗
     │           └── allure_tools.py   // allure 方法封装
+    │           └── error_case_excel.py   // 收集allure异常用例，生成excel测试报告
     │       └── localIpControl.py      // 获取本地IP
     │       └── threadControl.py       // 定时器类
     │   └── readFilesUtils             // 文件操作

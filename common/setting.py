@@ -32,6 +32,9 @@ class ConfigHandler:
     config_path = os.path.join(root_path, 'common' + _SLASH + 'config.yaml')
 
     file_path = os.path.join(root_path, 'Files' + _SLASH)
+
+    util_path = os.path.join(root_path, 'utils' + _SLASH)
+    util_install_path = util_path + 'otherUtils' + _SLASH + 'InstallUtils' + _SLASH
     # 测试报告路径
     report_path = os.path.join(root_path, 'report')
     # 测试报告中的test_case路径

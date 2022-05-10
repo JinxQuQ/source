@@ -36,6 +36,8 @@ MySqlDB:
   password:
   db: test_obp_data
 
+# 镜像源
+mirror_source: http://mirrors.aliyun.com/pypi/simple/
 
 # 企业通知的相关配置
 WeChat:

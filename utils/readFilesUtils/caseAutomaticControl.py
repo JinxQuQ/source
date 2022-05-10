@@ -7,7 +7,7 @@ import os
 from common.setting import ConfigHandler
 from utils.readFilesUtils.testcase_template import write_testcase_file
 from utils.readFilesUtils.yamlControl import GetYamlData
-from utils import get_os_sep
+from utils.otherUtils.get_os_sep import get_os_sep
 from utils.readFilesUtils.get_all_files_path import get_all_files
 
 

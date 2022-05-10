@@ -3,7 +3,7 @@
 # @Time   : 2022/3/30 13:32
 # @Author : 余少琪
 
-from enum import Enum
+from enum import Enum, unique
 
 
 class AllureAttachmentType(Enum):

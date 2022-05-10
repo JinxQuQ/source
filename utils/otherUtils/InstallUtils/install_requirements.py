@@ -5,13 +5,13 @@
 # @Email   : 1603453211@qq.com
 # @File    : install_requirements
 # @describe: 判断程序是否每次会更新依赖库，如有更新，则自动安装
-
+import os
 from common.setting import ConfigHandler
 from utils.otherUtils.get_os_sep import get_os_sep
 from utils.otherUtils.get_conf_data import get_mirror_url
-import chardet
 from utils.logUtils.logControl import INFO
-import os
+os.system("pip3 install chardet")
+import chardet
 
 
 class InstallRequirements:
@@ -22,8 +22,8 @@ class InstallRequirements:
         self.requirements_path = ConfigHandler.root_path + get_os_sep() + "requirements.txt"
         self.mirror_url = get_mirror_url()
         # 初始化时，获取最新的版本库
-        # 如需进入虚拟环境，直接
-        os.system("pip freeze > {0}".format(self.requirements_path))
+
+        # os.system("pip freeze > {0}".format(self.requirements_path))
 
     def read_version_library_comparisons_txt(self):
         """
@@ -67,7 +67,7 @@ class InstallRequirements:
         # 程序中如出现不同的文件，则安装
         else:
             INFO.logger.info("程序中检测到您更新了依赖库，已为您自动安装")
-            os.system("pip install -r {0}".format(self.requirements_path))
+            os.system("pip3 install -r {0}".format(self.requirements_path))
             with open(self.version_library_comparisons_path, "w",
                       encoding=self.check_charset(self.requirements_path)) as f:
                 f.write(read_requirements)

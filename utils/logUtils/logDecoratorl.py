@@ -37,7 +37,7 @@ def log_decorator(switch: bool):
                                 f"\n=================================================================================\n"
                                 f"测试标题: {res['yaml_data']['detail']}\n"
                                 f"请求方式: {res['yaml_data']['method']}\n"
-                                f"请求头:   {res['yaml_data']}\n"
+                                f"请求头:   {res['yaml_data']['headers']}\n"
                                 f"请求路径: {res['yaml_data']['url']}\n"
                                 f"请求内容: {res['yaml_data']['data']}\n"
                                 f"依赖测试用例: {_dependent_case}\n"

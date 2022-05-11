@@ -14,7 +14,6 @@ from utils.mysqlUtils.mysqlControl import MysqlDB
 from Enums.requestType_enum import RequestType
 from Enums.yamlData_enum import YAMLDate
 from common.setting import ConfigHandler
-from utils.cacheUtils.cacheControl import Cache
 from utils.logUtils.runTimeDecoratorl import execution_duration
 from utils.otherUtils.allureDate.allure_tools import allure_step, allure_step_no, allure_attach
 from utils.readFilesUtils.regularControl import cache_regular
@@ -44,40 +43,6 @@ class RequestControl:
                         "yaml_data": yaml_data, "res_time": cls.response_elapsed_total_seconds(response)}
 
     @classmethod
-    # 本段代码主要是用于兼容旧版本的用户，2022-04-21后拉取代码的使用者，可以直接删除此代码
-    # 对应调用这个函数的地方记得也要删除
-    def case_token(cls, header) -> None:
-        def case_header_dependent(header_name):
-            """
-            判断header中依赖的数据，为token、cookie、Authorization
-            :param header_name:
-            :return:
-            """
-            try:
-                # 判断用例是否依赖token
-                _token = header[header_name]
-                # 如果依赖则从缓存中读取对应得token信息
-                try:
-                    # 判断如果没有缓存数据，则直接取用例中的数据
-                    cache = Cache(_token).get_cache()
-                    header[header_name] = cache
-                except FileNotFoundError:
-                    pass
-            except KeyError:
-                pass
-        """
-        针对不同的请求头，进行处理
-        :param header:
-        :return:
-        """
-        if 'token' in header:
-            case_header_dependent(header_name='token')
-        if 'cookie' in header:
-            case_header_dependent(header_name='cookie')
-        if 'Authorization' in header:
-            case_header_dependent(header_name='Authorization')
-
-    @classmethod
     def file_data_exit(cls, yaml_data, file_data):
         """判断上传文件时，data参数是否存在"""
         # 兼容又要上传文件，又要上传其他类型参数
@@ -96,19 +61,40 @@ class RequestControl:
         return multipart
 
     @classmethod
+    def check_headers_str_null(cls, headers):
+        """
+        兼容用户未填写headers或者header值为int
+        @return:
+        """
+        if headers is None:
+            return {"headers": None}
+        else:
+            for k, v in headers.items():
+                if not isinstance(v, str):
+                    headers[k] = str(v)
+            return headers
+
+    @classmethod
     def multipart_in_headers(cls, request_data, header):
+
         """ 判断处理header为 Content-Type: multipart/form-data"""
+        if header is None:
+            return request_data, {"headers": None}
+        else:
+            # 将header中的int转换成str
+            for k, v in header.items():
+                if not isinstance(v, str):
+                    header[k] = str(v)
+            if "multipart/form-data" in str(header.values()):
+                # 判断请求参数不为空
+                if request_data:
+                    # 当 Content-Type 为 "multipart/form-data"时，需要将数据类型转换成 str
+                    for k, v in request_data.items():
+                        if not isinstance(v, str):
+                            request_data[k] = str(v)
 
-        if "multipart/form-data" in str(header.values()):
-            # 判断请求参数不为空
-            if request_data:
-                # 当 Content-Type 为 "multipart/form-data"时，需要将数据类型转换成 str
-                for k, v in request_data.items():
-                    if not isinstance(v, str):
-                        request_data[k] = str(v)
-
-                request_data = MultipartEncoder(request_data)
-                header['Content-Type'] = request_data.content_type
+                    request_data = MultipartEncoder(request_data)
+                    header['Content-Type'] = request_data.content_type
 
         return request_data, header
 
@@ -175,7 +161,6 @@ class RequestControl:
         _sql = yaml_data[YAMLDate.SQL.value]
         _assert = yaml_data[YAMLDate.ASSERT.value]
         _dependent_data = yaml_data[YAMLDate.DEPENDENCE_CASE_DATA.value]
-        self.case_token(_headers)
         res = None
 
         # 判断用例是否执行
@@ -184,8 +169,9 @@ class RequestControl:
             DependentCase().get_dependent_data(yaml_data)
             if _requestType == RequestType.JSON.value:
                 _data, _headers = self.multipart_in_headers(_data, _headers)
+                _headers = self.check_headers_str_null(_headers)
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], json=_data,
-                                       headers=_headers,  **kwargs)
+                                       headers=_headers, **kwargs)
 
             elif _requestType == RequestType.PARAMS.value:
                 url = yaml_data[YAMLDate.URL.value]
@@ -195,10 +181,12 @@ class RequestControl:
                     for k, v in _data.items():
                         params_data += (k + "=" + str(v) + "&")
                     url = yaml_data[YAMLDate.URL.value] + params_data[:-1]
+                _headers = self.check_headers_str_null(_headers)
                 res = requests.request(method=_method, url=url, headers=_headers, **kwargs)
             # 判断上传文件
             elif _requestType == RequestType.FILE.value:
                 multipart = self.upload_file(yaml_data)
+                _headers = self.check_headers_str_null(_headers)
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value],
                                        data=multipart[0], params=multipart[1], headers=_headers, **kwargs)
 

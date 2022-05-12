@@ -7,7 +7,7 @@
 import jsonpath
 from utils.otherUtils.get_conf_data import sql_switch
 from utils.logUtils.logControl import ERROR, WARNING
-from Enums.assertType_enum import AssertType
+from Enums.assertMethod_enum import AssertMethod
 from utils.assertUtils.assert_type import *
 
 
@@ -32,41 +32,44 @@ class Assert:
             if isinstance(response_data, dict) and isinstance(sql_data, dict):
                 pass
             else:
-                raise ValueError("response_data、sql_data、assert_data的数据类型必须要是字典类型")
+                raise ValueError("断言失败，response_data、sql_data的数据类型必须要是字典类型，"
+                                 "请检查接口对应的数据是否正确\n"
+                                 f"response_data: {response_data}, 数据类型: {type(response_data)}\n"
+                                 f"sql_data: {sql_data}, 数据类型: {type(sql_data)}\n")
 
     @staticmethod
     def _assert_type(key: any, types: str, value: any):
-        if str(types) == AssertType.equals.value:
+        if str(types) == AssertMethod.equals.value:
             equals(check_value=key, expect_value=value)
-        elif str(types) == AssertType.less_than.value:
+        elif str(types) == AssertMethod.less_than.value:
             less_than(check_value=key, expect_value=value)
-        elif str(types) == AssertType.less_than_or_equals.value:
+        elif str(types) == AssertMethod.less_than_or_equals.value:
             less_than_or_equals(check_value=key, expect_value=value)
-        elif str(types) == AssertType.greater_than.value:
+        elif str(types) == AssertMethod.greater_than.value:
             greater_than(check_value=key, expect_value=value)
-        elif str(types) == AssertType.greater_than_or_equals.value:
+        elif str(types) == AssertMethod.greater_than_or_equals.value:
             greater_than_or_equals(check_value=key, expect_value=value)
-        elif str(types) == AssertType.not_equals.value:
+        elif str(types) == AssertMethod.not_equals.value:
             not_equals(check_value=key, expect_value=value)
-        elif str(types) == AssertType.string_equals.value:
+        elif str(types) == AssertMethod.string_equals.value:
             string_equals(check_value=key, expect_value=value)
-        elif str(types) == AssertType.length_equals.value:
+        elif str(types) == AssertMethod.length_equals.value:
             length_equals(check_value=key, expect_value=value)
-        elif str(types) == AssertType.length_greater_than.value:
+        elif str(types) == AssertMethod.length_greater_than.value:
             length_greater_than(check_value=key, expect_value=value)
-        elif str(types) == AssertType.length_greater_than_or_equals.value:
+        elif str(types) == AssertMethod.length_greater_than_or_equals.value:
             length_greater_than_or_equals(check_value=key, expect_value=value)
-        elif str(types) == AssertType.length_less_than.value:
+        elif str(types) == AssertMethod.length_less_than.value:
             length_less_than(check_value=key, expect_value=value)
-        elif str(types) == AssertType.length_less_than_or_equals.value:
+        elif str(types) == AssertMethod.length_less_than_or_equals.value:
             length_less_than_or_equals(check_value=key, expect_value=value)
-        elif str(types) == AssertType.contains.value:
+        elif str(types) == AssertMethod.contains.value:
             contains(check_value=key, expect_value=value)
-        elif str(types) == AssertType.contained_by.value:
+        elif str(types) == AssertMethod.contained_by.value:
             contained_by(check_value=key, expect_value=value)
-        elif str(types) == AssertType.startswith.value:
+        elif str(types) == AssertMethod.startswith.value:
             startswith(check_value=key, expect_value=value)
-        elif str(types) == AssertType.endswith.value:
+        elif str(types) == AssertMethod.endswith.value:
             endswith(check_value=key, expect_value=value)
         else:
             raise ValueError(f"断言失败，目前不支持{types}断言类型，如需新增断言类型，请联系管理员")

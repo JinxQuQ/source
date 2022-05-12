@@ -3,10 +3,11 @@
 # @Time   : 2022/3/29 18:03
 # @Author : 余少琪
 
-from enum import Enum
+from enum import Enum, unique
 
 
-class AssertType(Enum):
+@unique
+class AssertMethod(Enum):
     # 是否相等
     equals = "=="
     # 判断实际结果小于预期结果

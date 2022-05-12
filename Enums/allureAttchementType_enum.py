@@ -6,6 +6,7 @@
 from enum import Enum, unique
 
 
+@unique
 class AllureAttachmentType(Enum):
     """
     allure 报告的文件类型枚举

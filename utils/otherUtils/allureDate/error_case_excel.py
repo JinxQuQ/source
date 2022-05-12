@@ -15,6 +15,7 @@ from common.setting import ConfigHandler
 from utils.noticUtils.weChatSendControl import WeChatSend
 
 
+# TODO 还需要处理动态值
 class ErrorTestCase:
     """ 收集错误的excel """
     def __init__(self):

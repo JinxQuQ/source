@@ -38,9 +38,11 @@ class RequestControl:
                 return {"response_data": res, "sql_data": {"sql": None}, "yaml_data": yaml_data,
                         "headers": headers, "cookie": cookie, "res_time": cls.response_elapsed_total_seconds(response)}
             except:
-                res = response.text
+                res = response
                 return {"response_data": res, "sql_data": {"sql": None},
                         "yaml_data": yaml_data, "res_time": cls.response_elapsed_total_seconds(response)}
+            # except AttributeError:
+            #     raise AttributeError(f"接口请求失败，失败原因{response}，请检查用例填写内容")
 
     @classmethod
     def file_data_exit(cls, yaml_data, file_data):
@@ -86,8 +88,8 @@ class RequestControl:
                 if not isinstance(v, str):
                     header[k] = str(v)
             if "multipart/form-data" in str(header.values()):
-                # 判断请求参数不为空
-                if request_data:
+                # 判断请求参数不为空, 并且参数是字典类型
+                if request_data and isinstance(request_data, dict):
                     # 当 Content-Type 为 "multipart/form-data"时，需要将数据类型转换成 str
                     for k, v in request_data.items():
                         if not isinstance(v, str):
@@ -115,7 +117,10 @@ class RequestControl:
     @classmethod
     def response_elapsed_total_seconds(cls, res):
         """获取接口响应时长"""
-        return res.elapsed.total_seconds()
+        try:
+            return res.elapsed.total_seconds()
+        except AttributeError:
+            return 0.00
 
     @classmethod
     def upload_file(cls, yaml_data):
@@ -168,7 +173,6 @@ class RequestControl:
             # 处理多业务逻辑
             DependentCase().get_dependent_data(yaml_data)
             if _requestType == RequestType.JSON.value:
-                _data, _headers = self.multipart_in_headers(_data, _headers)
                 _headers = self.check_headers_str_null(_headers)
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], json=_data,
                                        headers=_headers, **kwargs)
@@ -204,8 +208,8 @@ class RequestControl:
             allure_step_no(f"响应耗时(s): {self.response_elapsed_total_seconds(res)}")
             try:
                 allure_step("响应结果: ", res.json())
-            except json.decoder.JSONDecodeError:
-                res = self.text_encode(res.text)
+            except:
+                res = self.text_encode(res.reason)
                 allure_step("响应结果: ", res)
             try:
                 cookie = res.cookies.get_dict()

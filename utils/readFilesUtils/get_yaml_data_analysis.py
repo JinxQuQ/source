@@ -175,6 +175,7 @@ class CaseData:
         except KeyError:
             raise KeyError(self.raise_value_null_error(case_id=case_id, data_name="dependence_case"))
 
+    # TODO 对 dependence_case_data 中的值进行验证
     def get_dependence_case_data(self, case_id: str, case_data: dict) -> dict:
         """
         获取依赖的用例
@@ -210,6 +211,7 @@ class CaseData:
         except KeyError:
             raise KeyError(self.raise_value_null_error(case_id=case_id, data_name="data"))
 
+    # TODO 对 assert 中的值进行验证
     def get_assert(self, case_id: str, case_data: dict):
         """
         获取需要断言的数据

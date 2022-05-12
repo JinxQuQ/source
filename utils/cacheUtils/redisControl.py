@@ -10,7 +10,7 @@ class RedisHandler:
     """ redis 缓存读取封装 """
 
     def __init__(self):
-        self.host = '121.43.35.47'
+        self.host = '127.0.0.0'
         self.port = 6379
         self.db = 0
         self.password = 123456

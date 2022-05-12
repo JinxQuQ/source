@@ -2,9 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time   : 2022/3/28 12:52
 # @Author : 余少琪
-import json.decoder
 import random
-import allure
 import requests
 from typing import Any
 from utils.otherUtils.get_conf_data import sql_switch
@@ -28,21 +26,13 @@ class RequestControl:
         # 判断数据库开关，开启状态，则返回对应的数据
         if sql_switch() and yaml_data['sql'] is not None:
             sql_data = MysqlDB().assert_execution(sql=yaml_data['sql'], resp=response.json())
-            return {"response_data": response.json(), "sql_data": sql_data, "yaml_data": yaml_data,
+            return {"response_data": response, "sql_data": sql_data, "yaml_data": yaml_data,
                     "headers": headers, "cookie": cookie, "res_time": cls.response_elapsed_total_seconds(response)}
-
-        # 数据库关闭走的逻辑
         else:
-            try:
-                res = response.json()
-                return {"response_data": res, "sql_data": {"sql": None}, "yaml_data": yaml_data,
-                        "headers": headers, "cookie": cookie, "res_time": cls.response_elapsed_total_seconds(response)}
-            except:
-                res = response
-                return {"response_data": res, "sql_data": {"sql": None},
-                        "yaml_data": yaml_data, "res_time": cls.response_elapsed_total_seconds(response)}
-            # except AttributeError:
-            #     raise AttributeError(f"接口请求失败，失败原因{response}，请检查用例填写内容")
+            # 数据库关闭走的逻辑
+            res = response
+            return {"response_data": res, "sql_data": {"sql": None}, "yaml_data": yaml_data,
+                    "headers": headers, "cookie": cookie, "res_time": cls.response_elapsed_total_seconds(response)}
 
     @classmethod
     def file_data_exit(cls, yaml_data, file_data):
@@ -207,9 +197,10 @@ class RequestControl:
             allure_step("预期数据: ", _assert)
             allure_step_no(f"响应耗时(s): {self.response_elapsed_total_seconds(res)}")
             try:
-                allure_step("响应结果: ", res.json())
+                res = res.json()
+                allure_step("响应结果: ", res)
             except:
-                res = self.text_encode(res.reason)
+                res = self.text_encode(res.text)
                 allure_step("响应结果: ", res)
             try:
                 cookie = res.cookies.get_dict()

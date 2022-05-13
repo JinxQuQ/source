@@ -101,8 +101,9 @@ class DependentCase:
 
                         # 判断依赖数据类型, 依赖 request 中的数据
                         elif i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.REQUEST.value:
-                            data = cls.get_cache(_case_id)
-                            jsonpath_data = cls.jsonpath_data(data, _jsonpath)
+                            re_data = regular(str(cls.get_cache(_case_id)))
+                            # data = cls.get_cache(_case_id)
+                            jsonpath_data = cls.jsonpath_data(eval(re_data), _jsonpath)
                             jsonpath_dates[_replace_key] = jsonpath_data[0]
                             cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
                                             jsonpath_data=jsonpath_data, case_data=case_data)

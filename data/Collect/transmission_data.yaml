@@ -1,0 +1,37 @@
+# 公共参数
+case_common:
+  allureEpic: H5用户扫码使用接口
+  allureFeature: 获取用户信息模块
+  allureStory: 游戏机下单
+
+transmission_data_01:
+    host: http://wallet.isharegz.1gbox.com
+    url: /transmission/data
+    method: POST
+    detail: 游戏机-购买页面/transmission/data
+    headers:
+      Content-Type: application/json;charset=UTF-8
+      token: RldsRXlaRjRoeTNHeUgzamhYQ0lzN0ZockFNQkdiYjlieVdZR29EMWRXdz0=
+      serviceCode: '17'
+    # 请求的数据，是 params 还是 json、或者file、date
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+            action: '/terminal/list'
+            query:
+                machineCode: '2412110500000057'
+                type: 4
+            serviceCode: 17
+    # 是否有依赖业务，为空或者false则表示没有
+    dependence_case: False
+        # 依赖的数据
+    dependence_case_data:
+    assert:
+      # 断言接口状态码
+      code:
+        jsonpath: $.code
+        type: ==
+        value: 1
+        AssertType:
+    sql:

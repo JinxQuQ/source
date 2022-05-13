@@ -27,8 +27,8 @@ collect_update_tool_01:
     dependence_case_data:
       - case_id: collect_addtool_01
         dependent_data:
-          - dependent_type: response
-            jsonpath: $.data.id
+          - dependent_type: request
+            jsonpath: $.data.link
             replace_key: $.data.id
 
     assert:

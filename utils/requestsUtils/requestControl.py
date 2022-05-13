@@ -25,7 +25,7 @@ class RequestControl:
         """ 抽离出通用模块，判断 http_request 方法中的一些数据校验 """
         # 判断数据库开关，开启状态，则返回对应的数据
         if sql_switch() and yaml_data['sql'] is not None:
-            sql_data = MysqlDB().assert_execution(sql=yaml_data['sql'], resp=response.json())
+            sql_data = MysqlDB().assert_execution(sql=yaml_data['sql'], resp=response)
             return {"response_data": response, "sql_data": sql_data, "yaml_data": yaml_data,
                     "headers": headers, "cookie": cookie, "res_time": cls.response_elapsed_total_seconds(response)}
         else:

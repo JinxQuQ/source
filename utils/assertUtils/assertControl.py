@@ -94,8 +94,13 @@ class Assert:
                 raise ValueError("请在用例中添加您要查询的SQL语句。")
             # 走正常SQL断言逻辑
             else:
-                res_sql_data = jsonpath.jsonpath(sql_data, assert_value)[0]
+                res_sql_data = jsonpath.jsonpath(sql_data, assert_value)
+                print(res_sql_data, "这里是res_sql_data")
+                if res_sql_data is False:
+                    raise ValueError(f"数据库断言内容jsonpath提取失败， 当前jsonpath内容: {assert_value}\n"
+                                     f"数据库返回内容: {sql_data}")
                 # 判断mysql查询出来的数据类型如果是bytes类型，转换成str类型
+                res_sql_data = res_sql_data[0]
                 if isinstance(res_sql_data, bytes):
                     res_sql_data = res_sql_data.decode('utf=8')
                 self._assert_type(types=self.assert_data[key]['type'], key=resp_data[0], value=res_sql_data)

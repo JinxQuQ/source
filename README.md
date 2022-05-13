@@ -538,7 +538,7 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
         }
         headers = {'Content-Type': 'application/x-www-form-urlencoded'}
         # 请求登录接口
-        res = requests.post(url=url, data=data, verify=True, headers=headers)
+        res = requests.post(url=url, data=data, verify=True, headers=headers).json()
         token = res['response']['token']
         Cache("work_login_init").set_caches(token)
 

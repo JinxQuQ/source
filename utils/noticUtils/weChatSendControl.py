@@ -30,6 +30,7 @@ class WeChatSend:
         self.SKIP = self.allureData.skipped_count()
         self.TOTAL = self.allureData.total_count()
         self.RATE = self.allureData.pass_rate()
+        self.TIME = self.allureData.get_times()
 
     def send_text(self, content, mentioned_mobile_list=None):
         """
@@ -122,19 +123,25 @@ class WeChatSend:
         # 发送企业微信通知
         text = """【{0}自动化通知】
                                     >测试环境：<font color=\"info\">TEST</font>
-                                    >测试负责人：@{1}
+                                    >测试负责人：@{0}
                                     >
                                     > **执行结果**
-                                    ><font color=\"info\">成功率: {2}%</font>
+                                    ><font color=\"info\">成  功  率  : {1}%</font>
+                                    >用例  总数：<font color=\"info\">{2}</font>                                    
                                     >成功用例数：<font color=\"info\">{3}</font>
                                     >失败用例数：`{4}个`
                                     >异常用例数：`{5}个`
                                     >跳过用例数：<font color=\"warning\">{6}个</font>
-                                    >时　间：<font color=\"comment\">{7}</font>
+                                    >用例执行时长：<font color=\"warning\">{7} s</font>
+                                    >时间：<font color=\"comment\">{8}</font>
                                     >
                                     >非相关负责人员可忽略此消息。
-                                    >测试报告，点击查看>>[测试报告入口](http://{8}:9999/index.html)""" \
-            .format(project_name, tester_name, self.RATE, self.PASS, self.FAILED,
-                    self.BROKEN, self.SKIP, now_time(), get_host_ip())
+                                    >测试报告，点击查看>>[测试报告入口](http://{9}:9999/index.html)""" \
+            .format(tester_name, self.RATE, self.TOTAL, self.PASS, self.FAILED,
+                    self.BROKEN, self.SKIP, self.TIME, now_time(), get_host_ip())
 
         WeChatSend().send_markdown(text)
+
+
+if __name__ == '__main__':
+    WeChatSend().send_wechat_notification()

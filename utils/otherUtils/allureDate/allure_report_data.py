@@ -49,7 +49,7 @@ class AllureFileClean:
         """ 统计用例数量 """
         fil_name = ConfigHandler.report_path + '/html/widgets/summary.json'
         with open(fil_name, 'r', encoding='utf-8') as fp:
-            date = json.load(fp)['statistic']
+            date = json.load(fp)
         return date
 
 
@@ -59,23 +59,23 @@ class CaseCount:
 
     def pass_count(self) -> int:
         """用例成功数"""
-        return self.AllureData.get_case_count()['passed']
+        return self.AllureData.get_case_count()['statistic']['passed']
 
     def failed_count(self) -> int:
         """用例失败数"""
-        return self.AllureData.get_case_count()['failed']
+        return self.AllureData.get_case_count()['statistic']['failed']
 
     def broken_count(self) -> int:
         """用例异常数"""
-        return self.AllureData.get_case_count()['broken']
+        return self.AllureData.get_case_count()['statistic']['broken']
 
     def skipped_count(self) -> int:
         """用例跳过数"""
-        return self.AllureData.get_case_count()['skipped']
+        return self.AllureData.get_case_count()['statistic']['skipped']
 
     def total_count(self) -> int:
         """用例总数"""
-        return self.AllureData.get_case_count()['total']
+        return self.AllureData.get_case_count()['statistic']['total']
 
     def pass_rate(self) -> float:
         """用例成功率"""
@@ -85,3 +85,9 @@ class CaseCount:
             return pass_rate
         except ZeroDivisionError:
             return 0.00
+
+    def get_times(self):
+        """用例执行时长"""
+        run_time = round(self.AllureData.get_case_count()['time']['duration'] / 1000, 2)
+        return run_time
+

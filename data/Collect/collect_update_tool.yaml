@@ -18,7 +18,6 @@ collect_update_tool_01:
     # 是否执行，空或者 true 都会执行
     is_run:
     data:
-      id:
       name: 自动化编辑网址名称
       link: https://gitee.com/yu_xiao_qi/pytest-auto-api2
     # 是否有依赖业务，为空或者false则表示没有
@@ -27,10 +26,9 @@ collect_update_tool_01:
     dependence_case_data:
       - case_id: collect_addtool_01
         dependent_data:
-          - dependent_type: request
-            jsonpath: $.data.link
+          - dependent_type: response
+            jsonpath: $.data.id
             replace_key: $.data.id
-
     assert:
       # 断言接口状态码
       errorCode:

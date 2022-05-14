@@ -31,6 +31,7 @@ class ErrorTestCase:
         for i in path:
             with open(i, 'r', encoding='utf-8') as fp:
                 date = json.load(fp)
+                # 收集执行失败的用例数据
                 if date['status'] == 'failed' or date['status'] == 'broken':
                     files.append(date)
         return files
@@ -48,11 +49,21 @@ class ErrorTestCase:
     @classmethod
     def get_parameters(cls, test_case):
         """
-        获取allure报告中的 parameters 参数内容
+        获取allure报告中的 parameters 参数内容, 请求前的数据
+        用于兼容用例执行异常，未发送请求导致的情况
         @return:
         """
         parameters = test_case['parameters'][0]['value']
         return eval(parameters)
+
+    @classmethod
+    def get_test_stage(cls, test_case):
+        """
+        获取allure报告中请求后的数据
+        @return:
+        """
+        test_stage = test_case['testStage']['steps']
+        return test_stage
 
     def get_case_url(self, test_case):
         """
@@ -60,8 +71,14 @@ class ErrorTestCase:
         @param test_case:
         @return:
         """
-        url = self.get_parameters(test_case)['url']
-        return url
+        # 判断用例步骤中的数据是否异常
+        if test_case['testStage']['status'] == 'broken':
+            # 如果异常状态下，则获取请求前的数据
+            _url = self.get_parameters(test_case)['url']
+        else:
+            # 否则拿请求步骤的数据，因为如果设计到依赖，会获取多组，因此我们只取最后一组数据内容
+            _url = self.get_test_stage(test_case)[-8]['name'][7:]
+        return _url
 
     def get_method(self, test_case):
         """
@@ -69,16 +86,26 @@ class ErrorTestCase:
         @param test_case:
         @return:
         """
-        method = self.get_parameters(test_case)['method']
-        return method
+        if test_case['testStage']['status'] == 'broken':
+            _method = self.get_parameters(test_case)['method']
+        else:
+            _method = self.get_test_stage(test_case)[-7]['name'][6:]
+        return _method
 
     def get_headers(self, test_case):
         """
         获取用例中的请求头
         @return:
         """
-        headers = self.get_parameters(test_case)['headers']
-        return headers
+        if test_case['testStage']['status'] == 'broken':
+            _headers = self.get_parameters(test_case)['headers']
+        else:
+            # 如果用例请求成功，则从allure附件中获取请求头部信息
+            _headers_attachment = self.get_test_stage(test_case)[-6]['attachments'][0]['source']
+            path = ConfigHandler.report_html_attachments_path + _headers_attachment
+            with open(path, 'r', encoding='utf-8') as fp:
+                _headers = json.load(fp)
+        return _headers
 
     def get_request_type(self, test_case):
         """
@@ -94,8 +121,14 @@ class ErrorTestCase:
         获取用例内容
         @return:
         """
-        case_data = self.get_parameters(test_case)['data']
-        return case_data
+        if test_case['testStage']['status'] == 'broken':
+            _case_data = self.get_parameters(test_case)['data']
+        else:
+            _case_data_attachments = self.get_test_stage(test_case)[-5]['attachments'][0]['source']
+            path = ConfigHandler.report_html_attachments_path + _case_data_attachments
+            with open(path, 'r', encoding='utf-8') as fp:
+                _case_data = json.load(fp)
+        return _case_data
 
     def get_dependence_case(self, test_case):
         """
@@ -103,8 +136,8 @@ class ErrorTestCase:
         @param test_case:
         @return:
         """
-        dependence_case_data = self.get_parameters(test_case)['dependence_case_data']
-        return dependence_case_data
+        _dependence_case_data = self.get_parameters(test_case)['dependence_case_data']
+        return _dependence_case_data
 
     def get_sql(self, test_case):
         """
@@ -131,14 +164,18 @@ class ErrorTestCase:
         @param test_case:
         @return:
         """
-        try:
-            res_data_attachments = test_case['testStage']['steps'][7]['attachments'][0]['source']
-            path = ConfigHandler.report_html_attachments_path + res_data_attachments
-            with open(path, 'r', encoding='utf-8') as fp:
-                date = json.load(fp)
-            return date
-        except FileNotFoundError:
-            return "程序中未检测到响应内容附件信息"
+        if test_case['testStage']['status'] == 'broken':
+            _res_date = test_case['testStage']['statusMessage']
+        else:
+            try:
+                res_data_attachments = test_case['testStage']['steps'][-1]['attachments'][0]['source']
+                path = ConfigHandler.report_html_attachments_path + res_data_attachments
+                with open(path, 'r', encoding='utf-8') as fp:
+                    _res_date = json.load(fp)
+            except FileNotFoundError:
+                # 程序中没有提取到响应数据，返回None
+                _res_date = None
+        return _res_date
 
     @classmethod
     def get_case_time(cls, test_case):
@@ -147,6 +184,7 @@ class ErrorTestCase:
         @param test_case:
         @return:
         """
+
         case_time = str(test_case['time']['duration']) + "ms"
         return case_time
 
@@ -250,7 +288,6 @@ class ErrorCaseExcel:
         if len(dates) > 0:
             num = 2
             for date in dates:
-                print(self.case_data.get_headers(date))
                 self.write_excel_content(position="A" + str(num), value=str(self.case_data.get_uid(date)))
                 self.write_excel_content(position='B' + str(num), value=str(self.case_data.get_case_name(date)))
                 self.write_excel_content(position="C" + str(num), value=str(self.case_data.get_case_url(date)))

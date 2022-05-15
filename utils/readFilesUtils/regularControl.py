@@ -146,9 +146,7 @@ def regular(target):
         regular_pattern = r'\${{(.*?)}}'
         while re.findall(regular_pattern, target):
             key = re.search(regular_pattern, target).group(1)
-            func_name = key[0:key.index("(")]
-            arg_name = key[key.index("(") + 1:key.index(")")]
-            value_data = getattr(Context(), func_name)
+            value_data = getattr(Context(), key)
             if isinstance(value_data, (int, float)):
                 regular_int_pattern = r'\'\${{(.*?)}}\''
                 target = re.sub(regular_int_pattern, str(value_data), target, 1)

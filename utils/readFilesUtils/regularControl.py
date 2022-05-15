@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 # @Time   : 2022/3/28 10:52
 # @Author : 余少琪
-
+import json
 import re
 import datetime
-import jsonpath
+from utils.otherUtils.jsonpath import jsonpath
 from faker import Faker
 from utils.logUtils.logControl import ERROR
 from utils.cacheUtils.cacheControl import Cache
@@ -73,7 +73,7 @@ class Context:
     def random_int(self):
         """随机生成 0 - 9999 的数字"""
         numbers = self.f.random_int()
-        return str(numbers)
+        return numbers
 
     @property
     def host(self) -> str:
@@ -98,7 +98,7 @@ class Context:
 
 
 def sql_json(js_path, res):
-    return jsonpath.jsonpath(res, js_path)[0]
+    return jsonpath(res, js_path)[0]
 
 
 def sql_regular(value, res=None):
@@ -146,7 +146,9 @@ def regular(target):
         regular_pattern = r'\${{(.*?)}}'
         while re.findall(regular_pattern, target):
             key = re.search(regular_pattern, target).group(1)
-            value_data = getattr(Context(), key)
+            func_name = key[0:key.index("(")]
+            arg_name = key[key.index("(") + 1:key.index(")")]
+            value_data = getattr(Context(), func_name)
             if isinstance(value_data, (int, float)):
                 regular_int_pattern = r'\'\${{(.*?)}}\''
                 target = re.sub(regular_int_pattern, str(value_data), target, 1)
@@ -157,3 +159,31 @@ def regular(target):
     except AttributeError:
         ERROR.logger.error("未找到对应的替换的数据, 请检查数据是否正确", target)
         raise
+
+
+def replace_load(data):
+    """
+    使用热加载的方式替换解析yaml中的数据
+    调用这个方法，可以支持yaml中函数方法可以传参，但是目前返回的类型必须都是str类型的
+    """
+    if data and isinstance(data, dict):
+        str_data = json.dumps(data)
+    else:
+        str_data = data
+    for i in range(1, str_data.count('${{') + 1):
+        if "${{" in str_data and "}}" in str_data:
+            start_index = str_data.index("${{")
+            end_index = str_data.index("}}", start_index)
+            old_value = str_data[start_index:end_index + 2]
+            func_name = old_value[3:old_value.index("(")]
+            print(func_name)
+            args_value = old_value[old_value.index("(") + 1:old_value.index(")")]
+            # 反射
+            new_value = getattr(Context(), func_name)(*args_value.split(","))
+            str_data = str_data.replace(old_value, str(new_value))
+        else:
+            if data and isinstance(data, dict):
+                data = json.loads(str_data)
+            else:
+                data = str_data
+    return str_data

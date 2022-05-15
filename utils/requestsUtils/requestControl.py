@@ -165,7 +165,7 @@ class RequestControl:
             if _requestType == RequestType.JSON.value:
                 _headers = self.check_headers_str_null(_headers)
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], json=_data,
-                                       headers=_headers, **kwargs)
+                                       headers=_headers, verify=False, **kwargs)
 
             elif _requestType == RequestType.PARAMS.value:
                 url = yaml_data[YAMLDate.URL.value]
@@ -176,18 +176,18 @@ class RequestControl:
                         params_data += (k + "=" + str(v) + "&")
                     url = yaml_data[YAMLDate.URL.value] + params_data[:-1]
                 _headers = self.check_headers_str_null(_headers)
-                res = requests.request(method=_method, url=url, headers=_headers, **kwargs)
+                res = requests.request(method=_method, url=url, headers=_headers, verify=False, **kwargs)
             # 判断上传文件
             elif _requestType == RequestType.FILE.value:
                 multipart = self.upload_file(yaml_data)
                 _headers = self.check_headers_str_null(_headers)
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value],
-                                       data=multipart[0], params=multipart[1], headers=_headers, **kwargs)
+                                       data=multipart[0], params=multipart[1], headers=_headers, verify=False, **kwargs)
 
             elif _requestType == RequestType.DATE.value:
                 _data, _headers = self.multipart_in_headers(_data, _headers)
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], data=_data, headers=_headers,
-                                       **kwargs)
+                                       verify=False, **kwargs)
 
             allure_step_no(f"请求URL: {yaml_data[YAMLDate.URL.value]}")
             allure_step_no(f"请求方式: {_method}")

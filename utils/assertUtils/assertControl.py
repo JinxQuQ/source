@@ -4,7 +4,7 @@
 # @Author : 余少琪
 
 
-import jsonpath
+from utils.otherUtils.jsonpath import jsonpath
 from utils.otherUtils.get_conf_data import sql_switch
 from utils.logUtils.logControl import ERROR, WARNING
 from Enums.assertMethod_enum import AssertMethod
@@ -94,7 +94,7 @@ class Assert:
                 raise ValueError("请在用例中添加您要查询的SQL语句。")
             # 走正常SQL断言逻辑
             else:
-                res_sql_data = jsonpath.jsonpath(sql_data, assert_value)
+                res_sql_data = jsonpath(sql_data, assert_value)
                 print(res_sql_data, "这里是res_sql_data")
                 if res_sql_data is False:
                     raise ValueError(f"数据库断言内容jsonpath提取失败， 当前jsonpath内容: {assert_value}\n"
@@ -123,7 +123,7 @@ class Assert:
                 assert_jsonpath = self.assert_data[key]['jsonpath']  # 获取到 yaml断言中的jsonpath的数据
                 assert_type = self.assert_data[key]['AssertType']
                 # 从yaml获取jsonpath，拿到对象的接口响应数据
-                resp_data = jsonpath.jsonpath(response_data, assert_jsonpath)
+                resp_data = jsonpath(response_data, assert_jsonpath)
 
                 # jsonpath 如果数据获取失败，会返回False，判断获取成功才会执行如下代码
                 if resp_data is not False:

@@ -21,18 +21,18 @@ class RequestControl:
     """ 封装请求 """
 
     @classmethod
-    def _check_params(cls, response, yaml_data, headers, cookie) -> Any:
+    def _check_params(cls, response, yaml_data, headers, cookie, res_time) -> Any:
         """ 抽离出通用模块，判断 http_request 方法中的一些数据校验 """
         # 判断数据库开关，开启状态，则返回对应的数据
         if sql_switch() and yaml_data['sql'] is not None:
             sql_data = MysqlDB().assert_execution(sql=yaml_data['sql'], resp=response)
             return {"response_data": response, "sql_data": sql_data, "yaml_data": yaml_data,
-                    "headers": headers, "cookie": cookie, "res_time": cls.response_elapsed_total_seconds(response)}
+                    "headers": headers, "cookie": cookie, "res_time": res_time}
         else:
             # 数据库关闭走的逻辑
             res = response
             return {"response_data": res, "sql_data": {"sql": None}, "yaml_data": yaml_data,
-                    "headers": headers, "cookie": cookie, "res_time": cls.response_elapsed_total_seconds(response)}
+                    "headers": headers, "cookie": cookie, "res_time": res_time}
 
     @classmethod
     def file_data_exit(cls, yaml_data, file_data):
@@ -195,7 +195,8 @@ class RequestControl:
             allure_step("请求数据: ", _data)
             allure_step("依赖数据: ", _dependent_data)
             allure_step("预期数据: ", _assert)
-            allure_step_no(f"响应耗时(s): {self.response_elapsed_total_seconds(res)}")
+            _res_time = self.response_elapsed_total_seconds(res)
+            allure_step_no(f"响应耗时(s): {_res_time}")
             try:
                 res = res.json()
                 allure_step("响应结果: ", res)
@@ -207,7 +208,7 @@ class RequestControl:
             except:
                 cookie = None
 
-            return self._check_params(res, yaml_data, _headers, cookie)
+            return self._check_params(res, yaml_data, _headers, cookie, _res_time)
         else:
             # 用例跳过执行的话，响应数据和sql数据为空
             return {"response_data": False, "sql_data": False, "yaml_data": yaml_data, "res_time": 0.00}

@@ -18,7 +18,7 @@ collect_delete_tool_01:
     # 是否执行，空或者 true 都会执行
     is_run:
     data:
-      id: 111
+      id:
       # 是否有依赖业务，为空或者false则表示没有
       test:
     dependence_case: True
@@ -67,7 +67,6 @@ collect_delete_tool_02:
           - dependent_type: response
             jsonpath: $.data.id
             replace_key: $.data.id
-
     assert:
       # 断言接口状态码
       errorCode:

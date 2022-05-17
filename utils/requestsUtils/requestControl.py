@@ -15,6 +15,8 @@ from common.setting import ConfigHandler
 from utils.logUtils.runTimeDecoratorl import execution_duration
 from utils.otherUtils.allureDate.allure_tools import allure_step, allure_step_no, allure_attach
 from utils.readFilesUtils.regularControl import cache_regular
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 class RequestControl:

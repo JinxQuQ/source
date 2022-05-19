@@ -43,6 +43,7 @@ class YAMLDate(Enum):
     DETAIL = 'detail'
     # 前置sql
     SETUP_SQL = 'setup_sql'
+    STATUS_CODE = "status_code"
 
 
 

@@ -2,7 +2,10 @@
 # -*- coding: utf-8 -*-
 # @Time   : 2022/3/28 12:52
 # @Author : 余少琪
+import os
 import random
+import urllib
+
 import requests
 from typing import Any
 from utils.otherUtils.get_conf_data import sql_switch
@@ -23,18 +26,18 @@ class RequestControl:
     """ 封装请求 """
 
     @classmethod
-    def _check_params(cls, response, yaml_data, headers, cookie, res_time) -> Any:
+    def _check_params(cls, response, yaml_data, headers, cookie, res_time, status_code) -> Any:
         """ 抽离出通用模块，判断 http_request 方法中的一些数据校验 """
         # 判断数据库开关，开启状态，则返回对应的数据
         if sql_switch() and yaml_data['sql'] is not None:
             sql_data = MysqlDB().assert_execution(sql=yaml_data['sql'], resp=response)
             return {"response_data": response, "sql_data": sql_data, "yaml_data": yaml_data,
-                    "headers": headers, "cookie": cookie, "res_time": res_time}
+                    "headers": headers, "cookie": cookie, "res_time": res_time, "status_code": status_code}
         else:
             # 数据库关闭走的逻辑
             res = response
             return {"response_data": res, "sql_data": {"sql": None}, "yaml_data": yaml_data,
-                    "headers": headers, "cookie": cookie, "res_time": res_time}
+                    "headers": headers, "cookie": cookie, "res_time": res_time, "status_code": status_code}
 
     @classmethod
     def file_data_exit(cls, yaml_data, file_data):
@@ -105,6 +108,7 @@ class RequestControl:
     def text_encode(cls, text):
         """unicode 解码"""
         return text.encode("utf-8").decode("utf-8")
+        # return text
 
     @classmethod
     def response_elapsed_total_seconds(cls, res):
@@ -191,6 +195,22 @@ class RequestControl:
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], data=_data, headers=_headers,
                                        verify=False, **kwargs)
 
+            elif _requestType == RequestType.EXPORT.value:
+                _headers = self.check_headers_str_null(_headers)
+                res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], json=_data, headers=_headers,
+                                       verify=False, stream=False, **kwargs)
+                content_disposition = res.headers.get('content-disposition')
+                filename_code = content_disposition.split("=")[-1]  # 分隔字符串，提取文件名
+                filename = urllib.parse.unquote(filename_code)  # url解码
+                filepath = os.path.join(ConfigHandler.file_path, filename)  # 拼接路径
+                if res.status_code == 200:
+                    if res.text:  # 判断文件内容是否为空
+                        with open(filepath, 'wb') as f:
+                            for chunk in res.iter_content(chunk_size=1):  # iter_content循环读取信息写入，chunk_size设置文件大小
+                                f.write(chunk)
+                    else:
+                        print("文件为空")
+            _status_code = res.status_code
             allure_step_no(f"请求URL: {yaml_data[YAMLDate.URL.value]}")
             allure_step_no(f"请求方式: {_method}")
             allure_step("请求头: ", _headers)
@@ -210,7 +230,7 @@ class RequestControl:
             except:
                 cookie = None
 
-            return self._check_params(res, yaml_data, _headers, cookie, _res_time)
+            return self._check_params(res, yaml_data, _headers, cookie, _res_time, _status_code)
         else:
             # 用例跳过执行的话，响应数据和sql数据为空
             return {"response_data": False, "sql_data": False, "yaml_data": yaml_data, "res_time": 0.00}

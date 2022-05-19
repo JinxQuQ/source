@@ -69,7 +69,7 @@ class Test{class_title}:
 
         res = RequestControl().http_request(in_data)
         Assert(in_data['assert']).assert_equality(response_data=res['response_data'], 
-                                                  sql_data=res['sql_data'])
+                                                  sql_data=res['sql_data'], status_code=res['status_code'])
 
 
 if __name__ == '__main__':

@@ -36,15 +36,4 @@ collect_update_tool_01:
         type: ==
         value: 0
         AssertType:
-      name:
-        jsonpath: $.data.name
-        type: ==
-        value: 自动化编辑网址名称
-        AssertType:
-      link:
-        jsonpath: $.data.link
-        type: ==
-        value: https://gitee.com/yu_xiao_qi/pytest-auto-api2
-        AssertType:
-
     sql:

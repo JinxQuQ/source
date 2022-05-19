@@ -18,8 +18,7 @@ collect_tool_list_01:
     # 是否执行，空或者 true 都会执行
     is_run:
     data:
-      tester: qiyu
-      # 是否有依赖业务，为空或者false则表示没有
+    # 是否有依赖业务，为空或者false则表示没有
     dependence_case: False
         # 依赖的数据
     dependence_case_data:
@@ -30,4 +29,5 @@ collect_tool_list_01:
         type: ==
         value: 0
         AssertType:
+      status_code: 200
     sql:

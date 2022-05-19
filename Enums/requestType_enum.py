@@ -18,3 +18,5 @@ class RequestType(Enum):
     DATE = "DATE"
     # 文件类型
     FILE = 'FILE'
+    # 导出文件
+    EXPORT = "EXPORT"

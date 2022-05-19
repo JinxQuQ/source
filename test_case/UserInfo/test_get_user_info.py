@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time   : 2022-05-09 22:01:06
+# @Time   : 2022-05-19 23:43:10
 # @Author : 七月
 
 
@@ -31,7 +31,7 @@ class TestGetUserInfo:
 
         res = RequestControl().http_request(in_data)
         Assert(in_data['assert']).assert_equality(response_data=res['response_data'], 
-                                                  sql_data=res['sql_data'])
+                                                  sql_data=res['sql_data'], status_code=res['status_code'])
 
 
 if __name__ == '__main__':

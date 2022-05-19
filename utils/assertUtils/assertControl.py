@@ -29,12 +29,11 @@ class Assert:
             return False
         else:
             # 判断断言的数据类型
-            if isinstance(response_data, dict) and isinstance(sql_data, dict):
+            if isinstance(sql_data, dict):
                 pass
             else:
                 raise ValueError("断言失败，response_data、sql_data的数据类型必须要是字典类型，"
                                  "请检查接口对应的数据是否正确\n"
-                                 f"response_data: {response_data}, 数据类型: {type(response_data)}\n"
                                  f"sql_data: {sql_data}, 数据类型: {type(sql_data)}\n")
 
     @staticmethod
@@ -115,23 +114,26 @@ class Assert:
         else:
             raise ValueError("断言失败，目前只支持数据库断言和响应断言")
 
-    def assert_equality(self, response_data: dict, sql_data: dict):
+    def assert_equality(self, response_data: dict, sql_data: dict, status_code):
         # 判断数据类型
         if self._check_params(response_data, sql_data) is not False:
             for key, values in self.assert_data.items():
-                assert_value = self.assert_data[key]['value']  # 获取 yaml 文件中的期望value值
-                assert_jsonpath = self.assert_data[key]['jsonpath']  # 获取到 yaml断言中的jsonpath的数据
-                assert_type = self.assert_data[key]['AssertType']
-                # 从yaml获取jsonpath，拿到对象的接口响应数据
-                resp_data = jsonpath(response_data, assert_jsonpath)
-
-                # jsonpath 如果数据获取失败，会返回False，判断获取成功才会执行如下代码
-                if resp_data is not False:
-                    # 判断断言类型
-                    self.assert_type_handle(assert_type, sql_data, assert_value, key, values, resp_data)
+                if key == "status_code":
+                    assert status_code == values
                 else:
-                    ERROR.logger.error("JsonPath值获取失败{}".format(assert_jsonpath))
-                    raise ValueError(f"JsonPath值获取失败{assert_jsonpath}")
+                    assert_value = self.assert_data[key]['value']  # 获取 yaml 文件中的期望value值
+                    assert_jsonpath = self.assert_data[key]['jsonpath']  # 获取到 yaml断言中的jsonpath的数据
+                    assert_type = self.assert_data[key]['AssertType']
+                    # 从yaml获取jsonpath，拿到对象的接口响应数据
+                    resp_data = jsonpath(response_data, assert_jsonpath)
+
+                    # jsonpath 如果数据获取失败，会返回False，判断获取成功才会执行如下代码
+                    if resp_data is not False:
+                        # 判断断言类型
+                        self.assert_type_handle(assert_type, sql_data, assert_value, key, values, resp_data)
+                    else:
+                        ERROR.logger.error("JsonPath值获取失败{}".format(assert_jsonpath))
+                        raise ValueError(f"JsonPath值获取失败{assert_jsonpath}")
         else:
             pass
 

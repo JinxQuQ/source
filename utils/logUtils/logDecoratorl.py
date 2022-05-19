@@ -43,6 +43,7 @@ def log_decorator(switch: bool):
                                 f"依赖测试用例: {_dependent_case}\n"
                                 f"接口响应内容: {res['response_data']}\n"
                                 f"接口响应时长: {res['res_time']} ms\n"
+                                f"Http状态码: {res['status_code']}\n"                                
                                 f"数据库断言数据: {res['sql_data']}\n"
                                 "================================================================================="
                             )

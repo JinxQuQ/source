@@ -8,7 +8,6 @@ import os
 
 class ConfigHandler:
     _SLASH = os.sep
-
     # 项目路径
     root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -49,4 +48,4 @@ class ConfigHandler:
 
 
 if __name__ == '__main__':
-    print(ConfigHandler.excel_template)
+    print(ConfigHandler.info_log_path)

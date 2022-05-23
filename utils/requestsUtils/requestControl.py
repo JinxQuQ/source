@@ -114,7 +114,7 @@ class RequestControl:
     def response_elapsed_total_seconds(cls, res):
         """获取接口响应时长"""
         try:
-            return res.elapsed.total_seconds()
+            return res.elapsed.total_seconds() * 1000
         except AttributeError:
             return 0.00
 
@@ -223,8 +223,11 @@ class RequestControl:
                 res = res.json()
                 allure_step("响应结果: ", res)
             except:
-                res = self.text_encode(res.text)
-                allure_step("响应结果: ", res)
+                if _requestType == RequestType.EXPORT.value:
+                    res = filename
+                else:
+                    res = self.text_encode(res.text)
+                    allure_step("响应结果: ", res)
             try:
                 cookie = res.cookies.get_dict()
             except:

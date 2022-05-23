@@ -44,6 +44,8 @@ class YAMLDate(Enum):
     # 前置sql
     SETUP_SQL = 'setup_sql'
     STATUS_CODE = "status_code"
+    TEARDOWN = "teardown"
+    TEARDOWN_SQL = 'teardown_sql'
 
 
 

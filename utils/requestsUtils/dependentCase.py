@@ -10,6 +10,7 @@ from Enums.dependentType_enum import DependentType
 from Enums.yamlData_enum import YAMLDate
 from utils.mysqlUtils.mysqlControl import MysqlDB
 from utils.readFilesUtils.regularControl import regular
+from utils.otherUtils.jsonpath_date_replace import jsonpath_replace
 
 
 class DependentCase:
@@ -147,14 +148,7 @@ class DependentCase:
                 # 通过jsonpath判断出需要替换数据的位置
                 _change_data = key.split(".")
                 # jsonpath 数据解析
-                _new_data = 'yaml_data' + ''
-                for i in _change_data:
-                    if i == '$':
-                        pass
-                    elif i[0] == '[' and i[-1] == ']':
-                        _new_data += "[" + i[1:-1] + "]"
-                    else:
-                        _new_data += "[" + "'" + i + "'" + "]"
+                _new_data = jsonpath_replace(change_data=_change_data, key_name='yaml_data')
                 # 最终提取到的数据,转换成 yaml_data[xxx][xxx]
                 _new_data += ' = value'
                 exec(_new_data)

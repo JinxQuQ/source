@@ -147,7 +147,7 @@ def regular(target):
         while re.findall(regular_pattern, target):
             key = re.search(regular_pattern, target).group(1)
             value_data = getattr(Context(), key)
-            if isinstance(value_data, (int, float)):
+            if not isinstance(value_data, str):
                 regular_int_pattern = r'\'\${{(.*?)}}\''
                 target = re.sub(regular_int_pattern, str(value_data), target, 1)
             else:
@@ -185,3 +185,7 @@ def replace_load(data):
             else:
                 data = str_data
     return str_data
+
+
+if __name__ == '__main__':
+    data = {"headers": ""}

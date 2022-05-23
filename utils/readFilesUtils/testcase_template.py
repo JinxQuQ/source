@@ -49,6 +49,7 @@ from utils.readFilesUtils.get_yaml_data_analysis import CaseData
 from utils.assertUtils.assertControl import Assert
 from utils.requestsUtils.requestControl import RequestControl
 from utils.readFilesUtils.regularControl import regular
+from utils.requestsUtils.teardownControl import TearDownHandler
 
 
 TestData = CaseData(ConfigHandler.data_path + r'{yaml_path}').case_process()
@@ -68,6 +69,7 @@ class Test{class_title}:
         """
 
         res = RequestControl().http_request(in_data)
+        TearDownHandler().teardown_handle(res)
         Assert(in_data['assert']).assert_equality(response_data=res['response_data'], 
                                                   sql_data=res['sql_data'], status_code=res['status_code'])
 

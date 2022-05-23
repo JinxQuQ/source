@@ -1,3 +1,0 @@
-WARNING 2022-05-19 23:51:24,443  C:\work\Study\pytest-auto-api2\logs\warning.log:conftest.py:133 跳过用例数: 1
-WARNING 2022-05-20 15:08:34,714  C:\work\Study\pytest-auto-api2\logs\warning.log:conftest.py:133 跳过用例数: 1
-WARNING 2022-05-20 23:58:40,396  C:\work\Study\pytest-auto-api2\logs\warning.log:assertControl.py:88 检测到数据库状态为关闭状态，程序已为您跳过此断言，断言值:{'jsonpath': '$.data.[0].name', 'type': '==', 'value': '$.username', 'AssertType': 'SQL'}

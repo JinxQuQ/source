@@ -1,8 +1,0 @@
-WARNING 2022-05-05 20:50:39,768  C:\work\Study\pytest-auto-api2\logs\warning.log:conftest.py:132 跳过用例数: 1
-WARNING 2022-05-05 20:51:40,420  C:\work\Study\pytest-auto-api2\logs\warning.log:conftest.py:132 跳过用例数: 1
-WARNING 2022-05-05 23:27:01,640  C:\work\Study\pytest-auto-api2\logs\warning.log:conftest.py:136 跳过用例数: 1
-WARNING 2022-05-05 23:28:14,864  C:\work\Study\pytest-auto-api2\logs\warning.log:conftest.py:136 跳过用例数: 1
-WARNING 2022-05-05 23:29:28,044  C:\work\Study\pytest-auto-api2\logs\warning.log:conftest.py:136 跳过用例数: 1
-WARNING 2022-05-05 23:30:04,527  C:\work\Study\pytest-auto-api2\logs\warning.log:conftest.py:134 跳过用例数: 0
-WARNING 2022-05-05 23:30:28,750  C:\work\Study\pytest-auto-api2\logs\warning.log:conftest.py:134 跳过用例数: 1
-WARNING 2022-05-05 23:31:14,501  C:\work\Study\pytest-auto-api2\logs\warning.log:conftest.py:134 跳过用例数: 1

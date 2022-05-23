@@ -26,18 +26,20 @@ class RequestControl:
     """ 封装请求 """
 
     @classmethod
-    def _check_params(cls, response, yaml_data, headers, cookie, res_time, status_code) -> Any:
+    def _check_params(cls, response, yaml_data, headers, cookie, res_time, status_code, teardown, teardown_sql) -> Any:
         """ 抽离出通用模块，判断 http_request 方法中的一些数据校验 """
         # 判断数据库开关，开启状态，则返回对应的数据
         if sql_switch() and yaml_data['sql'] is not None:
             sql_data = MysqlDB().assert_execution(sql=yaml_data['sql'], resp=response)
             return {"response_data": response, "sql_data": sql_data, "yaml_data": yaml_data,
-                    "headers": headers, "cookie": cookie, "res_time": res_time, "status_code": status_code}
+                    "headers": headers, "cookie": cookie, "res_time": res_time, "status_code": status_code,
+                    "teardown": teardown, "teardown_sql": teardown_sql}
         else:
             # 数据库关闭走的逻辑
             res = response
             return {"response_data": res, "sql_data": {"sql": None}, "yaml_data": yaml_data,
-                    "headers": headers, "cookie": cookie, "res_time": res_time, "status_code": status_code}
+                    "headers": headers, "cookie": cookie, "res_time": res_time, "status_code": status_code,
+                    "teardown": teardown, "teardown_sql": teardown_sql}
 
     @classmethod
     def file_data_exit(cls, yaml_data, file_data):
@@ -143,10 +145,11 @@ class RequestControl:
 
     @log_decorator(True)
     @execution_duration(3000)
-    def http_request(self, yaml_data, **kwargs):
+    def http_request(self, yaml_data, dependent_switch=True, **kwargs):
         """
         请求封装
         :param yaml_data: 从yaml文件中读取出来的所有数据
+        :param dependent_switch:
         :param kwargs:
         :return:
         """
@@ -162,12 +165,16 @@ class RequestControl:
         _sql = yaml_data[YAMLDate.SQL.value]
         _assert = yaml_data[YAMLDate.ASSERT.value]
         _dependent_data = yaml_data[YAMLDate.DEPENDENCE_CASE_DATA.value]
+        _teardown = yaml_data[YAMLDate.TEARDOWN.value]
+        _teardown_sql = yaml_data[YAMLDate.TEARDOWN_SQL.value]
+
         res = None
 
         # 判断用例是否执行
         if _is_run is True or _is_run is None:
             # 处理多业务逻辑
-            DependentCase().get_dependent_data(yaml_data)
+            if dependent_switch is True:
+                DependentCase().get_dependent_data(yaml_data)
             if _requestType == RequestType.JSON.value:
                 _headers = self.check_headers_str_null(_headers)
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], json=_data,
@@ -233,7 +240,8 @@ class RequestControl:
             except:
                 cookie = None
 
-            return self._check_params(res, yaml_data, _headers, cookie, _res_time, _status_code)
+            return self._check_params(res, yaml_data, _headers, cookie, _res_time,
+                                      _status_code, _teardown, _teardown_sql)
         else:
             # 用例跳过执行的话，响应数据和sql数据为空
             return {"response_data": False, "sql_data": False, "yaml_data": yaml_data, "res_time": 0.00}

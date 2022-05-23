@@ -38,7 +38,9 @@ class CaseData:
                     'dependence_case_data': self.get_dependence_case_data(key, values),
                     "sql": self.get_sql(key, values),
                     "assert": self.get_assert(key, values),
-                    "setup_sql": self.setup_sql(values)
+                    "setup_sql": self.setup_sql(values),
+                    "teardown": self.tear_down(values),
+                    "teardown_sql": self.teardown_sql(values)
                 }
 
                 if case_id_switch is True:
@@ -249,5 +251,28 @@ class CaseData:
         try:
             _setup_sql = case_data['setup_sql']
             return _setup_sql
+        except KeyError:
+            return None
+
+    @classmethod
+    def tear_down(cls, case_data: dict):
+        """
+        获取后置请求数据
+        """
+        try:
+            _teardown = case_data['teardown']
+            return _teardown
+        except KeyError:
+            return None
+
+    @classmethod
+    def teardown_sql(cls, case_data: dict):
+        """
+        获取前置sql，比如该条用例中需要从数据库中读取sql作为用例参数，则需填写setup_sql
+        :return:
+        """
+        try:
+            _teardown_sql = case_data['teardown_sql']
+            return _teardown_sql
         except KeyError:
             return None

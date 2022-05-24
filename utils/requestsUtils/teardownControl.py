@@ -9,9 +9,10 @@
 from utils.otherUtils.jsonpath import jsonpath
 from utils.cacheUtils.cacheControl import Cache
 from utils.requestsUtils.requestControl import RequestControl
-from utils.readFilesUtils.regularControl import regular
+from utils.readFilesUtils.regularControl import regular, cache_regular
 from Enums.yamlData_enum import YAMLDate
 from utils.otherUtils.jsonpath_date_replace import jsonpath_replace
+from utils.assertUtils.assertControl import Assert
 
 
 class TearDownHandler:
@@ -24,9 +25,9 @@ class TearDownHandler:
     @classmethod
     def get_response_data(cls, case_data):
         return case_data['response_data']
-    
+
     @classmethod
-    def jsonpath_replace_data(cls, replace_key,  replace_value):
+    def jsonpath_replace_data(cls, replace_key, replace_value):
         # 通过jsonpath判断出需要替换数据的位置
         _change_data = replace_key.split(".")
         # jsonpath 数据解析
@@ -64,8 +65,8 @@ class TearDownHandler:
                         else:
                             raise ValueError(f"jsonpath提取失败，替换内容: {_request_data} \n"
                                              f"jsonpath: {i['jsonpath']}")
-                test_case = eval(regular(str(_teardown_case)))
-                RequestControl().http_request(yaml_data=test_case, dependent_switch=False)
-
-
-
+                test_case = regular(str(_teardown_case))
+                test_case = eval(cache_regular(test_case))
+                res = RequestControl().http_request(yaml_data=test_case, dependent_switch=False)
+                Assert(test_case['assert']).assert_equality(response_data=res['response_data'],
+                                                            sql_data=res['sql_data'], status_code=res['status_code'])

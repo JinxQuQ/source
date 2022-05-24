@@ -8,6 +8,7 @@ import urllib
 
 import requests
 from typing import Any
+import urllib3
 from utils.otherUtils.get_conf_data import sql_switch
 from requests_toolbelt import MultipartEncoder
 from utils.logUtils.logDecoratorl import log_decorator
@@ -17,8 +18,7 @@ from Enums.yamlData_enum import YAMLDate
 from common.setting import ConfigHandler
 from utils.logUtils.runTimeDecoratorl import execution_duration
 from utils.otherUtils.allureDate.allure_tools import allure_step, allure_step_no, allure_attach
-from utils.readFilesUtils.regularControl import cache_regular
-import urllib3
+from utils.requestsUtils.encryption_algorithm_control import encryption
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
@@ -145,6 +145,7 @@ class RequestControl:
 
     @log_decorator(True)
     @execution_duration(3000)
+    # @encryption("md5")
     def http_request(self, yaml_data, dependent_switch=True, **kwargs):
         """
         请求封装
@@ -153,8 +154,6 @@ class RequestControl:
         :param kwargs:
         :return:
         """
-        re_data = cache_regular(str(yaml_data))
-        yaml_data = eval(re_data)
         from utils.requestsUtils.dependentCase import DependentCase
         _is_run = yaml_data[YAMLDate.IS_RUN.value]
         _method = yaml_data[YAMLDate.METHOD.value]

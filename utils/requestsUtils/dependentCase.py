@@ -9,7 +9,7 @@ from utils.requestsUtils.requestControl import RequestControl
 from Enums.dependentType_enum import DependentType
 from Enums.yamlData_enum import YAMLDate
 from utils.mysqlUtils.mysqlControl import MysqlDB
-from utils.readFilesUtils.regularControl import regular
+from utils.readFilesUtils.regularControl import regular, cache_regular
 from utils.otherUtils.jsonpath_date_replace import jsonpath_replace
 
 
@@ -88,6 +88,7 @@ class DependentCase:
                     dependent_data = dependence_case_data['dependent_data']
                     _case_id = dependence_case_data[YAMLDate.CASE_ID.value]
                     re_data = regular(str(cls.get_cache(_case_id)))
+                    re_data = cache_regular(re_data)
                     res = RequestControl().http_request(eval(re_data))
                     for i in dependent_data:
 
@@ -101,14 +102,14 @@ class DependentCase:
                             jsonpath_data = cls.jsonpath_data(res['response_data'], _jsonpath)
                             cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
                                             jsonpath_data=jsonpath_data, case_data=case_data)
-                        #
-                        # # 判断依赖数据类型, 依赖 request 中的数据
-                        # elif i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.REQUEST.value:
-                        #     re_data = regular(str(cls.get_cache(_case_id)))
-                        #     jsonpath_data = cls.jsonpath_data(eval(re_data), _jsonpath)
-                        #     jsonpath_dates[_replace_key] = jsonpath_data[0]
-                        #     cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
-                        #                     jsonpath_data=jsonpath_data, case_data=case_data)
+
+                        # 判断依赖数据类型, 依赖 request 中的数据
+                        elif i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.REQUEST.value:
+                            print(res)
+                            jsonpath_data = cls.jsonpath_data(res['yaml_data']['data'], _jsonpath)
+                            jsonpath_dates[_replace_key] = jsonpath_data[0]
+                            cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
+                                            jsonpath_data=jsonpath_data, case_data=case_data)
 
                         # 判断依赖数据类型，依赖 sql中的数据
                         elif i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.SQL_DATA.value:

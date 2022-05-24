@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time   : 2022-05-23 20:51:35
+# @Time   : 2022-05-24 16:28:43
 # @Author : 七月
 
 
@@ -10,12 +10,13 @@ from common.setting import ConfigHandler
 from utils.readFilesUtils.get_yaml_data_analysis import CaseData
 from utils.assertUtils.assertControl import Assert
 from utils.requestsUtils.requestControl import RequestControl
-from utils.readFilesUtils.regularControl import regular
+from utils.readFilesUtils.regularControl import regular, cache_regular
 from utils.requestsUtils.teardownControl import TearDownHandler
 
 
 TestData = CaseData(ConfigHandler.data_path + r'UserInfo/get_user_info.yaml').case_process()
 re_data = regular(str(TestData))
+re_cache_date = cache_regular(re_data)
 
 
 @allure.epic("开发平台接口")
@@ -23,7 +24,7 @@ re_data = regular(str(TestData))
 class TestGetUserInfo:
 
     @allure.story("个人信息接口")
-    @pytest.mark.parametrize('in_data', eval(re_data), ids=[i['detail'] for i in TestData])
+    @pytest.mark.parametrize('in_data', eval(re_cache_date), ids=[i['detail'] for i in TestData])
     def test_get_user_info(self, in_data, case_skip):
         """
         :param :

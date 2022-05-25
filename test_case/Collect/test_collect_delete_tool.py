@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time   : 2022-05-24 16:28:43
+# @Time   : 2022-05-25 11:37:03
 # @Author : 七月
 
 
@@ -17,7 +17,6 @@ from utils.requestsUtils.teardownControl import TearDownHandler
 TestData = CaseData(ConfigHandler.data_path + r'Collect/collect_delete_tool.yaml').case_process()
 re_data = regular(str(TestData))
 re_cache_date = cache_regular(re_data)
-
 
 
 @allure.epic("开发平台接口")

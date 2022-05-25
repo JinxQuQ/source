@@ -57,7 +57,6 @@ re_data = regular(str(TestData))
 re_cache_date = cache_regular(re_data)
 
 
-
 @allure.epic("{allure_epic}")
 @allure.feature("{allure_feature}")
 class Test{class_title}:

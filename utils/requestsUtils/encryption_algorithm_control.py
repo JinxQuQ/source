@@ -68,10 +68,7 @@ def encryption(ency_type):
                         if isinstance(v, dict):
                             ency_value(data=v)
                         else:
-                            print(k, v)
                             data[k] = md5_encryption(v)
-                    return data
-
             else:
                 raise ValueError("暂不支持该加密规则，如有需要，请联系管理员")
             ency_value(params)
@@ -80,16 +77,3 @@ def encryption(ency_type):
         return swapper
 
     return decorator
-
-
-if __name__ == '__main__':
-    def getvalue(data: dict):
-        for k, v in data.items():
-            if isinstance(v, dict):
-                getvalue(v)
-            else:
-                v = str(v) + "i"
-                data[k] = v
-        return data
-    a = getvalue({'id': '20175', 'tester': {'yushaoqi': 123, 'woshi': {'liuming': 345}}})
-    print(a)

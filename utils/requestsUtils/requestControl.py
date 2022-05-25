@@ -178,6 +178,10 @@ class RequestControl:
                 _headers = self.check_headers_str_null(_headers)
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], json=_data,
                                        headers=_headers, verify=False, **kwargs)
+            elif _requestType == RequestType.NONE.value:
+                _headers = self.check_headers_str_null(_headers)
+                res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], data=None,
+                                       headers=_headers, verify=False, **kwargs)
 
             elif _requestType == RequestType.PARAMS.value:
                 url = yaml_data[YAMLDate.URL.value]

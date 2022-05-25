@@ -140,10 +140,10 @@ class CaseData:
         :return:
         """
 
-        _types = ['JSON', 'PARAMS', 'FILE', 'DATE', "EXPORT"]
+        _types = ['JSON', 'PARAMS', 'FILE', 'DATE', "EXPORT", "NONE"]
 
         try:
-            _request_type = case_data['requestType']
+            _request_type = str(case_data['requestType'])
             # 判断用户填写的 requestType是否符合规范
             if _request_type.upper() in _types:
                 return _request_type.upper()

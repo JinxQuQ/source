@@ -20,3 +20,5 @@ class RequestType(Enum):
     FILE = 'FILE'
     # 导出文件
     EXPORT = "EXPORT"
+    # 没有请求参数
+    NONE = "NONE"

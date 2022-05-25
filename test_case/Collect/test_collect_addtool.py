@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time   : 2022-05-25 11:37:03
+# @Time   : 2022-05-25 17:32:43
 # @Author : 七月
 
 
@@ -16,7 +16,6 @@ from utils.requestsUtils.teardownControl import TearDownHandler
 
 TestData = CaseData(ConfigHandler.data_path + r'Collect/collect_addtool.yaml').case_process()
 re_data = regular(str(TestData))
-re_cache_date = cache_regular(re_data)
 
 
 @allure.epic("开发平台接口")
@@ -24,13 +23,13 @@ re_cache_date = cache_regular(re_data)
 class TestCollectAddtool:
 
     @allure.story("收藏网址接口")
-    @pytest.mark.parametrize('in_data', eval(re_cache_date), ids=[i['detail'] for i in TestData])
+    @pytest.mark.parametrize('in_data', eval(re_data), ids=[i['detail'] for i in TestData])
     def test_collect_addtool(self, in_data, case_skip):
         """
         :param :
         :return:
         """
-
+        in_data = eval(cache_regular(str(in_data)))
         res = RequestControl().http_request(in_data)
         TearDownHandler().teardown_handle(res)
         Assert(in_data['assert']).assert_equality(response_data=res['response_data'], 

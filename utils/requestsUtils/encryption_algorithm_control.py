@@ -64,11 +64,12 @@ def encryption(ency_type):
                 params = args[1]['data']
             if ency_type == "md5":
                 def ency_value(data):
-                    for k, v in data.items():
-                        if isinstance(v, dict):
-                            ency_value(data=v)
-                        else:
-                            data[k] = md5_encryption(v)
+                    if data is not None:
+                        for k, v in data.items():
+                            if isinstance(v, dict):
+                                ency_value(data=v)
+                            else:
+                                data[k] = md5_encryption(v)
             else:
                 raise ValueError("暂不支持该加密规则，如有需要，请联系管理员")
             ency_value(params)

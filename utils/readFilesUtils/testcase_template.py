@@ -54,7 +54,6 @@ from utils.requestsUtils.teardownControl import TearDownHandler
 
 TestData = CaseData(ConfigHandler.data_path + r'{yaml_path}').case_process()
 re_data = regular(str(TestData))
-re_cache_date = cache_regular(re_data)
 
 
 @allure.epic("{allure_epic}")
@@ -62,13 +61,13 @@ re_cache_date = cache_regular(re_data)
 class Test{class_title}:
 
     @allure.story("{allure_story}")
-    @pytest.mark.parametrize('in_data', eval(re_cache_date), ids=[i['detail'] for i in TestData])
+    @pytest.mark.parametrize('in_data', eval(re_data), ids=[i['detail'] for i in TestData])
     def test_{func_title}(self, in_data, case_skip):
         """
         :param :
         :return:
         """
-
+        in_data = eval(cache_regular(str(in_data)))
         res = RequestControl().http_request(in_data)
         TearDownHandler().teardown_handle(res)
         Assert(in_data['assert']).assert_equality(response_data=res['response_data'], 

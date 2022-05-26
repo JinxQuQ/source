@@ -17,7 +17,7 @@ from Enums.yamlData_enum import YAMLDate
 from utils.otherUtils.allureDate.allure_tools import allure_step, allure_step_no
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="session", autouse=False)
 def clear_report():
     try:
         for one in os.listdir(ConfigHandler.report_path + '/tmp'):

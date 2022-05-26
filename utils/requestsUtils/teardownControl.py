@@ -9,10 +9,13 @@
 from utils.otherUtils.jsonpath import jsonpath
 from utils.cacheUtils.cacheControl import Cache
 from utils.requestsUtils.requestControl import RequestControl
-from utils.readFilesUtils.regularControl import regular, cache_regular
+from utils.readFilesUtils.regularControl import regular, cache_regular, sql_regular
 from Enums.yamlData_enum import YAMLDate
 from utils.otherUtils.jsonpath_date_replace import jsonpath_replace
 from utils.assertUtils.assertControl import Assert
+from utils.mysqlUtils.mysqlControl import MysqlDB
+from utils.otherUtils.get_conf_data import sql_switch
+from utils.logUtils.logControl import WARNING
 
 
 class TearDownHandler:
@@ -25,6 +28,10 @@ class TearDownHandler:
     @classmethod
     def get_response_data(cls, case_data):
         return case_data['response_data']
+
+    @classmethod
+    def get_teardown_sql(cls, case_data):
+        return case_data[YAMLDate.TEARDOWN_SQL.value]
 
     @classmethod
     def jsonpath_replace_data(cls, replace_key, replace_value):
@@ -70,3 +77,19 @@ class TearDownHandler:
                 res = RequestControl().http_request(yaml_data=test_case, dependent_switch=False)
                 Assert(test_case['assert']).assert_equality(response_data=res['response_data'],
                                                             sql_data=res['sql_data'], status_code=res['status_code'])
+                self.teardown_sql(case_data)
+
+    def teardown_sql(self, case_data):
+        """处理后置sql"""
+        sql_data = self.get_teardown_sql(case_data)
+        _response_data = case_data['response_data']
+        if sql_data is not None:
+            for i in sql_data:
+                if sql_switch():
+                    _sql_data = sql_regular(value=i, res=_response_data)
+                    print(_sql_data)
+                    MysqlDB().execute(_sql_data)
+                else:
+                    WARNING.logger.warning(f"程序中检查到您数据库开关为关闭状态，已为您跳过删除sql: {i}")
+
+

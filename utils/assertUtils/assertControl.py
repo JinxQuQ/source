@@ -94,7 +94,6 @@ class Assert:
             # 走正常SQL断言逻辑
             else:
                 res_sql_data = jsonpath(sql_data, assert_value)
-                print(res_sql_data, "这里是res_sql_data")
                 if res_sql_data is False:
                     raise ValueError(f"数据库断言内容jsonpath提取失败， 当前jsonpath内容: {assert_value}\n"
                                      f"数据库返回内容: {sql_data}")

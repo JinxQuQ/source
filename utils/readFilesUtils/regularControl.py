@@ -188,4 +188,4 @@ def replace_load(data):
 
 
 if __name__ == '__main__':
-    data = {"headers": ""}
+    data = {"headers": "$set_cache"}

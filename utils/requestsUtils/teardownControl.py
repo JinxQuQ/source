@@ -16,6 +16,8 @@ from utils.assertUtils.assertControl import Assert
 from utils.mysqlUtils.mysqlControl import MysqlDB
 from utils.otherUtils.get_conf_data import sql_switch
 from utils.logUtils.logControl import WARNING
+from utils.readFilesUtils.regularControl import regular
+from utils.cacheUtils.cacheControl import Cache
 
 
 class TearDownHandler:
@@ -39,45 +41,87 @@ class TearDownHandler:
         _change_data = replace_key.split(".")
         # jsonpath 数据解析
         _new_data = jsonpath_replace(change_data=_change_data, key_name='_teardown_case')
-        # 最终提取到的数据,转换成 yaml_data[xxx][xxx]
+        # 最终提取到的数据,转换成 _teardown_case[xxx][xxx]
         _new_data += ' = {0}'.format(replace_value)
         return _new_data
 
+    @classmethod
+    def get_cache_name(cls, replace_key, resp_case_data):
+        """
+        获取缓存名称，并且讲提取到的数据写入缓存
+        """
+        if "$set_cache{" in replace_key and "}" in replace_key:
+            start_index = replace_key.index("$set_cache{")
+            end_index = replace_key.index("}", start_index)
+            old_value = replace_key[start_index:end_index + 2]
+            cache_name = old_value[11:old_value.index("}")]
+            Cache(cache_name).set_caches(resp_case_data)
+
     def teardown_handle(self, case_data):
         """ 后置处理逻辑 """
+        # 拿到用例信息
         _teardown_data = self.get_teardown_data(case_data)
+        # 获取接口的响应内容
         _resp_data = case_data['response_data']
+        # 获取接口的请求参数
         _request_data = case_data['yaml_data']['data']
+        # 判断如果没有 teardown
         if _teardown_data is not None:
+            # 循环 teardown中的接口
             for _data in _teardown_data:
                 _case_id = _data['case_id']
                 _step = _data['step']
                 _teardown_case = eval(Cache('case_process').get_cache())[_case_id]
                 for i in _step:
-                    _replace_key = i['replace_key']
+                    # 判断请求类型为自己
+                    if i['dependent_type'] == 'self_response':
+                        _set_value = i['set_value']
+                        test_case = regular(str(_teardown_case))
+                        test_case = eval(cache_regular(test_case))
+                        res = RequestControl().http_request(yaml_data=test_case, dependent_switch=False)
+                        _response_dependent = jsonpath(obj=res['response_data'], expr=i['jsonpath'])
+                        # 如果提取到数据，则进行下一步
+                        if _response_dependent is not False:
+                            _resp_case_data = _response_dependent[0]
+                            # 拿到 set_cache 然后将数据写入缓存
+                            self.get_cache_name(replace_key=_set_value, resp_case_data=_resp_case_data)
+                        else:
+                            raise ValueError(f"jsonpath提取失败，替换内容: {_resp_data} \n"
+                                             f"jsonpath: {i['jsonpath']}")
+
+                    # 判断从响应内容提取数据
                     if i['dependent_type'] == 'response':
+                        _replace_key = i['replace_key']
                         _response_dependent = jsonpath(obj=_resp_data, expr=i['jsonpath'])
+                        # 如果提取到数据，则进行下一步
                         if _response_dependent is not False:
                             _resp_case_data = _response_dependent[0]
                             exec(self.jsonpath_replace_data(replace_key=_replace_key, replace_value=_resp_case_data))
                         else:
                             raise ValueError(f"jsonpath提取失败，替换内容: {_resp_data} \n"
                                              f"jsonpath: {i['jsonpath']}")
-
+                    # 判断请求中的数据
                     elif i['dependent_type'] == 'request':
+                        _request_set_value = i['set_value']
                         _request_dependent = jsonpath(obj=_request_data, expr=i['jsonpath'])
                         if _request_dependent is not False:
                             _request_case_data = _request_dependent[0]
-                            exec(self.jsonpath_replace_data(replace_key=_replace_key, replace_value=_request_case_data))
+                            self.get_cache_name(replace_key=_request_set_value, resp_case_data=_request_case_data)
                         else:
                             raise ValueError(f"jsonpath提取失败，替换内容: {_request_data} \n"
                                              f"jsonpath: {i['jsonpath']}")
+
+                    elif i['dependent_type'] == 'cache':
+                        _cache_data = Cache(i['cache_data']).get_cache()
+                        _replace_key = i['replace_key']
+                        exec(self.jsonpath_replace_data(replace_key=_replace_key, replace_value=_cache_data))
+
                 test_case = regular(str(_teardown_case))
                 test_case = eval(cache_regular(test_case))
+                self.teardown_sql(case_data)
                 res = RequestControl().http_request(yaml_data=test_case, dependent_switch=False)
                 Assert(test_case['assert']).assert_equality(response_data=res['response_data'],
                                                             sql_data=res['sql_data'], status_code=res['status_code'])
-                self.teardown_sql(case_data)
 
     def teardown_sql(self, case_data):
         """处理后置sql"""

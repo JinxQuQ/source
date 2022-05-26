@@ -45,6 +45,20 @@ collect_update_tool_01:
             jsonpath: $.data.id
             replace_key: $.data.id
 
+#      # 先搜索
+#      - case_id: collect_tool_list_01
+#        step:
+#          - dependent_type: self_response
+#            jsonpath: $.data[-1:].id
+#            set_value: $set_cache{artile_id}
+#
+#      # 删除
+#      - case_id: collect_delete_tool_01
+#        step:
+#          # 删除从缓存中拿数据
+#          - dependent_type: cache
+#            cache_data: artile_id
+#            replace_key: $.data.id
 
 
 

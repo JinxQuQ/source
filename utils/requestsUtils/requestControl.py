@@ -168,7 +168,7 @@ class RequestControl:
         _teardown_sql = yaml_data[YAMLDate.TEARDOWN_SQL.value]
 
         res = None
-
+        filename = None
         # 判断用例是否执行
         if _is_run is True or _is_run is None:
             # 处理多业务逻辑

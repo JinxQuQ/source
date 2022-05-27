@@ -134,7 +134,7 @@ def pytest_terminal_summary(terminalreporter):
     INFO.logger.info("用例执行时长: %.2f" % _TIMES + " s")
 
     try:
-        _RATE = round((_PASSED + _SKIPPED) / _TOTAL * 100, 2)
+        _RATE = round(_PASSED / _TOTAL * 100, 2)
         INFO.logger.info("用例成功率: %.2f" % _RATE + " %")
     except ZeroDivisionError:
         INFO.logger.info("用例成功率: 0.00 %")

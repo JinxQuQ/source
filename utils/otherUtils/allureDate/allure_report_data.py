@@ -81,7 +81,7 @@ class CaseCount:
         """用例成功率"""
         # 四舍五入，保留2位小数
         try:
-            pass_rate = round((self.pass_count() + self.skipped_count()) / self.total_count() * 100, 2)
+            pass_rate = round(self.pass_count() / self.total_count() * 100, 2)
             return pass_rate
         except ZeroDivisionError:
             return 0.00

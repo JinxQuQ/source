@@ -31,7 +31,7 @@ class CaseData:
                     'is_run': self.get_is_run(key, values),
                     'url': self.get_case_host(case_id=key, case_data=values),
                     'detail': self.get_case_detail(case_id=key, case_data=values),
-                    'headers': self.get_headers(case_id=key, case_data=values, file_path=self.filePath),
+                    'headers': self.get_headers(case_id=key, case_data=values),
                     'requestType': self.get_request_type(key, values),
                     'data': self.get_case_dates(key, values),
                     'dependence_case': self.get_dependence_case(key, values),
@@ -97,7 +97,7 @@ class CaseData:
         except KeyError:
             raise KeyError(self.raise_value_null_error(case_id=case_id, data_name="detail"))
 
-    def get_headers(self, case_id: str, case_data: dict, file_path: str) -> dict:
+    def get_headers(self, case_id: str, case_data: dict) -> dict:
         """
         胡求用例请求头中的信息
         :return:

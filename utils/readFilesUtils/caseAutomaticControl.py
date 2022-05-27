@@ -44,28 +44,6 @@ class TestCaseAutomaticGeneration:
             file_name = yaml_path.replace('.yml', '.py')
         return file_name
 
-    def get_package_path(self, file_path: str) -> str:
-        """
-        根据不同的层级，获取 test_case 中需要依赖的包
-        :return: from lib.test_demo import DateDemo
-        """
-        lib_path = self.file_name(file_path)
-        i = lib_path.split(get_os_sep())
-        # 判断多层目录下的导报结构
-        if len(i) > 1:
-            package_path = "from lib"
-            for files in i:
-                # 去掉路径中的 .py
-                if '.py' in files:
-                    files = files[:-3]
-                package_path += "." + files
-            # 正常完整版本的多层结构导包路径
-            package_path += ' import' + ' ' + i[-1][:-3]
-            return package_path
-        # 判断一层目录下的导报结构
-        elif len(i) == 1:
-            return f"from lib.{i[0][:-3]} import {i[0][:-3]}"
-
     def get_case_path(self, file_path: str) -> tuple:
         """
         根据 yaml 中的用例，生成对应 testCase 层代码的路径
@@ -79,15 +57,6 @@ class TestCaseAutomaticGeneration:
         case_name = path[-1] = path[-1].replace(path[-1], "test_" + path[-1])
         new_name = get_os_sep().join(path)
         return ConfigHandler.case_path + new_name, case_name
-
-    @classmethod
-    def get_testcase_detail(cls, file_path: str) -> str:
-        """
-        获取用例描述
-        :param file_path: yaml 用例路径
-        :return:
-        """
-        return GetYamlData(file_path).get_yaml_data()[0]['detail']
 
     def get_test_class_title(self, file_path: str) -> str:
         """

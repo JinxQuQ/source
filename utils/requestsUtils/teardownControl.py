@@ -7,16 +7,14 @@
 # @describe: 请求后置处理
 
 from utils.otherUtils.jsonpath import jsonpath
-from utils.cacheUtils.cacheControl import Cache
 from utils.requestsUtils.requestControl import RequestControl
-from utils.readFilesUtils.regularControl import regular, cache_regular, sql_regular
+from utils.readFilesUtils.regularControl import cache_regular, sql_regular, regular
 from Enums.yamlData_enum import YAMLDate
 from utils.otherUtils.jsonpath_date_replace import jsonpath_replace
 from utils.assertUtils.assertControl import Assert
 from utils.mysqlUtils.mysqlControl import MysqlDB
 from utils.otherUtils.get_conf_data import sql_switch
 from utils.logUtils.logControl import WARNING
-from utils.readFilesUtils.regularControl import regular
 from utils.cacheUtils.cacheControl import Cache
 
 
@@ -57,6 +55,20 @@ class TearDownHandler:
             cache_name = old_value[11:old_value.index("}")]
             Cache(cache_name).set_caches(resp_case_data)
 
+    @classmethod
+    def regular_testcase(cls, teardown_case):
+        """处理测试用例中的动态数据"""
+        test_case = regular(str(teardown_case))
+        test_case = eval(cache_regular(test_case))
+        return test_case
+
+    @classmethod
+    def teardown_http_requests(cls, teardown_case):
+        """发送后置请求"""
+        test_case = cls.regular_testcase(teardown_case)
+        res = RequestControl().http_request(yaml_data=test_case, dependent_switch=False)
+        return res
+
     def teardown_handle(self, case_data):
         """ 后置处理逻辑 """
         # 拿到用例信息
@@ -76,9 +88,7 @@ class TearDownHandler:
                     # 判断请求类型为自己
                     if i['dependent_type'] == 'self_response':
                         _set_value = i['set_value']
-                        test_case = regular(str(_teardown_case))
-                        test_case = eval(cache_regular(test_case))
-                        res = RequestControl().http_request(yaml_data=test_case, dependent_switch=False)
+                        res = self.teardown_http_requests(_teardown_case)
                         _response_dependent = jsonpath(obj=res['response_data'], expr=i['jsonpath'])
                         # 如果提取到数据，则进行下一步
                         if _response_dependent is not False:
@@ -116,10 +126,9 @@ class TearDownHandler:
                         _replace_key = i['replace_key']
                         exec(self.jsonpath_replace_data(replace_key=_replace_key, replace_value=_cache_data))
 
-                test_case = regular(str(_teardown_case))
-                test_case = eval(cache_regular(test_case))
                 self.teardown_sql(case_data)
-                res = RequestControl().http_request(yaml_data=test_case, dependent_switch=False)
+                test_case = self.regular_testcase(_teardown_case)
+                res = self.teardown_http_requests(test_case)
                 Assert(test_case['assert']).assert_equality(response_data=res['response_data'],
                                                             sql_data=res['sql_data'], status_code=res['status_code'])
 

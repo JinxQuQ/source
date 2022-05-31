@@ -72,6 +72,7 @@ class TearDownHandler:
     def teardown_handle(self, case_data):
         """ 后置处理逻辑 """
         # 拿到用例信息
+        case_data = eval(cache_regular(str(case_data)))
         _teardown_data = self.get_teardown_data(case_data)
         # 获取接口的响应内容
         _resp_data = case_data['response_data']

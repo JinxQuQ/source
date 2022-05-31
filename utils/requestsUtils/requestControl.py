@@ -18,7 +18,7 @@ from Enums.yamlData_enum import YAMLDate
 from common.setting import ConfigHandler
 from utils.logUtils.runTimeDecoratorl import execution_duration
 from utils.otherUtils.allureDate.allure_tools import allure_step, allure_step_no, allure_attach
-from utils.requestsUtils.encryption_algorithm_control import encryption
+from utils.readFilesUtils.regularControl import cache_regular
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
@@ -168,13 +168,15 @@ class RequestControl:
         _teardown_sql = yaml_data[YAMLDate.TEARDOWN_SQL.value]
 
         res = None
-        filename = None
+
         # 判断用例是否执行
         if _is_run is True or _is_run is None:
             # 处理多业务逻辑
             if dependent_switch is True:
                 DependentCase().get_dependent_data(yaml_data)
+
             if _requestType == RequestType.JSON.value:
+                yaml_data = eval(cache_regular(str(yaml_data)))
                 _headers = self.check_headers_str_null(_headers)
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], json=_data,
                                        headers=_headers, verify=False, **kwargs)
@@ -184,6 +186,8 @@ class RequestControl:
                                        headers=_headers, verify=False, **kwargs)
 
             elif _requestType == RequestType.PARAMS.value:
+                yaml_data = eval(cache_regular(str(yaml_data)))
+                _headers = eval(cache_regular(str(_headers)))
                 url = yaml_data[YAMLDate.URL.value]
                 if _data is not None:
                     # url 拼接的方式传参
@@ -195,17 +199,20 @@ class RequestControl:
                 res = requests.request(method=_method, url=url, headers=_headers, verify=False, **kwargs)
             # 判断上传文件
             elif _requestType == RequestType.FILE.value:
+                yaml_data = eval(cache_regular(str(yaml_data)))
                 multipart = self.upload_file(yaml_data)
                 _headers = self.check_headers_str_null(_headers)
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value],
                                        data=multipart[0], params=multipart[1], headers=_headers, verify=False, **kwargs)
 
             elif _requestType == RequestType.DATE.value:
+                yaml_data = eval(cache_regular(str(yaml_data)))
                 _data, _headers = self.multipart_in_headers(_data, _headers)
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], data=_data, headers=_headers,
                                        verify=False, **kwargs)
 
             elif _requestType == RequestType.EXPORT.value:
+                yaml_data = eval(cache_regular(str(yaml_data)))
                 _headers = self.check_headers_str_null(_headers)
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], json=_data, headers=_headers,
                                        verify=False, stream=False, **kwargs)

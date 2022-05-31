@@ -44,6 +44,16 @@ class DependentCase:
             raise ValueError(f"jsonpath提取失败！\n 提取的数据: {obj} \n jsonpath规则: {expr}")
 
     @classmethod
+    def set_cache_value(cls, dependent_data):
+        """
+        获取依赖中是否需要将数据存入缓存中
+        """
+        try:
+            return dependent_data['set_cache']
+        except KeyError:
+            return None
+
+    @classmethod
     def url_replace(cls, replace_key: str, jsonpath_dates: dict, jsonpath_data: list, case_data: dict):
         """
         url中的动态参数替换
@@ -96,17 +106,20 @@ class DependentCase:
                         _jsonpath = i[YAMLDate.JSONPATH.value]
                         _request_data = case_data[YAMLDate.DATA.value]
                         _replace_key = i[YAMLDate.REPLACE_KEY.value]
-
+                        _set_value = cls.set_cache_value(i)
                         # 判断依赖数据类型, 依赖 response 中的数据
                         if i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.RESPONSE.value:
                             jsonpath_data = cls.jsonpath_data(res['response_data'], _jsonpath)
+                            if _set_value is not None:
+                                Cache(_set_value).set_caches(jsonpath_data[0])
                             cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
                                             jsonpath_data=jsonpath_data, case_data=case_data)
 
                         # 判断依赖数据类型, 依赖 request 中的数据
                         elif i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.REQUEST.value:
-                            print(res)
                             jsonpath_data = cls.jsonpath_data(res['yaml_data']['data'], _jsonpath)
+                            if _set_value is not None:
+                                Cache(_set_value).set_caches(jsonpath_data[0])
                             jsonpath_dates[_replace_key] = jsonpath_data[0]
                             cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
                                             jsonpath_data=jsonpath_data, case_data=case_data)
@@ -116,6 +129,8 @@ class DependentCase:
                             if _setup_sql is not None:
                                 sql_data = MysqlDB().setup_sql_data(sql=_setup_sql)
                                 jsonpath_data = cls.jsonpath_data(obj=sql_data, expr=_jsonpath)
+                                if _set_value is not None:
+                                    Cache(_set_value).set_caches(jsonpath_data[0])
                                 jsonpath_dates[_replace_key] = jsonpath_data[0]
                                 cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
                                                 jsonpath_data=jsonpath_data, case_data=case_data)

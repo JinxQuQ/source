@@ -9,12 +9,13 @@ from utils.otherUtils.get_conf_data import sql_switch
 from utils.logUtils.logControl import ERROR, WARNING
 from Enums.assertMethod_enum import AssertMethod
 from utils.assertUtils.assert_type import *
+from utils.readFilesUtils.regularControl import cache_regular
 
 
 class Assert:
 
     def __init__(self, assert_data: dict):
-        self.assert_data = assert_data
+        self.assert_data = eval(cache_regular(str(assert_data)))
 
     @staticmethod
     def _check_params(response_data: dict, sql_data: dict):

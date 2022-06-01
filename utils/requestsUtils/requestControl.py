@@ -65,6 +65,7 @@ class RequestControl:
         兼容用户未填写headers或者header值为int
         @return:
         """
+        headers = eval(cache_regular(str(headers)))
         if headers is None:
             return {"headers": None}
         else:
@@ -75,7 +76,8 @@ class RequestControl:
 
     @classmethod
     def multipart_in_headers(cls, request_data, header):
-
+        header = eval(cache_regular(str(header)))
+        request_data = eval(cache_regular(str(request_data)))
         """ 判断处理header为 Content-Type: multipart/form-data"""
         if header is None:
             return request_data, {"headers": None}
@@ -128,6 +130,7 @@ class RequestControl:
         :return:
         """
         # 处理上传多个文件的情况
+        yaml_data = eval(cache_regular(str(yaml_data)))
         _files = []
         file_data = {}
         for key, value in yaml_data[YAMLDate.DATA.value]['file'].items():
@@ -178,16 +181,19 @@ class RequestControl:
             if _requestType == RequestType.JSON.value:
                 yaml_data = eval(cache_regular(str(yaml_data)))
                 _headers = self.check_headers_str_null(_headers)
+                _data = yaml_data[YAMLDate.DATA.value]
+
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], json=_data,
                                        headers=_headers, verify=False, **kwargs)
             elif _requestType == RequestType.NONE.value:
+                yaml_data = eval(cache_regular(str(yaml_data)))
                 _headers = self.check_headers_str_null(_headers)
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], data=None,
                                        headers=_headers, verify=False, **kwargs)
 
             elif _requestType == RequestType.PARAMS.value:
                 yaml_data = eval(cache_regular(str(yaml_data)))
-                _headers = eval(cache_regular(str(_headers)))
+                _data = yaml_data[YAMLDate.DATA.value]
                 url = yaml_data[YAMLDate.URL.value]
                 if _data is not None:
                     # url 拼接的方式传参
@@ -214,6 +220,7 @@ class RequestControl:
             elif _requestType == RequestType.EXPORT.value:
                 yaml_data = eval(cache_regular(str(yaml_data)))
                 _headers = self.check_headers_str_null(_headers)
+                _data = yaml_data[YAMLDate.DATA.value]
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], json=_data, headers=_headers,
                                        verify=False, stream=False, **kwargs)
                 content_disposition = res.headers.get('content-disposition')

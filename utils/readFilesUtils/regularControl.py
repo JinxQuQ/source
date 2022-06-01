@@ -1,12 +1,14 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# @Time   : 2022/3/28 10:52
-# @Author : 余少琪
+"""
+Desc : 自定义函数调用
+# @Time : 2022/4/2 9:32 上午
+# @Author : liuYunWin
+"""
 import json
 import re
 import datetime
 from utils.otherUtils.jsonpath import jsonpath
 from faker import Faker
+import random
 from utils.logUtils.logControl import ERROR
 from utils.cacheUtils.cacheControl import Cache
 
@@ -16,12 +18,62 @@ class Context:
         self.f = Faker(locale='zh_CN')
 
     @property
+    def test_random(self) -> int:
+        """
+        :return: 随机数
+        """
+        rn = random.randint(0, 5000)
+        return rn
+
+    @property
+    def get_video_plan_name(self) -> str:
+        """
+        :return: 随机计划名
+        """
+        name = "ci短视频计划" + str(random.randint(0, 5000))
+        return name
+
+    @property
+    def get_live_plan_name(self) -> str:
+        """
+        :return: 随机计划名
+        """
+        name = "ci直播计划" + str(random.randint(0, 5000))
+        return name
+
+    @property
+    def get_group_live_name(self) -> str:
+        """
+        :return: 随机计划组名
+        """
+        name = "ci直播组" + str(random.randint(0, 5000))
+        return name
+
+    @property
+    def get_group_video_name(self) -> str:
+        """
+        :return: 随机计划组名
+        """
+        name = "ci短视频组" + str(random.randint(0, 5000))
+        return name
+
+    @property
     def get_phone(self) -> int:
         """
         :return: 随机生成手机号码
         """
         phone = self.f.phone_number()
         return phone
+
+    @property
+    def get_job(self) -> str:
+        """
+
+        :return: 随机生成身份证号码
+        """
+
+        job = self.f.job()
+        return job
 
     @property
     def get_id_number(self) -> int:
@@ -61,13 +113,13 @@ class Context:
         return email
 
     @property
-    def get_time(self) -> datetime.datetime:
+    def get_time(self) -> str:
         """
         计算当前时间
         :return:
         """
-
-        return datetime.datetime.now()
+        nowtime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        return nowtime
 
     @property
     def random_int(self):
@@ -126,12 +178,17 @@ def cache_regular(value):
     :return:
     """
     # 正则获取 $cache{login_init}中的值 --> login_init
-    regular_data = re.findall(r"\$cache\{(.*?)\}", value)
+    regular_dates = re.findall(r"\$cache\{(.*?)\}", value)
 
     # 拿到的是一个list，循环数据
-    for i in regular_data:
-        pattern = re.compile(r'\$cache\{' + i.replace('$', "\$").replace('[', '\[') + r'\}')
-        cache_data = Cache(i).get_cache()
+    for regular_data in regular_dates:
+        value_types = ['int:', 'bool:', 'list:', 'dict:', 'tuple:', 'float:']
+        if any(i in regular_data for i in value_types) is True:
+            regular_data = regular_data.split(":")[1]
+            pattern = r'\'\$cache{(.*?)}\''
+        else:
+            pattern = re.compile(r'\$cache\{' + regular_data.replace('$', "\$").replace('[', '\[') + r'\}')
+        cache_data = Cache(regular_data).get_cache()
         # 使用sub方法，替换已经拿到的内容
         value = re.sub(pattern, cache_data, value)
     return value
@@ -146,11 +203,13 @@ def regular(target):
         regular_pattern = r'\${{(.*?)}}'
         while re.findall(regular_pattern, target):
             key = re.search(regular_pattern, target).group(1)
-            value_data = getattr(Context(), key)
-            if not isinstance(value_data, str):
+            value_types = ['int:', 'bool:', 'list:', 'dict:', 'tuple:', 'float:']
+            if any(i in key for i in value_types) is True:
+                value_data = getattr(Context(), key.split(":")[1])
                 regular_int_pattern = r'\'\${{(.*?)}}\''
                 target = re.sub(regular_int_pattern, str(value_data), target, 1)
             else:
+                value_data = getattr(Context(), key)
                 target = re.sub(regular_pattern, str(value_data), target, 1)
         return target
 
@@ -159,15 +218,15 @@ def regular(target):
         raise
 
 
-def replace_load(data):
+def replace_load(value):
     """
     使用热加载的方式替换解析yaml中的数据
     调用这个方法，可以支持yaml中函数方法可以传参，但是目前返回的类型必须都是str类型的
     """
-    if data and isinstance(data, dict):
-        str_data = json.dumps(data)
+    if value and isinstance(value, dict):
+        str_data = json.dumps(value)
     else:
-        str_data = data
+        str_data = value
     for i in range(1, str_data.count('${{') + 1):
         if "${{" in str_data and "}}" in str_data:
             start_index = str_data.index("${{")
@@ -180,12 +239,8 @@ def replace_load(data):
             new_value = getattr(Context(), func_name)(*args_value.split(","))
             str_data = str_data.replace(old_value, str(new_value))
         else:
-            if data and isinstance(data, dict):
-                data = json.loads(str_data)
+            if value and isinstance(value, dict):
+                value = json.loads(str_data)
             else:
-                data = str_data
+                value = str_data
     return str_data
-
-
-if __name__ == '__main__':
-    data = {"headers": "$set_cache"}

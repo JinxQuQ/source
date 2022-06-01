@@ -72,6 +72,7 @@ def work_login_init():
     }
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
     # 请求登录接口
+
     res = requests.post(url=url, data=data, verify=True, headers=headers)
     response_cookie = res.cookies
 
@@ -81,7 +82,8 @@ def work_login_init():
         # 拿到登录的cookie内容，cookie拿到的是字典类型，转换成对应的格式
         cookies += _cookie
         # 将登录接口中的cookie写入缓存中，其中login_cookie是缓存名称
-        Cache('login_cookie').set_caches(cookies)
+    print(cookies)
+    Cache('login_cookie').set_caches(cookies)
 
 
 def pytest_collection_modifyitems(items):

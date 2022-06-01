@@ -48,7 +48,7 @@ from common.setting import ConfigHandler
 from utils.readFilesUtils.get_yaml_data_analysis import CaseData
 from utils.assertUtils.assertControl import Assert
 from utils.requestsUtils.requestControl import RequestControl
-from utils.readFilesUtils.regularControl import regular, cache_regular
+from utils.readFilesUtils.regularControl import regular
 from utils.requestsUtils.teardownControl import TearDownHandler
 
 
@@ -67,7 +67,6 @@ class Test{class_title}:
         :param :
         :return:
         """
-        in_data = eval(cache_regular(str(in_data)))
         res = RequestControl().http_request(in_data)
         TearDownHandler().teardown_handle(res)
         Assert(in_data['assert']).assert_equality(response_data=res['response_data'], 

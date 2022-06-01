@@ -18,7 +18,7 @@ collect_delete_tool_01:
     # 是否执行，空或者 true 都会执行
     is_run:
     data:
-      id:
+      id: $cache{collect_delete_tool_01_id}
     dependence_case: True
     # 依赖的数据
     dependence_case_data:
@@ -26,7 +26,7 @@ collect_delete_tool_01:
         dependent_data:
           - dependent_type: response
             jsonpath: $.data.id
-            replace_key: $.data.id
+            set_cache: collect_delete_tool_01_id
 
     assert:
       # 断言接口状态码

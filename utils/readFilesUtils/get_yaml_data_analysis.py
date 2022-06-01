@@ -3,9 +3,8 @@
 # @Time   : 2022/3/22 13:45
 # @Author : 余少琪
 
-import datetime
-import json
 
+import json
 from utils.otherUtils.get_conf_data import sql_switch
 from utils.readFilesUtils.yamlControl import GetYamlData
 
@@ -212,7 +211,7 @@ class CaseData:
         """
         try:
             _dates = case_data['data']
-            # 处理请求参数中日期,没有加引号,导致数据不正确问题
+            # # 处理请求参数中日期,没有加引号,导致数据不正确问题
             # if _dates is not None:
             #     def data_type(value):
             #         if isinstance(value, dict):

@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 # @Time   : 2021/11/26 18:27
 # @Author : 余少琪
+import datetime
+import decimal
 
 import pymysql
 from warnings import filterwarnings
@@ -106,7 +108,12 @@ class MysqlDB(object):
                             query_data = self.query(sql)[0]
                             # 将sql 返回的所有内容全部放入对象中
                             for key, value in query_data.items():
-                                data[key] = value
+                                if isinstance(value, decimal.Decimal):
+                                    data[key] = float(value)
+                                elif isinstance(value, datetime.datetime):
+                                    data[key] = str(value)
+                                else:
+                                    data[key] = value
 
                         return data
                 else:

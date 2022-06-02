@@ -4,7 +4,6 @@
 # @Author : 余少琪
 
 
-import json
 from utils.otherUtils.get_conf_data import sql_switch
 from utils.readFilesUtils.yamlControl import GetYamlData
 
@@ -38,6 +37,7 @@ class CaseData:
                     'data': self.get_case_dates(key, values),
                     'dependence_case': self.get_dependence_case(key, values),
                     'dependence_case_data': self.get_dependence_case_data(key, values),
+                    "current_request_set_cache": self.get_current_request_set_cache(values),
                     "sql": self.get_sql(key, values),
                     "assert": self.get_assert(key, values),
                     "setup_sql": self.setup_sql(values),
@@ -88,6 +88,14 @@ class CaseData:
                              f"{self.raise_value_error(data_name='请求方式', case_id=case_id, detail=case_data['method'])}")
         except KeyError:
             raise KeyError(self.raise_value_null_error(data_name="method", case_id=case_id))
+
+    @classmethod
+    def get_current_request_set_cache(cls, case_data):
+        """将当前请求的用例数据存入缓存"""
+        try:
+            return case_data['current_request_set_cache']
+        except KeyError:
+            pass
 
     def get_case_detail(self, case_id, case_data: dict) -> str:
         """

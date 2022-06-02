@@ -19,6 +19,7 @@ from common.setting import ConfigHandler
 from utils.logUtils.runTimeDecoratorl import execution_duration
 from utils.otherUtils.allureDate.allure_tools import allure_step, allure_step_no, allure_attach
 from utils.readFilesUtils.regularControl import cache_regular
+from utils.requestsUtils.set_current_request_cache import SetCurrentRequestCache
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
@@ -169,7 +170,7 @@ class RequestControl:
         _dependent_data = yaml_data[YAMLDate.DEPENDENCE_CASE_DATA.value]
         _teardown = yaml_data[YAMLDate.TEARDOWN.value]
         _teardown_sql = yaml_data[YAMLDate.TEARDOWN_SQL.value]
-
+        _current_request_set_cache = yaml_data[YAMLDate.CURRENT_REQUEST_SET_CACHE.value]
         res = None
 
         # 判断用例是否执行
@@ -256,7 +257,11 @@ class RequestControl:
                 cookie = res.cookies.get_dict()
             except:
                 cookie = None
-
+            SetCurrentRequestCache(
+                current_request_set_cache=_current_request_set_cache,
+                request_data=yaml_data['data'],
+                response_data=res
+            ).set_caches_main()
             return self._check_params(res, yaml_data, _headers, cookie, _res_time,
                                       _status_code, _teardown, _teardown_sql)
         else:

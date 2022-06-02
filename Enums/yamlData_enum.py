@@ -46,6 +46,8 @@ class YAMLDate(Enum):
     STATUS_CODE = "status_code"
     TEARDOWN = "teardown"
     TEARDOWN_SQL = 'teardown_sql'
+    # 当前请求用例设置缓存
+    CURRENT_REQUEST_SET_CACHE = "current_request_set_cache"
 
 
 

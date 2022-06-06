@@ -59,7 +59,7 @@ class TearDownHandler:
     def regular_testcase(cls, teardown_case):
         """处理测试用例中的动态数据"""
         test_case = regular(str(teardown_case))
-        test_case = eval(cache_regular(test_case))
+        test_case = eval(cache_regular(str(test_case)))
         return test_case
 
     @classmethod
@@ -85,16 +85,18 @@ class TearDownHandler:
                 _case_id = _data['case_id']
                 _step = _data['step']
                 _teardown_case = eval(Cache('case_process').get_cache())[_case_id]
+                res = self.teardown_http_requests(_teardown_case)
                 for i in _step:
                     # 判断请求类型为自己
                     if i['dependent_type'] == 'self_response':
                         _set_value = i['set_value']
-                        res = self.teardown_http_requests(_teardown_case)
+                        # res = self.teardown_http_requests(_teardown_case)
                         _response_dependent = jsonpath(obj=res['response_data'], expr=i['jsonpath'])
                         # 如果提取到数据，则进行下一步
                         if _response_dependent is not False:
                             _resp_case_data = _response_dependent[0]
                             # 拿到 set_cache 然后将数据写入缓存
+                            Cache(_set_value).set_caches(_resp_case_data)
                             self.get_cache_name(replace_key=_set_value, resp_case_data=_resp_case_data)
                         else:
                             raise ValueError(f"jsonpath提取失败，替换内容: {_resp_data} \n"
@@ -123,13 +125,15 @@ class TearDownHandler:
                                              f"jsonpath: {i['jsonpath']}")
 
                     elif i['dependent_type'] == 'cache':
+
                         _cache_data = Cache(i['cache_data']).get_cache()
+                        # _cache_data = eval(cache_regular(str(i['cache_data'])))
                         _replace_key = i['replace_key']
                         exec(self.jsonpath_replace_data(replace_key=_replace_key, replace_value=_cache_data))
 
                 self.teardown_sql(case_data)
                 test_case = self.regular_testcase(_teardown_case)
-                res = self.teardown_http_requests(test_case)
+                # res = self.teardown_http_requests(test_case)
                 Assert(test_case['assert']).assert_equality(response_data=res['response_data'],
                                                             sql_data=res['sql_data'], status_code=res['status_code'])
 

@@ -1,0 +1,6 @@
+WARNING 2022-06-01 00:11:45,652  C:\work\Study\pytest-auto-api2\logs\warning.log:conftest.py:133 跳过用例数: 1
+WARNING 2022-06-01 21:02:07,490  C:\work\Study\pytest-auto-api2\logs\warning.log:conftest.py:133 跳过用例数: 1
+WARNING 2022-06-01 21:03:47,689  C:\work\Study\pytest-auto-api2\logs\warning.log:conftest.py:133 跳过用例数: 1
+WARNING 2022-06-01 21:14:12,003  C:\work\Study\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-06-01 21:24:35,573  C:\work\Study\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-06-02 15:06:34,098  C:\work\Study\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1

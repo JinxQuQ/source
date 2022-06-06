@@ -1,0 +1,12 @@
+ERROR   2022-06-01 00:11:45,645  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:131 异常用例数: 0
+ERROR   2022-06-01 00:11:45,652  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:132 失败用例数: 0
+ERROR   2022-06-01 21:02:07,488  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:131 异常用例数: 0
+ERROR   2022-06-01 21:02:07,490  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:132 失败用例数: 5
+ERROR   2022-06-01 21:03:47,687  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:131 异常用例数: 0
+ERROR   2022-06-01 21:03:47,689  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:132 失败用例数: 5
+ERROR   2022-06-01 21:14:11,998  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:133 异常用例数: 0
+ERROR   2022-06-01 21:14:12,003  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:134 失败用例数: 4
+ERROR   2022-06-01 21:24:35,571  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:133 异常用例数: 0
+ERROR   2022-06-01 21:24:35,573  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:134 失败用例数: 0
+ERROR   2022-06-02 15:06:34,097  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:133 异常用例数: 0
+ERROR   2022-06-02 15:06:34,098  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:134 失败用例数: 0

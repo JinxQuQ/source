@@ -40,7 +40,7 @@ class TearDownHandler:
         # jsonpath 数据解析
         _new_data = jsonpath_replace(change_data=_change_data, key_name='_teardown_case')
         # 最终提取到的数据,转换成 _teardown_case[xxx][xxx]
-        _new_data += " = {0}".format(replace_value)
+        _new_data += " = '{0}'".format(replace_value)
         return _new_data
 
     @classmethod
@@ -152,5 +152,3 @@ class TearDownHandler:
                     MysqlDB().execute(_sql_data)
                 else:
                     WARNING.logger.warning(f"程序中检查到您数据库开关为关闭状态，已为您跳过删除sql: {i}")
-
-

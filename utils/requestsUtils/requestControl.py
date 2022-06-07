@@ -101,13 +101,13 @@ class RequestControl:
         return request_data, header
 
     @classmethod
-    def file_prams_exit(cls, yaml_data, multipart):
+    def file_prams_exit(cls, yaml_data):
         # 判断上传文件接口，文件参数是否存在
         try:
             params = yaml_data[YAMLDate.DATA.value]['params']
         except KeyError:
             params = None
-        return multipart, params
+        return params
 
     @classmethod
     def text_encode(cls, text):
@@ -134,18 +134,18 @@ class RequestControl:
         yaml_data = eval(cache_regular(str(yaml_data)))
         _files = []
         file_data = {}
+        # 兼容又要上传文件，又要上传其他类型参数
+        cls.file_data_exit(yaml_data, file_data)
         for key, value in yaml_data[YAMLDate.DATA.value]['file'].items():
             file_path = ConfigHandler.file_path + value
             file_data[key] = (value, open(file_path, 'rb'), 'application/octet-stream')
             _files.append(file_data)
             # allure中展示该附件
             allure_attach(source=file_path, name=value, extension=value)
-        # 兼容又要上传文件，又要上传其他类型参数
-        cls.file_data_exit(yaml_data, file_data)
         multipart = cls.multipart_data(file_data)
         yaml_data[YAMLDate.HEADER.value]['Content-Type'] = multipart.content_type
-        yaml_data, multipart = cls.file_prams_exit(yaml_data, multipart)
-        return yaml_data, multipart
+        params_data = cls.file_prams_exit(yaml_data)
+        return multipart, params_data, yaml_data
 
     @log_decorator(True)
     @execution_duration(3000)
@@ -206,8 +206,9 @@ class RequestControl:
                 res = requests.request(method=_method, url=url, headers=_headers, verify=False, **kwargs)
             # 判断上传文件
             elif _requestType == RequestType.FILE.value:
-                yaml_data = eval(cache_regular(str(yaml_data)))
                 multipart = self.upload_file(yaml_data)
+                yaml_data = multipart[2]
+                _headers = multipart[2][YAMLDate.HEADER.value]
                 _headers = self.check_headers_str_null(_headers)
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value],
                                        data=multipart[0], params=multipart[1], headers=_headers, verify=False, **kwargs)

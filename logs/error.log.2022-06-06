@@ -1,0 +1,2 @@
+ERROR   2022-06-06 11:50:10,840  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:133 异常用例数: 0
+ERROR   2022-06-06 11:50:10,843  C:\work\Study\pytest-auto-api2\logs\error.log:conftest.py:134 失败用例数: 0

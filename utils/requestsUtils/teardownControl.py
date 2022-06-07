@@ -40,7 +40,7 @@ class TearDownHandler:
         # jsonpath 数据解析
         _new_data = jsonpath_replace(change_data=_change_data, key_name='_teardown_case')
         # 最终提取到的数据,转换成 _teardown_case[xxx][xxx]
-        _new_data += ' = {0}'.format(replace_value)
+        _new_data += " = {0}".format(replace_value)
         return _new_data
 
     @classmethod
@@ -129,11 +129,14 @@ class TearDownHandler:
                         _cache_data = Cache(i['cache_data']).get_cache()
                         # _cache_data = eval(cache_regular(str(i['cache_data'])))
                         _replace_key = i['replace_key']
+                        # _teardown_case['data']['customerCode'] = 'CC20220607021'
+                        # exec('_teardown_case[\'data\'][\'customerCode\'] = \'CC20220607047\'')
                         exec(self.jsonpath_replace_data(replace_key=_replace_key, replace_value=_cache_data))
 
                 self.teardown_sql(case_data)
+                print(_teardown_case)
                 test_case = self.regular_testcase(_teardown_case)
-                # res = self.teardown_http_requests(test_case)
+                res = self.teardown_http_requests(test_case)
                 Assert(test_case['assert']).assert_equality(response_data=res['response_data'],
                                                             sql_data=res['sql_data'], status_code=res['status_code'])
 

@@ -57,7 +57,7 @@ collect_update_tool_01:
         step:
           # 删除从缓存中拿数据
           - dependent_type: cache
-            cache_data: artile_id
+            cache_data: int:artile_id
             replace_key: $.data.id
 
 

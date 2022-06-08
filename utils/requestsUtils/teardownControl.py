@@ -39,8 +39,11 @@ class TearDownHandler:
         _change_data = replace_key.split(".")
         # jsonpath 数据解析
         _new_data = jsonpath_replace(change_data=_change_data, key_name='_teardown_case')
+        if not isinstance(replace_value, str):
+            _new_data += " = '{0}'".format(replace_value)
         # 最终提取到的数据,转换成 _teardown_case[xxx][xxx]
-        _new_data += " = '{0}'".format(replace_value)
+        else:
+            _new_data += " = {0}".format(replace_value)
         return _new_data
 
     @classmethod
@@ -125,14 +128,22 @@ class TearDownHandler:
                                              f"jsonpath: {i['jsonpath']}")
 
                     elif i['dependent_type'] == 'cache':
-
-                        _cache_data = Cache(i['cache_data']).get_cache()
-                        # _cache_data = eval(cache_regular(str(i['cache_data'])))
+                        _cache_name = i['cache_data']
                         _replace_key = i['replace_key']
-                        # _teardown_case['data']['customerCode'] = 'CC20220607021'
-                        # exec('_teardown_case[\'data\'][\'customerCode\'] = \'CC20220607047\'')
-                        exec(self.jsonpath_replace_data(replace_key=_replace_key, replace_value=_cache_data))
+                        # 通过jsonpath判断出需要替换数据的位置
+                        _change_data = _replace_key.split(".")
+                        _new_data = jsonpath_replace(change_data=_change_data, key_name='_teardown_case')
+                        # jsonpath 数据解析
+                        value_types = ['int:', 'bool:', 'list:', 'dict:', 'tuple:', 'float:']
+                        if any(i in _cache_name for i in value_types) is True:
+                            _cache_data = Cache(_cache_name.split(':')[1]).get_cache()
+                            _new_data += " = {0}".format(_cache_data)
 
+                            # 最终提取到的数据,转换成 _teardown_case[xxx][xxx]
+                        else:
+                            _cache_data = Cache(_cache_name).get_cache()
+                            _new_data += " = '{0}'".format(_cache_data)
+                        exec(_new_data)
                 self.teardown_sql(case_data)
                 print(_teardown_case)
                 test_case = self.regular_testcase(_teardown_case)

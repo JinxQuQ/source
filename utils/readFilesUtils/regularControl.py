@@ -170,6 +170,7 @@ def sql_regular(value, res=None):
     return value
 
 
+
 def cache_regular(value):
     """
     通过正则的方式，读取缓存中的内容
@@ -184,8 +185,9 @@ def cache_regular(value):
     for regular_data in regular_dates:
         value_types = ['int:', 'bool:', 'list:', 'dict:', 'tuple:', 'float:']
         if any(i in regular_data for i in value_types) is True:
+            value_types = regular_data.split(":")[0]
             regular_data = regular_data.split(":")[1]
-            pattern = r'\'\$cache{(.*?)}\''
+            pattern = re.compile(r'\'\$cache{' + value_types.split(":")[0] + r'(.*?)}\'')
         else:
             pattern = re.compile(r'\$cache\{' + regular_data.replace('$', "\$").replace('[', '\[') + r'\}')
         cache_data = Cache(regular_data).get_cache()

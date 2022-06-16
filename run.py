@@ -65,7 +65,7 @@ def run():
             FeiShuTalkChatBot().post()
         else:
             raise ValueError("通知类型配置错误，暂不支持该类型通知")
-        os.system(f"allure serve ./report/tmp -h 127.0.0.1 -p 9999")
+        # os.system(f"allure serve ./report/tmp -h 127.0.0.1 -p 9999")
 
     except Exception:
         # 如有异常，相关异常发送邮件

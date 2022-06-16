@@ -4,6 +4,7 @@
 # @Author : 余少琪
 import os
 import random
+import time
 import urllib
 
 import requests
@@ -171,6 +172,7 @@ class RequestControl:
         _teardown = yaml_data[YAMLDate.TEARDOWN.value]
         _teardown_sql = yaml_data[YAMLDate.TEARDOWN_SQL.value]
         _current_request_set_cache = yaml_data[YAMLDate.CURRENT_REQUEST_SET_CACHE.value]
+        _sleep = yaml_data[YAMLDate.SLEEP.value]
         res = None
 
         # 判断用例是否执行
@@ -236,6 +238,8 @@ class RequestControl:
                                 f.write(chunk)
                     else:
                         print("文件为空")
+            if _sleep is not None:
+                time.sleep(_sleep)
             _status_code = res.status_code
             allure_step_no(f"请求URL: {yaml_data[YAMLDate.URL.value]}")
             allure_step_no(f"请求方式: {_method}")

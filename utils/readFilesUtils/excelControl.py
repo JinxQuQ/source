@@ -50,4 +50,4 @@ def set_excel_data(sheet_index: int) -> tuple:
 
 
 if __name__ == '__main__':
-    get_excel_data("登录", 'Login001')
+    get_excel_data("异常用例", '111')

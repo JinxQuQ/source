@@ -42,7 +42,8 @@ class CaseData:
                     "assert": self.get_assert(key, values),
                     "setup_sql": self.setup_sql(values),
                     "teardown": self.tear_down(values),
-                    "teardown_sql": self.teardown_sql(values)
+                    "teardown_sql": self.teardown_sql(values),
+                    "sleep": self.time_sleep(values)
                 }
 
                 if case_id_switch is True:
@@ -296,5 +297,13 @@ class CaseData:
         try:
             _teardown_sql = case_data['teardown_sql']
             return _teardown_sql
+        except KeyError:
+            return None
+
+    @classmethod
+    def time_sleep(cls, case_data):
+        try:
+            _sleep_time = case_data['sleep']
+            return _sleep_time
         except KeyError:
             return None

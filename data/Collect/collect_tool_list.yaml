@@ -31,3 +31,4 @@ collect_tool_list_01:
         AssertType:
       status_code: 200
     sql:
+    sleep: 2

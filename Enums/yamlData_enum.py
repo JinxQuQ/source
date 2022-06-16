@@ -49,5 +49,8 @@ class YAMLDate(Enum):
     # 当前请求用例设置缓存
     CURRENT_REQUEST_SET_CACHE = "current_request_set_cache"
 
+    # 设置等待时间
+    SLEEP = 'sleep'
+
 
 

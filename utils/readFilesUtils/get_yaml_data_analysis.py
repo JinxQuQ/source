@@ -43,7 +43,8 @@ class CaseData:
                     "setup_sql": self.setup_sql(values),
                     "teardown": self.tear_down(values),
                     "teardown_sql": self.teardown_sql(values),
-                    "sleep": self.time_sleep(values)
+                    "sleep": self.time_sleep(values),
+                    "response_cache": self.get_response_cache(values)
                 }
 
                 if case_id_switch is True:
@@ -307,3 +308,16 @@ class CaseData:
             return _sleep_time
         except KeyError:
             return None
+
+    @classmethod
+    def get_response_cache(cls, case_data):
+        try:
+            _response_cache = case_data['response_cache']
+            return _response_cache
+        except KeyError:
+            return None
+
+
+if __name__ == '__main__':
+    a = CaseData(r'D:\work_code\pytest-auto-api2\data\Collect\collect_tool_list.yaml').case_process()
+    print(a)

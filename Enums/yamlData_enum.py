@@ -52,5 +52,8 @@ class YAMLDate(Enum):
     # 设置等待时间
     SLEEP = 'sleep'
 
+    # 缓存数据存放
+    RESPONSE_CACHE = 'response_cache'
+
 
 

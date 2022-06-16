@@ -7,6 +7,7 @@ import random
 import time
 import urllib
 
+import jsonpath
 import requests
 from typing import Any
 import urllib3
@@ -21,6 +22,8 @@ from utils.logUtils.runTimeDecoratorl import execution_duration
 from utils.otherUtils.allureDate.allure_tools import allure_step, allure_step_no, allure_attach
 from utils.readFilesUtils.regularControl import cache_regular
 from utils.requestsUtils.set_current_request_cache import SetCurrentRequestCache
+from utils.cacheUtils.cacheControl import Cache
+from utils.logUtils.logControl import ERROR
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
@@ -148,6 +151,32 @@ class RequestControl:
         params_data = cls.file_prams_exit(yaml_data)
         return multipart, params_data, yaml_data
 
+    @classmethod
+    def get_response_cache(cls, response_cache, response_data, request_data):
+        """
+        将当前请求的接口存入缓存中
+        @param response_cache: 设置缓存相关数据要求
+        @param response_data: 接口相应内容
+        @param request_data: 接口请求内容
+        @return:
+        """
+        # 判断当前用例中如果有需要存入缓存的数据，才会进行下一步
+        if response_cache is not None:
+            _cache_name = response_cache['cache_name']
+            _jsonpath = response_cache['jsonpath']
+            _cache_type = response_cache['cache_type']
+            _data = None
+            if _cache_type == 'request':
+                _data = jsonpath.jsonpath(obj=request_data, expr=_jsonpath)
+            elif _cache_type == 'response':
+                _data = jsonpath.jsonpath(obj=response_data, expr=_jsonpath)
+            if _data is not False:
+                Cache(_cache_name).set_caches(_data[0])
+            else:
+                ERROR.logger.error(f"缓存写入失败，接口返回数据 {response_cache} ，"
+                                   f"接口请求数据 {request_data},"
+                                   f"jsonpath内容：{response_cache}")
+
     @log_decorator(True)
     @execution_duration(3000)
     # @encryption("md5")
@@ -173,6 +202,7 @@ class RequestControl:
         _teardown_sql = yaml_data[YAMLDate.TEARDOWN_SQL.value]
         _current_request_set_cache = yaml_data[YAMLDate.CURRENT_REQUEST_SET_CACHE.value]
         _sleep = yaml_data[YAMLDate.SLEEP.value]
+        _response_cache = yaml_data[YAMLDate.RESPONSE_CACHE.value]
         res = None
 
         # 判断用例是否执行
@@ -267,6 +297,7 @@ class RequestControl:
                 request_data=yaml_data['data'],
                 response_data=res
             ).set_caches_main()
+            self.get_response_cache(response_cache=_response_cache, response_data=res, request_data=_data)
             return self._check_params(res, yaml_data, _headers, cookie, _res_time,
                                       _status_code, _teardown, _teardown_sql)
         else:

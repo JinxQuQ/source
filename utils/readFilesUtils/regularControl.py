@@ -153,6 +153,29 @@ def sql_json(js_path, res):
     return jsonpath(res, js_path)[0]
 
 
+def regular(target):
+    """
+    使用正则替换请求数据
+    :return:
+    """
+    try:
+        regular_pattern = r'\${{(.*?)}}'
+        while re.findall(regular_pattern, target):
+            key = re.search(regular_pattern, target).group(1)
+            value_types = ['int:', 'bool:', 'list:', 'dict:', 'tuple:', 'float:']
+            if any(i in key for i in value_types) is True:
+                value_data = getattr(Context(), key.split(":")[1])
+                regular_int_pattern = r'\'\${{(.*?)}}\''
+                target = re.sub(regular_int_pattern, str(value_data), target, 1)
+            else:
+                value_data = getattr(Context(), key)
+                target = re.sub(regular_pattern, str(value_data), target, 1)
+        return target
+
+    except AttributeError:
+        ERROR.logger.error("未找到对应的替换的数据, 请检查数据是否正确", target)
+        raise
+
 def sql_regular(value, res=None):
     """
     这里处理sql中的依赖数据，通过获取接口响应的jsonpath的值进行替换

@@ -26,38 +26,6 @@ class Context:
         return rn
 
     @property
-    def get_video_plan_name(self) -> str:
-        """
-        :return: 随机计划名
-        """
-        name = "ci短视频计划" + str(random.randint(0, 5000))
-        return name
-
-    @property
-    def get_live_plan_name(self) -> str:
-        """
-        :return: 随机计划名
-        """
-        name = "ci直播计划" + str(random.randint(0, 5000))
-        return name
-
-    @property
-    def get_group_live_name(self) -> str:
-        """
-        :return: 随机计划组名
-        """
-        name = "ci直播组" + str(random.randint(0, 5000))
-        return name
-
-    @property
-    def get_group_video_name(self) -> str:
-        """
-        :return: 随机计划组名
-        """
-        name = "ci短视频组" + str(random.randint(0, 5000))
-        return name
-
-    @property
     def get_phone(self) -> int:
         """
         :return: 随机生成手机号码
@@ -91,7 +59,7 @@ class Context:
 
         :return: 女生姓名
         """
-        female_name = self.f.name_male()
+        female_name = self.f.name_female()
         return female_name
 
     @property
@@ -100,7 +68,7 @@ class Context:
 
         :return: 男生姓名
         """
-        male_name = self.f.name_female()
+        male_name = self.f.name_male()
         return male_name
 
     @property
@@ -175,6 +143,7 @@ def regular(target):
     except AttributeError:
         ERROR.logger.error("未找到对应的替换的数据, 请检查数据是否正确", target)
         raise
+
 
 def sql_regular(value, res=None):
     """

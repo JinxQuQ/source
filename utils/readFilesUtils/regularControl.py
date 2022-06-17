@@ -170,7 +170,6 @@ def sql_regular(value, res=None):
     return value
 
 
-
 def cache_regular(value):
     """
     通过正则的方式，读取缓存中的内容
@@ -196,30 +195,6 @@ def cache_regular(value):
     return value
 
 
-def regular(target):
-    """
-    使用正则替换请求数据
-    :return:
-    """
-    try:
-        regular_pattern = r'\${{(.*?)}}'
-        while re.findall(regular_pattern, target):
-            key = re.search(regular_pattern, target).group(1)
-            value_types = ['int:', 'bool:', 'list:', 'dict:', 'tuple:', 'float:']
-            if any(i in key for i in value_types) is True:
-                value_data = getattr(Context(), key.split(":")[1])
-                regular_int_pattern = r'\'\${{(.*?)}}\''
-                target = re.sub(regular_int_pattern, str(value_data), target, 1)
-            else:
-                value_data = getattr(Context(), key)
-                target = re.sub(regular_pattern, str(value_data), target, 1)
-        return target
-
-    except AttributeError:
-        ERROR.logger.error("未找到对应的替换的数据, 请检查数据是否正确", target)
-        raise
-
-
 def replace_load(value):
     """
     使用热加载的方式替换解析yaml中的数据
@@ -235,7 +210,6 @@ def replace_load(value):
             end_index = str_data.index("}}", start_index)
             old_value = str_data[start_index:end_index + 2]
             func_name = old_value[3:old_value.index("(")]
-            print(func_name)
             args_value = old_value[old_value.index("(") + 1:old_value.index(")")]
             # 反射
             new_value = getattr(Context(), func_name)(*args_value.split(","))

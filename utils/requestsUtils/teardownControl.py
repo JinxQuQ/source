@@ -144,12 +144,12 @@ class TearDownHandler:
                             _cache_data = Cache(_cache_name).get_cache()
                             _new_data += " = '{0}'".format(_cache_data)
                         exec(_new_data)
-                self.teardown_sql(case_data)
                 print(_teardown_case)
                 test_case = self.regular_testcase(_teardown_case)
                 res = self.teardown_http_requests(test_case)
                 Assert(test_case['assert']).assert_equality(response_data=res['response_data'],
                                                             sql_data=res['sql_data'], status_code=res['status_code'])
+        self.teardown_sql(case_data)
 
     def teardown_sql(self, case_data):
         """处理后置sql"""

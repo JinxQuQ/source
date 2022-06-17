@@ -18,7 +18,6 @@ login_01:
     data:
       username: '18800000001'
       password: '123456'
-      random_data: ${{get_video_plan_name}}
       # 是否有依赖业务，为空或者false则表示没有
     dependence_case: False
         # 依赖的数据
@@ -36,11 +35,9 @@ login_01:
         type: ==
         value: '18800000001'
         AssertType:
-    response_cache:
-        cache_type: request
-        jsonpath: $.random_data
-        cache_name: woshi
     sql:
+    teardown_sql:
+      - DELETE FROM `api_test`.`ysq_test` WHERE `name` = 'yushaoqi'
 #
 #login_02:
 #    host: ${{host}}

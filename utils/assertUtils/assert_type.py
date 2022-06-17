@@ -48,31 +48,31 @@ def string_equals(check_value, expect_value):
 def length_equals(check_value, expect_value):
     """判断长度是否相等"""
     assert isinstance(expect_value, integer_types)
-    assert len(check_value) == expect_value
+    assert len(str(check_value)) == expect_value
 
 
 def length_greater_than(check_value, expect_value):
     """判断长度大于"""
     assert isinstance(expect_value, integer_types)
-    assert len(check_value) > expect_value
+    assert len(str(check_value)) > expect_value
 
 
 def length_greater_than_or_equals(check_value, expect_value):
     """判断长度大于等于"""
     assert isinstance(expect_value, integer_types)
-    assert len(check_value) >= expect_value
+    assert len(str(check_value)) >= expect_value
 
 
 def length_less_than(check_value, expect_value):
     """判断长度小于"""
     assert isinstance(expect_value, integer_types)
-    assert len(check_value) < expect_value
+    assert len(str(check_value)) < expect_value
 
 
 def length_less_than_or_equals(check_value, expect_value):
     """判断长度小于等于"""
     assert isinstance(expect_value, integer_types)
-    assert len(check_value) <= expect_value
+    assert len(str(check_value)) <= expect_value
 
 
 def contains(check_value, expect_value):

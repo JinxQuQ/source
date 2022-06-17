@@ -152,9 +152,10 @@ class DependentCase:
                             raise ValueError("依赖的dependent_type不正确，只支持request、response、sql依赖\n"
                                              f"当前填写内容: {i[YAMLDate.DEPENDENT_TYPE.value]}")
                 return jsonpath_dates
-            except KeyError as e:
-                raise KeyError(f"dependence_case_data依赖用例中，未找到 {e} 参数，请检查是否填写"
-                               f"如已填写，请检查是否存在yaml缩进问题")
+            except KeyError:
+                pass
+                # raise KeyError(f"dependence_case_data依赖用例中，未找到 {e} 参数，请检查是否填写"
+                #                f"如已填写，请检查是否存在yaml缩进问题")
             except TypeError:
                 raise TypeError("dependence_case_data下的所有内容均不能为空！请检查相关数据是否填写，如已填写，请检查缩进问题")
 
@@ -170,7 +171,8 @@ class DependentCase:
         """
         _dependent_data = DependentCase().is_dependent(yaml_data)
         # 判断有依赖
-        if _dependent_data is not False:
+        if _dependent_data is not None and _dependent_data is not False:
+            # if _dependent_data is not False:
             for key, value in _dependent_data.items():
                 # 通过jsonpath判断出需要替换数据的位置
                 _change_data = key.split(".")

@@ -96,7 +96,7 @@ class Context:
         return numbers
 
     @property
-    def host(self) -> str:
+    def host(cls) -> str:
         from utils.readFilesUtils.yamlControl import GetYamlData
         from common.setting import ConfigHandler
 
@@ -104,6 +104,9 @@ class Context:
         host = GetYamlData(ConfigHandler.config_path) \
             .get_yaml_data()['host']
         return host
+
+    def test(self, e):
+        return e
 
     @property
     def app_host(self) -> str:
@@ -119,6 +122,38 @@ class Context:
 
 def sql_json(js_path, res):
     return jsonpath(res, js_path)[0]
+
+
+# def regular(target):
+#     """
+#     新版本
+#     使用正则替换请求数据
+#     :return:
+#     """
+#     try:
+#         regular_pattern = r'\${{(.*?)}}'
+#         while re.findall(regular_pattern, target):
+#             key = re.search(regular_pattern, target).group(1)
+#             value_types = ['int:', 'bool:', 'list:', 'dict:', 'tuple:', 'float:']
+#             if any(i in key for i in value_types) is True:
+#                 func_name = key.split(":")[1].split("(")[0]
+#                 value_name = key.split(":")[1].split("(")[1][:-1]
+#                 value_data = getattr(Context(), func_name)(*value_name.split(","))
+#                 regular_int_pattern = r'\'\${{(.*?)}}\''
+#                 target = re.sub(regular_int_pattern, str(value_data), target, 1)
+#             else:
+#                 func_name = key.split("(")[0]
+#                 value_name = key.split("(")[1][:-1]
+#                 if value_name == "":
+#                     value_data = getattr(Context(), func_name)()
+#                 else:
+#                     value_data = getattr(Context(), func_name)(*value_name.split(","))
+#                 target = re.sub(regular_pattern, str(value_data), target, 1)
+#         return target
+#
+#     except AttributeError:
+#         ERROR.logger.error("未找到对应的替换的数据, 请检查数据是否正确", target)
+#         raise
 
 
 def regular(target):
@@ -211,4 +246,5 @@ def replace_load(value):
                 value = json.loads(str_data)
             else:
                 value = str_data
+
     return str_data

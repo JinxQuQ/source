@@ -27,7 +27,7 @@ def execution_duration(number: int):
                         "函数运行时间:{0} ms\n"
                         "测试用例相关数据: {1}\n"
                         "================================================================================="
-                        .format(run_time, func(*args, **kwargs)))
+                        .format(run_time, func(res)))
 
                 return res
 

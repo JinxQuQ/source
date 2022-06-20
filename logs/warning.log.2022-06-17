@@ -1,0 +1,7 @@
+WARNING 2022-06-15 18:31:03,955  D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-06-16 14:06:20,597  D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-06-17 11:06:47,820  D:\work_code\pytest-auto-api2\logs\warning.log:teardownControl.py:165 程序中检查到您数据库开关为关闭状态，已为您跳过删除sql: DELETE FROM `api_test`.`ysq_test` WHERE `name` = 'yushaoqi'
+WARNING 2022-06-17 11:06:48,023  D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-06-17 11:07:21,007  D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-06-17 18:14:23,872  D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-06-17 18:14:52,017  D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1

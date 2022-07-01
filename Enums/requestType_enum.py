@@ -15,7 +15,7 @@ class RequestType(Enum):
     # PARAMS 类型
     PARAMS = "PARAMS"
     # data 类型
-    DATE = "DATE"
+    DATA = "DATA"
     # 文件类型
     FILE = 'FILE'
     # 导出文件

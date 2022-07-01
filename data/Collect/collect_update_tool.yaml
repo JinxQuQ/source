@@ -13,8 +13,8 @@ collect_update_tool_01:
       Content-Type: multipart/form-data;
       # 这里cookie的值，写的是存入缓存的名称
       cookie: $cache{login_cookie}
-    # 请求的数据，是 params 还是 json、或者file、date
-    requestType: date
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
     # 是否执行，空或者 true 都会执行
     is_run:
     data:

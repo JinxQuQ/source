@@ -30,7 +30,7 @@ DingTalk:
 # 数据库相关配置
 MySqlDB:
   # 数据库开关
-  switch: False
+  switch:
   host:
   user: dev
   password:

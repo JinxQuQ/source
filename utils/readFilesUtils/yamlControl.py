@@ -25,8 +25,13 @@ class GetYamlData:
             try:
                 res = yaml.load(data, Loader=yaml.FullLoader)
                 return res
-            except UnicodeDecodeError:
-                raise ValueError(f"yaml文件编码错误，文件路径:{self.fileDir}")
+            except Exception as e:
+                _error_msg = str(e).split(",")
+                _file_path = _error_msg[0].split("in")[-1]
+                _error_line = _error_msg[1]
+
+                raise ValueError("yaml格式不正确, 请检查下方对应路径中的文件内容, 文件路径: {}, 错误行号：{}"
+                                 .format(_file_path, _error_line))
 
         else:
             raise FileNotFoundError("文件路径不存在")
@@ -79,13 +84,8 @@ class GetCaseData(GetYamlData):
         :return:
         """
 
-        try:
-            _yaml_data = self.get_yaml_data()
-            # 正则处理yaml文件中的数据
-            re_data = regular(str(_yaml_data))
-            return eval(re_data)
-        except yaml.parser.ParserError as e:
-            raise yaml.parser.ParserError("yaml格式不正确, 请检查下方对应路径中的文件内容 {0}".format(e))
-        except yaml.scanner.ScannerError as e:
-            raise yaml.scanner.ScannerError("yaml格式不正确, 请检查下方对应路径中的文件内容 {0}".format(e))
+        _yaml_data = self.get_yaml_data()
+        # 正则处理yaml文件中的数据
+        re_data = regular(str(_yaml_data))
+        return eval(re_data)
 

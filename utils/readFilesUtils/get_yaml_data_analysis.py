@@ -152,7 +152,7 @@ class CaseData:
         :return:
         """
 
-        _types = ['JSON', 'PARAMS', 'FILE', 'DATE', "EXPORT", "NONE"]
+        _types = ['JSON', 'PARAMS', 'FILE', 'DATA', "EXPORT", "NONE"]
 
         try:
             _request_type = str(case_data['requestType'])

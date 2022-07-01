@@ -245,7 +245,7 @@ class RequestControl:
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value],
                                        data=multipart[0], params=multipart[1], headers=_headers, verify=False, **kwargs)
 
-            elif _requestType == RequestType.DATE.value:
+            elif _requestType == RequestType.DATA.value:
                 yaml_data = eval(cache_regular(str(yaml_data)))
                 _data, _headers = self.multipart_in_headers(_data, _headers)
                 res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], data=_data, headers=_headers,

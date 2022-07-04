@@ -47,10 +47,14 @@ class AllureFileClean:
     @classmethod
     def get_case_count(cls) -> dict:
         """ 统计用例数量 """
-        fil_name = ConfigHandler.report_path + '/html/widgets/summary.json'
-        with open(fil_name, 'r', encoding='utf-8') as fp:
-            date = json.load(fp)
-        return date
+        try:
+            fil_name = ConfigHandler.report_path + '/html/widgets/summary.json'
+            with open(fil_name, 'r', encoding='utf-8') as fp:
+                date = json.load(fp)
+            return date
+        except FileNotFoundError:
+            raise FileNotFoundError("程序中检查到您未生成allure报告，通常可能导致的原因是allure环境未配置正确，详情可查看如下博客内容："
+                                    "https://blog.csdn.net/weixin_43865008/article/details/124332793")
 
 
 class CaseCount:

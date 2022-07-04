@@ -34,7 +34,10 @@ def log_decorator(switch: bool):
                         if res['yaml_data']['requestType'] == 'PARAMS':
                             params_data = "?"
                             for k, v in _data.items():
-                                params_data += (k + "=" + str(v) + "&")
+                                if v is None or v == '':
+                                    params_data += (k + "&")
+                                else:
+                                    params_data += (k + "=" + str(v) + "&")
                             _url += params_data[:-1]
                             _data = ""
                         _log_msg = f"\n===========================================================================\n" \

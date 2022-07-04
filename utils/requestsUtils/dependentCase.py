@@ -3,7 +3,6 @@
 # @Time   : 2022/3/28 16:08
 # @Author : 余少琪
 
-from utils.otherUtils.jsonpath import jsonpath
 from utils.cacheUtils.cacheControl import Cache
 from utils.requestsUtils.requestControl import RequestControl
 from Enums.dependentType_enum import DependentType

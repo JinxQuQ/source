@@ -232,7 +232,10 @@ class RequestControl:
                     # url 拼接的方式传参
                     params_data = "?"
                     for k, v in _data.items():
-                        params_data += (k + "=" + str(v) + "&")
+                        if v is None or v == '':
+                            params_data += (k + "&")
+                        else:
+                            params_data += (k + "=" + str(v) + "&")
                     url = yaml_data[YAMLDate.URL.value] + params_data[:-1]
                 _headers = self.check_headers_str_null(_headers)
                 res = requests.request(method=_method, url=url, headers=_headers, verify=False, **kwargs)

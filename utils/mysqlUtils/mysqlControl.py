@@ -98,7 +98,7 @@ class MysqlDB(object):
                 if isinstance(sql, list):
 
                     data = {}
-                    if 'UPDATE' and 'update' and 'DELETE' and 'delete' and 'INSERT' and 'insert' in sql:
+                    if 'UPDATE' or 'update' or 'DELETE' or 'delete' or 'INSERT' or 'insert' in sql:
                         raise ValueError("断言的 sql 必须是查询的 sql")
                     else:
                         for i in sql:

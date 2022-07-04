@@ -14,7 +14,7 @@ collect_addtool_01:
       # 这里cookie的值，写的是存入缓存的名称
       cookie: $cache{login_cookie}
     # 请求的数据，是 params 还是 json、或者file、data
-    requestType: data
+    requestType: params
     # 是否执行，空或者 true 都会执行
     is_run:
     data:
@@ -61,6 +61,7 @@ collect_addtool_02:
     # 依赖的数据
     dependence_case_data:
     assert:
+      status_code: 200
       # 断言接口状态码
       errorCode:
       # 断言接口状态码
@@ -74,3 +75,4 @@ collect_addtool_02:
         value: '请先登录！'
         AssertType:
     sql:
+

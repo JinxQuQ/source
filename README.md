@@ -466,6 +466,8 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
 如上图所示，用例中的 dependent_type 需要填写成 sqlData。
 当你的依赖类型为 sqlData 数据库的数据时，那么下方就需要再加一个 setup_sql 的参数，下方填写需要用到的sql语句
 
+注意case_id： 因为程序设计原因，通常情况下，我们关联的业务，会发送接口请求，但是如果我们依赖的是sql的话，
+是不需要发送请求的，因此我们如果是从数据库中提取数据作为参数的话，我们case_id 需要写self ，方便程序中去做区分
 
     ApplyVerifyCode_01:
         host: ${{host}}
@@ -485,7 +487,7 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
         dependence_case: True
             # 依赖的数据
         dependence_case_data:
-          - case_id: ApplyVerifyCode_01
+          - case_id: self
             dependent_data:
               - dependent_type: sqlData
                 jsonpath: $.username
@@ -675,6 +677,76 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
     sql:
       - select * from users;
       - select * from goods;
+
+### 使用teardown功能，做数据清洗
+
+通常情况下，我们做自动化所有新增的数据，我们测试完成之后，都需要讲这些数据删除，程序中支持两种写法
+一种是直接调用接口进行数据删除。另外一种是直接删除数据库中的数据，建议使用第一种，直接调用业务接口删除对应的数据
+
+
+1、下面我们先来看看第一种删除方式，teardown的功能，因为需要兼容较多的场景，因此使用功能上相对也会比较复杂
+需要小伙伴们一个一个去慢慢的理解。
+
+下面为了方便大家对于teardown功能的理解，我会针对不同的场景进行举例：
+
+* 假设现在我们有一个新增接口，写完之后，我们需要先调用查询接口获取到新增接口的ID，然后再进行删除
+那么此时会设计到两个场景，首先执行新增接口ID，然后再拿到响应（这里有个逻辑上的先后关系，查询接口，是先发送请求，在提取数据）
+  获取到查询的ID之后，我们在执行删除，删除的话，我们是直接发送请求
+  
+那么针对这个场景，我们就需要有个关键字去做区分，什么场景下先发送请求，什么场景下后发送请求，下面我们来看一下案例，方便大家理解
+
+    teardown:
+      # 查看品牌审核列表，获取品牌的apply_id
+      - case_id: query_apply_list_01
+        # 注意这里我们是先发送请求，在拿到自己响应的内容，因此我们这个字段需要写param_prepare
+        param_prepare:
+            # 因为是获取自己的响应内容，我们dependent_type需要写成 self_response
+          - dependent_type: self_response
+            # 通过jsonpath的方法，获取query_apply_list_01这个接口的响应内容
+            jsonpath: $.data.data.[0].applyId
+            # 将内容存入缓存，这个是自定义的缓存名称
+            set_value: test_brand_apply_initiate_apply_01_applyId
+            
+            # 支持同时存多个数据，只会发送一次请求
+          - dependent_type: self_response
+            jsonpath: $.data.data.[0].brandName
+            set_value: test_brand_apply_initiate_apply_01_brandName
+        
+      # 删除
+      - case_id: delete_01
+        # 删除的话，我们是直接发送请求的，因此我们这里写 send_request
+        send_request:
+            # 我们上方已经拿到了ID，并且将ID存入缓存中，因此这里依赖数据的类型为cache，直接从缓存中提取
+          - dependent_type: cache
+            # 这个是缓存名称
+            cache_data: test_brand_apply_initiate_apply_01_applyId
+            # 通过relace_key 去替换 delete_01 中的 applyID参数
+            replace_key: $.data.applyId
+
+* 那么有些小伙伴会在想，同样我们以上方的接口场景为例，有些小伙伴会说，我公司的新增的接口，有直接返回ID，不需要调用查询接口
+程序中当然也支持这种场景，我们只需要这么编写
+
+      - case_id: process_apply_01
+        # 同样这么写 send_request
+        send_request:
+            # 这里我们从响应中获取
+          - dependent_type: response
+            # 通过jsonpath的方式，获取响应的内容
+            jsonpath: $.data.id
+            # 使用repalce_key进行替换
+            replace_key: $.data.applyId  
+
+* 程序中也支持从请求里面获取内容，编写规则如下
+
+      - case_id: process_apply_01
+        # 同样这么写 send_request
+        send_request:
+            # 这里我们从响应中获取
+          - dependent_type: request
+            # 通过jsonpath的方式，获取请求的内容
+            jsonpath: $.data.id
+            # 使用repalce_key进行替换
+            replace_key: $.data.applyId
 
 ### 自动生成test_case层代码
 

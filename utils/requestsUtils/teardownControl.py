@@ -72,6 +72,87 @@ class TearDownHandler:
         res = RequestControl().http_request(yaml_data=test_case, dependent_switch=False)
         return res
 
+    def dependent_type_response(self, teardown_case_data, resp_data):
+        """
+        判断依赖类型为当前执行用例响应内容
+        :param : teardown_case_data: teardown中的用例内容
+        :param : resp_data: 需要替换的内容
+        :return:
+        """
+        _replace_key = teardown_case_data['replace_key']
+        _response_dependent = jsonpath(obj=resp_data, expr=teardown_case_data['jsonpath'])
+        # 如果提取到数据，则进行下一步
+        if _response_dependent is not False:
+            _resp_case_data = _response_dependent[0]
+            data = self.jsonpath_replace_data(replace_key=_replace_key, replace_value=_resp_case_data)
+            self.jsonpath_replace_data(replace_key=_replace_key, replace_value=_resp_case_data)
+        else:
+            raise ValueError(f"jsonpath提取失败，替换内容: {resp_data} \n"
+                             f"jsonpath: {teardown_case_data['jsonpath']}")
+        return data
+
+    def dependent_type_request(self, teardown_case_data, request_data):
+        """
+        判断依赖类型为请求内容
+        :param : teardown_case_data: teardown中的用例内容
+        :param : request_data: 需要替换的内容
+        :return:
+        """
+        _request_set_value = teardown_case_data['set_value']
+        _request_dependent = jsonpath(obj=request_data, expr=teardown_case_data['jsonpath'])
+        if _request_dependent is not False:
+            _request_case_data = _request_dependent[0]
+            self.get_cache_name(replace_key=_request_set_value, resp_case_data=_request_case_data)
+        else:
+            raise ValueError(f"jsonpath提取失败，替换内容: {request_data} \n"
+                             f"jsonpath: {teardown_case_data['jsonpath']}")
+
+    def dependent_self_response(self, teardown_case_data, res, resp_data):
+        """
+        判断依赖类型为依赖用例ID自己响应的内容
+        :param : teardown_case_data: teardown中的用例内容
+        :param : resp_data: 需要替换的内容
+        :param : res: 接口响应的内容
+        :return:
+        """
+        _set_value = teardown_case_data['set_value']
+        _response_dependent = jsonpath(obj=res['response_data'], expr=teardown_case_data['jsonpath'])
+        # 如果提取到数据，则进行下一步
+        if _response_dependent is not False:
+            _resp_case_data = _response_dependent[0]
+            # 拿到 set_cache 然后将数据写入缓存
+            Cache(_set_value).set_caches(_resp_case_data)
+            self.get_cache_name(replace_key=_set_value, resp_case_data=_resp_case_data)
+        else:
+            raise ValueError(f"jsonpath提取失败，替换内容: {resp_data} \n"
+                             f"jsonpath: {teardown_case_data['jsonpath']}")
+
+    @classmethod
+    def dependent_type_cache(cls, teardown_case):
+        """
+        判断依赖类型为从缓存中处理
+        :param : teardown_case_data: teardown中的用例内容
+        :return:
+        """
+        if teardown_case['dependent_type'] == 'cache':
+            _cache_name = teardown_case['cache_data']
+            _replace_key = teardown_case['replace_key']
+            # 通过jsonpath判断出需要替换数据的位置
+            _change_data = _replace_key.split(".")
+            _new_data = jsonpath_replace(change_data=_change_data, key_name='_teardown_case')
+            # jsonpath 数据解析
+            value_types = ['int:', 'bool:', 'list:', 'dict:', 'tuple:', 'float:']
+            if any(i in _cache_name for i in value_types) is True:
+                _cache_data = Cache(_cache_name.split(':')[1]).get_cache()
+                _new_data += " = {0}".format(_cache_data)
+
+            # 最终提取到的数据,转换成 _teardown_case[xxx][xxx]
+            else:
+                _cache_data = Cache(_cache_name).get_cache()
+                _new_data += " = '{0}'".format(_cache_data)
+
+            return _new_data
+
     def teardown_handle(self, case_data):
         """ 后置处理逻辑 """
         # 拿到用例信息
@@ -85,71 +166,53 @@ class TearDownHandler:
         if _teardown_data is not None:
             # 循环 teardown中的接口
             for _data in _teardown_data:
-                _case_id = _data['case_id']
-                _step = _data['step']
-                _teardown_case = eval(Cache('case_process').get_cache())[_case_id]
-                res = self.teardown_http_requests(_teardown_case)
-                for i in _step:
-                    # 判断请求类型为自己
-                    if i['dependent_type'] == 'self_response':
-                        _set_value = i['set_value']
-                        # res = self.teardown_http_requests(_teardown_case)
-                        _response_dependent = jsonpath(obj=res['response_data'], expr=i['jsonpath'])
-                        # 如果提取到数据，则进行下一步
-                        if _response_dependent is not False:
-                            _resp_case_data = _response_dependent[0]
-                            # 拿到 set_cache 然后将数据写入缓存
-                            Cache(_set_value).set_caches(_resp_case_data)
-                            self.get_cache_name(replace_key=_set_value, resp_case_data=_resp_case_data)
-                        else:
-                            raise ValueError(f"jsonpath提取失败，替换内容: {_resp_data} \n"
-                                             f"jsonpath: {i['jsonpath']}")
+                if jsonpath(_data, '$.param_prepare') is not False:
+                    _case_id = _data['case_id']
+                    _teardown_case = eval(Cache('case_process').get_cache())[_case_id]
+                    """
+                    为什么在这里需要单独区分 param_prepare 和 send_request
+                    假设此时我们有用例A，teardown中我们需要执行用例B
+                    
+                    那么考虑用户可能需要获取获取teardown的用例B的响应内容，也有可能需要获取用例A的响应内容，
+                    因此我们这里需要通过关键词去做区分。这里需要考虑到，假设我们需要拿到B用例的响应，那么就需要先发送请求然后在拿到响应数据
+                    
+                    那如果我们需要拿到A接口的响应，此时我们就不需要在额外发送请求了，因此我们需要区分一个是前置准备param_prepare，
+                    一个是发送请求send_request
+                    
+                    """
+                    _param_prepare = _data['param_prepare']
+                    res = self.teardown_http_requests(_teardown_case)
+                    for i in _param_prepare:
+                        # 判断请求类型为自己,拿到当前case_id自己的响应
+                        if i['dependent_type'] == 'self_response':
+                            self.dependent_self_response(teardown_case_data=i, resp_data=_resp_data, res=res)
 
-                    # 判断从响应内容提取数据
-                    if i['dependent_type'] == 'response':
-                        _replace_key = i['replace_key']
-                        _response_dependent = jsonpath(obj=_resp_data, expr=i['jsonpath'])
-                        # 如果提取到数据，则进行下一步
-                        if _response_dependent is not False:
-                            _resp_case_data = _response_dependent[0]
-                            exec(self.jsonpath_replace_data(replace_key=_replace_key, replace_value=_resp_case_data))
-                        else:
-                            raise ValueError(f"jsonpath提取失败，替换内容: {_resp_data} \n"
-                                             f"jsonpath: {i['jsonpath']}")
-                    # 判断请求中的数据
-                    elif i['dependent_type'] == 'request':
-                        _request_set_value = i['set_value']
-                        _request_dependent = jsonpath(obj=_request_data, expr=i['jsonpath'])
-                        if _request_dependent is not False:
-                            _request_case_data = _request_dependent[0]
-                            self.get_cache_name(replace_key=_request_set_value, resp_case_data=_request_case_data)
-                        else:
-                            raise ValueError(f"jsonpath提取失败，替换内容: {_request_data} \n"
-                                             f"jsonpath: {i['jsonpath']}")
+                        # # 判断从响应内容提取数据
+                        # if i['dependent_type'] == 'response':
+                        #     exec(self.dependent_type_response(teardown_case_data=i, resp_data=_resp_data))
+                        #
+                        # # 判断请求中的数据
+                        # elif i['dependent_type'] == 'request':
+                        #     self.dependent_type_request(teardown_case_data=i, request_data=_request_data)
 
-                    elif i['dependent_type'] == 'cache':
-                        _cache_name = i['cache_data']
-                        _replace_key = i['replace_key']
-                        # 通过jsonpath判断出需要替换数据的位置
-                        _change_data = _replace_key.split(".")
-                        _new_data = jsonpath_replace(change_data=_change_data, key_name='_teardown_case')
-                        # jsonpath 数据解析
-                        value_types = ['int:', 'bool:', 'list:', 'dict:', 'tuple:', 'float:']
-                        if any(i in _cache_name for i in value_types) is True:
-                            _cache_data = Cache(_cache_name.split(':')[1]).get_cache()
-                            _new_data += " = {0}".format(_cache_data)
+                elif jsonpath(_data, '$.send_request') is not False:
+                    _send_request = _data['send_request']
+                    _case_id = _data['case_id']
+                    _teardown_case = eval(Cache('case_process').get_cache())[_case_id]
+                    for i in _send_request:
+                        if i['dependent_type'] == 'cache':
+                            exec(self.dependent_type_cache(teardown_case=i))
+                        # 判断从响应内容提取数据
+                        if i['dependent_type'] == 'response':
+                            exec(self.dependent_type_response(teardown_case_data=i, resp_data=_resp_data))
 
-                            # 最终提取到的数据,转换成 _teardown_case[xxx][xxx]
-                        else:
-                            _cache_data = Cache(_cache_name).get_cache()
-                            _new_data += " = '{0}'".format(_cache_data)
-                        exec(_new_data)
-                print(_teardown_case)
-                test_case = self.regular_testcase(_teardown_case)
-                res = self.teardown_http_requests(test_case)
-                Assert(test_case['assert']).assert_equality(response_data=res['response_data'],
-                                                            sql_data=res['sql_data'], status_code=res['status_code'])
-        self.teardown_sql(case_data)
+                        # 判断请求中的数据
+                        elif i['dependent_type'] == 'request':
+                            self.dependent_type_request(teardown_case_data=i, request_data=_request_data)
+
+                    test_case = self.regular_testcase(_teardown_case)
+                    self.teardown_http_requests(test_case)
+                self.teardown_sql(case_data)
 
     def teardown_sql(self, case_data):
         """处理后置sql"""

@@ -105,9 +105,6 @@ class Context:
             .get_yaml_data()['host']
         return host
 
-    def test(self, e):
-        return e
-
     @property
     def app_host(self) -> str:
         """获取app的host"""

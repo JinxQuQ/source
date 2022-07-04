@@ -98,7 +98,8 @@ class MysqlDB(object):
                 if isinstance(sql, list):
 
                     data = {}
-                    if 'UPDATE' or 'update' or 'DELETE' or 'delete' or 'INSERT' or 'insert' in sql:
+                    _sql_type = ['UPDATE', 'update', 'DELETE', 'delete', 'INSERT', 'insert']
+                    if any(i in sql for i in _sql_type) is True:
                         raise ValueError("断言的 sql 必须是查询的 sql")
                     else:
                         for i in sql:
@@ -128,13 +129,16 @@ class MysqlDB(object):
             :param sql:
             :return:
             """
-            data = {}
-            if isinstance(sql, list):
-                for i in sql:
-                    sql_date = self.query(sql=i)[0]
-                    for key, value in sql_date.items():
-                        data[key] = value
-                return data
+            try:
+                data = {}
+                if isinstance(sql, list):
+                    for i in sql:
+                        sql_date = self.query(sql=i)[0]
+                        for key, value in sql_date.items():
+                            data[key] = value
+                    return data
+            except IndexError:
+                raise ValueError("sql 数据查询失败，请检查setup_sql语句是否正确")
 
 
 if __name__ == '__main__':

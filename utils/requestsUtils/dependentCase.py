@@ -8,9 +8,11 @@ from utils.requestsUtils.requestControl import RequestControl
 from Enums.dependentType_enum import DependentType
 from Enums.yamlData_enum import YAMLDate
 from utils.mysqlUtils.mysqlControl import MysqlDB
+from utils.otherUtils.get_conf_data import sql_switch
 from utils.readFilesUtils.regularControl import regular, cache_regular
 from utils.otherUtils.jsonpath_date_replace import jsonpath_replace
 from utils.otherUtils.jsonpath import jsonpath
+from utils.logUtils.logControl import WARNING
 
 
 class DependentCase:
@@ -83,6 +85,35 @@ class DependentCase:
             jsonpath_dates[replace_key] = jsonpath_data[0]
 
     @classmethod
+    def _dependent_type_for_sql(cls, setup_sql, dependence_case_data, jsonpath_dates, case_data):
+        """
+        判断依赖类型为 sql，程序中的依赖参数从 数据库中提取数据
+        @param setup_sql: 前置sql语句
+        @param dependence_case_data: 依赖的数据
+        @param jsonpath_dates: 依赖相关的用例数据
+        @param case_data:
+        @return:
+        """
+        # 判断依赖数据类型，依赖 sql中的数据
+        if setup_sql is not None:
+            if sql_switch():
+                sql_data = MysqlDB().setup_sql_data(sql=setup_sql)
+                dependent_data = dependence_case_data['dependent_data']
+                for i in dependent_data:
+                    _jsonpath = i[YAMLDate.JSONPATH.value]
+                    jsonpath_data = cls.jsonpath_data(obj=sql_data, expr=_jsonpath)
+                    _set_value = cls.set_cache_value(i)
+                    _replace_key = cls.replace_key(i)
+                    if _set_value is not None:
+                        Cache(_set_value).set_caches(jsonpath_data[0])
+                    if _replace_key is not None:
+                        jsonpath_dates[_replace_key] = jsonpath_data[0]
+                        cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
+                                        jsonpath_data=jsonpath_data, case_data=case_data)
+            else:
+                WARNING.logger.warning("检查到数据库开关为关闭状态，请确认配置")
+
+    @classmethod
     def is_dependent(cls, case_data: dict) -> [list, bool]:
         """
         判断是否有数据依赖
@@ -104,54 +135,47 @@ class DependentCase:
                 for dependence_case_data in _dependence_case_dates:
 
                     _case_id = dependence_case_data[YAMLDate.CASE_ID.value]
-                    re_data = regular(str(cls.get_cache(_case_id)))
-                    re_data = eval(cache_regular(str(re_data)))
-                    res = RequestControl().http_request(re_data)
-                    if jsonpath(obj=dependence_case_data, expr="$.dependent_data") is not False:
-                        dependent_data = dependence_case_data['dependent_data']
-                        for i in dependent_data:
+                    # 判断依赖数据为sql，case_id需要写成self，否则程序中无法获取case_id
+                    if _case_id == 'self':
+                        cls._dependent_type_for_sql(setup_sql=_setup_sql, dependence_case_data=dependence_case_data,
+                                                    jsonpath_dates=jsonpath_dates, case_data=case_data)
+                    else:
+                        re_data = regular(str(cls.get_cache(_case_id)))
+                        re_data = eval(cache_regular(str(re_data)))
+                        res = RequestControl().http_request(re_data)
+                        if jsonpath(obj=dependence_case_data, expr="$.dependent_data") is not False:
+                            dependent_data = dependence_case_data['dependent_data']
+                            for i in dependent_data:
 
-                            _case_id = dependence_case_data[YAMLDate.CASE_ID.value]
-                            _jsonpath = i[YAMLDate.JSONPATH.value]
-                            _request_data = case_data[YAMLDate.DATA.value]
-                            _replace_key = cls.replace_key(i)
-                            _set_value = cls.set_cache_value(i)
-                            # 判断依赖数据类型, 依赖 response 中的数据
-                            if i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.RESPONSE.value:
-                                jsonpath_data = cls.jsonpath_data(res['response_data'], _jsonpath)
-                                if _set_value is not None:
-                                    Cache(_set_value).set_caches(jsonpath_data[0])
-                                if _replace_key is not None:
-                                    cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
-                                                    jsonpath_data=jsonpath_data, case_data=case_data)
+                                _case_id = dependence_case_data[YAMLDate.CASE_ID.value]
+                                _jsonpath = i[YAMLDate.JSONPATH.value]
+                                _request_data = case_data[YAMLDate.DATA.value]
+                                _replace_key = cls.replace_key(i)
+                                _set_value = cls.set_cache_value(i)
+                                # 判断依赖数据类型, 依赖 response 中的数据
+                                if i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.RESPONSE.value:
+                                    jsonpath_data = cls.jsonpath_data(res['response_data'], _jsonpath)
+                                    if _set_value is not None:
+                                        Cache(_set_value).set_caches(jsonpath_data[0])
+                                    if _replace_key is not None:
+                                        cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
+                                                        jsonpath_data=jsonpath_data, case_data=case_data)
 
-                            # 判断依赖数据类型, 依赖 request 中的数据
-                            elif i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.REQUEST.value:
-                                jsonpath_data = cls.jsonpath_data(res['yaml_data']['data'], _jsonpath)
-                                if _set_value is not None:
-                                    Cache(_set_value).set_caches(jsonpath_data[0])
-                                if _replace_key is not None:
-                                    jsonpath_dates[_replace_key] = jsonpath_data[0]
-                                    cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
-                                                    jsonpath_data=jsonpath_data, case_data=case_data)
-
-                            # 判断依赖数据类型，依赖 sql中的数据
-                            elif i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.SQL_DATA.value:
-                                if _setup_sql is not None:
-                                    sql_data = MysqlDB().setup_sql_data(sql=_setup_sql)
-                                    jsonpath_data = cls.jsonpath_data(obj=sql_data, expr=_jsonpath)
+                                # 判断依赖数据类型, 依赖 request 中的数据
+                                elif i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.REQUEST.value:
+                                    jsonpath_data = cls.jsonpath_data(res['yaml_data']['data'], _jsonpath)
                                     if _set_value is not None:
                                         Cache(_set_value).set_caches(jsonpath_data[0])
                                     if _replace_key is not None:
                                         jsonpath_dates[_replace_key] = jsonpath_data[0]
                                         cls.url_replace(replace_key=_replace_key, jsonpath_dates=jsonpath_dates,
                                                         jsonpath_data=jsonpath_data, case_data=case_data)
+                                    else:
+                                        raise ValueError("当前用例需要获取sql数据，setup_sql中需要填写对应的sql语句。\n"
+                                                         "case_id: {0}".format(_case_id))
                                 else:
-                                    raise ValueError("当前用例需要获取sql数据，setup_sql中需要填写对应的sql语句。\n"
-                                                     "case_id: {0}".format(_case_id))
-                            else:
-                                raise ValueError("依赖的dependent_type不正确，只支持request、response、sql依赖\n"
-                                                 f"当前填写内容: {i[YAMLDate.DEPENDENT_TYPE.value]}")
+                                    raise ValueError("依赖的dependent_type不正确，只支持request、response、sql依赖\n"
+                                                     f"当前填写内容: {i[YAMLDate.DEPENDENT_TYPE.value]}")
                 return jsonpath_dates
             except KeyError:
                 pass

@@ -35,10 +35,11 @@ collect_addtool_01:
     sql:
     teardown:
       - case_id: collect_delete_tool_01
-        step:
+        send_request:
           - dependent_type: response
             jsonpath: $.data.id
             replace_key: $.data.id
+
 
 
 collect_addtool_02:

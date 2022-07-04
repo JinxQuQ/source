@@ -34,9 +34,9 @@ DingTalk:
 MySqlDB:
   # 数据库开关
   switch: True
-  host: 47.108.221.85
+  host:
   user: root
-  password: '123456'
+  password:
   db: api_test
 
 # 镜像源

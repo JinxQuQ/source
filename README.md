@@ -705,12 +705,12 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
             # 通过jsonpath的方法，获取query_apply_list_01这个接口的响应内容
             jsonpath: $.data.data.[0].applyId
             # 将内容存入缓存，这个是自定义的缓存名称
-            set_value: test_brand_apply_initiate_apply_01_applyId
+            set_cache: test_brand_apply_initiate_apply_01_applyId
             
             # 支持同时存多个数据，只会发送一次请求
           - dependent_type: self_response
             jsonpath: $.data.data.[0].brandName
-            set_value: test_brand_apply_initiate_apply_01_brandName
+            set_cache: test_brand_apply_initiate_apply_01_brandName
         
       # 删除
       - case_id: delete_01

@@ -47,14 +47,14 @@ collect_update_tool_01:
 
       # 先搜索
       - case_id: collect_tool_list_01
-        step:
+        param_prepare:
           - dependent_type: self_response
             jsonpath: $.data[-1:].id
-            set_value: $set_cache{artile_id}
+            set_cache: $set_cache{artile_id}
 
       # 删除
       - case_id: collect_delete_tool_01
-        step:
+        send_request:
           # 删除从缓存中拿数据
           - dependent_type: cache
             cache_data: int:artile_id

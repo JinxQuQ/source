@@ -39,11 +39,12 @@ class TearDownHandler:
         _change_data = replace_key.split(".")
         # jsonpath 数据解析
         _new_data = jsonpath_replace(change_data=_change_data, key_name='_teardown_case')
-        if not isinstance(replace_value, str):
-            _new_data += " = '{0}'".format(replace_value)
+        value_types = ['int:', 'bool:', 'list:', 'dict:', 'tuple:', 'float:']
+        if any(i in replace_value for i in value_types) is True:
+            _new_data += " = {0}".format(replace_value)
         # 最终提取到的数据,转换成 _teardown_case[xxx][xxx]
         else:
-            _new_data += " = {0}".format(replace_value)
+            _new_data += " = '{0}'".format(replace_value)
         return _new_data
 
     @classmethod
@@ -98,14 +99,17 @@ class TearDownHandler:
         :param : request_data: 需要替换的内容
         :return:
         """
-        _request_set_value = teardown_case_data['set_value']
-        _request_dependent = jsonpath(obj=request_data, expr=teardown_case_data['jsonpath'])
-        if _request_dependent is not False:
-            _request_case_data = _request_dependent[0]
-            self.get_cache_name(replace_key=_request_set_value, resp_case_data=_request_case_data)
-        else:
-            raise ValueError(f"jsonpath提取失败，替换内容: {request_data} \n"
-                             f"jsonpath: {teardown_case_data['jsonpath']}")
+        try:
+            _request_set_value = teardown_case_data['set_value']
+            _request_dependent = jsonpath(obj=request_data, expr=teardown_case_data['jsonpath'])
+            if _request_dependent is not False:
+                _request_case_data = _request_dependent[0]
+                self.get_cache_name(replace_key=_request_set_value, resp_case_data=_request_case_data)
+            else:
+                raise ValueError(f"jsonpath提取失败，替换内容: {request_data} \n"
+                                 f"jsonpath: {teardown_case_data['jsonpath']}")
+        except KeyError:
+            raise KeyError("teardown中缺少set_value参数，请检查用例是否正确")
 
     def dependent_self_response(self, teardown_case_data, res, resp_data):
         """
@@ -115,17 +119,20 @@ class TearDownHandler:
         :param : res: 接口响应的内容
         :return:
         """
-        _set_value = teardown_case_data['set_value']
-        _response_dependent = jsonpath(obj=res['response_data'], expr=teardown_case_data['jsonpath'])
-        # 如果提取到数据，则进行下一步
-        if _response_dependent is not False:
-            _resp_case_data = _response_dependent[0]
-            # 拿到 set_cache 然后将数据写入缓存
-            Cache(_set_value).set_caches(_resp_case_data)
-            self.get_cache_name(replace_key=_set_value, resp_case_data=_resp_case_data)
-        else:
-            raise ValueError(f"jsonpath提取失败，替换内容: {resp_data} \n"
-                             f"jsonpath: {teardown_case_data['jsonpath']}")
+        try:
+            _set_value = teardown_case_data['set_cache']
+            _response_dependent = jsonpath(obj=res['response_data'], expr=teardown_case_data['jsonpath'])
+            # 如果提取到数据，则进行下一步
+            if _response_dependent is not False:
+                _resp_case_data = _response_dependent[0]
+                # 拿到 set_cache 然后将数据写入缓存
+                Cache(_set_value).set_caches(_resp_case_data)
+                self.get_cache_name(replace_key=_set_value, resp_case_data=_resp_case_data)
+            else:
+                raise ValueError(f"jsonpath提取失败，替换内容: {resp_data} \n"
+                                 f"jsonpath: {teardown_case_data['jsonpath']}")
+        except KeyError:
+            raise KeyError("teardown中缺少set_value参数，请检查用例是否正确")
 
     @classmethod
     def dependent_type_cache(cls, teardown_case):

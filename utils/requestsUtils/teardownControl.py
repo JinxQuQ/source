@@ -39,8 +39,7 @@ class TearDownHandler:
         _change_data = replace_key.split(".")
         # jsonpath 数据解析
         _new_data = jsonpath_replace(change_data=_change_data, key_name='_teardown_case')
-        value_types = ['int:', 'bool:', 'list:', 'dict:', 'tuple:', 'float:']
-        if any(i in replace_value for i in value_types) is True:
+        if not isinstance(replace_value, str):
             _new_data += " = {0}".format(replace_value)
         # 最终提取到的数据,转换成 _teardown_case[xxx][xxx]
         else:

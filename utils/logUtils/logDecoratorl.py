@@ -32,14 +32,15 @@ def log_decorator(switch: bool):
                         else:
                             _dependent_case = "暂无依赖用例数据"
                         if res['yaml_data']['requestType'] == 'PARAMS':
-                            params_data = "?"
-                            for k, v in _data.items():
-                                if v is None or v == '':
-                                    params_data += (k + "&")
-                                else:
-                                    params_data += (k + "=" + str(v) + "&")
-                            _url += params_data[:-1]
-                            _data = ""
+                            if _data is not None:
+                                params_data = "?"
+                                for k, v in _data.items():
+                                    if v is None or v == '':
+                                        params_data += (k + "&")
+                                    else:
+                                        params_data += (k + "=" + str(v) + "&")
+                                _url += params_data[:-1]
+                                _data = ""
                         _log_msg = f"\n===========================================================================\n" \
                                    f"测试标题: {res['yaml_data']['detail']}\n" \
                                    f"请求方式: {res['yaml_data']['method']}\n" \

@@ -5,7 +5,7 @@ case_common:
   allureStory: 收藏网址列表接口
 
 collect_tool_list_01:
-    host: ${{host}}
+    host: ${{host()}}
     url: /lg/collect/usertools/json
     method: GET
     detail: 查看收藏网址列表接口

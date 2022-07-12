@@ -1,7 +1,0 @@
-ERROR   2022-06-28 15:02:21,032  D:\work_code\pytest-auto-api2\logs\error.log:assertControl.py:135 JsonPath值获取失败$.result
-ERROR   2022-06-28 15:41:41,351  D:\work_code\pytest-auto-api2\logs\error.log:assertControl.py:135 JsonPath值获取失败$.result
-ERROR   2022-06-28 16:16:45,033  D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:132 异常用例数: 2
-ERROR   2022-06-28 16:16:45,035  D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:133 失败用例数: 0
-ERROR   2022-06-28 16:17:48,054  D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:132 异常用例数: 0
-ERROR   2022-06-28 16:17:48,054  D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:133 失败用例数: 0
-ERROR   2022-06-28 17:57:50,254  D:\work_code\pytest-auto-api2\logs\error.log:assertControl.py:135 JsonPath值获取失败$.errorCode

@@ -17,15 +17,6 @@ class Context:
     def __init__(self):
         self.f = Faker(locale='zh_CN')
 
-    @property
-    def test_random(self) -> int:
-        """
-        :return: 随机数
-        """
-        rn = random.randint(0, 5000)
-        return rn
-
-    @property
     def get_phone(self) -> int:
         """
         :return: 随机生成手机号码
@@ -33,17 +24,14 @@ class Context:
         phone = self.f.phone_number()
         return phone
 
-    @property
     def get_job(self) -> str:
         """
-
-        :return: 随机生成身份证号码
+        :return: 随机生成职业
         """
 
         job = self.f.job()
         return job
 
-    @property
     def get_id_number(self) -> int:
         """
 
@@ -53,7 +41,6 @@ class Context:
         id_number = self.f.ssn()
         return id_number
 
-    @property
     def get_female_name(self) -> str:
         """
 
@@ -62,7 +49,6 @@ class Context:
         female_name = self.f.name_female()
         return female_name
 
-    @property
     def get_male_name(self) -> str:
         """
 
@@ -71,7 +57,6 @@ class Context:
         male_name = self.f.name_male()
         return male_name
 
-    @property
     def get_email(self) -> str:
         """
 
@@ -80,22 +65,21 @@ class Context:
         email = self.f.email()
         return email
 
-    @property
-    def get_time(self) -> str:
+    @classmethod
+    def get_time(cls) -> str:
         """
         计算当前时间
         :return:
         """
-        nowtime = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        return nowtime
+        now_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        return now_time
 
-    @property
     def random_int(self):
         """随机生成 0 - 9999 的数字"""
         numbers = self.f.random_int()
         return numbers
 
-    @property
+    @classmethod
     def host(cls) -> str:
         from utils.readFilesUtils.yamlControl import GetYamlData
         from common.setting import ConfigHandler
@@ -105,8 +89,8 @@ class Context:
             .get_yaml_data()['host']
         return host
 
-    @property
-    def app_host(self) -> str:
+    @classmethod
+    def app_host(cls) -> str:
         """获取app的host"""
         from utils.readFilesUtils.yamlControl import GetYamlData
         from common.setting import ConfigHandler
@@ -121,40 +105,9 @@ def sql_json(js_path, res):
     return jsonpath(res, js_path)[0]
 
 
-# def regular(target):
-#     """
-#     新版本
-#     使用正则替换请求数据
-#     :return:
-#     """
-#     try:
-#         regular_pattern = r'\${{(.*?)}}'
-#         while re.findall(regular_pattern, target):
-#             key = re.search(regular_pattern, target).group(1)
-#             value_types = ['int:', 'bool:', 'list:', 'dict:', 'tuple:', 'float:']
-#             if any(i in key for i in value_types) is True:
-#                 func_name = key.split(":")[1].split("(")[0]
-#                 value_name = key.split(":")[1].split("(")[1][:-1]
-#                 value_data = getattr(Context(), func_name)(*value_name.split(","))
-#                 regular_int_pattern = r'\'\${{(.*?)}}\''
-#                 target = re.sub(regular_int_pattern, str(value_data), target, 1)
-#             else:
-#                 func_name = key.split("(")[0]
-#                 value_name = key.split("(")[1][:-1]
-#                 if value_name == "":
-#                     value_data = getattr(Context(), func_name)()
-#                 else:
-#                     value_data = getattr(Context(), func_name)(*value_name.split(","))
-#                 target = re.sub(regular_pattern, str(value_data), target, 1)
-#         return target
-#
-#     except AttributeError:
-#         ERROR.logger.error("未找到对应的替换的数据, 请检查数据是否正确", target)
-#         raise
-
-
 def regular(target):
     """
+    新版本
     使用正则替换请求数据
     :return:
     """
@@ -164,11 +117,18 @@ def regular(target):
             key = re.search(regular_pattern, target).group(1)
             value_types = ['int:', 'bool:', 'list:', 'dict:', 'tuple:', 'float:']
             if any(i in key for i in value_types) is True:
-                value_data = getattr(Context(), key.split(":")[1])
+                func_name = key.split(":")[1].split("(")[0]
+                value_name = key.split(":")[1].split("(")[1][:-1]
+                value_data = getattr(Context(), func_name)(*value_name.split(","))
                 regular_int_pattern = r'\'\${{(.*?)}}\''
                 target = re.sub(regular_int_pattern, str(value_data), target, 1)
             else:
-                value_data = getattr(Context(), key)
+                func_name = key.split("(")[0]
+                value_name = key.split("(")[1][:-1]
+                if value_name == "":
+                    value_data = getattr(Context(), func_name)()
+                else:
+                    value_data = getattr(Context(), func_name)(*value_name.split(","))
                 target = re.sub(regular_pattern, str(value_data), target, 1)
         return target
 
@@ -219,29 +179,3 @@ def cache_regular(value):
     return value
 
 
-def replace_load(value):
-    """
-    使用热加载的方式替换解析yaml中的数据
-    调用这个方法，可以支持yaml中函数方法可以传参，但是目前返回的类型必须都是str类型的
-    """
-    if value and isinstance(value, dict):
-        str_data = json.dumps(value)
-    else:
-        str_data = value
-    for i in range(1, str_data.count('${{') + 1):
-        if "${{" in str_data and "}}" in str_data:
-            start_index = str_data.index("${{")
-            end_index = str_data.index("}}", start_index)
-            old_value = str_data[start_index:end_index + 2]
-            func_name = old_value[3:old_value.index("(")]
-            args_value = old_value[old_value.index("(") + 1:old_value.index(")")]
-            # 反射
-            new_value = getattr(Context(), func_name)(*args_value.split(","))
-            str_data = str_data.replace(old_value, str(new_value))
-        else:
-            if value and isinstance(value, dict):
-                value = json.loads(str_data)
-            else:
-                value = str_data
-
-    return str_data

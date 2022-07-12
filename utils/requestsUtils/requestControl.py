@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time   : 2022/3/28 12:52
 # @Author : 余少琪
+import copy
 import os
 import random
 import time
@@ -9,7 +10,7 @@ import urllib
 
 import jsonpath
 import requests
-from typing import Any
+from typing import Any, Tuple, Callable
 import urllib3
 from utils.otherUtils.get_conf_data import sql_switch
 from requests_toolbelt import MultipartEncoder
@@ -24,6 +25,7 @@ from utils.readFilesUtils.regularControl import cache_regular
 from utils.requestsUtils.set_current_request_cache import SetCurrentRequestCache
 from utils.cacheUtils.cacheControl import Cache
 from utils.logUtils.logControl import ERROR
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
@@ -31,33 +33,58 @@ class RequestControl:
     """ 封装请求 """
 
     @classmethod
-    def _check_params(cls, response, yaml_data, headers, cookie, res_time, status_code, teardown, teardown_sql) -> Any:
+    def _check_params(
+            cls,
+            response: [str, dict],
+            yaml_data: dict[str, ...],
+            headers: dict[str, str],
+            cookie: dict,
+            res_time: float,
+            status_code: int,
+            teardown,
+            teardown_sql) -> dict[str, ...]:
+
+        _data = {
+            "response_data": response,
+            "sql_data": None,
+            "yaml_data": yaml_data,
+            "headers": headers,
+            "cookie": cookie,
+            "res_time": res_time,
+            "status_code": status_code,
+            "teardown": teardown,
+            "teardown_sql": teardown_sql
+        }
         """ 抽离出通用模块，判断 http_request 方法中的一些数据校验 """
         # 判断数据库开关，开启状态，则返回对应的数据
         if sql_switch() and yaml_data['sql'] is not None:
-            sql_data = MysqlDB().assert_execution(sql=yaml_data['sql'], resp=response)
-            return {"response_data": response, "sql_data": sql_data, "yaml_data": yaml_data,
-                    "headers": headers, "cookie": cookie, "res_time": res_time, "status_code": status_code,
-                    "teardown": teardown, "teardown_sql": teardown_sql}
+            sql_data = MysqlDB().assert_execution(
+                sql=yaml_data['sql'],
+                resp=response
+            )
+            _data['sql_data'] = sql_data
         else:
-            # 数据库关闭走的逻辑
-            res = response
-            return {"response_data": res, "sql_data": {"sql": None}, "yaml_data": yaml_data,
-                    "headers": headers, "cookie": cookie, "res_time": res_time, "status_code": status_code,
-                    "teardown": teardown, "teardown_sql": teardown_sql}
+            _data['response_data'] = response
+            _data['sql_data'] = {"sql": None}
+        return _data
 
     @classmethod
-    def file_data_exit(cls, yaml_data, file_data):
+    def file_data_exit(
+            cls,
+            yaml_data: [str, ...],
+            file_data) -> None:
         """判断上传文件时，data参数是否存在"""
         # 兼容又要上传文件，又要上传其他类型参数
         try:
             for key, value in yaml_data[YAMLDate.DATA.value]['data'].items():
                 file_data[key] = value
         except KeyError:
-            pass
+            ...
 
     @classmethod
-    def multipart_data(cls, file_data):
+    def multipart_data(
+            cls,
+            file_data: [str, ...]):
         multipart = MultipartEncoder(
             fields=file_data,  # 字典格式
             boundary='-----------------------------' + str(random.randint(int(1e28), int(1e29 - 1)))
@@ -65,7 +92,9 @@ class RequestControl:
         return multipart
 
     @classmethod
-    def check_headers_str_null(cls, headers):
+    def check_headers_str_null(
+            cls,
+            headers: dict[str, str]) -> dict[str, ...]:
         """
         兼容用户未填写headers或者header值为int
         @return:
@@ -80,7 +109,10 @@ class RequestControl:
             return headers
 
     @classmethod
-    def multipart_in_headers(cls, request_data, header):
+    def multipart_in_headers(
+            cls,
+            request_data: dict[str, ...],
+            header: dict[str, ...]) -> Tuple[dict, dict]:
         header = eval(cache_regular(str(header)))
         request_data = eval(cache_regular(str(request_data)))
         """ 判断处理header为 Content-Type: multipart/form-data"""
@@ -105,8 +137,10 @@ class RequestControl:
         return request_data, header
 
     @classmethod
-    def file_prams_exit(cls, yaml_data):
-        # 判断上传文件接口，文件参数是否存在
+    def file_prams_exit(
+            cls,
+            yaml_data: [str, ...]) -> dict:
+        """判断上传文件接口，文件参数是否存在"""
         try:
             params = yaml_data[YAMLDate.DATA.value]['params']
         except KeyError:
@@ -114,13 +148,17 @@ class RequestControl:
         return params
 
     @classmethod
-    def text_encode(cls, text):
+    def text_encode(
+            cls,
+            text: str) -> str:
         """unicode 解码"""
         return text.encode("utf-8").decode("utf-8")
         # return text
 
     @classmethod
-    def response_elapsed_total_seconds(cls, res):
+    def response_elapsed_total_seconds(
+            cls,
+            res) -> float:
         """获取接口响应时长"""
         try:
             return res.elapsed.total_seconds() * 1000
@@ -128,7 +166,9 @@ class RequestControl:
             return 0.00
 
     @classmethod
-    def upload_file(cls, yaml_data):
+    def upload_file(
+            cls,
+            yaml_data: dict[str, ...]) -> Tuple:
         """
         判断处理上传文件
         :param yaml_data:
@@ -152,7 +192,11 @@ class RequestControl:
         return multipart, params_data, yaml_data
 
     @classmethod
-    def get_response_cache(cls, response_cache, response_data, request_data):
+    def get_response_cache(
+            cls,
+            response_cache: dict,
+            response_data: dict,
+            request_data: dict) -> None:
         """
         将当前请求的接口存入缓存中
         @param response_cache: 设置缓存相关数据要求
@@ -167,9 +211,15 @@ class RequestControl:
             _cache_type = response_cache['cache_type']
             _data = None
             if _cache_type == 'request':
-                _data = jsonpath.jsonpath(obj=request_data, expr=_jsonpath)
+                _data = jsonpath.jsonpath(
+                    obj=request_data,
+                    expr=_jsonpath
+                )
             elif _cache_type == 'response':
-                _data = jsonpath.jsonpath(obj=response_data, expr=_jsonpath)
+                _data = jsonpath.jsonpath(
+                    obj=response_data,
+                    expr=_jsonpath
+                )
             if _data is not False:
                 Cache(_cache_name).set_caches(_data[0])
             else:
@@ -177,10 +227,181 @@ class RequestControl:
                                    f"接口请求数据 {request_data},"
                                    f"jsonpath内容：{response_cache}")
 
+    def request_type_for_json(
+            self,
+            yaml_data: dict[str, ...],
+            headers: dict[str, str],
+            method: str,
+            **kwargs) -> object:
+        """ 判断请求类型为json格式 """
+        yaml_data = eval(cache_regular(str(yaml_data)))
+        _headers = self.check_headers_str_null(headers)
+        _data = yaml_data[YAMLDate.DATA.value]
+
+        res = requests.request(
+            method=method,
+            url=yaml_data[YAMLDate.URL.value],
+            json=_data,
+            headers=_headers,
+            verify=False,
+            **kwargs
+        )
+        return res
+
+    def request_type_for_none(
+            self,
+            yaml_data: dict[str, ...],
+            headers: dict[str, str],
+            method: str,
+            **kwargs) -> object:
+        """判断 requestType 为 None"""
+        yaml_data = eval(cache_regular(str(yaml_data)))
+        _headers = self.check_headers_str_null(headers)
+        res = requests.request(
+            method=method,
+            url=yaml_data[YAMLDate.URL.value],
+            data=None,
+            headers=_headers,
+            verify=False,
+            **kwargs
+        )
+        return res
+
+    def request_type_for_params(
+            self,
+            yaml_data: dict[str, ...],
+            headers: dict[str, str],
+            method: str,
+            **kwargs) -> object:
+
+        """处理 requestType 为 params """
+        yaml_data = eval(cache_regular(str(yaml_data)))
+        _data = yaml_data[YAMLDate.DATA.value]
+        url = yaml_data[YAMLDate.URL.value]
+        if _data is not None:
+            # url 拼接的方式传参
+            params_data = "?"
+            for k, v in _data.items():
+                if v is None or v == '':
+                    params_data += (k + "&")
+                else:
+                    params_data += (k + "=" + str(v) + "&")
+            url = yaml_data[YAMLDate.URL.value] + params_data[:-1]
+        _headers = self.check_headers_str_null(headers)
+        res = requests.request(method=method, url=url, headers=_headers, verify=False, **kwargs)
+        return res
+
+    def request_type_for_file(
+            self,
+            yaml_data: dict[str, ...],
+            method: str,
+            **kwargs) -> object:
+        """处理 requestType 为 file 类型"""
+        multipart = self.upload_file(yaml_data)
+        yaml_data = multipart[2]
+        _headers = multipart[2][YAMLDate.HEADER.value]
+        _headers = self.check_headers_str_null(_headers)
+        res = requests.request(method=method, url=yaml_data[YAMLDate.URL.value],
+                               data=multipart[0], params=multipart[1], headers=_headers, verify=False, **kwargs)
+        return res
+
+    def request_type_for_data(
+            self,
+            yaml_data: dict[str, ...],
+            data: dict[str, ...],
+            headers: dict[str, str],
+            method: str,
+            **kwargs) -> object:
+        """判断 requestType 为 data 类型"""
+        yaml_data = eval(cache_regular(str(yaml_data)))
+        _data, _headers = self.multipart_in_headers(data, headers)
+        res = requests.request(method=method, url=yaml_data[YAMLDate.URL.value], data=_data, headers=_headers,
+                               verify=False, **kwargs)
+        return res
+
+    @classmethod
+    def get_export_api_filename(cls, res):
+        content_disposition = res.headers.get('content-disposition')
+        filename_code = content_disposition.split("=")[-1]  # 分隔字符串，提取文件名
+        filename = urllib.parse.unquote(filename_code)  # url解码
+        return filename
+
+    def request_type_for_export(
+            self,
+            yaml_data: dict[str, ...],
+            headers: dict[str, str],
+            method: str,
+            **kwargs):
+        """判断 requestType 为 export 导出类型"""
+        yaml_data = eval(cache_regular(str(yaml_data)))
+        _headers = self.check_headers_str_null(headers)
+        _data = yaml_data[YAMLDate.DATA.value]
+        res = requests.request(method=method, url=yaml_data[YAMLDate.URL.value], json=_data, headers=_headers,
+                               verify=False, stream=False, **kwargs)
+        filepath = os.path.join(ConfigHandler.file_path, self.get_export_api_filename(res))  # 拼接路径
+        if res.status_code == 200:
+            if res.text:  # 判断文件内容是否为空
+                with open(filepath, 'wb') as f:
+                    for chunk in res.iter_content(chunk_size=1):  # iter_content循环读取信息写入，chunk_size设置文件大小
+                        f.write(chunk)
+            else:
+                print("文件为空")
+
+        return res
+
+    def api_allure_step(
+            self,
+            yaml_data: dict[str, ...],
+            headers: str,
+            method: str,
+            data: str,
+            dependent_data: str,
+            assert_data: str,
+            res,
+    ) -> None:
+        """ 在allure中记录请求数据 """
+        _status_code = res.status_code
+        allure_step_no(f"请求URL: {yaml_data[YAMLDate.URL.value]}")
+        allure_step_no(f"请求方式: {method}")
+        allure_step("请求头: ", headers)
+        allure_step("请求数据: ", data)
+        allure_step("依赖数据: ", dependent_data)
+        allure_step("预期数据: ", assert_data)
+        _res_time = self.response_elapsed_total_seconds(res)
+        allure_step_no(f"响应耗时(ms): {_res_time}")
+
+    @classmethod
+    def get_res_cookie(cls, res) -> [bool, dict]:
+        """获取响应cookie"""
+        try:
+            cookie = res.cookies.get_dict()
+        except:
+            cookie = None
+        return cookie
+
+    def get_res_text(self, res, request_type):
+        """兼容部分接口返回的内容为text文本内容"""
+        try:
+            res = res.json()
+            allure_step("响应结果: ", res)
+        except:
+            # 判断当请求类型为导出类型的接口时，res 展示 文件名称
+            if request_type == RequestType.EXPORT.value:
+                res = self.get_export_api_filename(res)
+            else:
+                res = self.text_encode(res.text)
+                allure_step("响应结果: ", res)
+        return res
+
     @log_decorator(True)
     @execution_duration(3000)
     # @encryption("md5")
-    def http_request(self, yaml_data, dependent_switch=True, **kwargs):
+    def http_request(
+            self,
+            yaml_data: dict[str, ...],
+            dependent_switch=True,
+            **kwargs
+    ):
         """
         请求封装
         :param yaml_data: 从yaml文件中读取出来的所有数据
@@ -210,99 +431,98 @@ class RequestControl:
             # 处理多业务逻辑
             if dependent_switch is True:
                 DependentCase().get_dependent_data(yaml_data)
-
+            # 判断请求类型为json形式的
             if _requestType == RequestType.JSON.value:
-                yaml_data = eval(cache_regular(str(yaml_data)))
-                _headers = self.check_headers_str_null(_headers)
-                _data = yaml_data[YAMLDate.DATA.value]
-
-                res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], json=_data,
-                                       headers=_headers, verify=False, **kwargs)
+                res = self.request_type_for_json(
+                    yaml_data=yaml_data,
+                    headers=_headers,
+                    method=_method,
+                    **kwargs
+                )
             elif _requestType == RequestType.NONE.value:
-                yaml_data = eval(cache_regular(str(yaml_data)))
-                _headers = self.check_headers_str_null(_headers)
-                res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], data=None,
-                                       headers=_headers, verify=False, **kwargs)
+                res = self.request_type_for_none(
+                    yaml_data=yaml_data,
+                    headers=_headers,
+                    method=_method,
+                    **kwargs
+                )
 
             elif _requestType == RequestType.PARAMS.value:
-                yaml_data = eval(cache_regular(str(yaml_data)))
-                _data = yaml_data[YAMLDate.DATA.value]
-                url = yaml_data[YAMLDate.URL.value]
-                if _data is not None:
-                    # url 拼接的方式传参
-                    params_data = "?"
-                    for k, v in _data.items():
-                        if v is None or v == '':
-                            params_data += (k + "&")
-                        else:
-                            params_data += (k + "=" + str(v) + "&")
-                    url = yaml_data[YAMLDate.URL.value] + params_data[:-1]
-                _headers = self.check_headers_str_null(_headers)
-                res = requests.request(method=_method, url=url, headers=_headers, verify=False, **kwargs)
+                res = self.request_type_for_params(
+                    yaml_data=yaml_data,
+                    headers=_headers,
+                    method=_method,
+                    **kwargs
+                )
             # 判断上传文件
             elif _requestType == RequestType.FILE.value:
-                multipart = self.upload_file(yaml_data)
-                yaml_data = multipart[2]
-                _headers = multipart[2][YAMLDate.HEADER.value]
-                _headers = self.check_headers_str_null(_headers)
-                res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value],
-                                       data=multipart[0], params=multipart[1], headers=_headers, verify=False, **kwargs)
+                res = self.request_type_for_file(
+                    yaml_data=yaml_data,
+                    method=_method,
+                    **kwargs
+                )
 
             elif _requestType == RequestType.DATA.value:
-                yaml_data = eval(cache_regular(str(yaml_data)))
-                _data, _headers = self.multipart_in_headers(_data, _headers)
-                res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], data=_data, headers=_headers,
-                                       verify=False, **kwargs)
+                res = self.request_type_for_data(
+                    yaml_data=yaml_data,
+                    headers=_headers,
+                    method=_method,
+                    data=_data,
+                    **kwargs
+                )
 
             elif _requestType == RequestType.EXPORT.value:
-                yaml_data = eval(cache_regular(str(yaml_data)))
-                _headers = self.check_headers_str_null(_headers)
-                _data = yaml_data[YAMLDate.DATA.value]
-                res = requests.request(method=_method, url=yaml_data[YAMLDate.URL.value], json=_data, headers=_headers,
-                                       verify=False, stream=False, **kwargs)
-                content_disposition = res.headers.get('content-disposition')
-                filename_code = content_disposition.split("=")[-1]  # 分隔字符串，提取文件名
-                filename = urllib.parse.unquote(filename_code)  # url解码
-                filepath = os.path.join(ConfigHandler.file_path, filename)  # 拼接路径
-                if res.status_code == 200:
-                    if res.text:  # 判断文件内容是否为空
-                        with open(filepath, 'wb') as f:
-                            for chunk in res.iter_content(chunk_size=1):  # iter_content循环读取信息写入，chunk_size设置文件大小
-                                f.write(chunk)
-                    else:
-                        print("文件为空")
+                res = self.request_type_for_export(
+                    yaml_data=yaml_data,
+                    headers=_headers,
+                    method=_method,
+                    **kwargs
+                )
+            # res 的值后期会被修改，复制一份，作用于部分函数的传参
+            new_res = copy.deepcopy(res)
             if _sleep is not None:
                 time.sleep(_sleep)
+            self.api_allure_step(
+                yaml_data=yaml_data,
+                headers=_headers,
+                method=_method,
+                data=_data,
+                dependent_data=_dependent_data,
+                assert_data=_assert,
+                res=new_res,
+            )
             _status_code = res.status_code
-            allure_step_no(f"请求URL: {yaml_data[YAMLDate.URL.value]}")
-            allure_step_no(f"请求方式: {_method}")
-            allure_step("请求头: ", _headers)
-            allure_step("请求数据: ", _data)
-            allure_step("依赖数据: ", _dependent_data)
-            allure_step("预期数据: ", _assert)
-            _res_time = self.response_elapsed_total_seconds(res)
-            allure_step_no(f"响应耗时(s): {_res_time}")
-            try:
-                res = res.json()
-                allure_step("响应结果: ", res)
-            except:
-                if _requestType == RequestType.EXPORT.value:
-                    res = filename
-                else:
-                    res = self.text_encode(res.text)
-                    allure_step("响应结果: ", res)
-            try:
-                cookie = res.cookies.get_dict()
-            except:
-                cookie = None
+
+            res = self.get_res_text(res=res, request_type=_requestType)
+
+            # 将当前请求数据存入缓存中
             SetCurrentRequestCache(
                 current_request_set_cache=_current_request_set_cache,
                 request_data=yaml_data['data'],
                 response_data=res
             ).set_caches_main()
-            self.get_response_cache(response_cache=_response_cache, response_data=res, request_data=_data)
-            return self._check_params(res, yaml_data, _headers, cookie, _res_time,
-                                      _status_code, _teardown, _teardown_sql)
+
+            # 获取当前请求的缓存
+            self.get_response_cache(
+                response_cache=_response_cache,
+                response_data=res,
+                request_data=_data)
+            _res_data = self._check_params(
+                response=res,
+                yaml_data=yaml_data,
+                headers=_headers,
+                cookie=self.get_res_cookie(new_res),
+                res_time=self.response_elapsed_total_seconds(new_res),
+                status_code=_status_code,
+                teardown=_teardown,
+                teardown_sql=_teardown_sql)
+            return _res_data
         else:
             # 用例跳过执行的话，响应数据和sql数据为空
-            return {"response_data": False, "sql_data": False, "yaml_data": yaml_data, "res_time": 0.00}
+            _response_data = {
+                "response_data": False,
+                "sql_data": False,
+                "yaml_data": yaml_data,
+                "res_time": 0.00
+            }
+            return _response_data

@@ -32,45 +32,15 @@ def allure_attach(source: str, name: str, extension: str):
     :return:
     """
     # 获取上传附件的尾缀，判断对应的 attachment_type 枚举值
-    _NAME = name.split('.')[-1]
-    attachment_type = None
-    if _NAME == AllureAttachmentType.TEXT.value:
-        attachment_type = allure.attachment_type.TEXT
-    elif _NAME == AllureAttachmentType.CSV.value:
-        attachment_type = allure.attachment_type.CSV
-    elif _NAME == AllureAttachmentType.TSV.value:
-        attachment_type = allure.attachment_type.TSV
-    elif _NAME == AllureAttachmentType.URI_LIST.value:
-        attachment_type = allure.attachment_type.URI_LIST
-    elif _NAME == AllureAttachmentType.HTML.value:
-        attachment_type = allure.attachment_type.HTML
-    elif _NAME == AllureAttachmentType.XML.value:
-        attachment_type = allure.attachment_type.XML
-    elif _NAME == AllureAttachmentType.PCAP.value:
-        attachment_type = allure.attachment_type.PCAP
-    elif _NAME == AllureAttachmentType.PNG.value:
-        attachment_type = allure.attachment_type.PNG
-    elif _NAME == AllureAttachmentType.JPG.value:
-        attachment_type = allure.attachment_type.JPG
-    elif _NAME == AllureAttachmentType.SVG.value:
-        attachment_type = allure.attachment_type.SVG
-    elif _NAME == AllureAttachmentType.GIF.value:
-        attachment_type = allure.attachment_type.GIF
-    elif _NAME == AllureAttachmentType.BMP.value:
-        attachment_type = allure.attachment_type.BMP
-    elif _NAME == AllureAttachmentType.TIFF.value:
-        attachment_type = allure.attachment_type.TIFF
-    elif _NAME == AllureAttachmentType.MP4.value:
-        attachment_type = allure.attachment_type.MP4
-    elif _NAME == AllureAttachmentType.OGG.value:
-        attachment_type = allure.attachment_type.OGG
-    elif _NAME == AllureAttachmentType.WEBM.value:
-        attachment_type = allure.attachment_type.WEBM
-    elif _NAME == AllureAttachmentType.SVG.PDF:
-        attachment_type = allure.attachment_type.PDF
-    # else:
-    #     raise ValueError(f"allure暂不支持该文件类型, 文件路径: {source}")
-    allure.attach.file(source=source, name=name, attachment_type=attachment_type, extension=extension)
+    _NAME = name.split('.')[-1].upper()
+    _attachment_type = getattr(AllureAttachmentType, _NAME, None)
+
+    allure.attach.file(
+        source=source,
+        name=name,
+        attachment_type=_attachment_type if _attachment_type is None else _attachment_type.value,
+        extension=extension
+    )
 
 
 def allure_step_no(step: str):

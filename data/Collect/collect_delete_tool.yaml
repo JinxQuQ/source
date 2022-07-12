@@ -5,7 +5,7 @@ case_common:
   allureStory: 删除收藏网站接口
 
 collect_delete_tool_01:
-    host: ${{host}}
+    host: ${{host()}}
     url: /lg/collect/deletetool/json
     method: POST
     detail: 正常删除收藏网站
@@ -39,7 +39,7 @@ collect_delete_tool_01:
 
 
 collect_delete_tool_02:
-    host: ${{host}}
+    host: ${{host()}}
     url: /lg/collect/deletetool/json
     method: POST
     detail: 正常删除不存在的ID数据（接口未完成此功能，跳过该条用例）

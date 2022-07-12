@@ -5,7 +5,7 @@ case_common:
   allureStory: 编辑收藏网址接口
 
 collect_update_tool_01:
-    host: ${{host}}
+    host: ${{host()}}
     url: /lg/collect/addtool/json
     method: POST
     detail: 编辑收藏网址

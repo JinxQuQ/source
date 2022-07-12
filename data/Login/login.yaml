@@ -5,7 +5,7 @@ case_common:
   allureStory: 登录
 
 login_01:
-    host: ${{host}}
+    host: ${{host()}}
     url: /user/login
     method: POST
     detail: 正常登录
@@ -38,7 +38,7 @@ login_01:
     sql:
 
 login_02:
-    host: ${{host}}
+    host: ${{host()}}
     url: /user/login
     method: POST
     detail: 输入错误的密码
@@ -71,7 +71,7 @@ login_02:
     sql:
 
 login_03:
-    host: ${{host}}
+    host: ${{host()}}
     url: /user/login
     method: POST
     detail: 登录密码为空
@@ -104,7 +104,7 @@ login_03:
     sql:
 
 login_04:
-    host: ${{host}}
+    host: ${{host()}}
     url: /user/login
     method: POST
     detail: 输入非1开头的手机号码
@@ -137,7 +137,7 @@ login_04:
     sql:
 
 login_05:
-    host: ${{host}}
+    host: ${{host()}}
     url: /user/login
     method: POST
     detail: 输入手机号码小于11位
@@ -170,7 +170,7 @@ login_05:
     sql:
 
 login_06:
-    host: ${{host}}
+    host: ${{host()}}
     url: /user/login
     method: POST
     detail: 输入手机号码大于于11位
@@ -203,7 +203,7 @@ login_06:
     sql:
 
 login_07:
-    host: ${{host}}
+    host: ${{host()}}
     url: /user/login
     method: POST
     detail: 手机号码为空
@@ -236,7 +236,7 @@ login_07:
     sql:
 
 login_08:
-    host: ${{host}}
+    host: ${{host()}}
     url: /user/login
     method: POST
     detail: 手机号码首位包含空格

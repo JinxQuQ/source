@@ -67,16 +67,15 @@ class DependentCase:
     def url_replace(cls, replace_key: str, jsonpath_dates: dict, jsonpath_data: list, case_data: dict):
         """
         url中的动态参数替换
+        # 如: 一般有些接口的参数在url中,并且没有参数名称, /api/v1/work/spu/approval/spuApplyDetails/{id}
+        # 那么可以使用如下方式编写用例, 可以使用 $url_params{}替换,
+        # 如/api/v1/work/spu/approval/spuApplyDetails/$url_params{id}
         :param jsonpath_data: jsonpath 解析出来的数据值
         :param replace_key: 用例中需要替换数据的 replace_key
         :param jsonpath_dates: jsonpath 存放的数据值
         :param case_data: 用例数据
         :return:
         """
-
-        # 如: 一般有些接口的参数在url中,并且没有参数名称, /api/v1/work/spu/approval/spuApplyDetails/{id}
-        # 那么可以使用如下方式编写用例, 可以使用 $url_params{}替换,
-        # 如/api/v1/work/spu/approval/spuApplyDetails/$url_params{id}
 
         if "$url_param" in replace_key:
             _url = case_data['url'].replace(replace_key, str(jsonpath_data[0]))
@@ -178,9 +177,9 @@ class DependentCase:
                                                      f"当前填写内容: {i[YAMLDate.DEPENDENT_TYPE.value]}")
                 return jsonpath_dates
             except KeyError:
-                pass
-                # raise KeyError(f"dependence_case_data依赖用例中，未找到 {e} 参数，请检查是否填写"
-                #                f"如已填写，请检查是否存在yaml缩进问题")
+                # pass
+                raise KeyError(f"dependence_case_data依赖用例中，未找到 {e} 参数，请检查是否填写"
+                               f"如已填写，请检查是否存在yaml缩进问题")
             except TypeError:
                 raise TypeError("dependence_case_data下的所有内容均不能为空！请检查相关数据是否填写，如已填写，请检查缩进问题")
 

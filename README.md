@@ -153,7 +153,16 @@
 
 如上环境如都搭建好，则安装本框架的所有第三方库依赖，执行如下命令
 
-    pip install -r requirements.txt
+    pip3 install -r requirements.txt
+
+
+![img.png](Files/image/安装异常.png)
+
+如果在安装过程中出现如下 Could not find a version 类似的异常， 不用担心，可能是因为你安装的python环境
+版本和我不一致导致的，直接 pip install 库名称，不指定版本安装就可以了。
+
+如上方截图说没有找到 asgiref==3.5.1,报错的意思是，没有找到3.5.1这个版本，那么直接控制台输入 pip3 install asgiref 进行安装即可
+
 
 ## 接口文档
 
@@ -198,7 +207,7 @@ collect_tool_list.yaml 的用例文件，请求/lg/collect/usertools/json这个�
       allureStory: 收藏网址列表接口
     
     collect_tool_list_01:
-        host: ${{host}}
+        host: ${{host()}}
         url: /lg/collect/usertools/json
         method: GET
         detail: 查看收藏网址列表接口
@@ -228,7 +237,7 @@ collect_tool_list.yaml 的用例文件，请求/lg/collect/usertools/json这个�
 
 get请求我们 requestType 写的是 params ，这样发送请求时，我们会将请求参数拼接中url中，最终像服务端发送请求的地址格式会为：
 
-    如: ${{host}}/lg/collect/usertools/json?pageNum=1&pageSize=10
+    如: ${{host()}}/lg/collect/usertools/json?pageNum=1&pageSize=10
 
 ### 如何发送post请求
 
@@ -239,7 +248,7 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
       allureStory: 收藏网址接口
     
     collect_addtool_01:
-        host: ${{host}}
+        host: ${{host()}}
         url: /lg/collect/addtool/json
         method: POST
         detail: 新增收藏网址接口
@@ -252,7 +261,7 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
         # 是否执行，空或者 true 都会执行
         is_run:
         data:
-          name: 自动化生成收藏网址${{random_int}}
+          name: 自动化生成收藏网址${{random_int()}}
           link: https://gitee.com/yu_xiao_qi/pytest-auto-api2
         # 是否有依赖业务，为空或者false则表示没有
         dependence_case: False
@@ -304,9 +313,9 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
 
 上方的这个案例，请求参数即上传了文件，又上传了其他参数
 
-1、file： 这里下方上传的是文件参数
-2、data： 这个data下方是该接口，除了文件参数，还需要上传其他的参数，这个参数会以json的方式传给服务端（如果没有其他参数，可以不用写这个）
-3、params： 这个是除了文件参数以外的，上传的其他参数，这个参数是拼接在url后方的
+* 1、file： 这里下方上传的是文件参数
+* 2、data： 这个data下方是该接口，除了文件参数，还需要上传其他的参数，这个参数会以json的方式传给服务端（如果没有其他参数，可以不用写这个）
+* 3、params： 这个是除了文件参数以外的，上传的其他参数，这个参数是拼接在url后方的
 
 ![img.png](Files/image/files_up.png)
 
@@ -329,7 +338,7 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
       allureStory: 获取登录验证码
     
     send_sms_code_01:
-        host: ${{host}}
+        host: ${{host()}}
         url: /mobile/sendSmsCode
         method: POST
         detail: 正常获取登录验证码
@@ -370,7 +379,7 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
       allureStory: 登录
     
     login_02:
-        host: ${{host}}
+        host: ${{host()}}
         url: /login/phone
         method: POST
         detail: 登录输入错误的验证码
@@ -458,6 +467,34 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
           - dependent_type: response
             jsonpath: $.code
             replace_key: $.data.code 
+
+### 将依赖的数据直接存入缓存中
+
+按照上方我们所写的，现在用到的是  replace_key去对原先用例中的内容进行替换，当然我们也提供了可以直接将数据存入缓存中
+这里我们需要用到set_cache的关键字。
+
+      - case_id: get_code_01
+        dependent_data:
+          # 提取接口响应的code码
+          - dependent_type: response
+            jsonpath: $.code
+            # 讲我们提取到的内容直接存入缓存中，set_cache后方定义的值，是我们缓存的名称
+            # 名称可以自定义， set_cache 和 repalce_key 的方法可以二选一，两种都支持
+            set_cache: verify_code
+
+
+### 将当前用例的请求值或者响应值存入缓存中
+
+有些小伙伴之前有反馈过，比如想要做数据库的断言，但是这个字段接口没有返回，我应该怎么去做校验呢？
+程序中提供了current_request_set_cache这个关键字，可以将当前这条用例的请求数据 或者响应数据 给直接存入缓存中
+如下案例所示：
+
+    current_request_set_cache:
+      # 1、response 从响应中提取内容  2、request从请求中提取内容
+      - type: response
+        jsonpath: $.data.data.[0].id
+        # 自定义的缓存名称
+        name: test_query_shop_brand_list_02_id
 
 ### 请求用例时参数需要从数据库中提取
 
@@ -596,10 +633,48 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
 
 那么我们就在 regularControl.py 文件中，编写 get_time 的方法。编写好之后，在用例中编写规则如下：
 
-    reason: 审核时间${{get_time}}
-使用 ${{函数名称}}的方法，程序调用时，会生成当前时间。在regularControl.py 文件中，我还封装了一些常用的随机数，如随机生成男生姓名、女生姓名、身份证、邮箱、手机号码之类的，方便大家使用。 如，随机生成邮箱，我们在用例中编写的格式为 ${{get_email}} 。
+    reason: 审核时间${{get_time()}}
+使用 ${{函数名称()}}的方法，程序调用时，会生成当前时间。在regularControl.py 文件中，我还封装了一些常用的随机数，如随机生成男生姓名、女生姓名、身份证、邮箱、手机号码之类的，方便大家使用。 如，随机生成邮箱，我们在用例中编写的格式为 ${{get_email}} 。
 
 其他所需随机生成的数据，可在文件中自行添加。
+
+### 自动化函数传递参数
+
+首先同样和上方一样，创建一个随机生成的方法，改方法支持接收参数
+
+    @classmethod
+    def random_int(cls, min_num, max_num):
+        """
+        随机生成指定范围的随机数
+        @param min_num: 最小数字
+        @param max_num: 最大数字
+        @return:
+        """
+        num = random.randint(int(min_num), int(max_num))
+        return num
+
+
+在用例中，假设我们需要获取一个 1-10之间的随机数，那么我们直接这样调用该数据即可
+
+    reason: {{random_int(1， 10)}}
+
+### 断言http响应状态码
+
+相信有些小伙伴在做接口测试的过程中，有部分接口是没有任何响应的，那么在没有响应数据的情况下
+我们就只能通过 http的状态码去判断这条用例是否通过，我们可以这样写
+
+    assert:
+      status_code: 200
+
+我们直接在assert下方添加一个 status_code 参数，状态码我们判断其为 200
+
+### 用例中添加等待时间
+
+程序中可以设定接口请求之后，等待时长，假设A接口依赖B接口的业务，A接口请求完时，我们需要让他等待几秒钟
+再次请求B接口，这样的话，我们可以使用sleep关键字
+
+    sleep: 3
+
 
 ### 断言类型
 下放截图中，是所有断言支持的类型

@@ -10,7 +10,7 @@ import urllib
 
 import jsonpath
 import requests
-from typing import Any, Tuple, Callable
+from typing import Tuple, Dict
 import urllib3
 from utils.otherUtils.get_conf_data import sql_switch
 from requests_toolbelt import MultipartEncoder
@@ -36,13 +36,13 @@ class RequestControl:
     def _check_params(
             cls,
             response: [str, dict],
-            yaml_data: dict[str, ...],
-            headers: dict[str, str],
-            cookie: dict,
+            yaml_data: Dict,
+            headers: Dict,
+            cookie: Dict,
             res_time: float,
             status_code: int,
             teardown,
-            teardown_sql) -> dict[str, ...]:
+            teardown_sql) -> Dict:
 
         _data = {
             "response_data": response,
@@ -71,7 +71,7 @@ class RequestControl:
     @classmethod
     def file_data_exit(
             cls,
-            yaml_data: [str, ...],
+            yaml_data: Dict,
             file_data) -> None:
         """判断上传文件时，data参数是否存在"""
         # 兼容又要上传文件，又要上传其他类型参数
@@ -84,7 +84,7 @@ class RequestControl:
     @classmethod
     def multipart_data(
             cls,
-            file_data: [str, ...]):
+            file_data: Dict):
         multipart = MultipartEncoder(
             fields=file_data,  # 字典格式
             boundary='-----------------------------' + str(random.randint(int(1e28), int(1e29 - 1)))
@@ -94,7 +94,7 @@ class RequestControl:
     @classmethod
     def check_headers_str_null(
             cls,
-            headers: dict[str, str]) -> dict[str, ...]:
+            headers: Dict) -> Dict:
         """
         兼容用户未填写headers或者header值为int
         @return:
@@ -111,8 +111,8 @@ class RequestControl:
     @classmethod
     def multipart_in_headers(
             cls,
-            request_data: dict[str, ...],
-            header: dict[str, ...]) -> Tuple[dict, dict]:
+            request_data: Dict,
+            header: Dict) -> Tuple[dict, ...]:
         header = eval(cache_regular(str(header)))
         request_data = eval(cache_regular(str(request_data)))
         """ 判断处理header为 Content-Type: multipart/form-data"""
@@ -139,7 +139,7 @@ class RequestControl:
     @classmethod
     def file_prams_exit(
             cls,
-            yaml_data: [str, ...]) -> dict:
+            yaml_data: Dict) -> Dict:
         """判断上传文件接口，文件参数是否存在"""
         try:
             params = yaml_data[YAMLDate.DATA.value]['params']
@@ -168,7 +168,7 @@ class RequestControl:
     @classmethod
     def upload_file(
             cls,
-            yaml_data: dict[str, ...]) -> Tuple:
+            yaml_data: Dict) -> Tuple:
         """
         判断处理上传文件
         :param yaml_data:
@@ -194,9 +194,9 @@ class RequestControl:
     @classmethod
     def get_response_cache(
             cls,
-            response_cache: dict,
-            response_data: dict,
-            request_data: dict) -> None:
+            response_cache: Dict,
+            response_data: Dict,
+            request_data: Dict) -> None:
         """
         将当前请求的接口存入缓存中
         @param response_cache: 设置缓存相关数据要求
@@ -229,8 +229,8 @@ class RequestControl:
 
     def request_type_for_json(
             self,
-            yaml_data: dict[str, ...],
-            headers: dict[str, str],
+            yaml_data: Dict,
+            headers: Dict,
             method: str,
             **kwargs) -> object:
         """ 判断请求类型为json格式 """
@@ -246,12 +246,12 @@ class RequestControl:
             verify=False,
             **kwargs
         )
-        return res
+        return res, _headers, _data, yaml_data
 
     def request_type_for_none(
             self,
-            yaml_data: dict[str, ...],
-            headers: dict[str, str],
+            yaml_data: Dict,
+            headers: Dict,
             method: str,
             **kwargs) -> object:
         """判断 requestType 为 None"""
@@ -265,12 +265,12 @@ class RequestControl:
             verify=False,
             **kwargs
         )
-        return res
+        return res, _headers, yaml_data
 
     def request_type_for_params(
             self,
-            yaml_data: dict[str, ...],
-            headers: dict[str, str],
+            yaml_data: Dict,
+            headers: Dict,
             method: str,
             **kwargs) -> object:
 
@@ -289,11 +289,11 @@ class RequestControl:
             url = yaml_data[YAMLDate.URL.value] + params_data[:-1]
         _headers = self.check_headers_str_null(headers)
         res = requests.request(method=method, url=url, headers=_headers, verify=False, **kwargs)
-        return res
+        return res, _data, url, _headers, yaml_data
 
     def request_type_for_file(
             self,
-            yaml_data: dict[str, ...],
+            yaml_data: Dict,
             method: str,
             **kwargs) -> object:
         """处理 requestType 为 file 类型"""
@@ -303,13 +303,13 @@ class RequestControl:
         _headers = self.check_headers_str_null(_headers)
         res = requests.request(method=method, url=yaml_data[YAMLDate.URL.value],
                                data=multipart[0], params=multipart[1], headers=_headers, verify=False, **kwargs)
-        return res
+        return res, _headers, yaml_data
 
     def request_type_for_data(
             self,
-            yaml_data: dict[str, ...],
-            data: dict[str, ...],
-            headers: dict[str, str],
+            yaml_data: Dict,
+            data: Dict,
+            headers: Dict,
             method: str,
             **kwargs) -> object:
         """判断 requestType 为 data 类型"""
@@ -317,7 +317,7 @@ class RequestControl:
         _data, _headers = self.multipart_in_headers(data, headers)
         res = requests.request(method=method, url=yaml_data[YAMLDate.URL.value], data=_data, headers=_headers,
                                verify=False, **kwargs)
-        return res
+        return res, _data, _headers, yaml_data
 
     @classmethod
     def get_export_api_filename(cls, res):
@@ -328,8 +328,8 @@ class RequestControl:
 
     def request_type_for_export(
             self,
-            yaml_data: dict[str, ...],
-            headers: dict[str, str],
+            yaml_data: Dict,
+            headers: Dict,
             method: str,
             **kwargs):
         """判断 requestType 为 export 导出类型"""
@@ -347,11 +347,11 @@ class RequestControl:
             else:
                 print("文件为空")
 
-        return res
+        return res, _data, _headers, yaml_data
 
     def api_allure_step(
             self,
-            yaml_data: dict[str, ...],
+            yaml_data: Dict,
             headers: str,
             method: str,
             data: str,
@@ -371,7 +371,7 @@ class RequestControl:
         allure_step_no(f"响应耗时(ms): {_res_time}")
 
     @classmethod
-    def get_res_cookie(cls, res) -> [bool, dict]:
+    def get_res_cookie(cls, res) -> [bool, Dict]:
         """获取响应cookie"""
         try:
             cookie = res.cookies.get_dict()
@@ -398,7 +398,7 @@ class RequestControl:
     # @encryption("md5")
     def http_request(
             self,
-            yaml_data: dict[str, ...],
+            yaml_data: Dict,
             dependent_switch=True,
             **kwargs
     ):
@@ -433,14 +433,14 @@ class RequestControl:
                 DependentCase().get_dependent_data(yaml_data)
             # 判断请求类型为json形式的
             if _requestType == RequestType.JSON.value:
-                res = self.request_type_for_json(
+                res, _headers, _data, yaml_data = self.request_type_for_json(
                     yaml_data=yaml_data,
                     headers=_headers,
                     method=_method,
                     **kwargs
                 )
             elif _requestType == RequestType.NONE.value:
-                res = self.request_type_for_none(
+                res, _headers, yaml_data = self.request_type_for_none(
                     yaml_data=yaml_data,
                     headers=_headers,
                     method=_method,
@@ -448,7 +448,7 @@ class RequestControl:
                 )
 
             elif _requestType == RequestType.PARAMS.value:
-                res = self.request_type_for_params(
+                res, _data, _url, _headers, yaml_data = self.request_type_for_params(
                     yaml_data=yaml_data,
                     headers=_headers,
                     method=_method,
@@ -456,14 +456,14 @@ class RequestControl:
                 )
             # 判断上传文件
             elif _requestType == RequestType.FILE.value:
-                res = self.request_type_for_file(
+                res, _headers, yaml_data = self.request_type_for_file(
                     yaml_data=yaml_data,
                     method=_method,
                     **kwargs
                 )
 
             elif _requestType == RequestType.DATA.value:
-                res = self.request_type_for_data(
+                res, _data, _headers, yaml_data = self.request_type_for_data(
                     yaml_data=yaml_data,
                     headers=_headers,
                     method=_method,
@@ -472,7 +472,7 @@ class RequestControl:
                 )
 
             elif _requestType == RequestType.EXPORT.value:
-                res = self.request_type_for_export(
+                res, _data, _headers, yaml_data = self.request_type_for_export(
                     yaml_data=yaml_data,
                     headers=_headers,
                     method=_method,

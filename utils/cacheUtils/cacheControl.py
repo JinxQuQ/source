@@ -4,13 +4,13 @@
 # @Author : 余少琪
 
 import os
-from typing import Any
+from typing import Any, Text
 from common.setting import ConfigHandler
 
 
 class Cache:
     """ 设置、读取缓存 """
-    def __init__(self, filename: [str, bool]) -> None:
+    def __init__(self, filename: [Text, bool]) -> None:
         # 如果filename不为空，则操作指定文件内容
         if filename:
             self.path = ConfigHandler().cache_path + filename
@@ -18,7 +18,7 @@ class Cache:
         else:
             self.path = ConfigHandler().cache_path
 
-    def set_cache(self, key, value):
+    def set_cache(self, key: Text, value: Any) -> None:
         """
         设置缓存, 只支持设置单字典类型缓存数据, 缓存文件如以存在,则替换之前的缓存内容
         :return:
@@ -26,7 +26,7 @@ class Cache:
         with open(self.path, 'w') as f:
             f.write(str({key: value}))
 
-    def set_caches(self, value: any) -> None:
+    def set_caches(self, value: Any) -> None:
         """
         设置多组缓存数据
         :param value: 缓存内容

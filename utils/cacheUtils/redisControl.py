@@ -4,6 +4,7 @@
 # @Author : 余少琪
 
 import redis
+from typing import Text, Any
 
 
 class RedisHandler:
@@ -15,9 +16,15 @@ class RedisHandler:
         self.db = 0
         self.password = 123456
         self.charset = 'UTF-8'
-        self.redis = redis.Redis(self.host, port=self.port, password=self.password, decode_responses=True, db=self.db)
+        self.redis = redis.Redis(
+            self.host,
+            port=self.port,
+            password=self.password,
+            decode_responses=True,
+            db=self.db
+        )
 
-    def set_string(self, name: str, value, ex=None, px=None, nx=False, xx=False) -> None:
+    def set_string(self, name: Text, value, ex=None, px=None, nx=False, xx=False) -> None:
         """
         缓存中写入 str（单个）
         :param name: 缓存名称
@@ -30,7 +37,7 @@ class RedisHandler:
         """
         self.redis.set(name, value, ex=ex, px=px, nx=nx, xx=xx)
 
-    def key_exit(self, key):
+    def key_exit(self, key: Text):
         """
         判断redis中的key是否存在
         :param key:
@@ -39,7 +46,7 @@ class RedisHandler:
 
         return self.redis.exists(key)
 
-    def incr(self, key):
+    def incr(self, key: Text):
         """
         使用 incr 方法，处理并发问题
         当 key 不存在时，则会先初始为 0, 每次调用，则会 +1
@@ -47,7 +54,7 @@ class RedisHandler:
         """
         self.redis.incr(key)
 
-    def get_key(self, name) -> str:
+    def get_key(self, name: Any) -> Text:
         """
         读取缓存
         :param name:

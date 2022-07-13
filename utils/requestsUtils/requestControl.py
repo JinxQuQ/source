@@ -7,11 +7,10 @@ import os
 import random
 import time
 import urllib
-
 import jsonpath
 import requests
-from typing import Tuple, Dict
 import urllib3
+from typing import Tuple, Dict, Union, Text
 from utils.otherUtils.get_conf_data import sql_switch
 from requests_toolbelt import MultipartEncoder
 from utils.logUtils.logDecoratorl import log_decorator
@@ -35,14 +34,16 @@ class RequestControl:
     @classmethod
     def _check_params(
             cls,
-            response: [str, dict],
+            response: Union[Text, Dict],
             yaml_data: Dict,
             headers: Dict,
             cookie: Dict,
             res_time: float,
             status_code: int,
             teardown,
-            teardown_sql) -> Dict:
+            teardown_sql,
+            url: Text
+    ) -> Dict:
 
         _data = {
             "response_data": response,
@@ -53,7 +54,8 @@ class RequestControl:
             "res_time": res_time,
             "status_code": status_code,
             "teardown": teardown,
-            "teardown_sql": teardown_sql
+            "teardown_sql": teardown_sql,
+            "url": url
         }
         """ 抽离出通用模块，判断 http_request 方法中的一些数据校验 """
         # 判断数据库开关，开启状态，则返回对应的数据
@@ -112,7 +114,7 @@ class RequestControl:
     def multipart_in_headers(
             cls,
             request_data: Dict,
-            header: Dict) -> Tuple[dict, ...]:
+            header: Dict):
         header = eval(cache_regular(str(header)))
         request_data = eval(cache_regular(str(request_data)))
         """ 判断处理header为 Content-Type: multipart/form-data"""
@@ -150,7 +152,7 @@ class RequestControl:
     @classmethod
     def text_encode(
             cls,
-            text: str) -> str:
+            text: Text) -> Text:
         """unicode 解码"""
         return text.encode("utf-8").decode("utf-8")
         # return text
@@ -231,8 +233,8 @@ class RequestControl:
             self,
             yaml_data: Dict,
             headers: Dict,
-            method: str,
-            **kwargs) -> object:
+            method: Text,
+            **kwargs):
         """ 判断请求类型为json格式 """
         yaml_data = eval(cache_regular(str(yaml_data)))
         _headers = self.check_headers_str_null(headers)
@@ -252,7 +254,7 @@ class RequestControl:
             self,
             yaml_data: Dict,
             headers: Dict,
-            method: str,
+            method: Text,
             **kwargs) -> object:
         """判断 requestType 为 None"""
         yaml_data = eval(cache_regular(str(yaml_data)))
@@ -271,8 +273,8 @@ class RequestControl:
             self,
             yaml_data: Dict,
             headers: Dict,
-            method: str,
-            **kwargs) -> object:
+            method: Text,
+            **kwargs):
 
         """处理 requestType 为 params """
         yaml_data = eval(cache_regular(str(yaml_data)))
@@ -294,8 +296,8 @@ class RequestControl:
     def request_type_for_file(
             self,
             yaml_data: Dict,
-            method: str,
-            **kwargs) -> object:
+            method: Text,
+            **kwargs):
         """处理 requestType 为 file 类型"""
         multipart = self.upload_file(yaml_data)
         yaml_data = multipart[2]
@@ -310,8 +312,8 @@ class RequestControl:
             yaml_data: Dict,
             data: Dict,
             headers: Dict,
-            method: str,
-            **kwargs) -> object:
+            method: Text,
+            **kwargs):
         """判断 requestType 为 data 类型"""
         yaml_data = eval(cache_regular(str(yaml_data)))
         _data, _headers = self.multipart_in_headers(data, headers)
@@ -330,7 +332,7 @@ class RequestControl:
             self,
             yaml_data: Dict,
             headers: Dict,
-            method: str,
+            method: Text,
             **kwargs):
         """判断 requestType 为 export 导出类型"""
         yaml_data = eval(cache_regular(str(yaml_data)))
@@ -352,11 +354,11 @@ class RequestControl:
     def api_allure_step(
             self,
             yaml_data: Dict,
-            headers: str,
-            method: str,
-            data: str,
-            dependent_data: str,
-            assert_data: str,
+            headers: Text,
+            method: Text,
+            data: Text,
+            dependent_data: Text,
+            assert_data: Text,
             res,
     ) -> None:
         """ 在allure中记录请求数据 """
@@ -371,7 +373,7 @@ class RequestControl:
         allure_step_no(f"响应耗时(ms): {_res_time}")
 
     @classmethod
-    def get_res_cookie(cls, res) -> [bool, Dict]:
+    def get_res_cookie(cls, res) -> Union[bool, Dict]:
         """获取响应cookie"""
         try:
             cookie = res.cookies.get_dict()
@@ -515,6 +517,7 @@ class RequestControl:
                 res_time=self.response_elapsed_total_seconds(new_res),
                 status_code=_status_code,
                 teardown=_teardown,
+                url=_url,
                 teardown_sql=_teardown_sql)
             return _res_data
         else:

@@ -23,7 +23,6 @@ def log_decorator(switch: bool):
                 # 判断日志开关为开启状态
                 if switch:
                     _data = res['yaml_data']['data']
-                    _url = res['yaml_data']['url']
                     if res is not None:
                         _dependent_case = res['yaml_data']['dependence_case']
                         # 判断如果有依赖数据，则展示
@@ -31,21 +30,12 @@ def log_decorator(switch: bool):
                             _dependent_case = res['yaml_data']['dependence_case_data']
                         else:
                             _dependent_case = "暂无依赖用例数据"
-                        if res['yaml_data']['requestType'] == 'PARAMS':
-                            if _data is not None:
-                                params_data = "?"
-                                for k, v in _data.items():
-                                    if v is None or v == '':
-                                        params_data += (k + "&")
-                                    else:
-                                        params_data += (k + "=" + str(v) + "&")
-                                _url += params_data[:-1]
-                                _data = ""
+                            _data = ""
                         _log_msg = f"\n===========================================================================\n" \
                                    f"测试标题: {res['yaml_data']['detail']}\n" \
                                    f"请求方式: {res['yaml_data']['method']}\n" \
                                    f"请求头:   {res['yaml_data']['headers']}\n" \
-                                   f"请求路径: {_url}\n" \
+                                   f"请求路径: {res['yaml_data']['url']}\n" \
                                    f"请求内容: {_data}\n" \
                                    f"依赖测试用例: {_dependent_case}\n" \
                                    f"接口响应内容: {res['response_data']}\n" \

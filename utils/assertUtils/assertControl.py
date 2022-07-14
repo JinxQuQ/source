@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time   : 2022/3/28 14:18
 # @Author : 余少琪
-
-
+import json
 import types
 from typing import Text, Dict, Callable, Any, Union
 from utils.otherUtils.jsonpath import jsonpath
@@ -22,7 +21,7 @@ class Assert:
 
     @staticmethod
     def _check_params(
-            response_data: Dict, sql_data: Union[Dict, None]) -> bool:
+            response_data: Text, sql_data: Union[Dict, None]) -> bool:
         """
 
         :param response_data: 响应数据
@@ -127,7 +126,7 @@ class Assert:
 
     def assert_equality(
             self,
-            response_data: Dict,
+            response_data: Text,
             sql_data: Dict,
             status_code: int) -> None:
 
@@ -141,7 +140,7 @@ class Assert:
                     assert_jsonpath = self.assert_data[key]['jsonpath']  # 获取到 yaml断言中的jsonpath的数据
                     assert_types = self.assert_data[key]['AssertType']
                     # 从yaml获取jsonpath，拿到对象的接口响应数据
-                    resp_data = jsonpath(response_data, assert_jsonpath)
+                    resp_data = jsonpath(json.loads(response_data), assert_jsonpath)
 
                     # jsonpath 如果数据获取失败，会返回False，判断获取成功才会执行如下代码
                     if resp_data is not False:

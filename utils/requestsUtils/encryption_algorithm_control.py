@@ -55,6 +55,7 @@ def encryption(ency_type):
     :param ency_type: 加密类型
     :return:
     """
+
     def decorator(func):
         def swapper(*args, **kwargs):
             res = func(*args, **kwargs)

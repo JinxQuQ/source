@@ -6,10 +6,17 @@
 import os
 
 
-class ConfigHandler:
-    _SLASH = os.sep
+def generate_path(name: str):
     # 项目路径
     root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(root_path, name.replace('$', os.sep))
+
+
+class ConfigHandler:
+    root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    _SLASH = os.sep
+    # case_path = generate_path('test_case$')
+    # info_log_path = generate_path('logs$info.log')
 
     # 用例路径
     case_path = os.path.join(root_path, 'test_case' + _SLASH)
@@ -48,4 +55,4 @@ class ConfigHandler:
 
 
 if __name__ == '__main__':
-    print(ConfigHandler.info_log_path)
+    ConfigHandler()

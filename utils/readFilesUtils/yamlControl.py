@@ -24,6 +24,7 @@ class GetYamlData:
             data = open(self.fileDir, 'r', encoding='utf-8')
             try:
                 res = yaml.load(data, Loader=yaml.FullLoader)
+
                 return res
             except Exception as e:
                 _error_msg = str(e).split(",")
@@ -38,7 +39,7 @@ class GetYamlData:
 
     def write_yaml_data(self, key: str, value) -> int:
         """
-        更改 yaml 文件中的值
+        更改 yaml 文件中的值, 并且保留注释内容
         :param key: 字典的key
         :param value: 写入的值
         :return:

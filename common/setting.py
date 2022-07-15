@@ -13,46 +13,38 @@ def generate_path(name: str):
 
 
 class ConfigHandler:
-    root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    _SLASH = os.sep
-    # case_path = generate_path('test_case$')
-    # info_log_path = generate_path('logs$info.log')
-
     # 用例路径
-    case_path = os.path.join(root_path, 'test_case' + _SLASH)
+    case_path = generate_path("test_case$")
     # 测试用例数据路径
-    data_path = os.path.join(root_path, 'data' + _SLASH)
+    data_path = generate_path('data$')
 
-    cache_path = os.path.join(root_path, 'Cache' + _SLASH)
+    cache_path = generate_path('Cache$')
     if not os.path.exists(cache_path):
         os.mkdir(cache_path)
 
-    log_path = os.path.join(root_path, 'logs' + _SLASH + 'log.log')
+    log_path = generate_path('logs$log.log')
 
-    info_log_path = os.path.join(root_path, 'logs' + _SLASH + 'info.log')
+    info_log_path = generate_path('logs$info.log')
+    error_log_path = generate_path('logs$error.log')
 
-    error_log_path = os.path.join(root_path, 'logs' + _SLASH + 'error.log')
+    warning_log_path = generate_path('logs$warning.log')
+    common_path = generate_path('common$')
+    config_path = generate_path('common$config.yaml')
 
-    warning_log_path = os.path.join(root_path, 'logs' + _SLASH + 'warning.log')
-    common_path = os.path.join(root_path, 'common' + _SLASH)
-    config_path = os.path.join(root_path, 'common' + _SLASH + 'config.yaml')
+    file_path = generate_path('Files$')
 
-    file_path = os.path.join(root_path, 'Files' + _SLASH)
-
-    util_path = os.path.join(root_path, 'utils' + _SLASH)
-    util_install_path = util_path + 'otherUtils' + _SLASH + 'InstallUtils' + _SLASH
+    util_path = generate_path("utils$")
+    util_install_path = generate_path('utils$otherUtils$InstallUtils$')
     # 测试报告路径
-    report_path = os.path.join(root_path, 'report')
+    report_path = generate_path('report')
     # 测试报告中的test_case路径
-    report_html_test_case_path = os.path.join(root_path, 'report' + _SLASH +
-                                              "html" + _SLASH + 'data' + _SLASH + "test-cases" + _SLASH)
+    report_html_test_case_path = generate_path("report$html$data$test-cases$")
 
     # 测试报告中的attachments路径
-    report_html_attachments_path = os.path.join(root_path, 'report' + _SLASH +
-                                                "html" + _SLASH + 'data' + _SLASH + "attachments" + _SLASH)
+    report_html_attachments_path = generate_path("report$html$data$attachments$")
 
-    excel_template = os.path.join(root_path, 'utils' + _SLASH + 'otherUtils' + _SLASH + "allureDate" + _SLASH)
+    excel_template = generate_path("utils$otherUtils$allureDate$")
 
 
 if __name__ == '__main__':
-    ConfigHandler()
+    print(ConfigHandler.util_install_path)

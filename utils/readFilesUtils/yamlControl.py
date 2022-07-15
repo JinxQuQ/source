@@ -27,12 +27,13 @@ class GetYamlData:
 
                 return res
             except Exception as e:
-                _error_msg = str(e).split(",")
-                _file_path = _error_msg[0].split("in")[-1]
-                _error_line = _error_msg[1]
-
-                raise ValueError("yaml格式不正确, 请检查下方对应路径中的文件内容, 文件路径: {}, 错误行号：{}"
-                                 .format(_file_path, _error_line))
+                raise
+                # _error_msg = str(e).split(",")
+                # _file_path = _error_msg[0].split("in")[-1]
+                # _error_line = _error_msg[1]
+                #
+                # raise ValueError("yaml格式不正确, 请检查下方对应路径中的文件内容, 文件路径: {}, 错误行号：{}"
+                #                  .format(_file_path, _error_line))
 
         else:
             raise FileNotFoundError("文件路径不存在")

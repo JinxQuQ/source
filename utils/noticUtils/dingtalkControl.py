@@ -8,7 +8,7 @@ import hashlib
 import hmac
 import time
 import urllib.parse
-from typing import Any
+from typing import Any, Text
 from utils.readFilesUtils.yamlControl import GetYamlData
 from dingtalkchatbot.chatbot import DingtalkChatbot, FeedLink
 from common.setting import ConfigHandler
@@ -31,7 +31,7 @@ class DingTalkSendMsg(object):
         self.xiaoDing = DingtalkChatbot(self.webhook)
         self.Process = CaseCount()
 
-    def get_sign(self) -> str:
+    def get_sign(self) -> Text:
         """
         根据时间戳 + "sign" 生成密钥
         :return:
@@ -42,7 +42,7 @@ class DingTalkSendMsg(object):
         sign = urllib.parse.quote_plus(base64.b64encode(hmac_code))
         return sign
 
-    def send_text(self, msg: str, mobiles=None) -> None:
+    def send_text(self, msg: Text, mobiles=None) -> None:
         """
         发送文本信息
         :param msg: 文本内容
@@ -57,7 +57,7 @@ class DingTalkSendMsg(object):
             else:
                 raise TypeError("mobiles类型错误 不是list类型.")
 
-    def send_link(self, title: str, text: str, message_url: str, pic_url: str) -> None:
+    def send_link(self, title: Text, text: Text, message_url: Text, pic_url: Text) -> None:
         """
         发送link通知
         :return:
@@ -67,7 +67,7 @@ class DingTalkSendMsg(object):
         except Exception:
             raise
 
-    def send_markdown(self, title: str, msg: str, mobiles=None, is_at_all=False) -> None:
+    def send_markdown(self, title: Text, msg: Text, mobiles=None, is_at_all=False) -> None:
         """
 
         :param is_at_all:
@@ -86,7 +86,7 @@ class DingTalkSendMsg(object):
                 raise TypeError("mobiles类型错误 不是list类型.")
 
     @staticmethod
-    def feed_link(title: str, message_url: str, pic_url: str) -> Any:
+    def feed_link(title: Text, message_url: Text, pic_url: Text) -> Any:
 
         return FeedLink(title=title, message_url=message_url, pic_url=pic_url)
 

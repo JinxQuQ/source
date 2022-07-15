@@ -202,7 +202,7 @@ class DependentCase:
                                 # 判断依赖数据类型, 依赖 request 中的数据
                                 elif i[YAMLDate.DEPENDENT_TYPE.value] == DependentType.REQUEST.value:
                                     self.dependent_handler(
-                                        data=res['request_body'],
+                                        data=res['body'],
                                         _jsonpath=_jsonpath,
                                         set_value=_set_value,
                                         replace_key=_replace_key,
@@ -221,9 +221,13 @@ class DependentCase:
                 # pass
                 raise KeyError(
                     f"dependence_case_data依赖用例中，未找到 {e} 参数，请检查是否填写"
-                               f"如已填写，请检查是否存在yaml缩进问题")
+                    f"如已填写，请检查是否存在yaml缩进问题"
+                )
             except TypeError:
-                raise TypeError("dependence_case_data下的所有内容均不能为空！请检查相关数据是否填写，如已填写，请检查缩进问题")
+                raise TypeError(
+                    "dependence_case_data下的所有内容均不能为空！"
+                    "请检查相关数据是否填写，如已填写，请检查缩进问题"
+                )
         else:
             return False
 

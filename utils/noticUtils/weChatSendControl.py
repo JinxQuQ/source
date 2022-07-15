@@ -69,34 +69,6 @@ class WeChatSend:
             ERROR.logger.error(res.json())
             raise ValueError(f"企业微信「MarkDown类型」消息发送失败")
 
-    def articles(self, article):
-        """
-
-        发送图文消息
-        :param article: 传参示例：{
-               "title" : ”标题，不超过128个字节，超过会自动截断“,
-               "description" : "描述，不超过512个字节，超过会自动截断",
-               "url" : "点击后跳转的链接",
-               "picurl" : "图文消息的图片链接，支持JPG、PNG格式，较好的效果为大图 1068*455，小图150*150。"
-           }
-        如果多组内容，则对象之间逗号隔开传递
-        :return:
-        """
-        _data = {"msgtype": "news", "news": {"articles": [article]}}
-        if isinstance(article, dict):
-            lists = ['description', "title", "url", "picurl"]
-            for i in lists:
-                # 判断所有参数都存在
-                if article.__contains__(i):
-                    res = requests.post(url=self.curl, headers=self.headers, json=_data)
-                    if res.json()['errcode'] != 0:
-                        ERROR.logger.error(res.json())
-                        raise ValueError(f"企业微信「图文类型」消息发送失败")
-                else:
-                    raise ValueError("发送图文消息失败，标题、描述、链接地址、图片地址均不能为空！")
-        else:
-            raise TypeError("图文类型的参数必须是字典类型")
-
     def _upload_file(self, file):
         """
         先将文件上传到临时媒体库

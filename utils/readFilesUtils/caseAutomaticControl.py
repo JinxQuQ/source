@@ -4,6 +4,7 @@
 # @Author : 余少琪
 
 import os
+from typing import Text, Dict
 from common.setting import ConfigHandler
 from utils.readFilesUtils.testcase_template import write_testcase_file
 from utils.readFilesUtils.yamlControl import GetYamlData
@@ -19,16 +20,16 @@ class TestCaseAutomaticGeneration:
         pass
 
     @classmethod
-    def case_date_path(cls) -> str:
+    def case_date_path(cls) -> Text:
         """返回 yaml 用例文件路径"""
         return ConfigHandler.data_path
 
     @classmethod
-    def case_path(cls) -> str:
+    def case_path(cls) -> Text:
         """ 存放用例代码路径"""
         return ConfigHandler.case_path
 
-    def file_name(self, file: str) -> str:
+    def file_name(self, file: Text) -> Text:
         """
         通过 yaml文件的命名，将名称转换成 py文件的名称
         :param file: yaml 文件路径
@@ -44,7 +45,7 @@ class TestCaseAutomaticGeneration:
             file_name = yaml_path.replace('.yml', '.py')
         return file_name
 
-    def get_case_path(self, file_path: str) -> tuple:
+    def get_case_path(self, file_path: Text) -> tuple:
         """
         根据 yaml 中的用例，生成对应 testCase 层代码的路径
         :param file_path: yaml用例路径
@@ -58,7 +59,7 @@ class TestCaseAutomaticGeneration:
         new_name = get_os_sep().join(path)
         return ConfigHandler.case_path + new_name, case_name
 
-    def get_test_class_title(self, file_path: str) -> str:
+    def get_test_class_title(self, file_path: Text) -> Text:
         """
         自动生成类名称
         :param file_path:
@@ -85,7 +86,7 @@ class TestCaseAutomaticGeneration:
               f"用例路径: {file_path}"
         return msg
 
-    def func_title(self, file_path: str) -> str:
+    def func_title(self, file_path: Text) -> Text:
         """
         函数名称
         :param file_path: yaml 用例路径
@@ -96,7 +97,7 @@ class TestCaseAutomaticGeneration:
         return _FILE_NAME
 
     @classmethod
-    def allure_epic(cls, case_data: dict, file_path) -> str:
+    def allure_epic(cls, case_data: Dict, file_path) -> Text:
         """
         用于 allure 报告装饰器中的内容 @allure.epic("项目名称")
         :param file_path: 用例路径
@@ -112,7 +113,7 @@ class TestCaseAutomaticGeneration:
             ))
 
     @classmethod
-    def allure_feature(cls, case_data: dict, file_path) -> str:
+    def allure_feature(cls, case_data: Dict, file_path) -> Text:
         """
         用于 allure 报告装饰器中的内容 @allure.feature("模块名称")
         :param file_path:
@@ -128,7 +129,7 @@ class TestCaseAutomaticGeneration:
             ))
 
     @classmethod
-    def allure_story(cls, case_data: dict, file_path) -> str:
+    def allure_story(cls, case_data: Dict, file_path) -> Text:
         """
         用于 allure 报告装饰器中的内容  @allure.story("测试功能")
         :param file_path:
@@ -143,7 +144,7 @@ class TestCaseAutomaticGeneration:
                 file_path=file_path
             ))
 
-    def mk_dir(self, file_path: str) -> None:
+    def mk_dir(self, file_path: Text) -> None:
         """ 判断生成自动化代码的文件夹路径是否存在，如果不存在，则自动创建 """
         # _LibDirPath = os.path.split(self.libPagePath(filePath))[0]
 
@@ -151,7 +152,7 @@ class TestCaseAutomaticGeneration:
         if not os.path.exists(_CaseDirPath):
             os.makedirs(_CaseDirPath)
 
-    def yaml_path(self, file_path: str) -> str:
+    def yaml_path(self, file_path: Text) -> Text:
         """
         生成动态 yaml 路径, 主要处理业务分层场景
         :param file_path: 如业务有多个层级, 则获取到每一层/test_demo/DateDemo.py

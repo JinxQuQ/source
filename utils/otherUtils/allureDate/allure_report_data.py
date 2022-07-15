@@ -5,6 +5,7 @@
 
 import json
 from common.setting import ConfigHandler
+from typing import List, Text, Dict
 from utils.readFilesUtils.get_all_files_path import get_all_files
 
 
@@ -12,7 +13,7 @@ class AllureFileClean:
     """allure 报告数据清洗，提取业务需要得数据"""
 
     @classmethod
-    def get_testcases(cls) -> list:
+    def get_testcases(cls) -> List:
         """ 获取所有 allure 报告中执行用例的情况"""
         # 将所有数据都收集到files中
         files = []
@@ -22,7 +23,7 @@ class AllureFileClean:
                 files.append(date)
         return files
 
-    def get_failed_case(self) -> list:
+    def get_failed_case(self) -> List:
         """ 获取到所有失败的用例标题和用例代码路径"""
         error_case = []
         for i in self.get_testcases():
@@ -30,7 +31,7 @@ class AllureFileClean:
                 error_case.append((i['name'], i['fullName']))
         return error_case
 
-    def get_failed_cases_detail(self) -> str:
+    def get_failed_cases_detail(self) -> Text:
         """ 返回所有失败的测试用例相关内容 """
         date = self.get_failed_case()
         # 判断有失败用例，则返回内容
@@ -45,7 +46,7 @@ class AllureFileClean:
             return ""
 
     @classmethod
-    def get_case_count(cls) -> dict:
+    def get_case_count(cls) -> Dict:
         """ 统计用例数量 """
         try:
             fil_name = ConfigHandler.report_path + '/html/widgets/summary.json'

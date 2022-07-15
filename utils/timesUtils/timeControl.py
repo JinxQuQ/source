@@ -4,6 +4,7 @@
 # @Author : 余少琪
 
 import time
+from typing import Text
 from datetime import datetime
 
 
@@ -18,7 +19,7 @@ def count_milliseconds():
     return access_delta
 
 
-def timestamp_conversion(time_str: str) -> int:
+def timestamp_conversion(time_str: Text) -> int:
     """
     时间戳转换，将日期格式转换成时间戳
     :param time_str: 时间

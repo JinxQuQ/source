@@ -7,7 +7,7 @@ import mitmproxy.http
 from mitmproxy import ctx
 from ruamel import yaml
 import os
-from typing import Any, Union
+from typing import Any, Union, Text, List, Dict, Tuple
 from urllib.parse import parse_qs, urlparse
 
 
@@ -18,7 +18,7 @@ class Counter:
     参考资料: https://blog.wolfogre.com/posts/usage-of-mitmproxy/
     """
 
-    def __init__(self, filter_url: list, filename: str = './data/proxy_data.yaml'):
+    def __init__(self, filter_url: List, filename: Text = './data/proxy_data.yaml'):
         self.num = 0
         self.file = filename
         self.counter = 1
@@ -78,7 +78,7 @@ class Counter:
                 self.counter += 1
 
     @classmethod
-    def get_case_id(cls, url: str) -> str:
+    def get_case_id(cls, url: Text) -> Text:
         """
         通过url，提取对应的user_id
         :param url:
@@ -89,7 +89,7 @@ class Counter:
         _url = _url_path.split('/')
         return _url[-1]
 
-    def filter_url(self, url: str) -> bool:
+    def filter_url(self, url: Text) -> bool:
         """过滤url"""
         for i in self.url:
             # 判断当前拦截的url地址，是否是addons中配置的host
@@ -101,7 +101,7 @@ class Counter:
         return False
 
     @classmethod
-    def response_code_handler(cls, response) -> Union[dict, None]:
+    def response_code_handler(cls, response) -> Union[Dict, None]:
         # 处理接口响应，默认断言数据为code码，如果接口没有code码，则返回None
         try:
             data = cls.data_handle(response)
@@ -113,7 +113,7 @@ class Counter:
             return None
 
     @classmethod
-    def request_type_handler(cls, method: str) -> str:
+    def request_type_handler(cls, method: Text) -> Text:
         # 处理请求类型，有params、json、file,需要根据公司的业务情况自己调整
         if method == 'GET':
             # 如我们公司只有get请求是prams，其他都是json的
@@ -140,7 +140,7 @@ class Counter:
             raise
 
     @classmethod
-    def token_handle(cls, header) -> dict:
+    def token_handle(cls, header) -> Dict:
         """
         提取请求头参数
         :param header:
@@ -153,7 +153,7 @@ class Counter:
             headers[k] = v
         return headers
 
-    def host_handle(self, url: str) -> tuple:
+    def host_handle(self, url: Text) -> Tuple:
         """
         解析 url
         :param url: https://xxxx.test.xxxx.com/#/goods/listShop
@@ -170,7 +170,7 @@ class Counter:
                 host = i
         return host
 
-    def url_path_handle(self, url: str):
+    def url_path_handle(self, url: Text):
         """
         解析 url_path
         :param url: https://xxxx.test.xxxx.com/shopList/json
@@ -183,7 +183,7 @@ class Counter:
                 url_path = url.split(path)[-1]
         return url_path
 
-    def yaml_cases(self, data: dict) -> None:
+    def yaml_cases(self, data: Dict) -> None:
         """
         写入 yaml 数据
         :param data: 测试用例数据
@@ -193,7 +193,7 @@ class Counter:
             yaml.dump(data, f, Dumper=yaml.RoundTripDumper, allow_unicode=True)
             f.write('\n')
 
-    def get_url_handler(self, url: str) -> tuple:
+    def get_url_handler(self, url: Text) -> Tuple:
         """
         将 url 中的参数 转换成字典
         :param url: /trade?tradeNo=&outTradeId=11

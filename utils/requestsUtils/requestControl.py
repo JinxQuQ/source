@@ -205,8 +205,10 @@ class RequestControl:
             method=method,
             url=yaml_data[YAMLDate.URL.value],
             json=_data,
+            data=None,
             headers=_headers,
             verify=False,
+            params=None,
             **kwargs
         )
         return res, yaml_data
@@ -226,6 +228,7 @@ class RequestControl:
             data=None,
             headers=_headers,
             verify=False,
+            params=None,
             **kwargs
         )
         return res, yaml_data
@@ -251,7 +254,14 @@ class RequestControl:
                     params_data += (k + "=" + str(v) + "&")
             url = yaml_data[YAMLDate.URL.value] + params_data[:-1]
         _headers = self.check_headers_str_null(headers)
-        res = requests.request(method=method, url=url, headers=_headers, verify=False, **kwargs)
+        res = requests.request(
+            method=method,
+            url=url,
+            headers=_headers,
+            verify=False,
+            data=None,
+            params=None,
+            **kwargs)
         return res, yaml_data
 
     def request_type_for_file(
@@ -264,8 +274,15 @@ class RequestControl:
         yaml_data = multipart[2]
         _headers = multipart[2][YAMLDate.HEADER.value]
         _headers = self.check_headers_str_null(_headers)
-        res = requests.request(method=method, url=yaml_data[YAMLDate.URL.value],
-                               data=multipart[0], params=multipart[1], headers=_headers, verify=False, **kwargs)
+        res = requests.request(
+            method=method,
+            url=yaml_data[YAMLDate.URL.value],
+            data=multipart[0],
+            params=multipart[1],
+            headers=_headers,
+            verify=False,
+            **kwargs
+        )
         return res, yaml_data
 
     def request_type_for_data(
@@ -278,8 +295,13 @@ class RequestControl:
         """判断 requestType 为 data 类型"""
         yaml_data = eval(cache_regular(str(yaml_data)))
         _data, _headers = self.multipart_in_headers(data, headers)
-        res = requests.request(method=method, url=yaml_data[YAMLDate.URL.value], data=_data, headers=_headers,
-                               verify=False, **kwargs)
+        res = requests.request(
+            method=method,
+            url=yaml_data[YAMLDate.URL.value],
+            data=_data,
+            headers=_headers,
+            verify=False,
+            **kwargs)
 
         return res, yaml_data
 
@@ -346,6 +368,7 @@ class RequestControl:
             "is_run": yaml_data[YAMLDate.IS_RUN.value],
             "detail": yaml_data[YAMLDate.DETAIL.value],
             "response_data": res.text,
+            # 这个用于日志专用，判断如果是get请求，直接打印url
             "request_body": self._request_body_handler(yaml_data[YAMLDate.DATA.value], res.request.method),
             "method": res.request.method,
             "sql_data": self._sql_data_handler(sql_data=yaml_data[YAMLDate.SQL.value], res=res),
@@ -356,7 +379,8 @@ class RequestControl:
             "res_time": self.response_elapsed_total_seconds(res),
             "status_code": res.status_code,
             "teardown": yaml_data[YAMLDate.TEARDOWN.value],
-            "teardown_sql": yaml_data[YAMLDate.TEARDOWN_SQL.value]
+            "teardown_sql": yaml_data[YAMLDate.TEARDOWN_SQL.value],
+            "body": yaml_data[YAMLDate.DATA.value]
         }
         """ 抽离出通用模块，判断 http_request 方法中的一些数据校验 """
         return _data
@@ -414,7 +438,7 @@ class RequestControl:
                 DependentCase().get_dependent_data(yaml_data)
             # 判断请求类型为json形式的
             if _requestType == RequestType.JSON.value:
-                res,  yaml_data = self.request_type_for_json(
+                res, yaml_data = self.request_type_for_json(
                     yaml_data=yaml_data,
                     headers=_headers,
                     method=_method,
@@ -470,7 +494,7 @@ class RequestControl:
             self.api_allure_step(
                 headers=_res_data['headers'],
                 method=_res_data['method'],
-                data=_res_data['request_body'],
+                data=_res_data['body'],
                 assert_data=_res_data['assert'],
                 res_time=_res_data['res_time'],
                 status_code=_res_data['status_code']
@@ -488,12 +512,3 @@ class RequestControl:
                 response_data=res,
                 request_data=_data)
             return _res_data
-        else:
-            # 用例跳过执行的话，响应数据和sql数据为空
-            _response_data = {
-                "response_data": False,
-                "sql_data": False,
-                "yaml_data": yaml_data,
-                "res_time": 0.00
-            }
-            return _response_data

@@ -97,7 +97,7 @@ class Assert:
                 # 判断mysql查询出来的数据类型如果是bytes类型，转换成str类型
                 res_sql_data = self.res_sql_data_bytes(res_sql_data[0])
                 name = AssertMethod(self.assert_data[key]['type']).name
-                self.functions_mapping[name](resp_data[0], value=res_sql_data)
+                self.functions_mapping[name](resp_data[0], res_sql_data)
 
     def assert_type_handle(
             self,
@@ -121,6 +121,7 @@ class Assert:
         elif assert_types is None:
             name = AssertMethod(self.assert_data[key]['type']).name
             self.functions_mapping[name](resp_data[0], assert_value)
+            print(resp_data[0], assert_value)
         else:
             raise ValueError("断言失败，目前只支持数据库断言和响应断言")
 

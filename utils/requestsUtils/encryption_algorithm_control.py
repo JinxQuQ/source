@@ -11,6 +11,7 @@ from hashlib import sha256
 import hmac
 from pyDes import *
 import binascii
+from typing import Text
 
 
 def hmac_sha256_encrypt(key, data):
@@ -27,7 +28,7 @@ def md5_encryption(value):
     return str_md5
 
 
-def sha1_secret_str(s: str):
+def sha1_secret_str(s: Text):
     """
     使用sha1加密算法，返回str加密后的字符串
     """

@@ -5,6 +5,8 @@
 # @Email   : 1603453211@qq.com
 # @File    : set_current_request_cache
 # @describe:
+import json
+
 import jsonpath
 from typing import Text, Dict
 from utils.cacheUtils.cacheControl import Cache
@@ -15,13 +17,13 @@ class SetCurrentRequestCache:
 
     def __init__(
             self,
-            current_request_set_cache: Text,
+            current_request_set_cache: Dict,
             request_data: Dict,
-            response_data: Dict
+            response_data
     ):
         self.current_request_set_cache = current_request_set_cache
         self.request_data = {"data": request_data}
-        self.response_data = response_data
+        self.response_data = response_data.text
 
     def set_request_cache(
             self,
@@ -47,7 +49,7 @@ class SetCurrentRequestCache:
             cache_name
     ):
         """将响应结果存入缓存"""
-        _response_data = jsonpath.jsonpath(self.response_data, jsonpath_value)
+        _response_data = jsonpath.jsonpath(json.loads(self.response_data), jsonpath_value)
         if _response_data is False:
             raise ValueError("缓存设置失败，程序中未检测到需要缓存的数据。"
                              f"请求参数: {self.response_data}"

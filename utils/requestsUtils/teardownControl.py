@@ -274,7 +274,7 @@ class TearDownHandler:
         # 拿到用例信息
         _teardown_data = case_data['teardown']
         # 获取接口的响应内容
-        _resp_data = json.loads(case_data['response_data'])
+        _resp_data = case_data['response_data']
         # 获取接口的请求参数
         _request_data = case_data['yaml_data']['data']
         # 判断如果没有 teardown
@@ -284,13 +284,13 @@ class TearDownHandler:
                 if jsonpath(_data, '$.param_prepare') is not False:
                     self.param_prepare_request_handler(
                         data=_data,
-                        resp_data=_resp_data
+                        resp_data=json.loads(_resp_data)
                     )
                 elif jsonpath(_data, '$.send_request') is not False:
                     self.send_request_handler(
                         data=_data,
                         request_data=_request_data,
-                        resp_data=_resp_data
+                        resp_data=json.loads(_resp_data)
                     )
         self.teardown_sql(case_data)
 
@@ -299,11 +299,11 @@ class TearDownHandler:
         """处理后置sql"""
 
         sql_data = case_data['teardown_sql']
-        _response_data = json.loads(case_data['response_data'])
+        _response_data = case_data['response_data']
         if sql_data is not None:
             for i in sql_data:
                 if sql_switch():
-                    _sql_data = sql_regular(value=i, res=_response_data)
+                    _sql_data = sql_regular(value=i, res=json.loads(_response_data))
                     MysqlDB().execute(_sql_data)
                 else:
                     WARNING.logger.warning(f"程序中检查到您数据库开关为关闭状态，已为您跳过删除sql: {i}")

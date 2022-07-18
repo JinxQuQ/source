@@ -465,59 +465,6 @@ class RequestControl:
                 data=_data,
                 **kwargs
             )
-            # # 判断请求类型为json形式的
-            # if _requestType == RequestType.JSON.value:
-            #     res, yaml_data = self.request_type_for_json(
-            #         yaml_data=yaml_data,
-            #         headers=_headers,
-            #         method=_method,
-            #         data=None,
-            #         **kwargs
-            #     )
-            # elif _requestType == RequestType.NONE.value:
-            #     res, yaml_data = self.request_type_for_none(
-            #         yaml_data=yaml_data,
-            #         headers=_headers,
-            #         method=_method,
-            #         data=None,
-            #         **kwargs
-            #     )
-            #
-            # elif _requestType == RequestType.PARAMS.value:
-            #     res, yaml_data = self.request_type_for_params(
-            #         yaml_data=yaml_data,
-            #         headers=_headers,
-            #         method=_method,
-            #         data=None,
-            #         **kwargs
-            #     )
-            # # 判断上传文件
-            # elif _requestType == RequestType.FILE.value:
-            #     res, yaml_data = self.request_type_for_file(
-            #         yaml_data=yaml_data,
-            #         method=_method,
-            #         headers=None,
-            #         data=None,
-            #         **kwargs
-            #     )
-            #
-            # elif _requestType == RequestType.DATA.value:
-            #     res, yaml_data = self.request_type_for_data(
-            #         yaml_data=yaml_data,
-            #         headers=_headers,
-            #         method=_method,
-            #         data=_data,
-            #         **kwargs
-            #     )
-            #
-            # elif _requestType == RequestType.EXPORT.value:
-            #     res, yaml_data = self.request_type_for_export(
-            #         yaml_data=yaml_data,
-            #         headers=_headers,
-            #         method=_method,
-            #         data=None,
-            #         **kwargs
-            #     )
 
             if _sleep is not None:
                 time.sleep(_sleep)

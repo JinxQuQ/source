@@ -37,7 +37,7 @@ MySqlDB:
   host:
   user: root
   password:
-  db: api_test
+  port: 3306
 
 # 镜像源
 mirror_source: http://mirrors.aliyun.com/pypi/simple/

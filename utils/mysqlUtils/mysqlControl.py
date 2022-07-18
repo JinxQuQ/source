@@ -31,7 +31,8 @@ class MysqlDB(object):
                     host=self.read_mysql_config['host'],
                     user=self.read_mysql_config['user'],
                     password=self.read_mysql_config['password'],
-                    db=self.read_mysql_config['db']
+                    db=self.read_mysql_config['db'],
+                    port=self.read_mysql_config['port']
                 )
 
                 # 使用 cursor 方法获取操作游标，得到一个可以执行sql语句，并且操作结果为字典返回的游标

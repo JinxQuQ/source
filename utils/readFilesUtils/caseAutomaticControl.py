@@ -106,7 +106,7 @@ class TestCaseAutomaticGeneration:
         """
         try:
             return case_data['case_common']['allureEpic']
-        except KeyError:
+        except (TypeError, KeyError):
             raise KeyError(cls.error_message(
                 param_name="allureEpic",
                 file_path=file_path

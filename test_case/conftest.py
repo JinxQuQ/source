@@ -14,21 +14,14 @@ from utils.cacheUtils.cacheControl import Cache
 from utils.readFilesUtils.get_all_files_path import get_all_files
 from utils.logUtils.logControl import WARNING, INFO, ERROR
 from Enums.yamlData_enum import YAMLDate
+from utils.readFilesUtils.clean_files import del_file
 from utils.otherUtils.allureDate.allure_tools import allure_step, allure_step_no
 
 
 @pytest.fixture(scope="session", autouse=False)
 def clear_report():
-    try:
-        for one in os.listdir(ConfigHandler.report_path + '/tmp'):
-            if 'json' in one:
-                os.remove(ConfigHandler.report_path + f'/tmp/{one}')
-            if 'txt' in one:
-                os.remove(ConfigHandler.report_path + f'/tmp/{one}')
-    except Exception as e:
-        print("allure数据清除失败", e)
-
-    yield
+    """如clean命名无法删除报告，这里手动删除"""
+    del_file(ConfigHandler.report_path)
 
 
 @pytest.fixture(scope="session", autouse=True)

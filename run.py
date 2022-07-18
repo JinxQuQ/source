@@ -50,21 +50,20 @@ def run():
                    """
 
         os.system(r"allure generate ./report/tmp -o ./report/html --clean")
-        # 判断通知类型，根据配置发送不同的报告通知
-        if get_notification_type() == NotificationType.DEFAULT.value:
-            pass
-        elif get_notification_type() == NotificationType.DING_TALK.value:
-            DingTalkSendMsg().send_ding_notification()
-        elif get_notification_type() == NotificationType.WECHAT.value:
-            WeChatSend().send_wechat_notification()
-            if get_excel_report_switch():
-                ErrorCaseExcel().write_case()
-        elif get_notification_type() == NotificationType.EMAIL.value:
-            SendEmail().send_main()
-        elif get_notification_type() == NotificationType.FEI_SHU.value:
-            FeiShuTalkChatBot().post()
-        else:
-            raise ValueError("通知类型配置错误，暂不支持该类型通知")
+
+        notification_mapping = {
+            NotificationType.DING_TALK.value: DingTalkSendMsg().send_ding_notification,
+            NotificationType.WECHAT.value: WeChatSend().send_wechat_notification,
+            NotificationType.EMAIL.value: SendEmail().send_main,
+            NotificationType.FEI_SHU.value: FeiShuTalkChatBot().post
+        }
+
+        if get_notification_type() != NotificationType.DEFAULT.value:
+            notification_mapping.get(get_notification_type())()
+
+        if get_excel_report_switch():
+            ErrorCaseExcel().write_case()
+
         # 程序运行之后，自动启动报告，如果不想启动报告，可注释这段代码
         os.system(f"allure serve ./report/tmp -h 127.0.0.1 -p 9999")
 

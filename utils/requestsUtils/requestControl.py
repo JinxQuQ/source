@@ -195,6 +195,7 @@ class RequestControl:
             yaml_data: Dict,
             headers: Dict,
             method: Text,
+            data: Union[Dict, None],
             **kwargs):
         """ 判断请求类型为json格式 """
         yaml_data = eval(cache_regular(str(yaml_data)))
@@ -205,7 +206,7 @@ class RequestControl:
             method=method,
             url=yaml_data[YAMLDate.URL.value],
             json=_data,
-            data=None,
+            data=data,
             headers=_headers,
             verify=False,
             params=None,
@@ -218,6 +219,7 @@ class RequestControl:
             yaml_data: Dict,
             headers: Dict,
             method: Text,
+            data: Union[Dict, None],
             **kwargs) -> object:
         """判断 requestType 为 None"""
         yaml_data = eval(cache_regular(str(yaml_data)))
@@ -225,7 +227,7 @@ class RequestControl:
         res = requests.request(
             method=method,
             url=yaml_data[YAMLDate.URL.value],
-            data=None,
+            data=data,
             headers=_headers,
             verify=False,
             params=None,
@@ -238,6 +240,7 @@ class RequestControl:
             yaml_data: Dict,
             headers: Dict,
             method: Text,
+            data: Union[Dict, None],
             **kwargs):
 
         """处理 requestType 为 params """
@@ -259,7 +262,7 @@ class RequestControl:
             url=url,
             headers=_headers,
             verify=False,
-            data=None,
+            data=data,
             params=None,
             **kwargs)
         return res, yaml_data
@@ -268,6 +271,8 @@ class RequestControl:
             self,
             yaml_data: Dict,
             method: Text,
+            data: Union[Dict, None],
+            headers: Union[Dict, None],
             **kwargs):
         """处理 requestType 为 file 类型"""
         multipart = self.upload_file(yaml_data)
@@ -317,13 +322,21 @@ class RequestControl:
             yaml_data: Dict,
             headers: Dict,
             method: Text,
+            data: Union[None, Dict],
             **kwargs):
         """判断 requestType 为 export 导出类型"""
         yaml_data = eval(cache_regular(str(yaml_data)))
         _headers = self.check_headers_str_null(headers)
         _data = yaml_data[YAMLDate.DATA.value]
-        res = requests.request(method=method, url=yaml_data[YAMLDate.URL.value], json=_data, headers=_headers,
-                               verify=False, stream=False, **kwargs)
+        res = requests.request(
+            method=method,
+            url=yaml_data[YAMLDate.URL.value],
+            json=_data,
+            headers=_headers,
+            verify=False,
+            stream=False,
+            data=data,
+            **kwargs)
         filepath = os.path.join(ConfigHandler.file_path, self.get_export_api_filename(res))  # 拼接路径
         if res.status_code == 200:
             if res.text:  # 判断文件内容是否为空
@@ -429,60 +442,82 @@ class RequestControl:
         _current_request_set_cache = yaml_data[YAMLDate.CURRENT_REQUEST_SET_CACHE.value]
         _sleep = yaml_data[YAMLDate.SLEEP.value]
         _response_cache = yaml_data[YAMLDate.RESPONSE_CACHE.value]
-        res = None
+
+        requests_type_mapping = {
+            RequestType.JSON.value: self.request_type_for_json,
+            RequestType.NONE.value: self.request_type_for_none,
+            RequestType.PARAMS.value: self.request_type_for_params,
+            RequestType.FILE.value: self.request_type_for_file,
+            RequestType.DATA.value:  self.request_type_for_data,
+            RequestType.EXPORT.value: self.request_type_for_export
+        }
 
         # 判断用例是否执行
         if _is_run is True or _is_run is None:
             # 处理多业务逻辑
             if dependent_switch is True:
                 DependentCase().get_dependent_data(yaml_data)
-            # 判断请求类型为json形式的
-            if _requestType == RequestType.JSON.value:
-                res, yaml_data = self.request_type_for_json(
-                    yaml_data=yaml_data,
-                    headers=_headers,
-                    method=_method,
-                    **kwargs
-                )
-            elif _requestType == RequestType.NONE.value:
-                res, yaml_data = self.request_type_for_none(
-                    yaml_data=yaml_data,
-                    headers=_headers,
-                    method=_method,
-                    **kwargs
-                )
 
-            elif _requestType == RequestType.PARAMS.value:
-                res, yaml_data = self.request_type_for_params(
-                    yaml_data=yaml_data,
-                    headers=_headers,
-                    method=_method,
-                    **kwargs
-                )
-            # 判断上传文件
-            elif _requestType == RequestType.FILE.value:
-                res, yaml_data = self.request_type_for_file(
-                    yaml_data=yaml_data,
-                    method=_method,
-                    **kwargs
-                )
-
-            elif _requestType == RequestType.DATA.value:
-                res, yaml_data = self.request_type_for_data(
-                    yaml_data=yaml_data,
-                    headers=_headers,
-                    method=_method,
-                    data=_data,
-                    **kwargs
-                )
-
-            elif _requestType == RequestType.EXPORT.value:
-                res, yaml_data = self.request_type_for_export(
-                    yaml_data=yaml_data,
-                    headers=_headers,
-                    method=_method,
-                    **kwargs
-                )
+            res, yaml_data = requests_type_mapping.get(_requestType)(
+                yaml_data=yaml_data,
+                headers=_headers,
+                method=_method,
+                data=_data,
+                **kwargs
+            )
+            # # 判断请求类型为json形式的
+            # if _requestType == RequestType.JSON.value:
+            #     res, yaml_data = self.request_type_for_json(
+            #         yaml_data=yaml_data,
+            #         headers=_headers,
+            #         method=_method,
+            #         data=None,
+            #         **kwargs
+            #     )
+            # elif _requestType == RequestType.NONE.value:
+            #     res, yaml_data = self.request_type_for_none(
+            #         yaml_data=yaml_data,
+            #         headers=_headers,
+            #         method=_method,
+            #         data=None,
+            #         **kwargs
+            #     )
+            #
+            # elif _requestType == RequestType.PARAMS.value:
+            #     res, yaml_data = self.request_type_for_params(
+            #         yaml_data=yaml_data,
+            #         headers=_headers,
+            #         method=_method,
+            #         data=None,
+            #         **kwargs
+            #     )
+            # # 判断上传文件
+            # elif _requestType == RequestType.FILE.value:
+            #     res, yaml_data = self.request_type_for_file(
+            #         yaml_data=yaml_data,
+            #         method=_method,
+            #         headers=None,
+            #         data=None,
+            #         **kwargs
+            #     )
+            #
+            # elif _requestType == RequestType.DATA.value:
+            #     res, yaml_data = self.request_type_for_data(
+            #         yaml_data=yaml_data,
+            #         headers=_headers,
+            #         method=_method,
+            #         data=_data,
+            #         **kwargs
+            #     )
+            #
+            # elif _requestType == RequestType.EXPORT.value:
+            #     res, yaml_data = self.request_type_for_export(
+            #         yaml_data=yaml_data,
+            #         headers=_headers,
+            #         method=_method,
+            #         data=None,
+            #         **kwargs
+            #     )
 
             if _sleep is not None:
                 time.sleep(_sleep)

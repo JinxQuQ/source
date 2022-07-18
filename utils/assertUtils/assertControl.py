@@ -3,21 +3,21 @@
 # @Time   : 2022/3/28 14:18
 # @Author : 余少琪
 import json
-import types
-from typing import Text, Dict, Callable, Any, Union
+from typing import Text, Dict, Any, Union
 from utils.otherUtils.jsonpath import jsonpath
 from utils.otherUtils.get_conf_data import sql_switch
 from utils.logUtils.logControl import ERROR, WARNING
 from Enums.assertMethod_enum import AssertMethod
 from utils.assertUtils import assert_type
 from utils.readFilesUtils.regularControl import cache_regular
+from utils.otherUtils.load_module_function import load_module_functions
 
 
 class Assert:
 
     def __init__(self, assert_data: Dict):
         self.assert_data = eval(cache_regular(str(assert_data)))
-        self.functions_mapping = self.load_module_functions(assert_type)
+        self.functions_mapping = load_module_functions(assert_type)
 
     @staticmethod
     def _check_params(
@@ -41,16 +41,6 @@ class Assert:
                     "请检查接口对应的数据是否正确\n"
                     f"sql_data: {sql_data}, 数据类型: {type(sql_data)}\n"
                 )
-
-    @classmethod
-    def load_module_functions(cls, module) -> Dict[Text, Callable]:
-        """ 获取 module中方法的名称和所在的内存地址 """
-        module_functions = {}
-
-        for name, item in vars(module).items():
-            if isinstance(item, types.FunctionType):
-                module_functions[name] = item
-        return module_functions
 
     @classmethod
     def res_sql_data_bytes(cls, res_sql_data: Any) -> Text:
@@ -121,7 +111,6 @@ class Assert:
         elif assert_types is None:
             name = AssertMethod(self.assert_data[key]['type']).name
             self.functions_mapping[name](resp_data[0], assert_value)
-            print(resp_data[0], assert_value)
         else:
             raise ValueError("断言失败，目前只支持数据库断言和响应断言")
 

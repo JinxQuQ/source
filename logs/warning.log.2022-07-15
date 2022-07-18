@@ -1,0 +1,427 @@
+WARNING 2022-07-12 18:04:31,619  D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-07-12 18:08:37,193  D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 0
+WARNING 2022-07-12 18:10:15,429  D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 0
+WARNING 2022-07-12 18:11:47,020  D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-07-13 15:31:46,142  D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-07-13 16:39:45,035  D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-07-13 16:41:33,251  D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-07-13 16:56:34,959  D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-07-13 18:31:45,233D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-07-13 18:46:03,237D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-07-14 10:38:07,523D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:39 
+===========================================================================
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=18E4AA9295A2607EC8C6BA66D3853310;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '70', 'Content-Type': 'application/x-www-form-urlencoded'}
+请求内容: name=9230&link=https%3A%2F%2Fgitee.com%2Fyu_xiao_qi%2Fpytest-auto-api2
+接口响应内容: {"data":{"desc":"","icon":"","id":32463,"link":"https://gitee.com/yu_xiao_qi/pytest-auto-api2","name":"9230","order":0,"userId":129462,"visible":1},"errorCode":0,"errorMsg":""}
+接口响应时长: 154447 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 10:38:07,722D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:39 
+===========================================================================
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'multipart/form-data; boundary=04839f52b3df4ccd9ca50cf834f305e0', 'Content-Length': '281'}
+请求内容: <MultipartEncoder: {'name': '自动生成收藏网址4307', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}>
+接口响应内容: {"errorCode":-1001,"errorMsg":"请先登录！"}
+接口响应时长: 171021 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 10:42:11,861D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:39 
+===========================================================================
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=542BA9AEBE88CEA8031B4016E27BF06A;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '70', 'Content-Type': 'application/x-www-form-urlencoded'}
+请求内容: name=9110&link=https%3A%2F%2Fgitee.com%2Fyu_xiao_qi%2Fpytest-auto-api2
+接口响应内容: {"data":{"desc":"","icon":"","id":32464,"link":"https://gitee.com/yu_xiao_qi/pytest-auto-api2","name":"9110","order":0,"userId":129462,"visible":1},"errorCode":0,"errorMsg":""}
+接口响应时长: 143222 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 10:42:12,044D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:39 
+===========================================================================
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'multipart/form-data; boundary=a290439ef2704b1b8e1402656da864a9', 'Content-Length': '281'}
+请求内容: <MultipartEncoder: {'name': '自动生成收藏网址1234', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}>
+接口响应内容: {"errorCode":-1001,"errorMsg":"请先登录！"}
+接口响应时长: 172988 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 10:44:22,160D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:39 
+===========================================================================
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=824ED2567CC646288A51527C5E61B0CD;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '70', 'Content-Type': 'application/x-www-form-urlencoded'}
+请求内容: name=6859&link=https%3A%2F%2Fgitee.com%2Fyu_xiao_qi%2Fpytest-auto-api2
+接口响应内容: {"data":{"desc":"","icon":"","id":32466,"link":"https://gitee.com/yu_xiao_qi/pytest-auto-api2","name":"6859","order":0,"userId":129462,"visible":1},"errorCode":0,"errorMsg":""}
+接口响应时长: 161.12199999999999 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 10:44:22,296D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:39 
+===========================================================================
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'multipart/form-data; boundary=417534ec25a646668008d13a2516766c', 'Content-Length': '281'}
+请求内容: <MultipartEncoder: {'name': '自动生成收藏网址6606', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}>
+接口响应内容: {"errorCode":-1001,"errorMsg":"请先登录！"}
+接口响应时长: 114.91999999999999 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 10:45:11,510D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:39 
+===========================================================================
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=3B706B99023E5D885975087130A14B68;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '70', 'Content-Type': 'application/x-www-form-urlencoded'}
+请求内容: name=8184&link=https%3A%2F%2Fgitee.com%2Fyu_xiao_qi%2Fpytest-auto-api2
+接口响应内容: {"data":{"desc":"","icon":"","id":32467,"link":"https://gitee.com/yu_xiao_qi/pytest-auto-api2","name":"8184","order":0,"userId":129462,"visible":1},"errorCode":0,"errorMsg":""}
+接口响应时长: 168.83 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 10:45:11,650D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:39 
+===========================================================================
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'multipart/form-data; boundary=3e63e25d5ced419b8f9336a3624c5a95', 'Content-Length': '281'}
+请求内容: <MultipartEncoder: {'name': '自动生成收藏网址4682', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}>
+接口响应内容: {"errorCode":-1001,"errorMsg":"请先登录！"}
+接口响应时长: 128.68 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 10:45:59,048D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:39 
+===========================================================================
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=421F9F9ADE1A799922F48E61CB333DDA;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '70', 'Content-Type': 'application/x-www-form-urlencoded'}
+请求内容: name=3453&link=https%3A%2F%2Fgitee.com%2Fyu_xiao_qi%2Fpytest-auto-api2
+接口响应内容: {"data":{"desc":"","icon":"","id":32468,"link":"https://gitee.com/yu_xiao_qi/pytest-auto-api2","name":"3453","order":0,"userId":129462,"visible":1},"errorCode":0,"errorMsg":""}
+接口响应时长: 153.9 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 10:45:59,213D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:39 
+===========================================================================
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'multipart/form-data;', 'Content-Length': '0'}
+请求内容: None
+接口响应内容: <html><head><title>Apache Tomcat/7.0.77 - Error report</title><style><!--H1 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:22px;} H2 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:16px;} H3 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:14px;} BODY {font-family:Tahoma,Arial,sans-serif;color:black;background-color:white;} B {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;} P {font-family:Tahoma,Arial,sans-serif;background:white;color:black;font-size:12px;}A {color : black;}A.name {color : black;}HR {color : #525D76;}--></style> </head><body><h1>HTTP Status 500 - Request processing failed; nested exception is org.springframework.web.multipart.MultipartException: Could not parse multipart servlet request; nested exception is org.apache.commons.fileupload.FileUploadException: the request was rejected because no multipart boundary was found</h1><HR size="1" noshade="noshade"><p><b>type</b> Exception report</p><p><b>message</b> <u>Request processing failed; nested exception is org.springframework.web.multipart.MultipartException: Could not parse multipart servlet request; nested exception is org.apache.commons.fileupload.FileUploadException: the request was rejected because no multipart boundary was found</u></p><p><b>description</b> <u>The server encountered an internal error that prevented it from fulfilling this request.</u></p><p><b>exception</b> <pre>org.springframework.web.util.NestedServletException: Request processing failed; nested exception is org.springframework.web.multipart.MultipartException: Could not parse multipart servlet request; nested exception is org.apache.commons.fileupload.FileUploadException: the request was rejected because no multipart boundary was found
+	org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:894)
+	org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:789)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:650)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
+	org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	com.zhy.xueandroid.web.xss.XssFilter.doFilter(XssFilter.java:33)
+	com.zhy.xueandroid.web.SystemContextFilter.doFilter(SystemContextFilter.java:23)
+	org.springframework.orm.hibernate3.support.OpenSessionInViewFilter.doFilterInternal(OpenSessionInViewFilter.java:198)
+	org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+</pre></p><p><b>root cause</b> <pre>org.springframework.web.multipart.MultipartException: Could not parse multipart servlet request; nested exception is org.apache.commons.fileupload.FileUploadException: the request was rejected because no multipart boundary was found
+	org.springframework.web.multipart.commons.CommonsMultipartResolver.parseRequest(CommonsMultipartResolver.java:163)
+	org.springframework.web.multipart.commons.CommonsMultipartResolver.resolveMultipart(CommonsMultipartResolver.java:139)
+	org.springframework.web.servlet.DispatcherServlet.checkMultipart(DispatcherServlet.java:1020)
+	org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:883)
+	org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:852)
+	org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:882)
+	org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:789)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:650)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
+	org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	com.zhy.xueandroid.web.xss.XssFilter.doFilter(XssFilter.java:33)
+	com.zhy.xueandroid.web.SystemContextFilter.doFilter(SystemContextFilter.java:23)
+	org.springframework.orm.hibernate3.support.OpenSessionInViewFilter.doFilterInternal(OpenSessionInViewFilter.java:198)
+	org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+</pre></p><p><b>root cause</b> <pre>org.apache.commons.fileupload.FileUploadException: the request was rejected because no multipart boundary was found
+	org.apache.commons.fileupload.FileUploadBase$FileItemIteratorImpl.&lt;init&gt;(FileUploadBase.java:954)
+	org.apache.commons.fileupload.FileUploadBase.getItemIterator(FileUploadBase.java:331)
+	org.apache.commons.fileupload.FileUploadBase.parseRequest(FileUploadBase.java:351)
+	org.apache.commons.fileupload.servlet.ServletFileUpload.parseRequest(ServletFileUpload.java:126)
+	org.springframework.web.multipart.commons.CommonsMultipartResolver.parseRequest(CommonsMultipartResolver.java:156)
+	org.springframework.web.multipart.commons.CommonsMultipartResolver.resolveMultipart(CommonsMultipartResolver.java:139)
+	org.springframework.web.servlet.DispatcherServlet.checkMultipart(DispatcherServlet.java:1020)
+	org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:883)
+	org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:852)
+	org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:882)
+	org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:789)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:650)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
+	org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	com.zhy.xueandroid.web.xss.XssFilter.doFilter(XssFilter.java:33)
+	com.zhy.xueandroid.web.SystemContextFilter.doFilter(SystemContextFilter.java:23)
+	org.springframework.orm.hibernate3.support.OpenSessionInViewFilter.doFilterInternal(OpenSessionInViewFilter.java:198)
+	org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+</pre></p><p><b>note</b> <u>The full stack trace of the root cause is available in the Apache Tomcat/7.0.77 logs.</u></p><HR size="1" noshade="noshade"><h3>Apache Tomcat/7.0.77</h3></body></html>
+接口响应时长: 144.28 ms
+Http状态码: 500
+================================================================================
+WARNING 2022-07-14 10:48:39,869D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:40 
+===========================================================================
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=479942F9290B029F0F0233FC37B5BD68;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '70', 'Content-Type': 'application/x-www-form-urlencoded'}
+请求内容: name=3152&link=https%3A%2F%2Fgitee.com%2Fyu_xiao_qi%2Fpytest-auto-api2
+接口响应内容: {"data":{"desc":"","icon":"","id":32474,"link":"https://gitee.com/yu_xiao_qi/pytest-auto-api2","name":"3152","order":0,"userId":129462,"visible":1},"errorCode":0,"errorMsg":""}
+接口响应时长: 166.1 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 10:48:40,037D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:40 
+===========================================================================
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'multipart/form-data;', 'Content-Length': '0'}
+请求内容: None
+接口响应内容: <html><head><title>Apache Tomcat/7.0.77 - Error report</title><style><!--H1 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:22px;} H2 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:16px;} H3 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:14px;} BODY {font-family:Tahoma,Arial,sans-serif;color:black;background-color:white;} B {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;} P {font-family:Tahoma,Arial,sans-serif;background:white;color:black;font-size:12px;}A {color : black;}A.name {color : black;}HR {color : #525D76;}--></style> </head><body><h1>HTTP Status 500 - Request processing failed; nested exception is org.springframework.web.multipart.MultipartException: Could not parse multipart servlet request; nested exception is org.apache.commons.fileupload.FileUploadException: the request was rejected because no multipart boundary was found</h1><HR size="1" noshade="noshade"><p><b>type</b> Exception report</p><p><b>message</b> <u>Request processing failed; nested exception is org.springframework.web.multipart.MultipartException: Could not parse multipart servlet request; nested exception is org.apache.commons.fileupload.FileUploadException: the request was rejected because no multipart boundary was found</u></p><p><b>description</b> <u>The server encountered an internal error that prevented it from fulfilling this request.</u></p><p><b>exception</b> <pre>org.springframework.web.util.NestedServletException: Request processing failed; nested exception is org.springframework.web.multipart.MultipartException: Could not parse multipart servlet request; nested exception is org.apache.commons.fileupload.FileUploadException: the request was rejected because no multipart boundary was found
+	org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:894)
+	org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:789)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:650)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
+	org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	com.zhy.xueandroid.web.xss.XssFilter.doFilter(XssFilter.java:33)
+	com.zhy.xueandroid.web.SystemContextFilter.doFilter(SystemContextFilter.java:23)
+	org.springframework.orm.hibernate3.support.OpenSessionInViewFilter.doFilterInternal(OpenSessionInViewFilter.java:198)
+	org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+</pre></p><p><b>root cause</b> <pre>org.springframework.web.multipart.MultipartException: Could not parse multipart servlet request; nested exception is org.apache.commons.fileupload.FileUploadException: the request was rejected because no multipart boundary was found
+	org.springframework.web.multipart.commons.CommonsMultipartResolver.parseRequest(CommonsMultipartResolver.java:163)
+	org.springframework.web.multipart.commons.CommonsMultipartResolver.resolveMultipart(CommonsMultipartResolver.java:139)
+	org.springframework.web.servlet.DispatcherServlet.checkMultipart(DispatcherServlet.java:1020)
+	org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:883)
+	org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:852)
+	org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:882)
+	org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:789)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:650)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
+	org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	com.zhy.xueandroid.web.xss.XssFilter.doFilter(XssFilter.java:33)
+	com.zhy.xueandroid.web.SystemContextFilter.doFilter(SystemContextFilter.java:23)
+	org.springframework.orm.hibernate3.support.OpenSessionInViewFilter.doFilterInternal(OpenSessionInViewFilter.java:198)
+	org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+</pre></p><p><b>root cause</b> <pre>org.apache.commons.fileupload.FileUploadException: the request was rejected because no multipart boundary was found
+	org.apache.commons.fileupload.FileUploadBase$FileItemIteratorImpl.&lt;init&gt;(FileUploadBase.java:954)
+	org.apache.commons.fileupload.FileUploadBase.getItemIterator(FileUploadBase.java:331)
+	org.apache.commons.fileupload.FileUploadBase.parseRequest(FileUploadBase.java:351)
+	org.apache.commons.fileupload.servlet.ServletFileUpload.parseRequest(ServletFileUpload.java:126)
+	org.springframework.web.multipart.commons.CommonsMultipartResolver.parseRequest(CommonsMultipartResolver.java:156)
+	org.springframework.web.multipart.commons.CommonsMultipartResolver.resolveMultipart(CommonsMultipartResolver.java:139)
+	org.springframework.web.servlet.DispatcherServlet.checkMultipart(DispatcherServlet.java:1020)
+	org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:883)
+	org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:852)
+	org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:882)
+	org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:789)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:650)
+	javax.servlet.http.HttpServlet.service(HttpServlet.java:731)
+	org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+	com.zhy.xueandroid.web.xss.XssFilter.doFilter(XssFilter.java:33)
+	com.zhy.xueandroid.web.SystemContextFilter.doFilter(SystemContextFilter.java:23)
+	org.springframework.orm.hibernate3.support.OpenSessionInViewFilter.doFilterInternal(OpenSessionInViewFilter.java:198)
+	org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+	org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:88)
+	org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:76)
+</pre></p><p><b>note</b> <u>The full stack trace of the root cause is available in the Apache Tomcat/7.0.77 logs.</u></p><HR size="1" noshade="noshade"><h3>Apache Tomcat/7.0.77</h3></body></html>
+接口响应时长: 155.33 ms
+Http状态码: 500
+================================================================================
+WARNING 2022-07-14 10:49:18,115D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:40 
+===========================================================================
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json?name=1347&link=https://gitee.com/yu_xiao_qi/pytest-auto-api2
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=AA4194CD3D13C72412034CE0416448D1;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '0'}
+请求内容: None
+接口响应内容: {"data":{"desc":"","icon":"","id":32475,"link":"https://gitee.com/yu_xiao_qi/pytest-auto-api2","name":"1347","order":0,"userId":129462,"visible":1},"errorCode":0,"errorMsg":""}
+接口响应时长: 138.86 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 10:49:18,259D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:40 
+===========================================================================
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'multipart/form-data; boundary=5bb08d4997614880adb45416434a1c0e', 'Content-Length': '281'}
+请求内容: <MultipartEncoder: {'name': '自动生成收藏网址1992', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}>
+接口响应内容: {"errorCode":-1001,"errorMsg":"请先登录！"}
+接口响应时长: 133.51 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 10:54:11,632D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:42 
+===========================================================================
+用例标题: 新增收藏网址接口
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json?name=9348&link=https://gitee.com/yu_xiao_qi/pytest-auto-api2
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=E47233DD8FE5EC001CBB935104FE6BDD;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '0'}
+请求内容: None
+接口响应内容: {"data":{"desc":"","icon":"","id":32476,"link":"https://gitee.com/yu_xiao_qi/pytest-auto-api2","name":"9348","order":0,"userId":129462,"visible":1},"errorCode":0,"errorMsg":""}
+接口响应时长: 139.14 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 10:54:11,780D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:42 
+===========================================================================
+用例标题: 未登录状态下新增收藏网址
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'multipart/form-data; boundary=343e0193f76f49a88c4af2ddfbf1a29b', 'Content-Length': '281'}
+请求内容: <MultipartEncoder: {'name': '自动生成收藏网址7004', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}>
+接口响应内容: {"errorCode":-1001,"errorMsg":"请先登录！"}
+接口响应时长: 138.1 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 10:54:34,004D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:41 
+===========================================================================
+用例标题: 新增收藏网址接口
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json?name=8224&link=https://gitee.com/yu_xiao_qi/pytest-auto-api2
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=A900E06A8013EFDA2C48A96D742F62BE;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '0'}
+请求内容: None
+接口响应内容: {"data":{"desc":"","icon":"","id":32477,"link":"https://gitee.com/yu_xiao_qi/pytest-auto-api2","name":"8224","order":0,"userId":129462,"visible":1},"errorCode":0,"errorMsg":""}
+接口响应时长: 135.25 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 10:54:46,972D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:41 
+===========================================================================
+用例标题: 新增收藏网址接口
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json?name=3943&link=https://gitee.com/yu_xiao_qi/pytest-auto-api2
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=C3239BD3BBB628FF58CB98506E42A5B4;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '0'}
+请求内容: None
+接口响应内容: {"data":{"desc":"","icon":"","id":32478,"link":"https://gitee.com/yu_xiao_qi/pytest-auto-api2","name":"3943","order":0,"userId":129462,"visible":1},"errorCode":0,"errorMsg":""}
+接口响应时长: 137.28 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 10:57:01,139D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:41 
+===========================================================================
+用例标题: 新增收藏网址接口
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json?name=5359&link=https://gitee.com/yu_xiao_qi/pytest-auto-api2
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=4DDD05D931A40E7B010A62457E8C8762;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '0'}
+请求内容: None
+接口响应内容: {"data":{"desc":"","icon":"","id":32479,"link":"https://gitee.com/yu_xiao_qi/pytest-auto-api2","name":"5359","order":0,"userId":129462,"visible":1},"errorCode":0,"errorMsg":""}
+接口响应时长: 165.61 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 10:58:43,776D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:41 
+===========================================================================
+用例标题: 新增收藏网址接口
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json?name=2488&link=https://gitee.com/yu_xiao_qi/pytest-auto-api2
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=C7B98E2EEE5B9312EB221A8C9CB53E0A;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '0'}
+请求内容: None
+接口响应内容: {"data":{"desc":"","icon":"","id":32483,"link":"https://gitee.com/yu_xiao_qi/pytest-auto-api2","name":"2488","order":0,"userId":129462,"visible":1},"errorCode":0,"errorMsg":""}
+接口响应时长: 158.24 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 10:59:40,893D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:41 
+===========================================================================
+用例标题: 新增收藏网址接口
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json?name=9453&link=https://gitee.com/yu_xiao_qi/pytest-auto-api2
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=DFD65576B9B6B105224F5738765FFEB1;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '0'}
+请求内容: None
+接口响应内容: {"data":{"desc":"","icon":"","id":32484,"link":"https://gitee.com/yu_xiao_qi/pytest-auto-api2","name":"9453","order":0,"userId":129462,"visible":1},"errorCode":0,"errorMsg":""}
+接口响应时长: 165.18 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 10:59:41,064D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:41 
+===========================================================================
+用例标题: 正常删除收藏网站
+请求路径: https://www.wanandroid.com/lg/collect/deletetool/json
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'multipart/form-data; boundary=2d7fa94e4bb2402b91fd8fabfd31036c', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=DFD65576B9B6B105224F5738765FFEB1;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '126'}
+请求内容: <MultipartEncoder: {'id': '32484'}>
+接口响应内容: {"data":null,"errorCode":0,"errorMsg":""}
+接口响应时长: 160.3 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 11:00:04,391D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:41 
+===========================================================================
+用例标题: 新增收藏网址接口
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json?name=3107&link=https://gitee.com/yu_xiao_qi/pytest-auto-api2
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=F121EEDC4AE5C90A91820BAED287BBBC;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '0'}
+请求内容: None
+接口响应内容: {"data":{"desc":"","icon":"","id":32485,"link":"https://gitee.com/yu_xiao_qi/pytest-auto-api2","name":"3107","order":0,"userId":129462,"visible":1},"errorCode":0,"errorMsg":""}
+接口响应时长: 161.5 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 11:00:12,359D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:41 
+===========================================================================
+用例标题: 新增收藏网址接口
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json?name=8931&link=https://gitee.com/yu_xiao_qi/pytest-auto-api2
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=1FA7EE580DE0ECECADE68E4985E21E2F;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '0'}
+请求内容: None
+接口响应内容: {"data":{"desc":"","icon":"","id":32486,"link":"https://gitee.com/yu_xiao_qi/pytest-auto-api2","name":"8931","order":0,"userId":129462,"visible":1},"errorCode":0,"errorMsg":""}
+接口响应时长: 153.1 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 11:00:21,361D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:41 
+===========================================================================
+用例标题: 新增收藏网址接口
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json?name=9104&link=https://gitee.com/yu_xiao_qi/pytest-auto-api2
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=EBEE86342D20BA30640D71D6597EDE33;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '0'}
+请求内容: None
+接口响应内容: {"data":{"desc":"","icon":"","id":32487,"link":"https://gitee.com/yu_xiao_qi/pytest-auto-api2","name":"9104","order":0,"userId":129462,"visible":1},"errorCode":0,"errorMsg":""}
+接口响应时长: 154.53 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 11:00:21,531D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:41 
+===========================================================================
+用例标题: 正常删除收藏网站
+请求路径: https://www.wanandroid.com/lg/collect/deletetool/json
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'multipart/form-data; boundary=f5d59bd47e0b44a28d109c2100ff57d0', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=EBEE86342D20BA30640D71D6597EDE33;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '126'}
+请求内容: <MultipartEncoder: {'id': '32487'}>
+接口响应内容: {"data":null,"errorCode":0,"errorMsg":""}
+接口响应时长: 157.69 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 11:14:45,962D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:41 
+===========================================================================
+用例标题: 新增收藏网址接口
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json?name=4561&link=https://gitee.com/yu_xiao_qi/pytest-auto-api2
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=B93DF311ECC62884BC203C4D5C7CF179;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '0'}
+请求内容: None
+接口响应内容: {"data":{"desc":"","icon":"","id":32496,"link":"https://gitee.com/yu_xiao_qi/pytest-auto-api2","name":"4561","order":0,"userId":129462,"visible":1},"errorCode":0,"errorMsg":""}
+接口响应时长: 145.58 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 11:14:46,165D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:41 
+===========================================================================
+用例标题: 正常删除收藏网站
+请求路径: https://www.wanandroid.com/lg/collect/deletetool/json
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'multipart/form-data; boundary=27a1532ac7f84ffe98175f7b942f16c4', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=B93DF311ECC62884BC203C4D5C7CF179;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '126'}
+请求内容: <MultipartEncoder: {'id': '32496'}>
+接口响应内容: {"data":null,"errorCode":0,"errorMsg":""}
+接口响应时长: 189.18 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 12:01:31,295D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:41 
+===========================================================================
+用例标题: 新增收藏网址接口
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json?name=3206&link=https://gitee.com/yu_xiao_qi/pytest-auto-api2
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=4684B13731278E8FB3B604E41106AAE7;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '0'}
+请求内容: None
+接口响应内容: {"data":{"desc":"","icon":"","id":32548,"link":"https://gitee.com/yu_xiao_qi/pytest-auto-api2","name":"3206","order":0,"userId":129462,"visible":1},"errorCode":0,"errorMsg":""}
+接口响应时长: 143.11 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 12:01:31,465D:\work_code\pytest-auto-api2\logs\warning.log:logDecoratorl.py:41 
+===========================================================================
+用例标题: 正常删除收藏网站
+请求路径: https://www.wanandroid.com/lg/collect/deletetool/json
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'multipart/form-data; boundary=6cca0461a1bd4169a03b331498a421c6', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=4684B13731278E8FB3B604E41106AAE7;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '126'}
+请求内容: <MultipartEncoder: {'id': '32548'}>
+接口响应内容: {"data":null,"errorCode":0,"errorMsg":""}
+接口响应时长: 156.21 ms
+Http状态码: 200
+================================================================================
+WARNING 2022-07-14 13:57:00,819D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-07-14 13:58:31,506D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-07-14 17:13:36,749D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-07-14 17:14:31,934D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-07-14 17:20:56,253D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-07-14 18:13:27,581D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-07-14 18:29:56,905D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-07-14 18:35:50,618D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-07-15 14:11:17,333D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-07-15 14:13:00,465D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1
+WARNING 2022-07-15 18:26:27,692D:\work_code\pytest-auto-api2\logs\warning.log:conftest.py:135 跳过用例数: 1

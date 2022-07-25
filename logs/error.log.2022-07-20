@@ -1,0 +1,21 @@
+ERROR   2022-07-20 13:48:08,749D:\work_code\pytest-auto-api2\logs\error.log:logDecoratorl.py:39 
+===========================================================================
+用例标题: 新增收藏网址接口
+请求路径: https://mall.dev.taihealth.cn/auth/oauth/token?username=wangketai&password=tjR%2BB82HD%2FzECGt%2F1lrqoQ%3D%3D&randomStr=14811629345135681&code=tMazc3HI8RoJDFQk&grant_type=password&scope=server
+请求方式: POST
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=715CF55605B8FE1A7AD518D28C03595D;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '155', 'Content-Type': 'application/x-www-form-urlencoded'}
+请求内容: {'username': 'wangketai', 'password': 'tjR%2BB82HD%2FzECGt%2F1lrqoQ%3D%3D', 'randomStr': 14811629345135681, 'code': 'tMazc3HI8RoJDFQk', 'grant_type': 'password', 'scope': 'server'}
+接口响应内容: {"code":1,"ok":false,"msg":"请求头中client信息为空","data":null}
+接口响应时长: 93.93 ms
+Http状态码: 428
+================================================================================
+ERROR   2022-07-20 13:48:08,752D:\work_code\pytest-auto-api2\logs\error.log:assertControl.py:146 JsonPath值获取失败$.errorCode
+ERROR   2022-07-20 13:48:48,891D:\work_code\pytest-auto-api2\logs\error.log:assertControl.py:146 JsonPath值获取失败$.errorCode
+ERROR   2022-07-20 13:49:59,096D:\work_code\pytest-auto-api2\logs\error.log:assertControl.py:146 JsonPath值获取失败$.errorCode
+ERROR   2022-07-20 13:49:59,475D:\work_code\pytest-auto-api2\logs\error.log:assertControl.py:146 JsonPath值获取失败$.errorCode
+ERROR   2022-07-20 14:49:44,674D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:142 异常用例数: 0
+ERROR   2022-07-20 14:49:44,675D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:143 失败用例数: 2
+ERROR   2022-07-20 14:51:08,134D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:142 异常用例数: 0
+ERROR   2022-07-20 14:51:08,135D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:143 失败用例数: 2
+ERROR   2022-07-20 15:59:49,954D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:142 异常用例数: 0
+ERROR   2022-07-20 15:59:49,955D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:143 失败用例数: 2

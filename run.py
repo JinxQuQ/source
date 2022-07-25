@@ -5,33 +5,17 @@
 import os
 import traceback
 import pytest
-from utils.otherUtils.get_conf_data import project_name, get_excel_report_switch
-from utils.logUtils.logControl import INFO
-from utils.otherUtils.get_conf_data import get_notification_type
-from utils.noticUtils.weChatSendControl import WeChatSend
-from utils.noticUtils.dingtalkControl import DingTalkSendMsg
-from utils.noticUtils.sendmailControl import SendEmail
 from Enums.notificationType_enum import NotificationType
-from utils.noticUtils.feishuControl import FeiShuTalkChatBot
-from utils.otherUtils.allureDate.error_case_excel import ErrorCaseExcel
-import sys
+from utils.other_tools.get_conf_data import project_name, get_excel_report_switch
+from utils.other_tools.allure_data.allure_report_data import AllureFileClean
+from utils.logging_tool.log_control import INFO
+from utils.other_tools.get_conf_data import get_notification_type
+from utils.notify.wechat_send import WeChatSend
+from utils.notify.ding_talk import DingTalkSendMsg
+from utils.notify.send_mail import SendEmail
+from utils.notify.lark import FeiShuTalkChatBot
+from utils.other_tools.allure_data.error_case_excel import ErrorCaseExcel
 
-
-def getCommand(argv):
-    d = {}  # 字典型参数
-    l = []  # 列表型参数
-    for item in argv:
-        if '=' in item:
-            index = str(item).index('=')
-            d.update({str(item)[:index]: str(item)[index + 1:]})
-        else:
-            l.append(item)
-    return d, l
-
-
-if __name__ == '__main__':
-    l = getCommand(sys.argv[1:])[1]
-    print(l)
 
 
 def run():
@@ -66,12 +50,12 @@ def run():
                    """
 
         os.system(r"allure generate ./report/tmp -o ./report/html --clean")
-
+        allure_data = AllureFileClean().get_case_count()
         notification_mapping = {
-            NotificationType.DING_TALK.value: DingTalkSendMsg().send_ding_notification,
-            NotificationType.WECHAT.value: WeChatSend().send_wechat_notification,
-            NotificationType.EMAIL.value: SendEmail().send_main,
-            NotificationType.FEI_SHU.value: FeiShuTalkChatBot().post
+            NotificationType.DING_TALK.value: DingTalkSendMsg(allure_data).send_ding_notification,
+            NotificationType.WECHAT.value: WeChatSend(allure_data).send_wechat_notification,
+            NotificationType.EMAIL.value: SendEmail(allure_data).send_main,
+            NotificationType.FEI_SHU.value: FeiShuTalkChatBot(allure_data).post
         }
 
         if get_notification_type() != NotificationType.DEFAULT.value:

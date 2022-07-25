@@ -8,14 +8,14 @@
 
 import json
 from typing import Dict, Text
-from utils.otherUtils.jsonpath import jsonpath
+from utils.other_tools.jsonpath import jsonpath
 from utils.requestsUtils.requestControl import RequestControl
-from utils.readFilesUtils.regularControl import cache_regular, sql_regular, regular
-from utils.otherUtils.jsonpath_date_replace import jsonpath_replace
-from utils.mysqlUtils.mysqlControl import MysqlDB
-from utils.otherUtils.get_conf_data import sql_switch
-from utils.logUtils.logControl import WARNING
-from utils.cacheUtils.cacheControl import Cache
+from utils.read_files_tools.regular_control import cache_regular, sql_regular, regular
+from utils.other_tools.jsonpath_date_replace import jsonpath_replace
+from utils.mysql_tool.mysql_control import MysqlDB
+from utils.other_tools.get_conf_data import sql_switch
+from utils.logging_tool.log_control import WARNING
+from utils.cache_process.cache_control import Cache
 
 
 class TearDownHandler:

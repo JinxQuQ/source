@@ -9,7 +9,7 @@ import json
 
 import jsonpath
 from typing import Text, Dict
-from utils.cacheUtils.cacheControl import Cache
+from utils.cache_process.cache_control import Cache
 
 
 class SetCurrentRequestCache:

@@ -4,16 +4,16 @@
 # @Author : 余少琪
 import json
 from typing import Text, Dict, Union
-from utils.cacheUtils.cacheControl import Cache
+from utils.cache_process.cache_control import Cache
 from utils.requestsUtils.requestControl import RequestControl
 from Enums.dependentType_enum import DependentType
 from Enums.yamlData_enum import YAMLDate
-from utils.mysqlUtils.mysqlControl import MysqlDB
-from utils.otherUtils.get_conf_data import sql_switch
-from utils.readFilesUtils.regularControl import regular, cache_regular
-from utils.otherUtils.jsonpath_date_replace import jsonpath_replace
-from utils.otherUtils.jsonpath import jsonpath
-from utils.logUtils.logControl import WARNING
+from utils.mysql_tool.mysql_control import MysqlDB
+from utils.other_tools.get_conf_data import sql_switch
+from utils.read_files_tools.regular_control import regular, cache_regular
+from utils.other_tools.jsonpath_date_replace import jsonpath_replace
+from utils.other_tools.jsonpath import jsonpath
+from utils.logging_tool.log_control import WARNING
 
 
 class DependentCase:
@@ -111,6 +111,7 @@ class DependentCase:
         # 判断依赖数据类型，依赖 sql中的数据
         if setup_sql is not None:
             if sql_switch():
+                setup_sql = eval(cache_regular(str(setup_sql)))
                 sql_data = MysqlDB().setup_sql_data(sql=setup_sql)
                 dependent_data = dependence_case_data['dependent_data']
                 for i in dependent_data:

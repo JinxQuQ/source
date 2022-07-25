@@ -6,6 +6,12 @@
 import os
 
 
+def replace_path(path):
+    """替换路径"""
+    path = path.replace('$', os.sep)
+    return path
+
+
 def generate_path(name: str):
     # 项目路径
     root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -35,7 +41,7 @@ class ConfigHandler:
     file_path = generate_path('Files$')
 
     util_path = generate_path("utils$")
-    util_install_path = generate_path('utils$otherUtils$InstallUtils$')
+    util_install_path = generate_path('utils$other_tools$install_tool$')
     # 测试报告路径
     report_path = generate_path('report')
     # 测试报告中的test_case路径
@@ -44,7 +50,7 @@ class ConfigHandler:
     # 测试报告中的attachments路径
     report_html_attachments_path = generate_path("report$html$data$attachments$")
 
-    excel_template = generate_path("utils$otherUtils$allureDate$")
+    excel_template = generate_path("utils$other_tools$allure_data$")
 
 
 if __name__ == '__main__':

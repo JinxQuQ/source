@@ -11,19 +11,19 @@ import jsonpath
 import requests
 import urllib3
 from typing import Tuple, Dict, Union, Text
-from utils.otherUtils.get_conf_data import sql_switch
+from utils.other_tools.get_conf_data import sql_switch
 from requests_toolbelt import MultipartEncoder
-from utils.logUtils.logDecoratorl import log_decorator
-from utils.mysqlUtils.mysqlControl import MysqlDB
+from utils.logging_tool.log_decorator import log_decorator
+from utils.mysql_tool.mysql_control import MysqlDB
 from Enums.requestType_enum import RequestType
 from Enums.yamlData_enum import YAMLDate
 from common.setting import ConfigHandler
-from utils.logUtils.runTimeDecoratorl import execution_duration
-from utils.otherUtils.allureDate.allure_tools import allure_step, allure_step_no, allure_attach
-from utils.readFilesUtils.regularControl import cache_regular
+from utils.logging_tool.run_time_decorator import execution_duration
+from utils.other_tools.allure_data.allure_tools import allure_step, allure_step_no, allure_attach
+from utils.read_files_tools.regular_control import cache_regular
 from utils.requestsUtils.set_current_request_cache import SetCurrentRequestCache
-from utils.cacheUtils.cacheControl import Cache
-from utils.logUtils.logControl import ERROR
+from utils.cache_process.cache_control import Cache
+from utils.logging_tool.log_control import ERROR
 from utils.requestsUtils.encryption_algorithm_control import encryption
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)

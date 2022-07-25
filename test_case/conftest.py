@@ -9,13 +9,13 @@ import time
 import allure
 import requests
 from common.setting import ConfigHandler
-from utils.readFilesUtils.get_yaml_data_analysis import CaseData
-from utils.cacheUtils.cacheControl import Cache
-from utils.readFilesUtils.get_all_files_path import get_all_files
-from utils.logUtils.logControl import WARNING, INFO, ERROR
+from utils.read_files_tools.get_yaml_data_analysis import CaseData
+from utils.cache_process.cache_control import Cache
+from utils.read_files_tools.get_all_files_path import get_all_files
+from utils.logging_tool.log_control import INFO
 from Enums.yamlData_enum import YAMLDate
-from utils.readFilesUtils.clean_files import del_file
-from utils.otherUtils.allureDate.allure_tools import allure_step, allure_step_no
+from utils.read_files_tools.clean_files import del_file
+from utils.other_tools.allure_data.allure_tools import allure_step, allure_step_no
 
 
 @pytest.fixture(scope="session", autouse=True)

@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time   : 2022-07-22 17:49:05
+# @Time   : 2022-07-25 16:39:10
 # @Author : 七月
 
 
 import allure
 import pytest
 from common.setting import ConfigHandler
-from utils.readFilesUtils.get_yaml_data_analysis import CaseData
-from utils.assertUtils.assertControl import Assert
+from utils.read_files_tools.get_yaml_data_analysis import CaseData
+from utils.assertion.assert_control import Assert
 from utils.requestsUtils.requestControl import RequestControl
-from utils.readFilesUtils.regularControl import regular
+from utils.read_files_tools.regular_control import regular
 from utils.requestsUtils.teardownControl import TearDownHandler
 
 

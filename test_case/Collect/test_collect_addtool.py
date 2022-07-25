@@ -29,6 +29,7 @@ class TestCollectAddtool:
         :param :
         :return:
         """
+        print(in_data)
         res = RequestControl().http_request(in_data)
         TearDownHandler().teardown_handle(res)
         Assert(res['assert']).assert_equality(

@@ -13,6 +13,7 @@ def generate_path(name: str):
 
 
 class ConfigHandler:
+
     # 用例路径
     case_path = generate_path("test_case$")
     # 测试用例数据路径

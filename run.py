@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 # @Time   : 2022/3/29 15:01
 # @Author : 余少琪
-
 import os
 import traceback
 import pytest
@@ -14,8 +13,25 @@ from utils.noticUtils.dingtalkControl import DingTalkSendMsg
 from utils.noticUtils.sendmailControl import SendEmail
 from Enums.notificationType_enum import NotificationType
 from utils.noticUtils.feishuControl import FeiShuTalkChatBot
-from utils.readFilesUtils.caseAutomaticControl import TestCaseAutomaticGeneration
 from utils.otherUtils.allureDate.error_case_excel import ErrorCaseExcel
+import sys
+
+
+def getCommand(argv):
+    d = {}  # 字典型参数
+    l = []  # 列表型参数
+    for item in argv:
+        if '=' in item:
+            index = str(item).index('=')
+            d.update({str(item)[:index]: str(item)[index + 1:]})
+        else:
+            l.append(item)
+    return d, l
+
+
+if __name__ == '__main__':
+    l = getCommand(sys.argv[1:])[1]
+    print(l)
 
 
 def run():

@@ -39,11 +39,6 @@ collect_update_tool_01:
         AssertType:
     sql:
     teardown:
-#      - case_id: collect_delete_tool_01
-#        step:
-#          - dependent_type: response
-#            jsonpath: $.data.id
-#            replace_key: $.data.id
 
       # 先搜索
       - case_id: collect_tool_list_01

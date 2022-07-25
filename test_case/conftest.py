@@ -18,7 +18,7 @@ from utils.readFilesUtils.clean_files import del_file
 from utils.otherUtils.allureDate.allure_tools import allure_step, allure_step_no
 
 
-@pytest.fixture(scope="session", autouse=False)
+@pytest.fixture(scope="session", autouse=True)
 def clear_report():
     """如clean命名无法删除报告，这里手动删除"""
     del_file(ConfigHandler.report_path)
@@ -76,8 +76,14 @@ def work_login_init():
         # 拿到登录的cookie内容，cookie拿到的是字典类型，转换成对应的格式
         cookies += _cookie
         # 将登录接口中的cookie写入缓存中，其中login_cookie是缓存名称
-    print(cookies)
+
     Cache('login_cookie').set_caches(cookies)
+
+
+@pytest.fixture(scope="class")
+def get_env(request):
+    project_url = request.config.getoption("--project_url")
+    return project_url
 
 
 def pytest_collection_modifyitems(items):
@@ -122,12 +128,12 @@ def pytest_terminal_summary(terminalreporter):
     _SKIPPED = len([i for i in terminalreporter.stats.get('skipped', []) if i.when != 'teardown'])
     _TOTAL = terminalreporter._numcollected
     _TIMES = time.time() - terminalreporter._sessionstarttime
-
-    INFO.logger.info(f"成功用例数: {_PASSED}")
-    ERROR.logger.error(f"异常用例数: {_ERROR}")
-    ERROR.logger.error(f"失败用例数: {_FAILED}")
-    WARNING.logger.warning(f"跳过用例数: {_SKIPPED}")
-    INFO.logger.info("用例执行时长: %.2f" % _TIMES + " s")
+    #
+    # INFO.logger.info(f"成功用例数: {_PASSED}")
+    # ERROR.logger.error(f"异常用例数: {_ERROR}")
+    # ERROR.logger.error(f"失败用例数: {_FAILED}")
+    # WARNING.logger.warning(f"跳过用例数: {_SKIPPED}")
+    # INFO.logger.info("用例执行时长: %.2f" % _TIMES + " s")
 
     try:
         _RATE = round(_PASSED / _TOTAL * 100, 2)

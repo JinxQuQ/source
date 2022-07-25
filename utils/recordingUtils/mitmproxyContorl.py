@@ -34,7 +34,7 @@ class Counter:
         # 存放需要过滤的接口
         filter_url_type = ['.css', '.js', '.map', '.ico', '.png', '.woff', '.map3', '.jpeg', '.jpg']
         url = flow.request.url
-
+        ctx.log.info("=" * 100)
         # 判断过滤掉含 filter_url_type 中后缀的 url
         if any(i in url for i in filter_url_type) is False:
             # 存放测试用例
@@ -214,9 +214,9 @@ class Counter:
 
 
 # 1、本机需要设置代理，默认端口为: 8080
-# 2、控制台输入 mitmweb -s .\utils\recordingUtils\mitmproxyControl.py - p 8888命令开启代理模式进行录制
+# 2、控制台输入 mitmweb -s .\utils\recordingUtils\mitmproxyContorl.py - p 8888命令开启代理模式进行录制
 
 
 addons = [
-    Counter(["https://www.wanandroid.com"])
+    Counter(["http://work.test.feng-go.com/", "http://merchant.test.feng-go.com"])
     ]

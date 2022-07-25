@@ -24,6 +24,7 @@ from utils.readFilesUtils.regularControl import cache_regular
 from utils.requestsUtils.set_current_request_cache import SetCurrentRequestCache
 from utils.cacheUtils.cacheControl import Cache
 from utils.logUtils.logControl import ERROR
+from utils.requestsUtils.encryption_algorithm_control import encryption
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -419,7 +420,7 @@ class RequestControl:
 
     @log_decorator(True)
     @execution_duration(3000)
-    # @encryption("md5")
+    @encryption("md5")
     def http_request(
             self,
             yaml_data: Dict,

@@ -102,7 +102,15 @@ class Context:
 
 
 def sql_json(js_path, res):
-    return jsonpath(res, js_path)[0]
+    _sql_data = jsonpath(res, js_path)[0]
+    if _sql_data is not False:
+        return jsonpath(res, js_path)[0]
+    else:
+        raise ValueError(
+            "sql 中的jsonpath数据未提取到，请检查语句是否正确",
+            f"接口响应内容: {res}",
+            f"jsonpath 提取规则: {js_path}"
+        )
 
 
 def regular(target):
@@ -179,3 +187,6 @@ def cache_regular(value):
     return value
 
 
+if __name__ == '__main__':
+    a = regular("${{random_int(1,10)}}")
+    print(a)

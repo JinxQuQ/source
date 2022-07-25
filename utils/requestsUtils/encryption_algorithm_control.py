@@ -60,10 +60,7 @@ def encryption(ency_type):
     def decorator(func):
         def swapper(*args, **kwargs):
             res = func(*args, **kwargs)
-            if kwargs != {}:
-                params = kwargs['yaml_data']['data']
-            else:
-                params = args[1]['data']
+            _data = res['body']
             if ency_type == "md5":
                 def ency_value(data):
                     if data is not None:
@@ -74,7 +71,7 @@ def encryption(ency_type):
                                 data[k] = md5_encryption(v)
             else:
                 raise ValueError("暂不支持该加密规则，如有需要，请联系管理员")
-            ency_value(params)
+            ency_value(_data)
             return res
 
         return swapper

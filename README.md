@@ -215,8 +215,8 @@ collect_tool_list.yaml 的用例文件，请求/lg/collect/usertools/json这个�
           Content-Type: multipart/form-data;
           # 这里cookie的值，写的是存入缓存的名称
           cookie: login_cookie
-        # 请求的数据，是 params 还是 json、或者file、date
-        requestType: date
+        # 请求的数据，是 params 还是 json、或者file、data
+        requestType: data
         # 是否执行，空或者 true 都会执行
         is_run:
         data:
@@ -256,8 +256,8 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
           Content-Type: multipart/form-data;
           # 这里cookie的值，写的是存入缓存的名称
           cookie: login_cookie
-        # 请求的数据，是 params 还是 json、或者file、date
-        requestType: date
+        # 请求的数据，是 params 还是 json、或者file、data
+        requestType: data
         # 是否执行，空或者 true 都会执行
         is_run:
         data:
@@ -513,7 +513,7 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
         detail: 校验已经审核通过的供应商手机号码
         headers:
           Content-Type: application/json;charset=UTF-8
-        # 请求的数据，是 params 还是 json、或者file、date
+        # 请求的数据，是 params 还是 json、或者file、data
         requestType: params
         # 是否执行，空或者 true 都会执行
         is_run:

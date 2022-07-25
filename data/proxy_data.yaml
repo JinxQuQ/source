@@ -1,0 +1,32 @@
+coupons1:
+  host: http://work.test.feng-go.com/
+  url: api/v1/work/market/coupons
+  method: GET
+  detail:
+  headers:
+    Host: work.test.feng-go.com
+    Proxy-Connection: keep-alive
+    Accept: application/json, text/plain, */*
+    User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
+      like Gecko) Chrome/103.0.0.0 Safari/537.36
+    token: 482d709eb575f47a7e9c4e415282c18831b696cc3a
+    Referer: http://work.test.feng-go.com/
+    Accept-Encoding: gzip, deflate
+    Accept-Language: zh-CN,zh;q=0.9
+    Cookie: mall_back_token=%22482d709eb575f47a7e9c4e415282c18831b696cc3a%22; mall_back_user=%7B%22accountSubType%22%3A-1%2C%22accountType%22%3A2%2C%22adSource%22%3A%22%22%2C%22areaName%22%3A%22%22%2C%22baseUserId%22%3A310000000161%2C%22bizType%22%3A1%2C%22cityName%22%3A%22%22%2C%22deleteFlag%22%3Afalse%2C%22gender%22%3A0%2C%22gmtCreated%22%3A1619595088000%2C%22gmtLastActive%22%3A1632726506000%2C%22gmtModified%22%3A1632726506000%2C%22marketChannel%22%3A%22%22%2C%22mobile%22%3A%2218867507063%22%2C%22nickname%22%3A%22%E4%BD%99%E5%B0%91%E7%90%AA%22%2C%22openid%22%3A%22%22%2C%22provinceName%22%3A%22%22%2C%22registerIp%22%3A%22%22%2C%22registrationPlatform%22%3A%22%22%2C%22subBizType%22%3A101%2C%22unionid%22%3A%22%22%2C%22userIcon%22%3A%22https%3A%2F%2Foss-fg.feng-go.com%2Fassets%2Fpic%2Fgrzx_mrtx_pic_user_icon.png%22%2C%22userId%22%3A310000000693%2C%22userStatus%22%3A0%2C%22username%22%3A%22hsh310000000161%22%7D
+  requestType: params
+  is_run: true
+  data:
+    pageSize: '10'
+    pageNum: '1'
+    subBizType: '101'
+  dependence_case:
+  dependence_case_data:
+  assert:
+    code:
+      jsonpath: $.code
+      type: ==
+      value: 200
+      AssertType:
+  sql:
+

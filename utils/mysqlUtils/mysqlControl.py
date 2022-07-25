@@ -106,16 +106,19 @@ class MysqlDB(object):
                         for i in sql:
                             # 判断sql中是否有正则，如果有则通过jsonpath提取相关的数据
                             sql = sql_regular(i, resp)
-                            # for 循环逐条处理断言 sql
-                            query_data = self.query(sql)[0]
-                            # 将sql 返回的所有内容全部放入对象中
-                            for key, value in query_data.items():
-                                if isinstance(value, decimal.Decimal):
-                                    data[key] = float(value)
-                                elif isinstance(value, datetime.datetime):
-                                    data[key] = str(value)
-                                else:
-                                    data[key] = value
+                            if sql is not None:
+                                # for 循环逐条处理断言 sql
+                                query_data = self.query(sql)[0]
+                                # 将sql 返回的所有内容全部放入对象中
+                                for key, value in query_data.items():
+                                    if isinstance(value, decimal.Decimal):
+                                        data[key] = float(value)
+                                    elif isinstance(value, datetime.datetime):
+                                        data[key] = str(value)
+                                    else:
+                                        data[key] = value
+                            else:
+                                raise ValueError(f"该条sql未查询出任何数据, {sql}")
 
                         return data
                 else:

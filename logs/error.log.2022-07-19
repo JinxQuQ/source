@@ -1,0 +1,47 @@
+ERROR   2022-07-18 14:17:31,405D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:127 异常用例数: 0
+ERROR   2022-07-18 14:17:31,405D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:128 失败用例数: 0
+ERROR   2022-07-18 14:17:32,379D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:127 异常用例数: 0
+ERROR   2022-07-18 14:17:32,380D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:128 失败用例数: 0
+ERROR   2022-07-18 14:17:33,224D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:127 异常用例数: 0
+ERROR   2022-07-18 14:17:33,225D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:128 失败用例数: 0
+ERROR   2022-07-18 14:17:33,350D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:127 异常用例数: 0
+ERROR   2022-07-18 14:17:33,351D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:128 失败用例数: 0
+ERROR   2022-07-18 17:21:01,676D:\work_code\pytest-auto-api2\logs\error.log:logDecoratorl.py:38 
+===========================================================================
+用例标题: 新增收藏网址接口
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求方式: DELETE
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=59E1C806D1D925A7EFB850F2E491D56D;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '70', 'Content-Type': 'application/x-www-form-urlencoded'}
+请求内容: {'name': '9340', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+接口响应内容: <html><head><title>Apache Tomcat/7.0.77 - Error report</title><style><!--H1 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:22px;} H2 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:16px;} H3 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:14px;} BODY {font-family:Tahoma,Arial,sans-serif;color:black;background-color:white;} B {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;} P {font-family:Tahoma,Arial,sans-serif;background:white;color:black;font-size:12px;}A {color : black;}A.name {color : black;}HR {color : #525D76;}--></style> </head><body><h1>HTTP Status 405 - Request method 'DELETE' not supported</h1><HR size="1" noshade="noshade"><p><b>type</b> Status report</p><p><b>message</b> <u>Request method 'DELETE' not supported</u></p><p><b>description</b> <u>The specified HTTP method is not allowed for the requested resource.</u></p><HR size="1" noshade="noshade"><h3>Apache Tomcat/7.0.77</h3></body></html>
+接口响应时长: 142.41 ms
+Http状态码: 405
+================================================================================
+ERROR   2022-07-18 17:21:02,397D:\work_code\pytest-auto-api2\logs\error.log:logDecoratorl.py:38 
+===========================================================================
+用例标题: 新增收藏网址接口
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求方式: DELETE
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=59E1C806D1D925A7EFB850F2E491D56D;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '70', 'Content-Type': 'application/x-www-form-urlencoded'}
+请求内容: {'name': '8175', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+接口响应内容: <html><head><title>Apache Tomcat/7.0.77 - Error report</title><style><!--H1 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:22px;} H2 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:16px;} H3 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:14px;} BODY {font-family:Tahoma,Arial,sans-serif;color:black;background-color:white;} B {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;} P {font-family:Tahoma,Arial,sans-serif;background:white;color:black;font-size:12px;}A {color : black;}A.name {color : black;}HR {color : #525D76;}--></style> </head><body><h1>HTTP Status 405 - Request method 'DELETE' not supported</h1><HR size="1" noshade="noshade"><p><b>type</b> Status report</p><p><b>message</b> <u>Request method 'DELETE' not supported</u></p><p><b>description</b> <u>The specified HTTP method is not allowed for the requested resource.</u></p><HR size="1" noshade="noshade"><h3>Apache Tomcat/7.0.77</h3></body></html>
+接口响应时长: 125.3 ms
+Http状态码: 405
+================================================================================
+ERROR   2022-07-18 17:21:05,554D:\work_code\pytest-auto-api2\logs\error.log:logDecoratorl.py:38 
+===========================================================================
+用例标题: 新增收藏网址接口
+请求路径: https://www.wanandroid.com/lg/collect/addtool/json
+请求方式: DELETE
+请求头:   {'User-Agent': 'python-requests/2.26.0', 'Accept-Encoding': 'gzip, deflate, br', 'Accept': '*/*', 'Connection': 'keep-alive', 'cookie': 'loginUserName_wanandroid_com=18800000001;token_pass_wanandroid_com=5d9b90bcb70640183e09d1e755ead823;JSESSIONID=59E1C806D1D925A7EFB850F2E491D56D;loginUserName=18800000001;token_pass=5d9b90bcb70640183e09d1e755ead823;', 'Content-Length': '69', 'Content-Type': 'application/x-www-form-urlencoded'}
+请求内容: {'name': '932', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}
+接口响应内容: <html><head><title>Apache Tomcat/7.0.77 - Error report</title><style><!--H1 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:22px;} H2 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:16px;} H3 {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;font-size:14px;} BODY {font-family:Tahoma,Arial,sans-serif;color:black;background-color:white;} B {font-family:Tahoma,Arial,sans-serif;color:white;background-color:#525D76;} P {font-family:Tahoma,Arial,sans-serif;background:white;color:black;font-size:12px;}A {color : black;}A.name {color : black;}HR {color : #525D76;}--></style> </head><body><h1>HTTP Status 405 - Request method 'DELETE' not supported</h1><HR size="1" noshade="noshade"><p><b>type</b> Status report</p><p><b>message</b> <u>Request method 'DELETE' not supported</u></p><p><b>description</b> <u>The specified HTTP method is not allowed for the requested resource.</u></p><HR size="1" noshade="noshade"><h3>Apache Tomcat/7.0.77</h3></body></html>
+接口响应时长: 143.09 ms
+Http状态码: 405
+================================================================================
+ERROR   2022-07-18 17:21:09,522D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:127 异常用例数: 0
+ERROR   2022-07-18 17:21:09,523D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:128 失败用例数: 3
+ERROR   2022-07-19 11:11:10,981D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:127 异常用例数: 0
+ERROR   2022-07-19 11:11:10,983D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:128 失败用例数: 0
+ERROR   2022-07-19 11:23:29,660D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:127 异常用例数: 0
+ERROR   2022-07-19 11:23:29,661D:\work_code\pytest-auto-api2\logs\error.log:conftest.py:128 失败用例数: 0

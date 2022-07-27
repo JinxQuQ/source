@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""
 # @Time   : 2022/3/28 13:22
 # @Author : 余少琪
-
+"""
 import os
 from typing import Text, Dict
 from common.setting import ConfigHandler
@@ -14,10 +15,6 @@ from utils.read_files_tools.get_all_files_path import get_all_files
 
 class TestCaseAutomaticGeneration:
     """自动生成自动化测试中的test_case代码"""
-
-    # TODO 自动生成测试代码
-    def __init__(self):
-        pass
 
     @classmethod
     def case_date_path(cls) -> Text:
@@ -66,14 +63,15 @@ class TestCaseAutomaticGeneration:
         :return: sup_apply_list --> SupApplyList
         """
         # 提取文件名称
-        _FILE_NAME = os.path.split(self.file_name(file_path))[1][:-3]
-        _NAME = _FILE_NAME.split("_")
+        _file_name = os.path.split(self.file_name(file_path))[1][:-3]
+        _name = _file_name.split("_")
+        _name_len = len(_name)
         # 将文件名称格式，转换成类名称: sup_apply_list --> SupApplyList
-        for i in range(len(_NAME)):
-            _NAME[i] = _NAME[i].capitalize()
-        _CLASS_NAME = "".join(_NAME)
+        for i in range(_name_len):
+            _name[i] = _name[i].capitalize()
+        _class_name = "".join(_name)
 
-        return _CLASS_NAME
+        return _class_name
 
     @classmethod
     def error_message(cls, param_name, file_path):
@@ -93,8 +91,8 @@ class TestCaseAutomaticGeneration:
         :return:
         """
 
-        _FILE_NAME = os.path.split(self.file_name(file_path))[1][:-3]
-        return _FILE_NAME
+        _file_name = os.path.split(self.file_name(file_path))[1][:-3]
+        return _file_name
 
     @classmethod
     def allure_epic(cls, case_data: Dict, file_path) -> Text:
@@ -106,11 +104,11 @@ class TestCaseAutomaticGeneration:
         """
         try:
             return case_data['case_common']['allureEpic']
-        except KeyError:
+        except KeyError as exc:
             raise KeyError(cls.error_message(
                 param_name="allureEpic",
                 file_path=file_path
-            ))
+            )) from exc
 
     @classmethod
     def allure_feature(cls, case_data: Dict, file_path) -> Text:
@@ -122,11 +120,11 @@ class TestCaseAutomaticGeneration:
         """
         try:
             return case_data['case_common']['allureFeature']
-        except KeyError:
+        except KeyError as exc:
             raise KeyError(cls.error_message(
                 param_name="allureFeature",
                 file_path=file_path
-            ))
+            )) from exc
 
     @classmethod
     def allure_story(cls, case_data: Dict, file_path) -> Text:
@@ -138,19 +136,19 @@ class TestCaseAutomaticGeneration:
         """
         try:
             return case_data['case_common']['allureStory']
-        except KeyError:
+        except KeyError as exc:
             raise KeyError(cls.error_message(
                 param_name="allureStory",
                 file_path=file_path
-            ))
+            )) from exc
 
     def mk_dir(self, file_path: Text) -> None:
         """ 判断生成自动化代码的文件夹路径是否存在，如果不存在，则自动创建 """
         # _LibDirPath = os.path.split(self.libPagePath(filePath))[0]
 
-        _CaseDirPath = os.path.split(self.get_case_path(file_path)[0])[0]
-        if not os.path.exists(_CaseDirPath):
-            os.makedirs(_CaseDirPath)
+        _case_dir_path = os.path.split(self.get_case_path(file_path)[0])[0]
+        if not os.path.exists(_case_dir_path):
+            os.makedirs(_case_dir_path)
 
     def yaml_path(self, file_path: Text) -> Text:
         """

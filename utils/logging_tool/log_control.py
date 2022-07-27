@@ -28,7 +28,6 @@ class LogHandler:
             filename: Text,
             level: Text = "info",
             when: Text = "D",
-            back_count: int = 3,
             fmt: Text = "%(levelname)-8s%(asctime)s%(name)s:%(filename)s:%(lineno)d %(message)s"
     ):
         self.logger = logging.getLogger(filename)
@@ -47,7 +46,7 @@ class LogHandler:
         time_rotating = handlers.TimedRotatingFileHandler(
             filename=filename,
             when=when,
-            backupCount=back_count,
+            backupCount=3,
             encoding='utf-8'
         )
         # 设置文件里写入的格式

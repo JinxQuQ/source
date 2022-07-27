@@ -64,14 +64,13 @@ class MysqlDB:
                 if state == "all":
                     # 查询全部
                     data = self.cur.fetchall()
-
                 else:
                     # 查询单条
                     data = self.cur.fetchone()
-
                 return data
-            except AttributeError as error:
-                ERROR.logger.error("数据库连接失败，失败原因 %s", error)
+            except AttributeError as error_data:
+                ERROR.logger.error("数据库连接失败，失败原因 %s", error_data)
+                raise
 
         def execute(self, sql: str):
             """
@@ -89,6 +88,7 @@ class MysqlDB:
                 ERROR.logger.error("数据库连接失败，失败原因 %s", error)
                 # 如果事务异常，则回滚数据
                 self.conn.rollback()
+                raise
 
         @classmethod
         def sql_data_handler(cls, query_data, data):
@@ -130,12 +130,14 @@ class MysqlDB:
                                 data = self.sql_data_handler(query_data, data)
                             else:
                                 raise ValueError(f"该条sql未查询出任何数据, {sql}")
-                        return data
                     else:
                         raise ValueError("断言的 sql 必须是查询的 sql")
-            except Exception as error:
-                ERROR.logger.error("数据库连接失败，失败原因 %s", error)
-                raise
+                else:
+                    raise ValueError("sql数据类型不正确，接受的是list")
+                return data
+            except Exception as error_data:
+                ERROR.logger.error("数据库连接失败，失败原因 %s", error_data)
+                raise error_data
 
         def setup_sql_data(self, sql: list) -> dict:
             """
@@ -150,9 +152,11 @@ class MysqlDB:
                         sql_date = self.query(sql=i)[0]
                         for key, value in sql_date.items():
                             data[key] = value
-                    return data
-            except IndexError:
-                raise ValueError("sql 数据查询失败，请检查setup_sql语句是否正确")
+                else:
+                    raise ValueError("setup_sql数据类型不正确，接受的是list")
+                return data
+            except IndexError as exc:
+                raise ValueError("sql 数据查询失败，请检查setup_sql语句是否正确") from exc
 
 
 if __name__ == '__main__':

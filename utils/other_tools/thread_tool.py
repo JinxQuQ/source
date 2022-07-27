@@ -31,8 +31,7 @@ class PyTimer:
     def _start(self, interval, once):
         """启动定时器的线程函数"""
 
-        if interval < 0.010:
-            interval = 0.010
+        interval = max(interval, 0.01)
 
         if interval < 0.050:
             _dt = interval / 10

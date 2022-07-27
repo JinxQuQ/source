@@ -9,9 +9,9 @@ import pytest
 from common.setting import ConfigHandler
 from utils.read_files_tools.get_yaml_data_analysis import CaseData
 from utils.assertion.assert_control import Assert
-from utils.requestsUtils.requestControl import RequestControl
+from utils.requests_tool.request_control import RequestControl
 from utils.read_files_tools.regular_control import regular
-from utils.requestsUtils.teardownControl import TearDownHandler
+from utils.requests_tool.teardown_control import TearDownHandler
 
 
 TestData = CaseData(ConfigHandler.data_path + r'Collect/collect_delete_tool.yaml').case_process()
@@ -31,7 +31,7 @@ class TestCollectDeleteTool:
         """
         res = RequestControl().http_request(in_data)
         TearDownHandler().teardown_handle(res)
-        Assert(in_data['assert']).assert_equality(response_data=res['response_data'], 
+        Assert(in_data['assert']).assert_equality(response_data=res['response_data'],
                                                   sql_data=res['sql_data'], status_code=res['status_code'])
 
 

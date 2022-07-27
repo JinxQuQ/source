@@ -19,8 +19,10 @@ def log_decorator(switch: bool):
     def decorator(func):
         @wraps(func)
         def swapper(*args, **kwargs):
+
             # 判断日志为开启状态，才打印日志
             res = func(*args, **kwargs)
+            print(res)
             # 判断日志开关为开启状态
             if switch:
                 _log_msg = f"\n======================================================\n" \

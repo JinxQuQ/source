@@ -16,4 +16,3 @@ def get_os_sep():
     :return: windows 返回 "\", linux 返回 "/"
     """
     return os.sep
-

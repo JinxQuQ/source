@@ -11,7 +11,7 @@ from common.setting import ConfigHandler
 from utils.read_files_tools.yaml_control import GetYamlData
 from utils.logging_tool.log_control import ERROR
 from utils.other_tools.allure_data.allure_report_data import TestMetrics, AllureFileClean
-from utils.timesUtils.timeControl import now_time
+from utils.times_tool.time_control import now_time
 from utils.other_tools.get_local_ip import get_host_ip
 from utils.other_tools.get_conf_data import tester_name
 

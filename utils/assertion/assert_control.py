@@ -5,10 +5,11 @@
 """
 断言类型封装，支持json响应断言、数据库断言
 """
+import ast
 import json
 from typing import Text, Dict, Any, Union
+from jsonpath import jsonpath
 from Enums.assertMethod_enum import AssertMethod
-from utils.other_tools.jsonpath import jsonpath
 from utils.other_tools.get_conf_data import sql_switch
 from utils.logging_tool.log_control import ERROR, WARNING
 from utils.read_files_tools.regular_control import cache_regular
@@ -20,7 +21,7 @@ class Assert:
     """ assert 模块封装 """
 
     def __init__(self, assert_data: Dict):
-        self.assert_data = eval(cache_regular(str(assert_data)))
+        self.assert_data = ast.literal_eval(cache_regular(str(assert_data)))
         self.functions_mapping = load_module_functions(assert_type)
 
     @classmethod

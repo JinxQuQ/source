@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""
 # @Time   : 2022/3/28 10:51
 # @Author : 余少琪
+"""
 
 import os
 import yaml.scanner
@@ -9,9 +11,10 @@ from utils.read_files_tools.regular_control import regular
 
 
 class GetYamlData:
+    """ 获取 yaml 文件中的数据 """
 
     def __init__(self, file_dir):
-        self.fileDir = file_dir
+        self.file_dir = file_dir
 
     def get_yaml_data(self) -> dict:
         """
@@ -20,23 +23,12 @@ class GetYamlData:
         :return:
         """
         # 判断文件是否存在
-        if os.path.exists(self.fileDir):
-            data = open(self.fileDir, 'r', encoding='utf-8')
-            try:
-                res = yaml.load(data, Loader=yaml.FullLoader)
-
-                return res
-            except Exception as e:
-                raise
-                # _error_msg = str(e).split(",")
-                # _file_path = _error_msg[0].split("in")[-1]
-                # _error_line = _error_msg[1]
-                #
-                # raise ValueError("yaml格式不正确, 请检查下方对应路径中的文件内容, 文件路径: {}, 错误行号：{}"
-                #                  .format(_file_path, _error_line))
-
+        if os.path.exists(self.file_dir):
+            data = open(self.file_dir, 'r', encoding='utf-8')
+            res = yaml.load(data, Loader=yaml.FullLoader)
         else:
             raise FileNotFoundError("文件路径不存在")
+        return res
 
     def write_yaml_data(self, key: str, value) -> int:
         """
@@ -45,30 +37,31 @@ class GetYamlData:
         :param value: 写入的值
         :return:
         """
-        with open(self.fileDir, 'r', encoding='utf-8') as f:
+        with open(self.file_dir, 'r', encoding='utf-8') as file:
             # 创建了一个空列表，里面没有元素
             lines = []
-            for line in f.readlines():
+            for line in file.readlines():
                 if line != '\n':
                     lines.append(line)
-            f.close()
+            file.close()
 
-        with open(self.fileDir, 'w', encoding='utf-8') as f:
+        with open(self.file_dir, 'w', encoding='utf-8') as file:
             flag = 0
             for line in lines:
                 left_str = line.split(":")[0]
                 if key == left_str and '#' not in line:
-                    newline = "{0}: {1}".format(left_str, value)
+                    newline = f"{left_str}: {value}"
                     line = newline
-                    f.write('%s\n' % line)
+                    file.write(f'{line}\n')
                     flag = 1
                 else:
-                    f.write('%s' % line)
-            f.close()
+                    file.write(f'{line}')
+            file.close()
             return flag
 
 
 class GetCaseData(GetYamlData):
+    """ 获取测试用例中的数据 """
 
     def get_different_formats_yaml_data(self) -> list:
         """
@@ -90,4 +83,3 @@ class GetCaseData(GetYamlData):
         # 正则处理yaml文件中的数据
         re_data = regular(str(_yaml_data))
         return eval(re_data)
-

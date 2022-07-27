@@ -1,10 +1,12 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
+"""
 # @Time    : 2022/4/25 20:02
 # @Author  : 余少琪
 # @Email   : 1603453211@qq.com
 # @File    : testcase_template
 # @describe: 用例模板
+"""
 
 import datetime
 import os
@@ -13,8 +15,9 @@ from common.setting import ConfigHandler
 
 
 def write_case(case_path, page):
-    with open(case_path, 'w', encoding="utf-8") as f:
-        f.write(page)
+    """ 写入用例数据 """
+    with open(case_path, 'w', encoding="utf-8") as file:
+        file.write(page)
 
 
 def write_testcase_file(allure_epic, allure_feature, class_title,

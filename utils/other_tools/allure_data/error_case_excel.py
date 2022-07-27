@@ -12,6 +12,7 @@ import os
 import json
 import shutil
 import xlwings
+import ast
 from common.setting import ConfigHandler
 from utils.read_files_tools.get_all_files_path import get_all_files
 from utils.notify.wechat_send import WeChatSend
@@ -57,7 +58,7 @@ class ErrorTestCase:
         @return:
         """
         parameters = test_case['parameters'][0]['value']
-        return eval(parameters)
+        return ast.literal_eval(parameters)
 
     @classmethod
     def get_test_stage(cls, test_case):

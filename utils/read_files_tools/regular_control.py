@@ -3,34 +3,34 @@ Desc : 自定义函数调用
 # @Time : 2022/4/2 9:32 上午
 # @Author : liuYunWin
 """
-import json
 import re
 import datetime
-from faker import Faker
 import random
+import jsonpath
 from datetime import date, timedelta, datetime
-from utils.other_tools.jsonpath import jsonpath
+from faker import Faker
 from utils.logging_tool.log_control import ERROR
 from utils.cache_process.cache_control import Cache
 
 
 class Context:
+    """ 正则替换 """
     def __init__(self):
-        self.f = Faker(locale='zh_CN')
+        self.faker = Faker(locale='zh_CN')
 
     @classmethod
-    def test_random(cls) -> int:
+    def random_int(cls) -> int:
         """
         :return: 随机数
         """
-        rn = random.randint(0, 5000)
-        return rn
+        _data = random.randint(0, 5000)
+        return _data
 
     def get_phone(self) -> int:
         """
         :return: 随机生成手机号码
         """
-        phone = self.f.phone_number()
+        phone = self.faker.phone_number()
         return phone
 
     def get_id_number(self) -> int:
@@ -39,7 +39,7 @@ class Context:
         :return: 随机生成身份证号码
         """
 
-        id_number = self.f.ssn()
+        id_number = self.faker.ssn()
         return id_number
 
     def get_female_name(self) -> str:
@@ -47,7 +47,7 @@ class Context:
 
         :return: 女生姓名
         """
-        female_name = self.f.name_female()
+        female_name = self.faker.name_female()
         return female_name
 
     def get_male_name(self) -> str:
@@ -55,7 +55,7 @@ class Context:
 
         :return: 男生姓名
         """
-        male_name = self.f.name_male()
+        male_name = self.faker.name_male()
         return male_name
 
     def get_email(self) -> str:
@@ -63,7 +63,7 @@ class Context:
 
         :return: 生成邮箱
         """
-        email = self.f.email()
+        email = self.faker.email()
         return email
 
     @classmethod
@@ -81,11 +81,6 @@ class Context:
         now_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         return now_time
 
-    def random_int(self):
-        """随机生成 0 - 9999 的数字"""
-        numbers = self.f.random_int()
-        return numbers
-
     @classmethod
     def today_date(cls):
         """获取今日0点整时间"""
@@ -102,6 +97,7 @@ class Context:
 
     @classmethod
     def host(cls) -> str:
+        """ 获取接口域名 """
         from utils.read_files_tools.yaml_control import GetYamlData
         from common.setting import ConfigHandler
 
@@ -123,6 +119,10 @@ class Context:
 
 
 def sql_json(js_path, res):
+    """ 提取 sql中的 json 数据 """
+    _json_data = jsonpath(res, js_path)[0]
+    if _json_data is not False:
+        raise ValueError(f"sql中的jsonpath获取失败 {res}, {js_path}")
     return jsonpath(res, js_path)[0]
 
 
@@ -161,7 +161,9 @@ def cache_regular(value):
             regular_data = regular_data.split(":")[1]
             pattern = re.compile(r'\'\$cache{' + value_types.split(":")[0] + r'(.*?)}\'')
         else:
-            pattern = re.compile(r'\$cache\{' + regular_data.replace('$', "\$").replace('[', '\[') + r'\}')
+            pattern = re.compile(
+                r'\$cache\{' + regular_data.replace('$', "\$").replace('[', '\[') + r'\}'
+            )
         cache_data = Cache(regular_data).get_cache()
         # 使用sub方法，替换已经拿到的内容
         value = re.sub(pattern, cache_data, value)
@@ -199,38 +201,5 @@ def regular(target):
         return target
 
     except AttributeError:
-        ERROR.logger.error("未找到对应的替换的数据, 请检查数据是否正确", target)
+        ERROR.logger.error("未找到对应的替换的数据, 请检查数据是否正确 %s", target)
         raise
-
-
-def replace_load(value):
-    """
-    使用热加载的方式替换解析yaml中的数据
-    调用这个方法，可以支持yaml中函数方法可以传参，但是目前返回的类型必须都是str类型的
-    """
-    if value and isinstance(value, dict):
-        str_data = json.dumps(value)
-    else:
-        str_data = value
-    for i in range(1, str_data.count('${{') + 1):
-        if "${{" in str_data and "}}" in str_data:
-            start_index = str_data.index("${{")
-            end_index = str_data.index("}}", start_index)
-            old_value = str_data[start_index:end_index + 2]
-            func_name = old_value[3:old_value.index("(")]
-            print(func_name)
-            args_value = old_value[old_value.index("(") + 1:old_value.index(")")]
-            # 反射
-            new_value = getattr(Context(), func_name)(*args_value.split(","))
-            str_data = str_data.replace(old_value, str(new_value))
-        else:
-            if value and isinstance(value, dict):
-                value = json.loads(str_data)
-            else:
-                value = str_data
-    return str_data
-
-
-if __name__ == '__main__':
-    data = {"headers": "${timestamp_conversion(1652857876000)}"}
-    print(replace_load(data))

@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""
 # @Time   : 2022/3/22 13:45
 # @Author : 余少琪
+"""
 
 from typing import Union, Text, Dict
 from utils.other_tools.get_conf_data import sql_switch
@@ -14,7 +16,7 @@ class CaseData:
     """
 
     def __init__(self, file_path):
-        self.filePath = file_path
+        self.file_path = file_path
 
     def case_process(self, case_id_switch: Union[Text, bool] = None):
         """
@@ -22,7 +24,7 @@ class CaseData:
         :param case_id_switch: 判断数据清洗，是否需要清洗出 case_id, 主要用于兼容用例池中的数据
         :return:
         """
-        dates = GetYamlData(self.filePath).get_yaml_data()
+        dates = GetYamlData(self.file_path).get_yaml_data()
         case_lists = []
         for key, values in dates.items():
             # 公共配置中的数据，与用例数据不同，需要单独处理
@@ -44,7 +46,6 @@ class CaseData:
                     "teardown": self.tear_down(values),
                     "teardown_sql": self.teardown_sql(values),
                     "sleep": self.time_sleep(values),
-                    "response_cache": self.get_response_cache(values)
                 }
 
                 if case_id_switch is True:
@@ -69,12 +70,13 @@ class CaseData:
                 raise ValueError(
                     f"用例中的 url 或者 host 不能为空！\n "
                     f"用例ID: {case_id} \n "
-                    f"用例路径: {self.filePath}"
+                    f"用例路径: {self.file_path}"
                 )
-            else:
-                return _host + _url
-        except KeyError:
-            raise KeyError(self.raise_value_null_error(data_name="url 或 host", case_id=case_id))
+            return _host + _url
+        except KeyError as exc:
+            raise KeyError(
+                self.raise_value_null_error(data_name="url 或 host", case_id=case_id)
+            ) from exc
 
     def get_case_method(
             self, case_id: Text,
@@ -86,24 +88,23 @@ class CaseData:
         try:
             _case_method = case_data['method']
             _request_method = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTION']
-            if _case_method.upper() in _request_method:
-                return _case_method.upper()
-            else:
+            if _case_method.upper() not in _request_method:
                 raise ValueError(
                     f"method 目前只支持 {_request_method} 请求方式，如需新增请联系管理员. "
                     f"{self.raise_value_error(data_name='请求方式', case_id=case_id, detail=_case_method)}"
                 )
+            return _case_method.upper()
 
-        except AttributeError:
+        except AttributeError as exc:
             raise ValueError(
                 f"method 目前只支持 {['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTION']} 请求方式，"
                 f"如需新增请联系管理员！ "
                 f"{self.raise_value_error(data_name='请求方式', case_id=case_id, detail=case_data['method'])}"
-            )
-        except KeyError:
+            ) from exc
+        except KeyError as exc:
             raise KeyError(
                 self.raise_value_null_error(data_name="method", case_id=case_id)
-            )
+            ) from exc
 
     @classmethod
     def get_current_request_set_cache(cls, case_data: Dict) -> Dict:
@@ -123,10 +124,10 @@ class CaseData:
         """
         try:
             return case_data['detail']
-        except KeyError:
+        except KeyError as exc:
             raise KeyError(
                 self.raise_value_null_error(case_id=case_id, data_name="detail")
-            )
+            ) from exc
 
     def get_headers(
             self,
@@ -139,10 +140,10 @@ class CaseData:
         try:
             _header = case_data['headers']
             return _header
-        except KeyError:
+        except KeyError as exc:
             raise KeyError(
                 self.raise_value_null_error(case_id=case_id, data_name="headers")
-            )
+            ) from exc
 
     def raise_value_error(
             self, data_name: Text,
@@ -157,7 +158,7 @@ class CaseData:
         """
         detail = f"用例中的 {data_name} 填写不正确！\n " \
                  f"用例ID: {case_id} \n" \
-                 f" 用例路径: {self.filePath}\n" \
+                 f" 用例路径: {self.file_path}\n" \
                  f"当前填写的内容: {detail}"
 
         return detail
@@ -173,8 +174,7 @@ class CaseData:
         """
         detail = f"用例中未找到 {data_name} 参数， 如已填写，请检查用例缩进是否存在问题" \
                  f"用例ID: {case_id} " \
-                 f"用例路径: {self.filePath}"
-
+                 f"用例路径: {self.file_path}"
         return detail
 
     def get_request_type(self, case_id: Text, case_data: Dict) -> Text:
@@ -188,9 +188,7 @@ class CaseData:
         try:
             _request_type = str(case_data['requestType'])
             # 判断用户填写的 requestType是否符合规范
-            if _request_type.upper() in _types:
-                return _request_type.upper()
-            else:
+            if _request_type.upper() not in _types:
                 raise ValueError(
                     self.raise_value_error(
                         data_name='requestType',
@@ -198,18 +196,19 @@ class CaseData:
                         detail=_request_type
                     )
                 )
+            return _request_type.upper()
         # 异常捕捉
-        except AttributeError:
+        except AttributeError as exc:
             raise ValueError(
                 self.raise_value_error(
                     data_name='requestType',
                     case_id=case_id,
                     detail=case_data['requestType'])
-            )
-        except KeyError:
+            ) from exc
+        except KeyError as exc:
             raise KeyError(
                 self.raise_value_null_error(case_id=case_id, data_name="requestType")
-            )
+            ) from exc
 
     def get_is_run(
             self,
@@ -221,10 +220,10 @@ class CaseData:
         """
         try:
             return case_data['is_run']
-        except KeyError:
+        except KeyError as exc:
             raise KeyError(
                 self.raise_value_null_error(case_id=case_id, data_name="is_run")
-            )
+            ) from exc
 
     def get_dependence_case(
             self,
@@ -237,10 +236,10 @@ class CaseData:
         try:
             _dependence_case = case_data['dependence_case']
             return _dependence_case
-        except KeyError:
+        except KeyError as exc:
             raise KeyError(
                 self.raise_value_null_error(case_id=case_id, data_name="dependence_case")
-            )
+            ) from exc
 
     # TODO 对 dependence_case_data 中的值进行验证
     def get_dependence_case_data(
@@ -260,13 +259,13 @@ class CaseData:
                     raise ValueError(f"dependence_case_data 依赖数据中缺少依赖相关数据！"
                                      f"如有填写，请检查缩进是否正确"
                                      f"用例ID: {case_id}"
-                                     f"用例路径: {self.filePath}")
+                                     f"用例路径: {self.file_path}")
 
                 return _dependence_case_data
-            except KeyError:
+            except KeyError as exc:
                 raise KeyError(
                     self.raise_value_null_error(case_id=case_id, data_name="dependence_case_data")
-                )
+                ) from exc
         else:
             return {"dependence_case_data": None}
 
@@ -295,8 +294,10 @@ class CaseData:
             #     data_type(_dates)
             return _dates
 
-        except KeyError:
-            raise KeyError(self.raise_value_null_error(case_id=case_id, data_name="data"))
+        except KeyError as exc:
+            raise KeyError(
+                self.raise_value_null_error(case_id=case_id, data_name="data")
+            ) from exc
 
     # TODO 对 assert 中的值进行验证
     def get_assert(
@@ -312,8 +313,10 @@ class CaseData:
             if _assert is None:
                 raise self.raise_value_error(data_name="assert", case_id=case_id, detail=_assert)
             return case_data['assert']
-        except KeyError:
-            raise KeyError(self.raise_value_null_error(case_id=case_id, data_name="assert"))
+        except KeyError as exc:
+            raise KeyError(
+                self.raise_value_null_error(case_id=case_id, data_name="assert")
+            ) from exc
 
     def get_sql(
             self,
@@ -330,8 +333,10 @@ class CaseData:
                 return case_data['sql']
             else:
                 return None
-        except KeyError:
-            raise KeyError(self.raise_value_null_error(case_id=case_id, data_name="sql"))
+        except KeyError as exc:
+            raise KeyError(
+                self.raise_value_null_error(case_id=case_id, data_name="sql")
+            ) from exc
 
     @classmethod
     def setup_sql(cls, case_data: Dict) -> Union[list, None]:
@@ -370,17 +375,9 @@ class CaseData:
 
     @classmethod
     def time_sleep(cls, case_data: Dict) -> Union[int, float, None]:
+        """ 设置休眠时间 """
         try:
             _sleep_time = case_data['sleep']
             return _sleep_time
         except KeyError:
             return None
-
-    @classmethod
-    def get_response_cache(cls, case_data: Dict) -> Union[Dict, None]:
-        try:
-            _response_cache = case_data['response_cache']
-            return _response_cache
-        except KeyError:
-            return None
-

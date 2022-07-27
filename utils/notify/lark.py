@@ -25,10 +25,7 @@ def is_not_null_and_blank_str(content):
   :param content: 字符串
   :return: 非空 - True，空 - False
   """
-    if content and content.strip():
-        return True
-    else:
-        return False
+    return bool(content and content.strip())
 
 
 class FeiShuTalkChatBot:
@@ -81,7 +78,7 @@ class FeiShuTalkChatBot:
                                 {
                                     "tag": "a",
                                     "text": "测试报告",
-                                    "href": "https://192.168.xx.72:8080/job/helper_test_adverte/allure/#"
+                                    "href": "https://192.168.xx.72:8080"
                                 },
                                 {
                                     "tag": "at",

@@ -82,13 +82,13 @@ class AllureFileClean:
             # 收集用例运行时长
             run_case_data['time'] = round(_time / 1000, 2)
             return TestMetrics(**run_case_data)
-        except FileNotFoundError:
+        except FileNotFoundError as exc:
             raise FileNotFoundError(
                 "程序中检查到您未生成allure报告，"
                 "通常可能导致的原因是allure环境未配置正确，"
                 "详情可查看如下博客内容："
                 "https://blog.csdn.net/weixin_43865008/article/details/124332793"
-            )
+            ) from exc
 
 
 if __name__ == '__main__':

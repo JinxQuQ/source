@@ -11,7 +11,7 @@ from typing import Text, Dict, Any, Union
 from jsonpath import jsonpath
 from Enums.assertMethod_enum import AssertMethod
 from utils.other_tools.get_conf_data import sql_switch
-from utils.logging_tool.log_control import ERROR, WARNING
+from utils.logging_tool.log_control import ERROR
 from utils.read_files_tools.regular_control import cache_regular
 from utils.other_tools.load_module_function import load_module_functions
 from utils.assertion import assert_type
@@ -70,7 +70,7 @@ class Assert:
         """
         # 判断数据库为开关为关闭状态
         if sql_switch() is False:
-            WARNING.logger.warning(
+            logger.warning(
                 "检测到数据库状态为关闭状态，程序已为您跳过此断言，断言值:%s", values
             )
         # 数据库开关为开启

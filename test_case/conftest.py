@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 # @Time   : 2022/3/30 14:12
 # @Author : 余少琪
-import json
-import os
 import pytest
 import time
 import allure
@@ -12,13 +10,13 @@ from common.setting import ConfigHandler
 from utils.read_files_tools.get_yaml_data_analysis import CaseData
 from utils.cache_process.cache_control import Cache
 from utils.read_files_tools.get_all_files_path import get_all_files
-from utils.logging_tool.log_control import INFO
+from utils.logging_tool.log_control import INFO, ERROR, WARNING
 from Enums.yamlData_enum import YAMLDate
 from utils.read_files_tools.clean_files import del_file
 from utils.other_tools.allure_data.allure_tools import allure_step, allure_step_no
 
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="session", autouse=False)
 def clear_report():
     """如clean命名无法删除报告，这里手动删除"""
     del_file(ConfigHandler.report_path)
@@ -128,15 +126,14 @@ def pytest_terminal_summary(terminalreporter):
     _SKIPPED = len([i for i in terminalreporter.stats.get('skipped', []) if i.when != 'teardown'])
     _TOTAL = terminalreporter._numcollected
     _TIMES = time.time() - terminalreporter._sessionstarttime
-    #
-    # INFO.logger.info(f"成功用例数: {_PASSED}")
-    # ERROR.logger.error(f"异常用例数: {_ERROR}")
-    # ERROR.logger.error(f"失败用例数: {_FAILED}")
-    # WARNING.logger.warning(f"跳过用例数: {_SKIPPED}")
-    # INFO.logger.info("用例执行时长: %.2f" % _TIMES + " s")
+
+    INFO.logger.error(f"异常用例数: {_ERROR}")
+    ERROR.logger.error(f"失败用例数: {_FAILED}")
+    WARNING.logger.warning(f"跳过用例数: {_SKIPPED}")
+    INFO.logger.info("用例执行时长: %.2f" % _TIMES + " s")
 
     try:
-        _RATE = round(_PASSED / _TOTAL * 100, 2)
-        INFO.logger.info("用例成功率: %.2f" % _RATE + " %")
+        _RATE = _PASSED / _TOTAL * 100
+        logger.info("用例成功率: %.2f" % _RATE + " %")
     except ZeroDivisionError:
-        INFO.logger.info("用例成功率: 0.00 %")
+        logger.info("用例成功率: 0.00 %")

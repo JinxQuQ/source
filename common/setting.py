@@ -4,7 +4,7 @@
 # @Author : 余少琪
 
 import os
-
+from utils.times_tool.time_control import now_time_day
 
 def replace_path(path):
     """替换路径"""
@@ -28,15 +28,14 @@ class ConfigHandler:
     cache_path = generate_path('Cache$')
     if not os.path.exists(cache_path):
         os.mkdir(cache_path)
+    common_path = generate_path('common$')
+    config_path = generate_path('common$config.yaml')
 
     log_path = generate_path('logs$log.log')
 
-    info_log_path = generate_path('logs$info.log')
-    error_log_path = generate_path('logs$error.log')
-
-    warning_log_path = generate_path('logs$warning.log')
-    common_path = generate_path('common$')
-    config_path = generate_path('common$config.yaml')
+    info_log_path = generate_path(f'logs$info-{now_time_day()}.log')
+    error_log_path = generate_path(f'logs$error-{now_time_day()}.log')
+    warning_log_path = generate_path(f'logs$warning-{now_time_day()}.log')
 
     file_path = generate_path('Files$')
 

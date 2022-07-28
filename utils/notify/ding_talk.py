@@ -23,25 +23,23 @@ class DingTalkSendMsg:
     """ 发送钉钉通知 """
     def __init__(self, metrics: TestMetrics):
         self.metrics = metrics
+        self.timeStamp = str(round(time.time() * 1000))
         self.sign = self.get_sign()
         self.dev_config = ConfigHandler()
         # 从yaml文件中获取钉钉配置信息
         self.get_ding_talk = GetYamlData(self.dev_config.config_path).get_yaml_data()['DingTalk']
+        self.webhook = self.get_ding_talk["webhook"] + "&timestamp=" + self.timeStamp + "&sign=" + self.sign
 
         # 获取 webhook地址
-        self.webhook = self.get_ding_talk["webhook"] + "&timestamp=" \
-                       + str(round(time.time() * 1000)) + "&sign=" + self.sign
-
         self.xiao_ding = DingtalkChatbot(self.webhook)
 
-    @classmethod
-    def get_sign(cls) -> Text:
+    def get_sign(self) -> Text:
         """
         根据时间戳 + "sign" 生成密钥
         :return:
         """
         secret = GetYamlData(ConfigHandler().config_path).get_yaml_data()['DingTalk']['secret']
-        string_to_sign = f'{str(round(time.time() * 1000))}\n{secret}'.encode('utf-8')
+        string_to_sign = f'{self.timeStamp}\n{secret}'.encode('utf-8')
         hmac_code = hmac.new(
             secret.encode('utf-8'),
             string_to_sign,
@@ -131,6 +129,10 @@ class DingTalkSendMsg:
 
     def send_ding_notification(self):
         """ 发送钉钉报告通知 """
+        # 判断如果有失败的用例，@所有人
+        is_at_all = False
+        if self.metrics.failed + self.metrics.broken > 0:
+            is_at_all = True
         text = f"#### {project_name}自动化通知  " \
                f"\n\n>Python脚本任务: {project_name}" \
                f"\n\n>环境: TEST\n\n>" \
@@ -139,6 +141,7 @@ class DingTalkSendMsg:
                f"\n\n>总用例数: {self.metrics.total} " \
                f"\n\n>成功用例数: {self.metrics.passed}" \
                f" \n\n>失败用例数: {self.metrics.failed} " \
+               f" \n\n>异常用例数: {self.metrics.broken} " \
                f"\n\n>跳过用例数: {self.metrics.skipped}" \
                f" ![screenshot](" \
                f"https://img.alicdn.com/tfs/TB1NwmBEL9TBuNjy1zbXXXpepXa-2400-1218.png" \
@@ -146,7 +149,8 @@ class DingTalkSendMsg:
                f" > ###### 测试报告 [详情](http://{get_host_ip()}:9999/index.html) \n"
         DingTalkSendMsg(AllureFileClean().get_case_count()).send_markdown(
             title="【接口自动化通知】",
-            msg=text
+            msg=text,
+            is_at_all=is_at_all
         )
 
 

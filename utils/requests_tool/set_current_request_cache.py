@@ -31,7 +31,7 @@ class SetCurrentRequestCache:
             jsonpath_value: Text,
             cache_name: Text) -> None:
         """将接口的请求参数存入缓存"""
-        _request_data = jsonpath.jsonpath(
+        _request_data = jsonpath(
             self.request_data,
             jsonpath_value
         )
@@ -50,7 +50,7 @@ class SetCurrentRequestCache:
             cache_name
     ):
         """将响应结果存入缓存"""
-        _response_data = jsonpath.jsonpath(json.loads(self.response_data), jsonpath_value)
+        _response_data = jsonpath(json.loads(self.response_data), jsonpath_value)
         if _response_data is not False:
             Cache(cache_name).set_caches(_response_data[0])
         else:

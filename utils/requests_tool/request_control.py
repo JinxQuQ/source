@@ -4,6 +4,7 @@
 # @Time   : 2022/3/28 12:52
 # @Author : 余少琪
 """
+import ast
 import os
 import random
 import time
@@ -22,7 +23,7 @@ from utils.logging_tool.run_time_decorator import execution_duration
 from utils.other_tools.allure_data.allure_tools import allure_step, allure_step_no, allure_attach
 from utils.read_files_tools.regular_control import cache_regular
 from utils.requests_tool.set_current_request_cache import SetCurrentRequestCache
-from utils.requests_tool.encryption_algorithm_control import encryption
+# from utils.requests_tool.encryption_algorithm_control import encryption
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -62,14 +63,14 @@ class RequestControl:
         兼容用户未填写headers或者header值为int
         @return:
         """
-        headers = eval(cache_regular(str(headers)))
+        headers = ast.literal_eval(cache_regular(str(headers)))
         if headers is None:
-            return {"headers": None}
+            headers = {"headers": None}
         else:
             for key, value in headers.items():
                 if not isinstance(value, str):
                     headers[key] = str(value)
-            return headers
+        return headers
 
     @classmethod
     def multipart_in_headers(
@@ -77,11 +78,11 @@ class RequestControl:
             request_data: Dict,
             header: Dict):
         """ 判断处理header为 Content-Type: multipart/form-data"""
-        header = eval(cache_regular(str(header)))
-        request_data = eval(cache_regular(str(request_data)))
+        header = ast.literal_eval(cache_regular(str(header)))
+        request_data = ast.literal_eval(cache_regular(str(request_data)))
 
         if header is None:
-            return request_data, {"headers": None}
+            header = {"headers": None}
         else:
             # 将header中的int转换成str
             for key, value in header.items():
@@ -117,7 +118,6 @@ class RequestControl:
             text: Text) -> Text:
         """unicode 解码"""
         return text.encode("utf-8").decode("utf-8")
-        # return text
 
     @classmethod
     def response_elapsed_total_seconds(
@@ -139,7 +139,7 @@ class RequestControl:
         :return:
         """
         # 处理上传多个文件的情况
-        yaml_data = eval(cache_regular(str(yaml_data)))
+        yaml_data = ast.literal_eval(cache_regular(str(yaml_data)))
         _files = []
         file_data = {}
         # 兼容又要上传文件，又要上传其他类型参数
@@ -163,7 +163,7 @@ class RequestControl:
             data: Union[Dict, None],
             **kwargs):
         """ 判断请求类型为json格式 """
-        yaml_data = eval(cache_regular(str(yaml_data)))
+        yaml_data = ast.literal_eval(cache_regular(str(yaml_data)))
         _headers = self.check_headers_str_null(headers)
         _data = yaml_data[YAMLDate.DATA.value]
 
@@ -187,7 +187,7 @@ class RequestControl:
             data: Union[Dict, None],
             **kwargs) -> object:
         """判断 requestType 为 None"""
-        yaml_data = eval(cache_regular(str(yaml_data)))
+        yaml_data = ast.literal_eval(cache_regular(str(yaml_data)))
         _headers = self.check_headers_str_null(headers)
         res = requests.request(
             method=method,
@@ -209,7 +209,7 @@ class RequestControl:
             **kwargs):
 
         """处理 requestType 为 params """
-        yaml_data = eval(cache_regular(str(yaml_data)))
+        yaml_data = ast.literal_eval(cache_regular(str(yaml_data)))
         _data = yaml_data[YAMLDate.DATA.value]
         url = yaml_data[YAMLDate.URL.value]
         if _data is not None:
@@ -263,7 +263,7 @@ class RequestControl:
             method: Text,
             **kwargs):
         """判断 requestType 为 data 类型"""
-        yaml_data = eval(cache_regular(str(yaml_data)))
+        yaml_data = ast.literal_eval(cache_regular(str(yaml_data)))
         _data, _headers = self.multipart_in_headers(data, headers)
         res = requests.request(
             method=method,
@@ -291,7 +291,7 @@ class RequestControl:
             data: Union[None, Dict],
             **kwargs):
         """判断 requestType 为 export 导出类型"""
-        yaml_data = eval(cache_regular(str(yaml_data)))
+        yaml_data = ast.literal_eval(cache_regular(str(yaml_data)))
         _headers = self.check_headers_str_null(headers)
         _data = yaml_data[YAMLDate.DATA.value]
         res = requests.request(
@@ -388,7 +388,7 @@ class RequestControl:
 
     @log_decorator(True)
     @execution_duration(3000)
-    @encryption("md5")
+    # @encryption("md5")
     def http_request(
             self,
             yaml_data: Dict,

@@ -329,10 +329,9 @@ class CaseData:
         try:
             _sql = case_data['sql']
             # 判断数据库开关为开启状态，并且sql不为空
-            if sql_switch() and _sql is not None:
-                return case_data['sql']
-            else:
+            if sql_switch() and _sql is None:
                 return None
+            return case_data['sql']
         except KeyError as exc:
             raise KeyError(
                 self.raise_value_null_error(case_id=case_id, data_name="sql")

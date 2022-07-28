@@ -49,7 +49,7 @@ def time_conversion(time_num: int):
         time_stamp = float(time_num / 1000)
         time_array = time.localtime(time_stamp)
         other_style_time = time.strftime("%Y-%m-%d %H:%M:%S", time_array)
-        return other_style_time
+    return other_style_time
 
 
 def now_time():

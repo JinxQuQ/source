@@ -6,6 +6,7 @@
 """
 
 import os
+import ast
 import yaml.scanner
 from utils.read_files_tools.regular_control import regular
 
@@ -82,4 +83,4 @@ class GetCaseData(GetYamlData):
         _yaml_data = self.get_yaml_data()
         # 正则处理yaml文件中的数据
         re_data = regular(str(_yaml_data))
-        return eval(re_data)
+        return ast.literal_eval(re_data)

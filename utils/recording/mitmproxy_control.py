@@ -5,9 +5,10 @@
 # @Author : 余少琪
 """
 from urllib.parse import parse_qs, urlparse
-import mitmproxy.http
-import os
 from typing import Any, Union, Text, List, Dict, Tuple
+import ast
+import os
+import mitmproxy.http
 from mitmproxy import ctx
 from ruamel import yaml
 
@@ -123,8 +124,7 @@ class Counter:
         if method == 'GET':
             # 如我们公司只有get请求是prams，其他都是json的
             return 'params'
-        else:
-            return 'json'
+        return 'json'
 
     @classmethod
     def data_handle(cls, dict_str) -> Any:
@@ -137,12 +137,12 @@ class Counter:
                     dict_str = dict_str.replace('true', 'True')
                 if 'false' in dict_str:
                     dict_str = dict_str.replace('false', 'False')
-                dict_str = eval(dict_str)
+                dict_str = ast.literal_eval(dict_str)
             if dict_str == "":
                 dict_str = None
             return dict_str
-        except Exception:
-            raise
+        except Exception as exc:
+            raise exc
 
     @classmethod
     def token_handle(cls, header) -> Dict:

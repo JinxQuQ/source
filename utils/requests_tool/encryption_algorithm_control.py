@@ -13,7 +13,7 @@ from hashlib import sha256
 import hmac
 from typing import Text
 import binascii
-from pyDes import *
+from pyDes import des, ECB, PAD_PKCS5
 
 
 def hmac_sha256_encrypt(key, data):
@@ -41,7 +41,6 @@ def sha1_secret_str(_str: Text):
 def des_encrypt(_str):
     """
     DES 加密
-    :param s: 原始字符串
     :return: 加密后字符串，16进制
     """
     # 密钥，自行修改

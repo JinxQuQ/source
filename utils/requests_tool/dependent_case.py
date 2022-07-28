@@ -4,9 +4,10 @@
 # @Time   : 2022/3/28 16:08
 # @Author : 余少琪
 """
+import ast
 import json
-from jsonpath import jsonpath
 from typing import Text, Dict, Union
+from jsonpath import jsonpath
 from utils.cache_process.cache_control import Cache
 from utils.requests_tool.request_control import RequestControl
 from utils.mysql_tool.mysql_control import MysqlDB
@@ -28,7 +29,7 @@ class DependentCase:
         :param case_id:
         :return: case_id_01
         """
-        _case_data = eval(Cache('case_process').get_cache())[case_id]
+        _case_data = ast.literal_eval(Cache('case_process').get_cache())[case_id]
         return _case_data
 
     @classmethod
@@ -47,12 +48,11 @@ class DependentCase:
 
         _jsonpath_data = jsonpath(obj, expr)
         # 判断是否正常提取到数据，如未提取到，则抛异常
-        if _jsonpath_data is not False:
-            return _jsonpath_data
-        else:
+        if _jsonpath_data is False:
             raise ValueError(
                 f"jsonpath提取失败！\n 提取的数据: {obj} \n jsonpath规则: {expr}"
             )
+        return _jsonpath_data
 
     @classmethod
     def set_cache_value(cls, dependent_data: Dict) -> Union[Text, None]:
@@ -115,7 +115,7 @@ class DependentCase:
         # 判断依赖数据类型，依赖 sql中的数据
         if setup_sql is not None:
             if sql_switch():
-                setup_sql = eval(cache_regular(str(setup_sql)))
+                setup_sql = ast.literal_eval(cache_regular(str(setup_sql)))
                 sql_data = MysqlDB().setup_sql_data(sql=setup_sql)
                 dependent_data = dependence_case_data['dependent_data']
                 for i in dependent_data:
@@ -189,7 +189,7 @@ class DependentCase:
                         )
                     else:
                         re_data = regular(str(self.get_cache(_case_id)))
-                        re_data = eval(cache_regular(str(re_data)))
+                        re_data = ast.literal_eval(cache_regular(str(re_data)))
                         res = RequestControl().http_request(re_data)
                         if jsonpath(obj=dependence_case_data, expr="$.dependent_data") is not False:
                             dependent_data = dependence_case_data['dependent_data']

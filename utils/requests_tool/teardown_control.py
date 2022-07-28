@@ -7,10 +7,10 @@
 # @File    : teardownControl
 # @describe: 请求后置处理
 """
-
+import ast
 import json
-from jsonpath import jsonpath
 from typing import Dict, Text
+from jsonpath import jsonpath
 from utils.requests_tool.request_control import RequestControl
 from utils.read_files_tools.regular_control import cache_regular, sql_regular, regular
 from utils.other_tools.jsonpath_date_replace import jsonpath_replace
@@ -63,7 +63,7 @@ class TearDownHandler:
     def regular_testcase(cls, teardown_case: Dict) -> Dict:
         """处理测试用例中的动态数据"""
         test_case = regular(str(teardown_case))
-        test_case = eval(cache_regular(str(test_case)))
+        test_case = ast.literal_eval(cache_regular(str(test_case)))
         return test_case
 
     @classmethod
@@ -214,7 +214,7 @@ class TearDownHandler:
         """
         _send_request = data['send_request']
         _case_id = data['case_id']
-        _teardown_case = eval(Cache('case_process').get_cache())[_case_id]
+        _teardown_case = ast.literal_eval(Cache('case_process').get_cache())[_case_id]
         for i in _send_request:
             if i['dependent_type'] == 'cache':
                 exec(self.dependent_type_cache(teardown_case=i))
@@ -247,7 +247,7 @@ class TearDownHandler:
         @return:
         """
         _case_id = data['case_id']
-        _teardown_case = eval(Cache('case_process').get_cache())[_case_id]
+        _teardown_case = ast.literal_eval(Cache('case_process').get_cache())[_case_id]
         _param_prepare = data['param_prepare']
         res = self.teardown_http_requests(_teardown_case)
         for i in _param_prepare:

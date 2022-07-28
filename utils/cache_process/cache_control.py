@@ -8,13 +8,13 @@
 """
 
 import os
-from typing import Any, Text
+from typing import Any, Text, Union
 from common.setting import ConfigHandler
 
 
 class Cache:
     """ 设置、读取缓存 """
-    def __init__(self, filename: [Text, bool]) -> None:
+    def __init__(self, filename: Union[Text, None]) -> None:
         # 如果filename不为空，则操作指定文件内容
         if filename:
             self.path = ConfigHandler().cache_path + filename
@@ -44,8 +44,11 @@ class Cache:
         获取缓存数据
         :return:
         """
-        with open(self.path, 'r', encoding='utf-8') as file:
-            return file.read()
+        try:
+            with open(self.path, 'r', encoding='utf-8') as file:
+                return file.read()
+        except FileNotFoundError:
+            pass
 
     def clean_cache(self) -> None:
         """删除所有缓存文件"""

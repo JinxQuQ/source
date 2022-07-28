@@ -6,8 +6,8 @@ Desc : 自定义函数调用
 import re
 import datetime
 import random
-import jsonpath
 from datetime import date, timedelta, datetime
+from jsonpath import jsonpath
 from faker import Faker
 from utils.logging_tool.log_control import ERROR
 from utils.cache_process.cache_control import Cache
@@ -164,9 +164,12 @@ def cache_regular(value):
             pattern = re.compile(
                 r'\$cache\{' + regular_data.replace('$', "\$").replace('[', '\[') + r'\}'
             )
-        cache_data = Cache(regular_data).get_cache()
-        # 使用sub方法，替换已经拿到的内容
-        value = re.sub(pattern, cache_data, value)
+        try:
+            cache_data = Cache(regular_data).get_cache()
+            # 使用sub方法，替换已经拿到的内容
+            value = re.sub(pattern, cache_data, value)
+        except Exception:
+            pass
     return value
 
 

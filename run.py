@@ -17,7 +17,6 @@ from utils.notify.lark import FeiShuTalkChatBot
 from utils.other_tools.allure_data.error_case_excel import ErrorCaseExcel
 
 
-
 def run():
     # 从配置文件中获取项目名称
     try:
@@ -70,7 +69,7 @@ def run():
     except Exception:
         # 如有异常，相关异常发送邮件
         e = traceback.format_exc()
-        send_email = SendEmail()
+        send_email = SendEmail(AllureFileClean.get_case_count())
         send_email.error_mail(e)
         raise
 

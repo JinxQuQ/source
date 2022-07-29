@@ -10,11 +10,10 @@ from typing import Text, Dict, Union
 from jsonpath import jsonpath
 from utils.cache_process.cache_control import Cache
 from utils.requests_tool.request_control import RequestControl
-from utils.mysql_tool.mysql_control import MysqlDB
 from utils.other_tools.get_conf_data import sql_switch
 from utils.read_files_tools.regular_control import regular, cache_regular
 from utils.other_tools.jsonpath_date_replace import jsonpath_replace
-from utils.logging_tool.log_control import WARNING
+from utils.logging_tool.log_control import WARNING, ERROR
 from Enums.dependentType_enum import DependentType
 from Enums.yamlData_enum import YAMLDate
 
@@ -100,23 +99,22 @@ class DependentCase:
     @classmethod
     def _dependent_type_for_sql(
             cls,
-            setup_sql: list,
+            sql_data: Dict,
             dependence_case_data: Dict,
             jsonpath_dates: Dict,
             case_data: Dict) -> None:
         """
         判断依赖类型为 sql，程序中的依赖参数从 数据库中提取数据
-        @param setup_sql: 前置sql语句
+        @param sql_data: 前置sql数据
         @param dependence_case_data: 依赖的数据
         @param jsonpath_dates: 依赖相关的用例数据
         @param case_data:
         @return:
         """
         # 判断依赖数据类型，依赖 sql中的数据
-        if setup_sql is not None:
+        if sql_data != {}:
             if sql_switch():
-                setup_sql = ast.literal_eval(cache_regular(str(setup_sql)))
-                sql_data = MysqlDB().setup_sql_data(sql=setup_sql)
+                # sql_data = MysqlDB().setup_sql_data(sql=setup_sql)
                 dependent_data = dependence_case_data['dependent_data']
                 for i in dependent_data:
                     _jsonpath = i[YAMLDate.JSONPATH.value]
@@ -135,6 +133,8 @@ class DependentCase:
                         )
             else:
                 WARNING.logger.warning("检查到数据库开关为关闭状态，请确认配置")
+        else:
+            ERROR.logger.error("程序中检测到你在使用数据库字段，但是setup_sql中未查询出任何数据")
 
     @classmethod
     def dependent_handler(
@@ -160,7 +160,7 @@ class DependentCase:
             cls.url_replace(replace_key=replace_key, jsonpath_dates=jsonpath_dates,
                             jsonpath_data=jsonpath_data, case_data=case_data)
 
-    def is_dependent(self, case_data: Dict) -> Union[Dict, bool]:
+    def is_dependent(self, case_data: Dict, sql_data: Dict) -> Union[Dict, bool]:
         """
         判断是否有数据依赖
         :return:
@@ -170,7 +170,6 @@ class DependentCase:
         _dependent_type = case_data[YAMLDate.DEPENDENCE_CASE.value]
         # 获取依赖用例数据
         _dependence_case_dates = case_data[YAMLDate.DEPENDENCE_CASE_DATA.value]
-        _setup_sql = case_data[YAMLDate.SETUP_SQL.value]
         # 判断是否有依赖
         if _dependent_type is True:
             # 读取依赖相关的用例数据
@@ -182,7 +181,7 @@ class DependentCase:
                     # 判断依赖数据为sql，case_id需要写成self，否则程序中无法获取case_id
                     if _case_id == 'self':
                         self._dependent_type_for_sql(
-                            setup_sql=_setup_sql,
+                            sql_data=sql_data,
                             dependence_case_data=dependence_case_data,
                             jsonpath_dates=jsonpath_dates,
                             case_data=case_data
@@ -245,13 +244,13 @@ class DependentCase:
             return False
 
     @classmethod
-    def get_dependent_data(cls, yaml_data: Dict) -> None:
+    def get_dependent_data(cls, yaml_data: Dict, sql_data) -> None:
         """
         jsonpath 和 依赖的数据,进行替换
-        :param yaml_data:
-        :return:
+        @param yaml_data:
+        @param sql_data:
         """
-        _dependent_data = DependentCase().is_dependent(yaml_data)
+        _dependent_data = DependentCase().is_dependent(yaml_data, sql_data=sql_data)
         # 判断有依赖
         if _dependent_data is not None and _dependent_data is not False:
             # if _dependent_data is not False:

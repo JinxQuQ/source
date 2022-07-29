@@ -37,9 +37,6 @@ collect_addtool_01:
           - dependent_type: response
             jsonpath: $.data.id
             replace_key: $.data.id
-    setup_sql:
-      - SELECT * FROM `api_test`.`ysq_test` LIMIT 0,1000
-
 
 collect_addtool_02:
     host: ${{host()}}

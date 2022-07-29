@@ -6,6 +6,7 @@ import os
 import traceback
 import pytest
 from Enums.notificationType_enum import NotificationType
+from setting import ConfigHandler
 from utils.other_tools.get_conf_data import project_name, get_excel_report_switch
 from utils.other_tools.allure_data.allure_report_data import AllureFileClean
 from utils.logging_tool.log_control import INFO
@@ -14,6 +15,7 @@ from utils.notify.wechat_send import WeChatSend
 from utils.notify.ding_talk import DingTalkSendMsg
 from utils.notify.send_mail import SendEmail
 from utils.notify.lark import FeiShuTalkChatBot
+from utils.read_files_tools.clean_files import del_file
 from utils.other_tools.allure_data.error_case_excel import ErrorCaseExcel
 
 
@@ -31,6 +33,9 @@ def run():
                   开始执行{}项目...
                 """.format(project_name)
         )
+
+        del_file(ConfigHandler.cache_path)
+
         # # 判断现有的测试用例，如果未生成测试代码，则自动生成
         # TestCaseAutomaticGeneration().get_case_automatic()
 

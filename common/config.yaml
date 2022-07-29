@@ -36,7 +36,7 @@ MySqlDB:
   switch: True
   host:
   user: root
-  password:
+  password: '123456'
   port: 3306
 
 # 镜像源

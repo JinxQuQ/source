@@ -38,7 +38,6 @@ collect_addtool_01:
             jsonpath: $.data.id
             replace_key: $.data.id
 
-
 collect_addtool_02:
     host: ${{host()}}
     url: /lg/collect/addtool/json

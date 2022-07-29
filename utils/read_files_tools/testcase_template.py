@@ -50,9 +50,9 @@ import pytest
 from common.setting import ConfigHandler
 from utils.read_files_tools.get_yaml_data_analysis import CaseData
 from utils.assertion.assert_control import Assert
-from utils.requestsUtils.requestControl import RequestControl
+from utils.requests_tool.request_control import RequestControl
 from utils.read_files_tools.regular_control import regular
-from utils.requestsUtils.teardownControl import TearDownHandler
+from utils.requests_tool.teardown_control import TearDownHandler
 
 
 TestData = CaseData(ConfigHandler.data_path + r'{yaml_path}').case_process()

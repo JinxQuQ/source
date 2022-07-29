@@ -17,7 +17,7 @@ from Enums.requestType_enum import RequestType
 from Enums.yamlData_enum import YAMLDate
 from common.setting import ConfigHandler
 from utils.logging_tool.log_decorator import log_decorator
-from utils.mysql_tool.mysql_control import MysqlDB
+from utils.mysql_tool.mysql_control import AssertExecution, SetUpMySQL
 from utils.other_tools.get_conf_data import sql_switch
 from utils.logging_tool.run_time_decorator import execution_duration
 from utils.other_tools.allure_data.allure_tools import allure_step, allure_step_no, allure_attach
@@ -328,7 +328,7 @@ class RequestControl:
         """处理 sql 参数 """
         # 判断数据库开关，开启状态，则返回对应的数据
         if sql_switch() and sql_data is not None:
-            sql_data = MysqlDB().assert_execution(
+            sql_data = AssertExecution().assert_execution(
                 sql=sql_data,
                 resp=res.json()
             )
@@ -410,6 +410,7 @@ class RequestControl:
         _data = yaml_data[YAMLDate.DATA.value]
         _current_request_set_cache = yaml_data[YAMLDate.CURRENT_REQUEST_SET_CACHE.value]
         _sleep = yaml_data[YAMLDate.SLEEP.value]
+        _setup_sql = yaml_data[YAMLDate.SETUP_SQL.value]
 
         requests_type_mapping = {
             RequestType.JSON.value: self.request_type_for_json,
@@ -422,9 +423,10 @@ class RequestControl:
 
         # 判断用例是否执行
         if _is_run is True or _is_run is None:
+            sql_data = SetUpMySQL().setup_sql_data(_setup_sql)
             # 处理多业务逻辑
             if dependent_switch is True:
-                DependentCase().get_dependent_data(yaml_data)
+                DependentCase().get_dependent_data(yaml_data, sql_data)
 
             res, yaml_data = requests_type_mapping.get(_request_type)(
                 yaml_data=yaml_data,

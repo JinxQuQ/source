@@ -34,7 +34,7 @@ DingTalk:
 MySqlDB:
   # 数据库开关
   switch: True
-  host:
+  host: 47.108.221.85
   user: root
   password: '123456'
   port: 3306

@@ -1,0 +1,49 @@
+# 公共参数
+case_common:
+  allureEpic: PathMedics
+  allureFeature: 冒烟测试
+  allureStory: 组别
+
+creat_group_01:
+    host: ${{host()}}
+    url: /apollo/hermes/group/
+    method: POST
+    detail: 正常创建组别
+    headers:
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run: 
+    data:
+      group_description: "描述"
+      group_name: "api_auto_test测试组别(删)"
+      project_uuid_fk: ""
+      # 是否有依赖业务，为空或者false则表示没有
+    dependence_case: True
+        # 依赖的数据
+    dependence_case_data:
+      # - case_id: creat_project_01
+      - case_id: get_project_list_01
+        dependent_data:
+          - dependent_type: response
+            jsonpath: $.data[0].project_uuid
+            replace_key: $.data.project_uuid_fk
+    assert:
+      status:
+        jsonpath: $.status
+        type: ==
+        value: success
+        AssertType:
+    sql:
+
+    teardown:
+      - case_id: get_study_list_01
+        param_prepare: 
+          - dependent_type: self_response
+            jsonpath: $.data[0].study_uuid
+            set_cache: study_uuid
+
+      - case_id: delete_study_01
+        send_request:
+          - dependent_type: 
+          #   cache_data : 
+          #   replace_key : 

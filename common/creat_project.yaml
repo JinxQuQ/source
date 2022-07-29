@@ -1,0 +1,71 @@
+# 公共参数
+case_common:
+  allureEpic: PathMedics
+  allureFeature: 冒烟测试
+  allureStory: 项目
+
+creat_project_01:
+    host: ${{host()}}
+    url: /apollo/hermes/project/
+    method: POST
+    detail: 正常创建项目
+    headers:
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run: 
+    data: 
+      study_uuid_fk: 
+      lesion_uuid_fk: 
+      project_description: "描述"
+      project_name: "api_auto_test测试项目(删)"
+      project_owner: "测试拥有者"
+      tissue_uuid_fk: 
+      # 是否有依赖业务，为空或者false则表示没有
+    dependence_case: true
+        # 依赖的数据
+    dependence_case_data:
+      - case_id: creat_study_01
+
+      - case_id: get_study_list_01
+        dependent_data:
+          - dependent_type: response
+            jsonpath: $.data[0].study_uuid
+            replace_key: $.data.study_uuid_fk
+
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.tissue_uuid
+            replace_key: $.data.tissue_uuid_fk
+          - dependent_type: sqlData
+            jsonpath: $.lesion_uuid
+            replace_key: $.data.lesion_uuid_fk
+    assert:
+      status:
+        jsonpath: $.status
+        type: ==
+        value: success
+        AssertType:
+
+    current_request_set_cache:
+      - type: request
+        jsonpath: $.data.study_uuid_fk
+        # 自定义的缓存名称
+        name: current_request_set_cache_study_uuid
+
+    teardown:
+      - case_id: get_study_list_01
+        param_prepare: 
+          - dependent_type: self_response
+            jsonpath: $.data[0].study_uuid
+            set_cache: study_uuid
+
+      - case_id: delete_study_01
+        send_request:
+          - dependent_type: 
+          #   cache_data : 
+          #   replace_key : 
+
+    sql:
+    setup_sql:
+     - SELECT tissue_uuid, lesion_uuid FROM hermes_tissue inner join hermes_lesion on hermes_lesion.tissue_uuid_fk_id = hermes_tissue.tissue_uuid where tissue = '生长板';

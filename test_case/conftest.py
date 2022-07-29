@@ -15,11 +15,11 @@ from Enums.yamlData_enum import YAMLDate
 from utils.read_files_tools.clean_files import del_file
 from utils.other_tools.allure_data.allure_tools import allure_step, allure_step_no
 
-
-@pytest.fixture(scope="session", autouse=False)
-def clear_report():
-    """如clean命名无法删除报告，这里手动删除"""
-    del_file(ConfigHandler.report_path)
+#
+# @pytest.fixture(scope="session", autouse=False)
+# def clear_report():
+#     """如clean命名无法删除报告，这里手动删除"""
+#     del_file(ConfigHandler.report_path)
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -134,6 +134,6 @@ def pytest_terminal_summary(terminalreporter):
 
     try:
         _RATE = _PASSED / _TOTAL * 100
-        logger.info("用例成功率: %.2f" % _RATE + " %")
+        INFO.logger.info("用例成功率: %.2f" % _RATE + " %")
     except ZeroDivisionError:
-        logger.info("用例成功率: 0.00 %")
+        INFO.logger.info("用例成功率: 0.00 %")

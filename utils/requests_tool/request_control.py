@@ -171,7 +171,7 @@ class RequestControl:
             method=method,
             url=yaml_data[YAMLDate.URL.value],
             json=_data,
-            data=data,
+            data={},
             headers=_headers,
             verify=False,
             params=None,

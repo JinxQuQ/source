@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time   : 2022-07-25 16:39:10
+# @Time   : 2022-08-01 10:57:25
 # @Author : 七月
 
 
@@ -31,7 +31,7 @@ class TestGetUserInfo:
         """
         res = RequestControl().http_request(in_data)
         TearDownHandler().teardown_handle(res)
-        Assert(in_data['assert']).assert_equality(response_data=res['response_data'],
+        Assert(in_data['assert']).assert_equality(response_data=res['response_data'], 
                                                   sql_data=res['sql_data'], status_code=res['status_code'])
 
 

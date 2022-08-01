@@ -160,7 +160,6 @@ class RequestControl:
             yaml_data: Dict,
             headers: Dict,
             method: Text,
-            data: Union[Dict, None],
             **kwargs):
         """ 判断请求类型为json格式 """
         yaml_data = ast.literal_eval(cache_regular(str(yaml_data)))
@@ -171,7 +170,7 @@ class RequestControl:
             method=method,
             url=yaml_data[YAMLDate.URL.value],
             json=_data,
-            data=data,
+            data={},
             headers=_headers,
             verify=False,
             params=None,
@@ -184,15 +183,13 @@ class RequestControl:
             yaml_data: Dict,
             headers: Dict,
             method: Text,
-            data: Union[Dict, None],
             **kwargs) -> object:
         """判断 requestType 为 None"""
-        yaml_data = ast.literal_eval(cache_regular(str(yaml_data)))
         _headers = self.check_headers_str_null(headers)
         res = requests.request(
             method=method,
             url=yaml_data[YAMLDate.URL.value],
-            data=data,
+            data=None,
             headers=_headers,
             verify=False,
             params=None,
@@ -205,7 +202,6 @@ class RequestControl:
             yaml_data: Dict,
             headers: Dict,
             method: Text,
-            data: Union[Dict, None],
             **kwargs):
 
         """处理 requestType 为 params """
@@ -227,7 +223,7 @@ class RequestControl:
             url=url,
             headers=_headers,
             verify=False,
-            data=data,
+            data=_data,
             params=None,
             **kwargs)
         return res, yaml_data
@@ -236,10 +232,10 @@ class RequestControl:
             self,
             yaml_data: Dict,
             method: Text,
-            data: Union[Dict, None],
             headers: Union[Dict, None],
             **kwargs):
         """处理 requestType 为 file 类型"""
+        yaml_data = ast.literal_eval(cache_regular(str(yaml_data)))
         multipart = self.upload_file(yaml_data)
         yaml_data = multipart[2]
         _headers = multipart[2][YAMLDate.HEADER.value]
@@ -258,12 +254,12 @@ class RequestControl:
     def request_type_for_data(
             self,
             yaml_data: Dict,
-            data: Dict,
             headers: Dict,
             method: Text,
             **kwargs):
         """判断 requestType 为 data 类型"""
         yaml_data = ast.literal_eval(cache_regular(str(yaml_data)))
+        data = yaml_data[YAMLDate.DATA.value]
         _data, _headers = self.multipart_in_headers(data, headers)
         res = requests.request(
             method=method,
@@ -288,7 +284,6 @@ class RequestControl:
             yaml_data: Dict,
             headers: Dict,
             method: Text,
-            data: Union[None, Dict],
             **kwargs):
         """判断 requestType 为 export 导出类型"""
         yaml_data = ast.literal_eval(cache_regular(str(yaml_data)))
@@ -301,7 +296,7 @@ class RequestControl:
             headers=_headers,
             verify=False,
             stream=False,
-            data=data,
+            data={},
             **kwargs)
         filepath = os.path.join(ConfigHandler.file_path, self.get_export_api_filename(res))  # 拼接路径
         if res.status_code == 200:
@@ -407,7 +402,6 @@ class RequestControl:
         _method = yaml_data[YAMLDate.METHOD.value]
         _headers = yaml_data[YAMLDate.HEADER.value]
         _request_type = yaml_data[YAMLDate.REQUEST_TYPE.value].upper()
-        _data = yaml_data[YAMLDate.DATA.value]
         _current_request_set_cache = yaml_data[YAMLDate.CURRENT_REQUEST_SET_CACHE.value]
         _sleep = yaml_data[YAMLDate.SLEEP.value]
         _setup_sql = yaml_data[YAMLDate.SETUP_SQL.value]
@@ -432,7 +426,6 @@ class RequestControl:
                 yaml_data=yaml_data,
                 headers=_headers,
                 method=_method,
-                data=_data,
                 **kwargs
             )
 

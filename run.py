@@ -6,7 +6,7 @@ import os
 import traceback
 import pytest
 from Enums.notificationType_enum import NotificationType
-from setting import ConfigHandler
+from common.setting import ConfigHandler
 from utils.other_tools.get_conf_data import project_name, get_excel_report_switch
 from utils.other_tools.allure_data.allure_report_data import AllureFileClean
 from utils.logging_tool.log_control import INFO

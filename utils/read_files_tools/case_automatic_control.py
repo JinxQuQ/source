@@ -174,8 +174,10 @@ class TestCaseAutomaticGeneration:
                 write_testcase_file(
                     allure_epic=self.allure_epic(case_data=yaml_case_process, file_path=file),
                     allure_feature=self.allure_feature(yaml_case_process, file_path=file),
-                    class_title=self.get_test_class_title(file), func_title=self.func_title(file),
-                    case_path=self.get_case_path(file)[0], yaml_path=self.yaml_path(file),
+                    class_title=self.get_test_class_title(file),
+                    func_title=self.func_title(file),
+                    case_path=self.get_case_path(file)[0],
+                    yaml_path=self.yaml_path(file),
                     file_name=self.get_case_path(file)[1],
                     allure_story=self.allure_story(case_data=yaml_case_process, file_path=file)
                     )

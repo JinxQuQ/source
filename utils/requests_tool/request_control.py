@@ -17,7 +17,7 @@ from Enums.requestType_enum import RequestType
 from Enums.yamlData_enum import YAMLDate
 from common.setting import ConfigHandler
 from utils.logging_tool.log_decorator import log_decorator
-from utils.mysql_tool.mysql_control import AssertExecution, SetUpMySQL
+from utils.mysql_tool.mysql_control import AssertExecution
 from utils.other_tools.get_conf_data import sql_switch
 from utils.logging_tool.run_time_decorator import execution_duration
 from utils.other_tools.allure_data.allure_tools import allure_step, allure_step_no, allure_attach
@@ -311,9 +311,9 @@ class RequestControl:
         return res, yaml_data
 
     @classmethod
-    def _request_body_handler(cls, data: Dict, method: Text) -> Union[None, Dict]:
+    def _request_body_handler(cls, data: Dict, request_type: Text) -> Union[None, Dict]:
         """处理请求参数 """
-        if method.upper() == 'GET':
+        if request_type.upper() == 'PARAMS':
             return None
         else:
             return data
@@ -337,7 +337,7 @@ class RequestControl:
             res,
             yaml_data: Dict,
     ) -> Dict:
-
+        res.encoding = 'uft-8'
         _data = {
             "url": res.url,
             "is_run": yaml_data[YAMLDate.IS_RUN.value],
@@ -345,7 +345,7 @@ class RequestControl:
             "response_data": res.text,
             # 这个用于日志专用，判断如果是get请求，直接打印url
             "request_body": self._request_body_handler(
-                yaml_data[YAMLDate.DATA.value], res.request.method
+                yaml_data[YAMLDate.DATA.value], yaml_data[YAMLDate.REQUEST_TYPE.value]
             ),
             "method": res.request.method,
             "sql_data": self._sql_data_handler(sql_data=yaml_data[YAMLDate.SQL.value], res=res),
@@ -417,10 +417,9 @@ class RequestControl:
 
         # 判断用例是否执行
         if _is_run is True or _is_run is None:
-            sql_data = SetUpMySQL().setup_sql_data(_setup_sql)
             # 处理多业务逻辑
             if dependent_switch is True:
-                DependentCase().get_dependent_data(yaml_data, sql_data)
+                DependentCase().get_dependent_data(yaml_data)
 
             res, yaml_data = requests_type_mapping.get(_request_type)(
                 yaml_data=yaml_data,

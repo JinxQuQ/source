@@ -213,10 +213,9 @@ class ErrorCaseExcel:
             os.remove(self._file_path)
 
         shutil.copyfile(src=_excel_template, dst=self._file_path)
-
-        # 打开程序（只打开不新建
+        # 打开程序（只打开不新建)
         self.app = xlwings.App(visible=False, add_book=False)
-        self.w_book = self.app.books.open(self._file_path)
+        self.w_book = self.app.books.open(self._file_path, read_only=True)
 
         # 选取工作表：
         self.sheet = self.w_book.sheets['异常用例']  # 或通过索引选取

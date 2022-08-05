@@ -9,11 +9,11 @@ import ast
 import json
 from typing import Text, Dict, Any, Union
 from jsonpath import jsonpath
-from Enums.assertMethod_enum import AssertMethod
+from utils.other_tools.models import AssertMethod
 from utils.other_tools.get_conf_data import sql_switch
 from utils.logging_tool.log_control import ERROR, WARNING
 from utils.read_files_tools.regular_control import cache_regular
-from utils.other_tools.load_module_function import load_module_functions
+from utils.other_tools.models import load_module_functions
 from utils.assertion import assert_type
 
 
@@ -28,7 +28,7 @@ class Assert:
     def _check_params(
             cls,
             response_data: Text,
-            sql_data: Union[Dict, None]) -> None:
+            sql_data: Union[Dict, None]) -> bool:
         """
 
         :param response_data: 响应数据
@@ -36,14 +36,13 @@ class Assert:
         :return:
         """
         if (response_data and sql_data) is not False:
-            if isinstance(sql_data, dict):
-                ...
-            else:
+            if not isinstance(sql_data, dict):
                 raise ValueError(
                     "断言失败，response_data、sql_data的数据类型必须要是字典类型，"
                     "请检查接口对应的数据是否正确\n"
                     f"sql_data: {sql_data}, 数据类型: {type(sql_data)}\n"
                 )
+        return True
 
     @classmethod
     def res_sql_data_bytes(cls, res_sql_data: Any) -> Text:

@@ -6,7 +6,7 @@
 """
 import json
 import allure
-from Enums.allureAttchementType_enum import AllureAttachmentType
+from utils.other_tools.models import AllureAttachmentType
 
 
 def allure_step(step: str, var: str) -> None:

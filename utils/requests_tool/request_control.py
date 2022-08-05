@@ -9,13 +9,13 @@ import os
 import random
 import time
 import urllib
-from typing import Tuple, Dict, Union, Text
+from typing import Tuple, Dict, Union, Text, Callable
 import requests
 import urllib3
 from requests_toolbelt import MultipartEncoder
-from Enums.requestType_enum import RequestType
-from Enums.yamlData_enum import YAMLDate
 from common.setting import ConfigHandler
+from utils.other_tools.models import YAMLDate
+from utils.other_tools.models import RequestType
 from utils.logging_tool.log_decorator import log_decorator
 from utils.mysql_tool.mysql_control import AssertExecution
 from utils.other_tools.get_conf_data import sql_switch
@@ -23,6 +23,7 @@ from utils.logging_tool.run_time_decorator import execution_duration
 from utils.other_tools.allure_data.allure_tools import allure_step, allure_step_no, allure_attach
 from utils.read_files_tools.regular_control import cache_regular
 from utils.requests_tool.set_current_request_cache import SetCurrentRequestCache
+from utils.other_tools.models import TestCase
 # from utils.requests_tool.encryption_algorithm_control import encryption
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -30,6 +31,9 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class RequestControl:
     """ 封装请求 """
+
+    def __init__(self, yaml_case: "TestCase"):
+        self.__yaml_case = yaml_case
 
     @classmethod
     def file_data_exit(
@@ -206,6 +210,7 @@ class RequestControl:
 
         """处理 requestType 为 params """
         yaml_data = ast.literal_eval(cache_regular(str(yaml_data)))
+        print(yaml_data)
         _data = yaml_data[YAMLDate.DATA.value]
         url = yaml_data[YAMLDate.URL.value]
         if _data is not None:
@@ -386,26 +391,23 @@ class RequestControl:
     # @encryption("md5")
     def http_request(
             self,
-            yaml_data: Dict,
             dependent_switch=True,
             **kwargs
     ):
         """
         请求封装
-        :param yaml_data: 从yaml文件中读取出来的所有数据
         :param dependent_switch:
         :param kwargs:
         :return:
         """
         from utils.requests_tool.dependent_case import DependentCase
-        _is_run = yaml_data[YAMLDate.IS_RUN.value]
-        _method = yaml_data[YAMLDate.METHOD.value]
-        _headers = yaml_data[YAMLDate.HEADER.value]
-        _request_type = yaml_data[YAMLDate.REQUEST_TYPE.value].upper()
-        _current_request_set_cache = yaml_data[YAMLDate.CURRENT_REQUEST_SET_CACHE.value]
-        _sleep = yaml_data[YAMLDate.SLEEP.value]
-        _setup_sql = yaml_data[YAMLDate.SETUP_SQL.value]
-
+        # _is_run = yaml_data[YAMLDate.IS_RUN.value]
+        # _method = yaml_data[YAMLDate.METHOD.value]
+        # _headers = yaml_data[YAMLDate.HEADER.value]
+        # _request_type = yaml_data[YAMLDate.REQUEST_TYPE.value].upper()
+        # _current_request_set_cache = yaml_data[YAMLDate.CURRENT_REQUEST_SET_CACHE.value]
+        # _sleep = yaml_data[YAMLDate.SLEEP.value]
+        # _setup_sql = yaml_data[YAMLDate.SETUP_SQL.value]
         requests_type_mapping = {
             RequestType.JSON.value: self.request_type_for_json,
             RequestType.NONE.value: self.request_type_for_none,
@@ -416,20 +418,20 @@ class RequestControl:
         }
 
         # 判断用例是否执行
-        if _is_run is True or _is_run is None:
+        if self.__yaml_case.is_run is True or self.__yaml_case.is_run is None:
             # 处理多业务逻辑
             if dependent_switch is True:
-                DependentCase().get_dependent_data(yaml_data)
+                DependentCase(self.__yaml_case).get_dependent_data()
 
-            res, yaml_data = requests_type_mapping.get(_request_type)(
-                yaml_data=yaml_data,
-                headers=_headers,
-                method=_method,
+            res, yaml_data = requests_type_mapping.get(self.__yaml_case.requestType)(
+                yaml_data=self.__yaml_case,
+                headers=self.__yaml_case.headers,
+                method=self.__yaml_case.method,
                 **kwargs
             )
 
-            if _sleep is not None:
-                time.sleep(_sleep)
+            if self.__yaml_case.sleep is not None:
+                time.sleep(self.__yaml_case.sleep)
 
             _res_data = self._check_params(
                 res=res,
@@ -445,9 +447,15 @@ class RequestControl:
             )
             # 将当前请求数据存入缓存中
             SetCurrentRequestCache(
-                current_request_set_cache=_current_request_set_cache,
+                current_request_set_cache=self.__yaml_case.current_request_set_cache,
                 request_data=yaml_data['data'],
                 response_data=res
             ).set_caches_main()
 
             return _res_data
+
+
+if __name__ == '__main__':
+    from utils.other_tools.models import TearDown, SendRequest
+    a = TestCase(url='https://www.wanandroid.com/lg/collect/addtool/json', method='POST', detail='新增收藏网址接口', assert_data = {'errorCode': {'jsonpath': '$.errorCode', 'type': '==', 'value': 0, 'AssertType': None}}, headers={'cookie': '$cache{login_cookie}'}, requestType='PARAMS', is_run=None, data={'name': '自动化', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}, dependence_case=False, dependence_case_data=None, sql=None, setup_sql=None, status_code=None, teardown_sql=None, teardown=[TearDown(case_id='collect_delete_tool_01', param_prepare=None, send_request=[SendRequest(dependent_type='response', jsonpath='$.data.id', cache_data=None, set_cache=None, replace_key='$.data.id')])], current_request_set_cache=None, sleep=None)
+    RequestControl(a).http_request()

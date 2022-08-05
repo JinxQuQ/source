@@ -5,7 +5,7 @@
 import os
 import traceback
 import pytest
-from Enums.notificationType_enum import NotificationType
+from utils.other_tools.models import NotificationType
 from common.setting import ConfigHandler
 from utils.other_tools.get_conf_data import project_name, get_excel_report_switch
 from utils.other_tools.allure_data.allure_report_data import AllureFileClean
@@ -34,7 +34,7 @@ def run():
                 """.format(project_name)
         )
 
-        del_file(ConfigHandler.cache_path)
+        # del_file(ConfigHandler.cache_path)
 
         # 判断现有的测试用例，如果未生成测试代码，则自动生成
         # TestCaseAutomaticGeneration().get_case_automatic()

@@ -283,12 +283,12 @@ class TearDownHandler:
         if _teardown_data is not None:
             # 循环 teardown中的接口
             for _data in _teardown_data:
-                if jsonpath(_data, '$.param_prepare') is not False:
+                if _data['param_prepare'] is not None:
                     self.param_prepare_request_handler(
                         data=_data,
                         resp_data=json.loads(_resp_data)
                     )
-                elif jsonpath(_data, '$.send_request') is not False:
+                elif _data['send_request'] is not None:
                     self.send_request_handler(
                         data=_data,
                         request_data=_request_data,

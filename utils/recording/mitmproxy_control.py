@@ -95,7 +95,6 @@ class Counter:
         """过滤url"""
         for i in self.url:
             # 判断当前拦截的url地址，是否是addons中配置的host
-
             if i in url:
                 # 如果是，则返回True
                 return True

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time   : 2022-08-01 10:57:25
+# @Time   : 2022-08-05 11:10:57
 # @Author : 七月
 
 
@@ -31,8 +31,8 @@ class TestCollectDeleteTool:
         """
         res = RequestControl().http_request(in_data)
         TearDownHandler().teardown_handle(res)
-        Assert(in_data['assert']).assert_equality(response_data=res['response_data'], 
-                                                  sql_data=res['sql_data'], status_code=res['status_code'])
+        Assert(in_data['assert_data']).assert_equality(response_data=res['response_data'],
+                                                       sql_data=res['sql_data'], status_code=res['status_code'])
 
 
 if __name__ == '__main__':

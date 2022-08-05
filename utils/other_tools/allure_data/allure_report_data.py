@@ -8,21 +8,9 @@
 
 import json
 from typing import List, Text
-from dataclasses import dataclass
 from common.setting import ConfigHandler, replace_path
 from utils.read_files_tools.get_all_files_path import get_all_files
-
-
-@dataclass
-class TestMetrics:
-    """ 用例执行数据 """
-    passed: int
-    failed: int
-    broken: int
-    skipped: int
-    total: int
-    pass_rate: float
-    time: str
+from utils.other_tools.models import TestMetrics
 
 
 class AllureFileClean:
@@ -60,7 +48,7 @@ class AllureFileClean:
         return values
 
     @classmethod
-    def get_case_count(cls) -> TestMetrics:
+    def get_case_count(cls) -> "TestMetrics":
         """ 统计用例数量 """
         try:
             file_name = ConfigHandler.report_path + replace_path('$html$widgets$summary.json')
@@ -81,6 +69,7 @@ class AllureFileClean:
                 run_case_data["pass_rate"] = 0.0
             # 收集用例运行时长
             run_case_data['time'] = _time if run_case_data['total'] == 0 else round(_time['duration'] / 1000, 2)
+            print(TestMetrics(**run_case_data))
             return TestMetrics(**run_case_data)
         except FileNotFoundError as exc:
             raise FileNotFoundError(

@@ -13,12 +13,14 @@ from utils.other_tools.get_conf_data import sql_switch
 from utils.read_files_tools.regular_control import regular, cache_regular
 from utils.other_tools.jsonpath_date_replace import jsonpath_replace
 from utils.logging_tool.log_control import WARNING
-from Enums.dependentType_enum import DependentType
-from Enums.yamlData_enum import YAMLDate
+from utils.other_tools.models import DependentType
+from utils.other_tools.models import YAMLDate, TestCase
 
 
 class DependentCase:
     """ 处理依赖相关的业务 """
+    def __init__(self, dependent_yaml_case: TestCase):
+        self.__dependent_case = dependent_yaml_case
 
     @classmethod
     def get_cache(cls, case_id: Text) -> Dict:
@@ -71,12 +73,11 @@ class DependentCase:
         except KeyError:
             return None
 
-    @classmethod
     def url_replace(
-            cls, replace_key: Text,
+            self, replace_key: Text,
             jsonpath_dates: Dict,
             jsonpath_data: list,
-            case_data: Dict) -> None:
+            case_data: "TestCase") -> None:
         """
         url中的动态参数替换
         # 如: 一般有些接口的参数在url中,并且没有参数名称, /api/v1/work/spu/approval/spuApplyDetails/{id}
@@ -90,7 +91,7 @@ class DependentCase:
         """
 
         if "$url_param" in replace_key:
-            _url = case_data['url'].replace(replace_key, str(jsonpath_data[0]))
+            _url = self.__dependent_case.url.replace(replace_key, str(jsonpath_data[0]))
             jsonpath_dates['$.url'] = _url
         else:
             jsonpath_dates[replace_key] = jsonpath_data[0]
@@ -101,7 +102,7 @@ class DependentCase:
             setup_sql: list,
             dependence_case_data: Dict,
             jsonpath_dates: Dict,
-            case_data: Dict) -> None:
+            case_data: "TestCase") -> None:
         """
         判断依赖类型为 sql，程序中的依赖参数从 数据库中提取数据
         @param setup_sql: 前置sql语句
@@ -140,7 +141,7 @@ class DependentCase:
             _jsonpath: Text,
             set_value: Text,
             replace_key: Text,
-            case_data: Dict,
+            case_data: "TestCase",
             jsonpath_dates: Dict,
             data: Dict,
             dependent_type: int
@@ -158,17 +159,17 @@ class DependentCase:
             cls.url_replace(replace_key=replace_key, jsonpath_dates=jsonpath_dates,
                             jsonpath_data=jsonpath_data, case_data=case_data)
 
-    def is_dependent(self, case_data: Dict) -> Union[Dict, bool]:
+    def is_dependent(self) -> Union[Dict, bool]:
         """
         判断是否有数据依赖
         :return:
         """
 
         # 获取用例中的dependent_type值，判断该用例是否需要执行依赖
-        _dependent_type = case_data[YAMLDate.DEPENDENCE_CASE.value]
+        _dependent_type = self.__dependent_case.dependence_case
         # 获取依赖用例数据
-        _dependence_case_dates = case_data[YAMLDate.DEPENDENCE_CASE_DATA.value]
-        _setup_sql = case_data[YAMLDate.SETUP_SQL.value]
+        _dependence_case_dates = self.__dependent_case.dependence_case_data
+        _setup_sql = self.__dependent_case.setup_sql
         # 判断是否有依赖
         if _dependent_type is True:
             # 读取依赖相关的用例数据
@@ -183,19 +184,19 @@ class DependentCase:
                             setup_sql=_setup_sql,
                             dependence_case_data=dependence_case_data,
                             jsonpath_dates=jsonpath_dates,
-                            case_data=case_data
+                            case_data=self.__dependent_case
                         )
                     else:
                         re_data = regular(str(self.get_cache(_case_id)))
                         re_data = ast.literal_eval(cache_regular(str(re_data)))
-                        res = RequestControl().http_request(re_data)
+                        res = RequestControl(re_data).http_request()
                         if jsonpath(obj=dependence_case_data, expr="$.dependent_data") is not False:
                             dependent_data = dependence_case_data['dependent_data']
                             for i in dependent_data:
 
                                 _case_id = dependence_case_data[YAMLDate.CASE_ID.value]
                                 _jsonpath = i[YAMLDate.JSONPATH.value]
-                                _request_data = case_data[YAMLDate.DATA.value]
+                                _request_data = self.__dependent_case.data
                                 _replace_key = self.replace_key(i)
                                 _set_value = self.set_cache_value(i)
                                 # 判断依赖数据类型, 依赖 response 中的数据
@@ -205,7 +206,7 @@ class DependentCase:
                                         _jsonpath=_jsonpath,
                                         set_value=_set_value,
                                         replace_key=_replace_key,
-                                        case_data=case_data,
+                                        case_data=self.__dependent_case,
                                         jsonpath_dates=jsonpath_dates,
                                         dependent_type=0
                                     )
@@ -217,7 +218,7 @@ class DependentCase:
                                         _jsonpath=_jsonpath,
                                         set_value=_set_value,
                                         replace_key=_replace_key,
-                                        case_data=case_data,
+                                        case_data=self.__dependent_case,
                                         jsonpath_dates=jsonpath_dates,
                                         dependent_type=1
                                     )
@@ -242,14 +243,12 @@ class DependentCase:
         else:
             return False
 
-    @classmethod
-    def get_dependent_data(cls, yaml_data: Dict) -> None:
+    def get_dependent_data(self) -> None:
         """
         jsonpath 和 依赖的数据,进行替换
-        :param yaml_data:
         :return:
         """
-        _dependent_data = DependentCase().is_dependent(yaml_data)
+        _dependent_data = DependentCase(self.__dependent_case).is_dependent()
         # 判断有依赖
         if _dependent_data is not None and _dependent_data is not False:
             # if _dependent_data is not False:

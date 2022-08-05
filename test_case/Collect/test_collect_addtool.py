@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time   : 2022-08-01 10:57:25
+# @Time   : 2022-08-05 11:10:57
 # @Author : 七月
 
 
@@ -16,6 +16,7 @@ from utils.requests_tool.teardown_control import TearDownHandler
 
 TestData = CaseData(ConfigHandler.data_path + r'Collect/collect_addtool.yaml').case_process()
 re_data = regular(str(TestData))
+print(re_data)
 
 
 @allure.epic("开发平台接口")
@@ -29,10 +30,10 @@ class TestCollectAddtool:
         :param :
         :return:
         """
-        res = RequestControl().http_request(in_data)
+        res = RequestControl(in_data).http_request()
         TearDownHandler().teardown_handle(res)
-        Assert(in_data['assert']).assert_equality(response_data=res['response_data'], 
-                                                  sql_data=res['sql_data'], status_code=res['status_code'])
+        Assert(in_data['assert_data']).assert_equality(response_data=res['response_data'],
+                                                       sql_data=res['sql_data'], status_code=res['status_code'])
 
 
 if __name__ == '__main__':

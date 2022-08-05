@@ -8,6 +8,7 @@
 from typing import Union, Text, Dict
 from utils.other_tools.get_conf_data import sql_switch
 from utils.read_files_tools.yaml_control import GetYamlData
+from utils.other_tools.models import TestCase
 
 
 class CaseData:
@@ -47,13 +48,11 @@ class CaseData:
                     "teardown_sql": self.teardown_sql(values),
                     "sleep": self.time_sleep(values),
                 }
-
                 if case_id_switch is True:
-                    case_lists.append({key: case_date})
+                    case_lists.append({key: TestCase(**case_date)})
                 else:
                     # 正则处理，如果用例中有需要读取缓存中的数据，则优先读取缓存
-
-                    case_lists.append(case_date)
+                    case_lists.append(TestCase(**case_date))
         return case_lists
 
     def get_case_host(
@@ -245,7 +244,7 @@ class CaseData:
     def get_dependence_case_data(
             self,
             case_id: Text,
-            case_data: Dict) -> Dict:
+            case_data: Dict) -> Union[Dict, None]:
         """
         获取依赖的用例
         :return:
@@ -267,7 +266,7 @@ class CaseData:
                     self.raise_value_null_error(case_id=case_id, data_name="dependence_case_data")
                 ) from exc
         else:
-            return {"dependence_case_data": None}
+            return None
 
     def get_case_dates(
             self,
@@ -380,3 +379,4 @@ class CaseData:
             return _sleep_time
         except KeyError:
             return None
+

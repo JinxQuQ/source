@@ -18,8 +18,8 @@ class SetCurrentRequestCache:
 
     def __init__(
             self,
-            current_request_set_cache: Dict,
-            request_data: Dict,
+            current_request_set_cache,
+            request_data,
             response_data
     ):
         self.current_request_set_cache = current_request_set_cache

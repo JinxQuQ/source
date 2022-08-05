@@ -8,7 +8,6 @@
 # @describe:
 """
 
-import os
 import json
 import shutil
 import ast
@@ -209,13 +208,13 @@ class ErrorCaseExcel:
     def __init__(self):
         _excel_template = ConfigHandler.excel_template + "自动化异常测试用例.xlsx"
         self._file_path = ConfigHandler.file_path + "自动化异常测试用例.xlsx"
-        if os.path.exists(self._file_path):
-            os.remove(self._file_path)
+        # if os.path.exists(self._file_path):
+        #     os.remove(self._file_path)
 
         shutil.copyfile(src=_excel_template, dst=self._file_path)
         # 打开程序（只打开不新建)
         self.app = xlwings.App(visible=False, add_book=False)
-        self.w_book = self.app.books.open(self._file_path, read_only=True)
+        self.w_book = self.app.books.open(self._file_path, read_only=False)
 
         # 选取工作表：
         self.sheet = self.w_book.sheets['异常用例']  # 或通过索引选取
@@ -287,59 +286,23 @@ class ErrorCaseExcel:
         @return:
         """
 
-        dates = self.case_data.get_error_case_data()
+        _data = self.case_data.get_error_case_data()
         # 判断有数据才进行写入
-        if len(dates) > 0:
+        if len(_data) > 0:
             num = 2
-            for date in dates:
-                self.write_excel_content(
-                    position="A" + str(num),
-                    value=str(self.case_data.get_uid(date))
-                )
-                self.write_excel_content(
-                    position='B' + str(num),
-                    value=str(self.case_data.get_case_name(date))
-                )
-                self.write_excel_content(
-                    position="C" + str(num),
-                    value=str(self.case_data.get_case_url(date))
-                )
-                self.write_excel_content(
-                    position="D" + str(num),
-                    value=str(self.case_data.get_method(date))
-                )
-                self.write_excel_content(
-                    position="E" + str(num),
-                    value=str(self.case_data.get_request_type(date))
-                )
-                self.write_excel_content(
-                    position="F" + str(num),
-                    value=str(self.case_data.get_headers(date))
-                )
-                self.write_excel_content(
-                    position="G" + str(num),
-                    value=str(self.case_data.get_case_data(date))
-                )
-                self.write_excel_content(
-                    position="H" + str(num),
-                    value=str(self.case_data.get_dependence_case(date))
-                )
-                self.write_excel_content(
-                    position="I" + str(num),
-                    value=str(self.case_data.get_assert(date))
-                )
-                self.write_excel_content(
-                    position="J" + str(num),
-                    value=str(self.case_data.get_sql(date))
-                )
-                self.write_excel_content(
-                    position="K" + str(num),
-                    value=str(self.case_data.get_case_time(date))
-                )
-                self.write_excel_content(
-                    position="L" + str(num),
-                    value=str(self.case_data.get_response(date))
-                )
+            for data in _data:
+                self.write_excel_content(position="A" + str(num), value=str(self.case_data.get_uid(data)))
+                self.write_excel_content(position='B' + str(num), value=str(self.case_data.get_case_name(data)))
+                self.write_excel_content(position="C" + str(num), value=str(self.case_data.get_case_url(data)))
+                self.write_excel_content(position="D" + str(num), value=str(self.case_data.get_method(data)))
+                self.write_excel_content(position="E" + str(num), value=str(self.case_data.get_request_type(data)))
+                self.write_excel_content(position="F" + str(num), value=str(self.case_data.get_headers(data)))
+                self.write_excel_content(position="G" + str(num), value=str(self.case_data.get_case_data(data)))
+                self.write_excel_content(position="H" + str(num), value=str(self.case_data.get_dependence_case(data)))
+                self.write_excel_content(position="I" + str(num), value=str(self.case_data.get_assert(data)))
+                self.write_excel_content(position="J" + str(num), value=str(self.case_data.get_sql(data)))
+                self.write_excel_content(position="K" + str(num), value=str(self.case_data.get_case_time(data)))
+                self.write_excel_content(position="L" + str(num), value=str(self.case_data.get_response(data)))
                 num += 1
             self.w_book.save()
             self.w_book.close()

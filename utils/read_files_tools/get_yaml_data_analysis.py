@@ -379,4 +379,3 @@ class CaseData:
             return _sleep_time
         except KeyError:
             return None
-

@@ -224,6 +224,7 @@ class AAA(BaseModel):
     irl = 'aaa'
 
 if __name__ == '__main__':
-    a = {"irl" : 333}
-    b =  AAA(**a).dict()
-    print(b['irl'])
+    a ={'host': '${{host()}}', 'url': '/lg/collect/addtool/json', 'method': 'POST', 'detail': '新增收藏网址接口', 'headers': {'cookie': '$cache{login_cookie}'}, 'requestType': 'params', 'is_run': None, 'data': {'name': '自动化', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}, 'dependence_case': False, 'dependence_case_data': None, 'assert': {'errorCode': {'jsonpath': '$.errorCode', 'type': '==', 'value': 0, 'AssertType': None}}, 'sql': None, 'teardown': [{'case_id': 'collect_delete_tool_01', 'send_request': [{'dependent_type': 'response', 'jsonpath': '$.data.id', 'replace_key': '$.data.id'}]}]}
+    b = TestCase(**a)
+    from utils.read_files_tools.regular_control import cache_regular
+    print(cache_regular(str(b)))

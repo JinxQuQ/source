@@ -6,6 +6,7 @@
 import os
 from utils.times_tool.time_control import now_time_day
 
+
 def replace_path(path):
     """替换路径"""
     path = path.replace('$', os.sep)

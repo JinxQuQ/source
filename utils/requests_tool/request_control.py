@@ -161,18 +161,17 @@ class RequestControl:
 
     def request_type_for_json(
             self,
-            yaml_data: Dict,
             headers: Dict,
             method: Text,
             **kwargs):
         """ 判断请求类型为json格式 """
-        yaml_data = ast.literal_eval(cache_regular(str(yaml_data)))
+        yaml_data = ast.literal_eval(cache_regular(str(self.__yaml_case)))
         _headers = self.check_headers_str_null(headers)
-        _data = yaml_data[YAMLDate.DATA.value]
+        _data = yaml_data.data
 
         res = requests.request(
             method=method,
-            url=yaml_data[YAMLDate.URL.value],
+            url=yaml_data.url,
             json=_data,
             data={},
             headers=_headers,
@@ -180,11 +179,10 @@ class RequestControl:
             params=None,
             **kwargs
         )
-        return res, yaml_data
+        return res
 
     def request_type_for_none(
             self,
-            yaml_data: Dict,
             headers: Dict,
             method: Text,
             **kwargs) -> object:
@@ -192,27 +190,24 @@ class RequestControl:
         _headers = self.check_headers_str_null(headers)
         res = requests.request(
             method=method,
-            url=yaml_data[YAMLDate.URL.value],
+            url=self.__yaml_case.url,
             data=None,
             headers=_headers,
             verify=False,
             params=None,
             **kwargs
         )
-        return res, yaml_data
+        return res
 
     def request_type_for_params(
             self,
-            yaml_data: Dict,
             headers: Dict,
             method: Text,
             **kwargs):
 
         """处理 requestType 为 params """
-        yaml_data = ast.literal_eval(cache_regular(str(yaml_data)))
-        print(yaml_data)
-        _data = yaml_data[YAMLDate.DATA.value]
-        url = yaml_data[YAMLDate.URL.value]
+        _data = self.__yaml_case.data
+        url = self.__yaml_case.url
         if _data is not None:
             # url 拼接的方式传参
             params_data = "?"
@@ -221,7 +216,7 @@ class RequestControl:
                     params_data += (key + "&")
                 else:
                     params_data += (key + "=" + str(value) + "&")
-            url = yaml_data[YAMLDate.URL.value] + params_data[:-1]
+            url = self.__yaml_case.url + params_data[:-1]
         _headers = self.check_headers_str_null(headers)
         res = requests.request(
             method=method,
@@ -231,7 +226,7 @@ class RequestControl:
             data=_data,
             params=None,
             **kwargs)
-        return res, yaml_data
+        return res
 
     def request_type_for_file(
             self,
@@ -254,7 +249,7 @@ class RequestControl:
             verify=False,
             **kwargs
         )
-        return res, yaml_data
+        return res
 
     def request_type_for_data(
             self,
@@ -274,7 +269,7 @@ class RequestControl:
             verify=False,
             **kwargs)
 
-        return res, yaml_data
+        return res
 
     @classmethod
     def get_export_api_filename(cls, res):
@@ -313,7 +308,7 @@ class RequestControl:
             else:
                 print("文件为空")
 
-        return res, yaml_data
+        return res
 
     @classmethod
     def _request_body_handler(cls, data: Dict, request_type: Text) -> Union[None, Dict]:
@@ -340,29 +335,28 @@ class RequestControl:
     def _check_params(
             self,
             res,
-            yaml_data: Dict,
+            yaml_data: "TestCase",
     ) -> Dict:
-        res.encoding = 'uft-8'
         _data = {
             "url": res.url,
-            "is_run": yaml_data[YAMLDate.IS_RUN.value],
-            "detail": yaml_data[YAMLDate.DETAIL.value],
+            "is_run": yaml_data.is_run,
+            "detail": yaml_data.detail,
             "response_data": res.text,
             # 这个用于日志专用，判断如果是get请求，直接打印url
             "request_body": self._request_body_handler(
-                yaml_data[YAMLDate.DATA.value], yaml_data[YAMLDate.REQUEST_TYPE.value]
+                yaml_data.data, yaml_data.requestType
             ),
             "method": res.request.method,
-            "sql_data": self._sql_data_handler(sql_data=yaml_data[YAMLDate.SQL.value], res=res),
+            "sql_data": self._sql_data_handler(sql_data=yaml_data.sql, res=res),
             "yaml_data": yaml_data,
             "headers": res.request.headers,
             "cookie": res.cookies,
-            "assert": yaml_data[YAMLDate.ASSERT.value],
+            "assert": yaml_data.assert_data,
             "res_time": self.response_elapsed_total_seconds(res),
             "status_code": res.status_code,
-            "teardown": yaml_data[YAMLDate.TEARDOWN.value],
-            "teardown_sql": yaml_data[YAMLDate.TEARDOWN_SQL.value],
-            "body": yaml_data[YAMLDate.DATA.value]
+            "teardown": yaml_data.teardown,
+            "teardown_sql": yaml_data.teardown_sql,
+            "body": yaml_data.data
         }
         # 抽离出通用模块，判断 http_request 方法中的一些数据校验
         return _data
@@ -401,13 +395,6 @@ class RequestControl:
         :return:
         """
         from utils.requests_tool.dependent_case import DependentCase
-        # _is_run = yaml_data[YAMLDate.IS_RUN.value]
-        # _method = yaml_data[YAMLDate.METHOD.value]
-        # _headers = yaml_data[YAMLDate.HEADER.value]
-        # _request_type = yaml_data[YAMLDate.REQUEST_TYPE.value].upper()
-        # _current_request_set_cache = yaml_data[YAMLDate.CURRENT_REQUEST_SET_CACHE.value]
-        # _sleep = yaml_data[YAMLDate.SLEEP.value]
-        # _setup_sql = yaml_data[YAMLDate.SETUP_SQL.value]
         requests_type_mapping = {
             RequestType.JSON.value: self.request_type_for_json,
             RequestType.NONE.value: self.request_type_for_none,
@@ -423,8 +410,7 @@ class RequestControl:
             if dependent_switch is True:
                 DependentCase(self.__yaml_case).get_dependent_data()
 
-            res, yaml_data = requests_type_mapping.get(self.__yaml_case.requestType)(
-                yaml_data=self.__yaml_case,
+            res = requests_type_mapping.get(self.__yaml_case.requestType)(
                 headers=self.__yaml_case.headers,
                 method=self.__yaml_case.method,
                 **kwargs
@@ -435,7 +421,7 @@ class RequestControl:
 
             _res_data = self._check_params(
                 res=res,
-                yaml_data=yaml_data)
+                yaml_data=self.__yaml_case)
 
             self.api_allure_step(
                 headers=_res_data['headers'],
@@ -448,7 +434,7 @@ class RequestControl:
             # 将当前请求数据存入缓存中
             SetCurrentRequestCache(
                 current_request_set_cache=self.__yaml_case.current_request_set_cache,
-                request_data=yaml_data['data'],
+                request_data=self.__yaml_case.data,
                 response_data=res
             ).set_caches_main()
 

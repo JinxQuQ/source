@@ -15,6 +15,7 @@ from utils.other_tools.jsonpath_date_replace import jsonpath_replace
 from utils.logging_tool.log_control import WARNING
 from utils.other_tools.models import DependentType
 from utils.other_tools.models import TestCase, DependentCaseData, DependentData
+from utils.other_tools.exceptions import ValueNotFoundError
 
 
 class DependentCase:
@@ -50,7 +51,7 @@ class DependentCase:
         _jsonpath_data = jsonpath(obj, expr)
         # 判断是否正常提取到数据，如未提取到，则抛异常
         if _jsonpath_data is False:
-            raise ValueError(
+            raise ValueNotFoundError(
                 f"jsonpath提取失败！\n 提取的数据: {obj} \n jsonpath规则: {expr}"
             )
         return _jsonpath_data
@@ -221,12 +222,12 @@ class DependentCase:
                 return jsonpath_dates
             except KeyError as exc:
                 # pass
-                raise KeyError(
+                raise ValueNotFoundError(
                     f"dependence_case_data依赖用例中，未找到 {exc} 参数，请检查是否填写"
                     f"如已填写，请检查是否存在yaml缩进问题"
                 ) from exc
             except TypeError as exc:
-                raise TypeError(
+                raise ValueNotFoundError(
                     "dependence_case_data下的所有内容均不能为空！"
                     "请检查相关数据是否填写，如已填写，请检查缩进问题"
                 ) from exc

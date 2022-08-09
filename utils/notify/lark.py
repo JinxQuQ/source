@@ -11,6 +11,7 @@ from common.setting import ConfigHandler
 from utils.read_files_tools.yaml_control import GetYamlData
 from utils.other_tools.allure_data.allure_report_data import TestMetrics
 
+
 urllib3.disable_warnings()
 
 try:

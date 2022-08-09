@@ -19,6 +19,7 @@ from utils.other_tools.get_conf_data import sql_switch
 from utils.logging_tool.log_control import WARNING
 from utils.cache_process.cache_control import Cache
 from utils.other_tools.models import ResponseData, TearDown, SendRequest, ParamPrepare
+from utils.other_tools.exceptions import JsonpathExtractionFailed, ValueNotFoundError
 
 
 class TearDownHandler:
@@ -106,7 +107,7 @@ class TearDownHandler:
                 replace_value=_resp_case_data
             )
         else:
-            raise ValueError(
+            raise JsonpathExtractionFailed(
                 f"jsonpath提取失败，替换内容: {resp_data} \n"
                 f"jsonpath: {teardown_case_data.jsonpath}"
             )
@@ -135,12 +136,12 @@ class TearDownHandler:
                     resp_case_data=_request_case_data
                 )
             else:
-                raise ValueError(
+                raise JsonpathExtractionFailed(
                     f"jsonpath提取失败，替换内容: {request_data} \n"
                     f"jsonpath: {teardown_case_data['jsonpath']}"
                 )
         except KeyError as exc:
-            raise KeyError("teardown中缺少set_value参数，请检查用例是否正确") from exc
+            raise ValueNotFoundError("teardown中缺少set_value参数，请检查用例是否正确") from exc
 
     def dependent_self_response(
             self,
@@ -170,11 +171,11 @@ class TearDownHandler:
                     resp_case_data=_resp_case_data
                 )
             else:
-                raise ValueError(
+                raise JsonpathExtractionFailed(
                     f"jsonpath提取失败，替换内容: {resp_data} \n"
                     f"jsonpath: {teardown_case_data.jsonpath}")
         except KeyError as exc:
-            raise KeyError("teardown中缺少set_cache参数，请检查用例是否正确") from exc
+            raise ValueNotFoundError("teardown中缺少set_cache参数，请检查用例是否正确") from exc
 
     @classmethod
     def dependent_type_cache(cls, teardown_case: "SendRequest") -> Text:

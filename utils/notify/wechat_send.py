@@ -14,6 +14,7 @@ from utils.other_tools.allure_data.allure_report_data import TestMetrics, Allure
 from utils.times_tool.time_control import now_time
 from utils.other_tools.get_local_ip import get_host_ip
 from utils.other_tools.get_conf_data import tester_name
+from utils.other_tools.exceptions import SendMessageError, ValueTypeError
 
 
 class WeChatSend:
@@ -45,12 +46,12 @@ class WeChatSend:
                         res = requests.post(url=self.curl, json=_data, headers=self.headers)
                         if res.json()['errcode'] != 0:
                             ERROR.logger.error(res.json())
-                            raise ValueError("企业微信「文本类型」消息发送失败")
+                            raise SendMessageError("企业微信「文本类型」消息发送失败")
 
                     else:
-                        raise TypeError("手机号码必须是字符串类型.")
+                        raise ValueTypeError("手机号码必须是字符串类型.")
         else:
-            raise ValueError("手机号码列表必须是list类型.")
+            raise ValueTypeError("手机号码列表必须是list类型.")
 
     def send_markdown(self, content):
         """
@@ -62,7 +63,7 @@ class WeChatSend:
         res = requests.post(url=self.curl, json=_data, headers=self.headers)
         if res.json()['errcode'] != 0:
             ERROR.logger.error(res.json())
-            raise ValueError("企业微信「MarkDown类型」消息发送失败")
+            raise SendMessageError("企业微信「MarkDown类型」消息发送失败")
 
     def _upload_file(self, file):
         """
@@ -84,7 +85,7 @@ class WeChatSend:
         res = requests.post(url=self.curl, json=_data, headers=self.headers)
         if res.json()['errcode'] != 0:
             ERROR.logger.error(res.json())
-            raise ValueError("企业微信「file类型」消息发送失败")
+            raise SendMessageError("企业微信「file类型」消息发送失败")
 
     def send_wechat_notification(self):
         """ 发送企业微信通知 """

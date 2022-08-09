@@ -12,7 +12,7 @@ import datetime
 import os
 from utils.read_files_tools.yaml_control import GetYamlData
 from common.setting import ConfigHandler
-
+from utils.other_tools.exceptions import ValueNotFoundError
 
 def write_case(case_path, page):
     """ 写入用例数据 """
@@ -86,4 +86,4 @@ if __name__ == '__main__':
         if not os.path.exists(case_path):
             write_case(case_path=case_path, page=page)
     else:
-        raise ValueError("real_time_update_test_cases 配置不正确，只能配置 True 或者 False")
+        raise ValueNotFoundError("real_time_update_test_cases 配置不正确，只能配置 True 或者 False")

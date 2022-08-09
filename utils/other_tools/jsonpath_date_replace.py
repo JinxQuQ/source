@@ -21,7 +21,6 @@ def jsonpath_replace(change_data, key_name):
             _new_data += "[" + i[1:-1] + "]"
         else:
             _new_data += '[' + '"' + i + '"' + "]"
-    print(_new_data)
     return _new_data
 
 

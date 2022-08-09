@@ -15,6 +15,7 @@ from utils.logging_tool.log_control import ERROR, WARNING
 from utils.read_files_tools.regular_control import cache_regular
 from utils.other_tools.models import load_module_functions
 from utils.assertion import assert_type
+from utils.other_tools.exceptions import JsonpathExtractionFailed, SqlNotFound, AssertTypeError
 
 
 class Assert:
@@ -78,7 +79,7 @@ class Assert:
             if sql_data != {'sql': None}:
                 res_sql_data = jsonpath(sql_data, assert_value)
                 if res_sql_data is False:
-                    raise ValueError(
+                    raise JsonpathExtractionFailed(
                         f"数据库断言内容jsonpath提取失败， 当前jsonpath内容: {assert_value}\n"
                         f"数据库返回内容: {sql_data}"
                     )
@@ -90,7 +91,7 @@ class Assert:
 
             # 判断当用例走的数据数据库断言，但是用例中未填写SQL
             else:
-                raise ValueError("请在用例中添加您要查询的SQL语句。")
+                raise SqlNotFound("请在用例中添加您要查询的SQL语句。")
 
     def assert_type_handle(
             self,
@@ -115,7 +116,7 @@ class Assert:
             name = AssertMethod(self.assert_data[key]['type']).name
             self.functions_mapping[name](resp_data[0], assert_value)
         else:
-            raise ValueError("断言失败，目前只支持数据库断言和响应断言")
+            raise AssertTypeError("断言失败，目前只支持数据库断言和响应断言")
 
     def assert_equality(
             self,
@@ -147,7 +148,7 @@ class Assert:
                             resp_data=resp_data)
                     else:
                         ERROR.logger.error("JsonPath值获取失败 %s ", assert_jsonpath)
-                        raise ValueError(f"JsonPath值获取失败 {assert_jsonpath}")
+                        raise JsonpathExtractionFailed(f"JsonPath值获取失败 {assert_jsonpath}")
 
 
 if __name__ == '__main__':

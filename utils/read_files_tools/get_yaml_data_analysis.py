@@ -9,6 +9,7 @@ from typing import Union, Text, Dict
 from utils.other_tools.get_conf_data import sql_switch
 from utils.read_files_tools.yaml_control import GetYamlData
 from utils.other_tools.models import TestCase
+from utils.other_tools.exceptions import ValueNotFoundError
 
 
 class CaseData:
@@ -21,12 +22,10 @@ class CaseData:
 
     def case_process(
             self,
-            case_id_switch: Union[None, bool] = None,
-            case_type_switch: bool = None):
+            case_id_switch: Union[None, bool] = None):
         """
         数据清洗之后，返回该 yaml 文件中的所有用例
         @param case_id_switch: 判断数据清洗，是否需要清洗出 case_id, 主要用于兼容用例池中的数据
-        @param case_type_switch: 用例数据类型，parametrize装饰器不接收TestCase对象，这里定义开关，返回Dict
         :return:
         """
         dates = GetYamlData(self.file_path).get_yaml_data()
@@ -70,14 +69,14 @@ class CaseData:
             _url = case_data['url']
             _host = case_data['host']
             if _url is None or _host is None:
-                raise ValueError(
+                raise ValueNotFoundError(
                     f"用例中的 url 或者 host 不能为空！\n "
                     f"用例ID: {case_id} \n "
                     f"用例路径: {self.file_path}"
                 )
             return _host + _url
         except KeyError as exc:
-            raise KeyError(
+            raise ValueNotFoundError(
                 self.raise_value_null_error(data_name="url 或 host", case_id=case_id)
             ) from exc
 
@@ -92,20 +91,20 @@ class CaseData:
             _case_method = case_data['method']
             _request_method = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTION']
             if _case_method.upper() not in _request_method:
-                raise ValueError(
+                raise ValueNotFoundError(
                     f"method 目前只支持 {_request_method} 请求方式，如需新增请联系管理员. "
                     f"{self.raise_value_error(data_name='请求方式', case_id=case_id, detail=_case_method)}"
                 )
             return _case_method.upper()
 
         except AttributeError as exc:
-            raise ValueError(
+            raise ValueNotFoundError(
                 f"method 目前只支持 {['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTION']} 请求方式，"
                 f"如需新增请联系管理员！ "
                 f"{self.raise_value_error(data_name='请求方式', case_id=case_id, detail=case_data['method'])}"
             ) from exc
         except KeyError as exc:
-            raise KeyError(
+            raise ValueNotFoundError(
                 self.raise_value_null_error(data_name="method", case_id=case_id)
             ) from exc
 
@@ -128,7 +127,7 @@ class CaseData:
         try:
             return case_data['detail']
         except KeyError as exc:
-            raise KeyError(
+            raise ValueNotFoundError(
                 self.raise_value_null_error(case_id=case_id, data_name="detail")
             ) from exc
 
@@ -144,7 +143,7 @@ class CaseData:
             _header = case_data['headers']
             return _header
         except KeyError as exc:
-            raise KeyError(
+            raise ValueNotFoundError(
                 self.raise_value_null_error(case_id=case_id, data_name="headers")
             ) from exc
 
@@ -192,7 +191,7 @@ class CaseData:
             _request_type = str(case_data['requestType'])
             # 判断用户填写的 requestType是否符合规范
             if _request_type.upper() not in _types:
-                raise ValueError(
+                raise ValueNotFoundError(
                     self.raise_value_error(
                         data_name='requestType',
                         case_id=case_id,
@@ -202,14 +201,14 @@ class CaseData:
             return _request_type.upper()
         # 异常捕捉
         except AttributeError as exc:
-            raise ValueError(
+            raise ValueNotFoundError(
                 self.raise_value_error(
                     data_name='requestType',
                     case_id=case_id,
                     detail=case_data['requestType'])
             ) from exc
         except KeyError as exc:
-            raise KeyError(
+            raise ValueNotFoundError(
                 self.raise_value_null_error(case_id=case_id, data_name="requestType")
             ) from exc
 
@@ -224,7 +223,7 @@ class CaseData:
         try:
             return case_data['is_run']
         except KeyError as exc:
-            raise KeyError(
+            raise ValueNotFoundError(
                 self.raise_value_null_error(case_id=case_id, data_name="is_run")
             ) from exc
 
@@ -240,7 +239,7 @@ class CaseData:
             _dependence_case = case_data['dependence_case']
             return _dependence_case
         except KeyError as exc:
-            raise KeyError(
+            raise ValueNotFoundError(
                 self.raise_value_null_error(case_id=case_id, data_name="dependence_case")
             ) from exc
 
@@ -259,14 +258,14 @@ class CaseData:
                 _dependence_case_data = case_data['dependence_case_data']
                 # 判断当用例中设置的需要依赖用例，但是dependence_case_data下方没有填写依赖的数据，异常提示
                 if _dependence_case_data is None:
-                    raise ValueError(f"dependence_case_data 依赖数据中缺少依赖相关数据！"
+                    raise ValueNotFoundError(f"dependence_case_data 依赖数据中缺少依赖相关数据！"
                                      f"如有填写，请检查缩进是否正确"
                                      f"用例ID: {case_id}"
                                      f"用例路径: {self.file_path}")
 
                 return _dependence_case_data
             except KeyError as exc:
-                raise KeyError(
+                raise ValueNotFoundError(
                     self.raise_value_null_error(case_id=case_id, data_name="dependence_case_data")
                 ) from exc
         else:
@@ -298,7 +297,7 @@ class CaseData:
             return _dates
 
         except KeyError as exc:
-            raise KeyError(
+            raise ValueNotFoundError(
                 self.raise_value_null_error(case_id=case_id, data_name="data")
             ) from exc
 
@@ -317,7 +316,7 @@ class CaseData:
                 raise self.raise_value_error(data_name="assert", case_id=case_id, detail=_assert)
             return case_data['assert']
         except KeyError as exc:
-            raise KeyError(
+            raise ValueNotFoundError(
                 self.raise_value_null_error(case_id=case_id, data_name="assert")
             ) from exc
 
@@ -336,7 +335,7 @@ class CaseData:
                 return None
             return case_data['sql']
         except KeyError as exc:
-            raise KeyError(
+            raise ValueNotFoundError(
                 self.raise_value_null_error(case_id=case_id, data_name="sql")
             ) from exc
 

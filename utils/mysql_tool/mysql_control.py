@@ -17,6 +17,7 @@ from utils.read_files_tools.regular_control import sql_regular
 from utils.read_files_tools.yaml_control import GetYamlData
 from utils.other_tools.get_conf_data import sql_switch
 from utils.read_files_tools.regular_control import cache_regular
+from utils.other_tools.exceptions import DataAcquisitionFailed, ValueTypeError
 
 # 忽略 Mysql 告警信息
 filterwarnings("ignore", category=pymysql.Warning)
@@ -134,7 +135,7 @@ class SetUpMySQL(MysqlDB):
                         self.execute(sql=i)
             return data
         except IndexError as exc:
-            raise ValueError("sql 数据查询失败，请检查setup_sql语句是否正确") from exc
+            raise DataAcquisitionFailed("sql 数据查询失败，请检查setup_sql语句是否正确") from exc
 
 
 class AssertExecution(MysqlDB):
@@ -161,11 +162,11 @@ class AssertExecution(MysqlDB):
                             query_data = self.query(sql)[0]
                             data = self.sql_data_handler(query_data, data)
                         else:
-                            raise ValueError(f"该条sql未查询出任何数据, {sql}")
+                            raise DataAcquisitionFailed(f"该条sql未查询出任何数据, {sql}")
                 else:
-                    raise ValueError("断言的 sql 必须是查询的 sql")
+                    raise DataAcquisitionFailed("断言的 sql 必须是查询的 sql")
             else:
-                raise ValueError("sql数据类型不正确，接受的是list")
+                raise ValueTypeError("sql数据类型不正确，接受的是list")
             return data
         except Exception as error_data:
             ERROR.logger.error("数据库连接失败，失败原因 %s", error_data)

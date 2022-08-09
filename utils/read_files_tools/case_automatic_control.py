@@ -11,6 +11,7 @@ from utils.read_files_tools.testcase_template import write_testcase_file
 from utils.read_files_tools.yaml_control import GetYamlData
 from utils.other_tools.get_os_sep import get_os_sep
 from utils.read_files_tools.get_all_files_path import get_all_files
+from utils.other_tools.exceptions import ValueNotFoundError
 
 
 class TestCaseAutomaticGeneration:
@@ -105,7 +106,7 @@ class TestCaseAutomaticGeneration:
         try:
             return case_data['case_common']['allureEpic']
         except KeyError as exc:
-            raise KeyError(cls.error_message(
+            raise ValueNotFoundError(cls.error_message(
                 param_name="allureEpic",
                 file_path=file_path
             )) from exc
@@ -121,7 +122,7 @@ class TestCaseAutomaticGeneration:
         try:
             return case_data['case_common']['allureFeature']
         except KeyError as exc:
-            raise KeyError(cls.error_message(
+            raise ValueNotFoundError(cls.error_message(
                 param_name="allureFeature",
                 file_path=file_path
             )) from exc
@@ -137,7 +138,7 @@ class TestCaseAutomaticGeneration:
         try:
             return case_data['case_common']['allureStory']
         except KeyError as exc:
-            raise KeyError(cls.error_message(
+            raise ValueNotFoundError(cls.error_message(
                 param_name="allureStory",
                 file_path=file_path
             )) from exc

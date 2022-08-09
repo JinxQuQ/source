@@ -8,9 +8,10 @@
 # @describe:
 """
 import json
-from typing import Text, Dict
+from typing import Text
 from jsonpath import jsonpath
 from utils.cache_process.cache_control import Cache
+from utils.other_tools.exceptions import ValueNotFoundError
 
 
 class SetCurrentRequestCache:
@@ -38,7 +39,7 @@ class SetCurrentRequestCache:
         if _request_data is not False:
             Cache(cache_name).set_caches(_request_data[0])
         else:
-            raise ValueError(
+            raise ValueNotFoundError(
                 "缓存设置失败，程序中未检测到需要缓存的数据。"
                 f"请求参数: {self.request_data}"
                 f"提取的 jsonpath 内容: {jsonpath_value}"
@@ -54,7 +55,7 @@ class SetCurrentRequestCache:
         if _response_data is not False:
             Cache(cache_name).set_caches(_response_data[0])
         else:
-            raise ValueError("缓存设置失败，程序中未检测到需要缓存的数据。"
+            raise ValueNotFoundError("缓存设置失败，程序中未检测到需要缓存的数据。"
                              f"请求参数: {self.response_data}"
                              f"提取的 jsonpath 内容: {jsonpath_value}")
 

@@ -19,7 +19,7 @@ def execution_duration(number: int):
     def decorator(func):
         def swapper(*args, **kwargs):
             res = func(*args, **kwargs)
-            run_time = res['res_time']
+            run_time = res.res_time
             # 计算时间戳毫米级别，如果时间大于number，则打印 函数名称 和运行时间
             if run_time > number:
                 ERROR.logger.error(

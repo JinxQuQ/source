@@ -20,7 +20,7 @@ collect_update_tool_01:
     data:
       name: 自动化编辑网址名称
       link: https://gitee.com/yu_xiao_qi/pytest-auto-api2
-      id:
+      id: $cache{collect_update_tool_01_id}
     # 是否有依赖业务，为空或者false则表示没有
     dependence_case: True
     # 依赖的数据
@@ -29,7 +29,7 @@ collect_update_tool_01:
         dependent_data:
           - dependent_type: response
             jsonpath: $.data.id
-            replace_key: $.data.id
+            set_cache: collect_update_tool_01_id
     assert:
       # 断言接口状态码
       errorCode:

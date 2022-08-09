@@ -50,6 +50,101 @@ def load_module_functions(module) -> Dict[Text, Callable]:
 
 
 @unique
+class DependentType(Enum):
+    """
+    数据依赖相关枚举
+    """
+    RESPONSE = 'response'
+    REQUEST = 'request'
+    SQL_DATA = 'sqlData'
+    CACHE = "cache"
+
+
+class Assert(BaseModel):
+    jsonpath: Text
+    type: Text
+    value: Any
+    AssertType: Union[None, Text] = None
+
+
+class DependentData(BaseModel):
+    dependent_type: Text
+    jsonpath: Text
+    set_cache: Optional[Text]
+    replace_key: Optional[Text]
+
+
+class DependentCaseData(BaseModel):
+    case_id: Text
+    dependent_data: List[DependentData]
+
+
+class ParamPrepare(BaseModel):
+    dependent_type: Text
+    jsonpath: Text
+    set_cache: Text
+
+
+class SendRequest(BaseModel):
+    dependent_type: Text
+    jsonpath: Optional[Text]
+    cache_data: Optional[Text]
+    set_cache: Optional[Text]
+    replace_key: Optional[Text]
+
+
+class TearDown(BaseModel):
+    case_id: Text
+    param_prepare: Optional[List["ParamPrepare"]]
+    send_request: Optional[List["SendRequest"]]
+
+
+class CurrentRequestSetCache(BaseModel):
+    type: Text
+    jsonpath: Text
+    name: Text
+
+
+class TestCase(BaseModel):
+    url: Text
+    method: Text
+    detail: Text
+    assert_data: Union[Dict, Text] = Field([], alias="assert")
+    headers: Union[None, Dict, Text] = {}
+    requestType: Text
+    is_run: Union[None, bool] = None
+    data: Union[Dict, None, Text] = None
+    dependence_case: Union[None, bool] = False
+    dependence_case_data: Optional[Union[None, List["DependentCaseData"], Text]] = None
+    sql: List = None
+    setup_sql: List = None
+    status_code: Optional[int] = None
+    teardown_sql: Optional[List] = None
+    teardown: List["TearDown"] = None
+    current_request_set_cache: Optional[List["CurrentRequestSetCache"]]
+    sleep: Optional[Union[int, float]]
+
+
+class ResponseData(BaseModel):
+    url: Text
+    is_run: Union[None, bool]
+    detail: Text
+    response_data: Text
+    request_body: Union[Dict, None]
+    method: Text
+    sql_data: Dict
+    yaml_data: "TestCase"
+    headers: Dict
+    cookie: Dict
+    assert_data: List = Field([], alias="assert")
+    res_time: Union[int, float]
+    status_code: int
+    teardown: List["TearDown"] = None
+    teardown_sql: Union[None, List]
+    body: Union[Dict, None] = None
+
+
+@unique
 class AllureAttachmentType(Enum):
     """
     allure 报告的文件类型枚举
@@ -114,117 +209,3 @@ class AssertMethod(Enum):
     startswith = 'startswith'
     # 检查响应内容的结尾是否和预期结果内容相等
     endswith = 'endswith'
-
-
-@unique
-class DependentType(Enum):
-    """
-    数据依赖相关枚举
-    """
-    RESPONSE = 'response'
-    REQUEST = 'request'
-    SQL_DATA = 'sqlData'
-    CACHE = "cache"
-
-
-class Assert(BaseModel):
-    jsonpath: Text
-    type: Text
-    value: Any
-    AssertType: Union[None, Text] = None
-
-
-class DependentData(BaseModel):
-    dependent_type: Text
-    jsonpath: Text
-    set_cache: Optional[Text]
-    replace_key: Optional[Text]
-
-
-class DependentCaseData(BaseModel):
-    case_id: Text
-    dependent_data: List[DependentData]
-
-
-class ParamPrepare(BaseModel):
-    dependent_type: Text
-    jsonpath: Text
-    set_cache: Text
-
-
-class SendRequest(BaseModel):
-    dependent_type: Text
-    jsonpath: Optional[Text]
-    cache_data: Optional[Text]
-    set_cache: Optional[Text]
-    replace_key: Optional[Text]
-
-
-class TearDown(BaseModel):
-    case_id: Text
-    param_prepare: Optional[List["ParamPrepare"]]
-    send_request: Optional[List["SendRequest"]]
-
-
-class CurrentRequestSetCache(BaseModel):
-    type: Text
-    jsonpath: Text
-    name: Text
-
-
-class TestCase(BaseModel):
-    url: Text
-    method: Text
-    detail: Text
-    assert_data: Dict = Field([], alias="assert")
-    headers: Union[None, Dict] = {}
-    requestType: Text
-    is_run: Union[None, bool] = None
-    data: Dict = None
-    dependence_case: Union[None, bool] = False
-    dependence_case_data: Optional[Union[None, List["DependentCaseData"]]] = None
-    sql: List = None
-    setup_sql: List = None
-    status_code: Optional[int] = None
-    teardown_sql: Optional[List] = None
-    teardown: List["TearDown"] = None
-    current_request_set_cache: Optional[List["CurrentRequestSetCache"]]
-    sleep: Optional[Union[int, float]]
-
-
-class YAMLDate(Text, Enum):
-    """
-    测试用例相关字段
-    """
-    HOST = 'host'
-    URL = 'url'
-    METHOD = 'method'
-    HEADER = 'headers'
-    REQUEST_TYPE = 'requestType'
-    IS_RUN = 'is_run'
-    DATA = 'data'
-    DEPENDENCE_CASE = 'dependence_case'
-    DEPENDENCE_CASE_DATA = 'dependence_case_data'
-    ASSERT = 'assert_data'
-    SQL = 'sql'
-    CASE_ID = 'case_id'
-    JSONPATH = 'jsonpath'
-    REPLACE_KEY = 'replace_key'
-    DEPENDENT_TYPE = 'dependent_type'
-    DETAIL = 'detail'
-    SETUP_SQL = 'setup_sql'
-    STATUS_CODE = "status_code"
-    TEARDOWN = "teardown"
-    TEARDOWN_SQL = 'teardown_sql'
-    CURRENT_REQUEST_SET_CACHE = "current_request_set_cache"
-    SLEEP = 'sleep'
-
-
-class AAA(BaseModel):
-    irl = 'aaa'
-
-if __name__ == '__main__':
-    a ={'host': '${{host()}}', 'url': '/lg/collect/addtool/json', 'method': 'POST', 'detail': '新增收藏网址接口', 'headers': {'cookie': '$cache{login_cookie}'}, 'requestType': 'params', 'is_run': None, 'data': {'name': '自动化', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}, 'dependence_case': False, 'dependence_case_data': None, 'assert': {'errorCode': {'jsonpath': '$.errorCode', 'type': '==', 'value': 0, 'AssertType': None}}, 'sql': None, 'teardown': [{'case_id': 'collect_delete_tool_01', 'send_request': [{'dependent_type': 'response', 'jsonpath': '$.data.id', 'replace_key': '$.data.id'}]}]}
-    b = TestCase(**a)
-    from utils.read_files_tools.regular_control import cache_regular
-    print(cache_regular(str(b)))

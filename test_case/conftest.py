@@ -11,7 +11,7 @@ from utils.read_files_tools.get_yaml_data_analysis import CaseData
 from utils.cache_process.cache_control import Cache
 from utils.read_files_tools.get_all_files_path import get_all_files
 from utils.logging_tool.log_control import INFO, ERROR, WARNING
-from utils.other_tools.models import YAMLDate
+from utils.other_tools.models import TestCase
 from utils.read_files_tools.clean_files import del_file
 from utils.other_tools.allure_data.allure_tools import allure_step, allure_step_no
 
@@ -104,14 +104,15 @@ def pytest_configure(config):
 @pytest.fixture(scope="function", autouse=True)
 def case_skip(in_data):
     """处理跳过用例"""
-    if in_data['is_run'] is False:
-        allure.dynamic.title(in_data[YAMLDate.DETAIL.value])
-        allure_step_no(f"请求URL: {in_data[YAMLDate.IS_RUN.value]}")
-        allure_step_no(f"请求方式: {in_data[YAMLDate.METHOD.value]}")
-        allure_step("请求头: ", in_data[YAMLDate.HEADER.value])
-        allure_step("请求数据: ", in_data[YAMLDate.DATA.value])
-        allure_step("依赖数据: ", in_data[YAMLDate.DEPENDENCE_CASE_DATA.value])
-        allure_step("预期数据: ", in_data[YAMLDate.ASSERT.value])
+    in_data = TestCase(**in_data)
+    if in_data.is_run is False:
+        allure.dynamic.title(in_data.detail)
+        allure_step_no(f"请求URL: {in_data.is_run}")
+        allure_step_no(f"请求方式: {in_data.method}")
+        allure_step("请求头: ", in_data.headers)
+        allure_step("请求数据: ", in_data.data)
+        allure_step("依赖数据: ", in_data.dependence_case_data)
+        allure_step("预期数据: ", in_data.assert_data)
         pytest.skip()
 
 

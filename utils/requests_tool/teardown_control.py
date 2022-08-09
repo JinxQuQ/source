@@ -18,10 +18,13 @@ from utils.mysql_tool.mysql_control import MysqlDB
 from utils.other_tools.get_conf_data import sql_switch
 from utils.logging_tool.log_control import WARNING
 from utils.cache_process.cache_control import Cache
+from utils.other_tools.models import ResponseData, TearDown, SendRequest, ParamPrepare
 
 
 class TearDownHandler:
     """ 处理yaml格式后置请求 """
+    def __init__(self, res: "ResponseData"):
+        self._res = res
 
     @classmethod
     def jsonpath_replace_data(
@@ -67,7 +70,7 @@ class TearDownHandler:
         return test_case
 
     @classmethod
-    def teardown_http_requests(cls, teardown_case: Dict) -> Dict:
+    def teardown_http_requests(cls, teardown_case: Dict) -> "ResponseData":
         """
         发送后置请求
         @param teardown_case: 后置用例
@@ -75,15 +78,14 @@ class TearDownHandler:
         """
 
         test_case = cls.regular_testcase(teardown_case)
-        res = RequestControl().http_request(
-            yaml_data=test_case,
+        res = RequestControl(test_case).http_request(
             dependent_switch=False
         )
         return res
 
     def dependent_type_response(
             self,
-            teardown_case_data: Dict,
+            teardown_case_data: "SendRequest",
             resp_data: Dict) -> Text:
         """
         判断依赖类型为当前执行用例响应内容
@@ -91,10 +93,10 @@ class TearDownHandler:
         :param : resp_data: 需要替换的内容
         :return:
         """
-        _replace_key = teardown_case_data['replace_key']
+        _replace_key = teardown_case_data.replace_key
         _response_dependent = jsonpath(
             obj=resp_data,
-            expr=teardown_case_data['jsonpath']
+            expr=teardown_case_data.jsonpath
         )
         # 如果提取到数据，则进行下一步
         if _response_dependent is not False:
@@ -106,7 +108,7 @@ class TearDownHandler:
         else:
             raise ValueError(
                 f"jsonpath提取失败，替换内容: {resp_data} \n"
-                f"jsonpath: {teardown_case_data['jsonpath']}"
+                f"jsonpath: {teardown_case_data.jsonpath}"
             )
         return data
 
@@ -142,7 +144,7 @@ class TearDownHandler:
 
     def dependent_self_response(
             self,
-            teardown_case_data: Dict,
+            teardown_case_data: "ParamPrepare",
             res: Dict,
             resp_data: Dict) -> None:
         """
@@ -153,10 +155,10 @@ class TearDownHandler:
         :return:
         """
         try:
-            _set_value = teardown_case_data['set_cache']
+            _set_value = teardown_case_data.set_cache
             _response_dependent = jsonpath(
                 obj=res,
-                expr=teardown_case_data['jsonpath']
+                expr=teardown_case_data.jsonpath
             )
             # 如果提取到数据，则进行下一步
             if _response_dependent is not False:
@@ -170,20 +172,20 @@ class TearDownHandler:
             else:
                 raise ValueError(
                     f"jsonpath提取失败，替换内容: {resp_data} \n"
-                    f"jsonpath: {teardown_case_data['jsonpath']}")
+                    f"jsonpath: {teardown_case_data.jsonpath}")
         except KeyError as exc:
             raise KeyError("teardown中缺少set_cache参数，请检查用例是否正确") from exc
 
     @classmethod
-    def dependent_type_cache(cls, teardown_case: Dict) -> Text:
+    def dependent_type_cache(cls, teardown_case: "SendRequest") -> Text:
         """
         判断依赖类型为从缓存中处理
         :param : teardown_case_data: teardown中的用例内容
         :return:
         """
-        if teardown_case['dependent_type'] == 'cache':
-            _cache_name = teardown_case['cache_data']
-            _replace_key = teardown_case['replace_key']
+        if teardown_case.dependent_type == 'cache':
+            _cache_name = teardown_case.cache_data
+            _replace_key = teardown_case.replace_key
             # 通过jsonpath判断出需要替换数据的位置
             _change_data = _replace_key.split(".")
             _new_data = jsonpath_replace(
@@ -204,7 +206,7 @@ class TearDownHandler:
             return _new_data
 
     def send_request_handler(
-            self, data: Dict,
+            self, data: "TearDown",
             resp_data: Dict,
             request_data: Dict
     ) -> None:
@@ -212,14 +214,14 @@ class TearDownHandler:
         后置请求处理
         @return:
         """
-        _send_request = data['send_request']
-        _case_id = data['case_id']
+        _send_request = data.send_request
+        _case_id = data.case_id
         _teardown_case = ast.literal_eval(Cache('case_process').get_cache())[_case_id]
         for i in _send_request:
-            if i['dependent_type'] == 'cache':
+            if i.dependent_type == 'cache':
                 exec(self.dependent_type_cache(teardown_case=i))
             # 判断从响应内容提取数据
-            if i['dependent_type'] == 'response':
+            if i.dependent_type == 'response':
                 exec(
                     self.dependent_type_response(
                         teardown_case_data=i,
@@ -227,7 +229,7 @@ class TearDownHandler:
                 )
 
             # 判断请求中的数据
-            elif i['dependent_type'] == 'request':
+            elif i.dependent_type == 'request':
                 self.dependent_type_request(
                     teardown_case_data=i,
                     request_data=request_data
@@ -238,7 +240,7 @@ class TearDownHandler:
 
     def param_prepare_request_handler(
             self,
-            data: Dict,
+            data: "TearDown",
             resp_data: Dict) -> None:
         """
         前置请求处理
@@ -246,20 +248,20 @@ class TearDownHandler:
         @param resp_data:
         @return:
         """
-        _case_id = data['case_id']
+        _case_id = data.case_id
         _teardown_case = ast.literal_eval(Cache('case_process').get_cache())[_case_id]
-        _param_prepare = data['param_prepare']
+        _param_prepare = data.param_prepare
         res = self.teardown_http_requests(_teardown_case)
         for i in _param_prepare:
             # 判断请求类型为自己,拿到当前case_id自己的响应
-            if i['dependent_type'] == 'self_response':
+            if i.dependent_type == 'self_response':
                 self.dependent_self_response(
                     teardown_case_data=i,
                     resp_data=resp_data,
-                    res=json.loads(res['response_data'])
+                    res=json.loads(res.response_data)
                 )
 
-    def teardown_handle(self, case_data: Dict) -> None:
+    def teardown_handle(self) -> None:
         """
         为什么在这里需要单独区分 param_prepare 和 send_request
         假设此时我们有用例A，teardown中我们需要执行用例B
@@ -269,39 +271,36 @@ class TearDownHandler:
 
         那如果我们需要拿到A接口的响应，此时我们就不需要在额外发送请求了，因此我们需要区分一个是前置准备param_prepare，
         一个是发送请求send_request
-
-        @param case_data:
         @return:
         """
         # 拿到用例信息
-        _teardown_data = case_data['teardown']
+        _teardown_data = self._res.teardown
         # 获取接口的响应内容
-        _resp_data = case_data['response_data']
+        _resp_data = self._res.response_data
         # 获取接口的请求参数
-        _request_data = case_data['yaml_data']['data']
+        _request_data = self._res.yaml_data.data
         # 判断如果没有 teardown
         if _teardown_data is not None:
             # 循环 teardown中的接口
             for _data in _teardown_data:
-                if _data['param_prepare'] is not None:
+                if _data.param_prepare is not None:
                     self.param_prepare_request_handler(
                         data=_data,
                         resp_data=json.loads(_resp_data)
                     )
-                elif _data['send_request'] is not None:
+                elif _data.send_request is not None:
                     self.send_request_handler(
                         data=_data,
                         request_data=_request_data,
                         resp_data=json.loads(_resp_data)
                     )
-        self.teardown_sql(case_data)
+        self.teardown_sql()
 
-    @classmethod
-    def teardown_sql(cls, case_data) -> None:
+    def teardown_sql(self) -> None:
         """处理后置sql"""
 
-        sql_data = case_data['teardown_sql']
-        _response_data = case_data['response_data']
+        sql_data = self._res.teardown_sql
+        _response_data = self._res.response_data
         if sql_data is not None:
             for i in sql_data:
                 if sql_switch():

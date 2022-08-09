@@ -19,10 +19,14 @@ class CaseData:
     def __init__(self, file_path):
         self.file_path = file_path
 
-    def case_process(self, case_id_switch: Union[Text, bool] = None):
+    def case_process(
+            self,
+            case_id_switch: Union[None, bool] = None,
+            case_type_switch: bool = None):
         """
         数据清洗之后，返回该 yaml 文件中的所有用例
-        :param case_id_switch: 判断数据清洗，是否需要清洗出 case_id, 主要用于兼容用例池中的数据
+        @param case_id_switch: 判断数据清洗，是否需要清洗出 case_id, 主要用于兼容用例池中的数据
+        @param case_type_switch: 用例数据类型，parametrize装饰器不接收TestCase对象，这里定义开关，返回Dict
         :return:
         """
         dates = GetYamlData(self.file_path).get_yaml_data()
@@ -49,10 +53,10 @@ class CaseData:
                     "sleep": self.time_sleep(values),
                 }
                 if case_id_switch is True:
-                    case_lists.append({key: TestCase(**case_date)})
+                    case_lists.append({key: TestCase(**case_date).dict()})
                 else:
                     # 正则处理，如果用例中有需要读取缓存中的数据，则优先读取缓存
-                    case_lists.append(TestCase(**case_date))
+                    case_lists.append(TestCase(**case_date).dict())
         return case_lists
 
     def get_case_host(

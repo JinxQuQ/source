@@ -9,12 +9,11 @@ import os
 import random
 import time
 import urllib
-from typing import Tuple, Dict, Union, Text, Callable
+from typing import Tuple, Dict, Union, Text
 import requests
 import urllib3
 from requests_toolbelt import MultipartEncoder
 from common.setting import ConfigHandler
-from utils.other_tools.models import YAMLDate
 from utils.other_tools.models import RequestType
 from utils.logging_tool.log_decorator import log_decorator
 from utils.mysql_tool.mysql_control import AssertExecution
@@ -23,7 +22,8 @@ from utils.logging_tool.run_time_decorator import execution_duration
 from utils.other_tools.allure_data.allure_tools import allure_step, allure_step_no, allure_attach
 from utils.read_files_tools.regular_control import cache_regular
 from utils.requests_tool.set_current_request_cache import SetCurrentRequestCache
-from utils.other_tools.models import TestCase
+from utils.other_tools.models import TestCase, ResponseData
+
 # from utils.requests_tool.encryption_algorithm_control import encryption
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -32,18 +32,16 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 class RequestControl:
     """ 封装请求 """
 
-    def __init__(self, yaml_case: "TestCase"):
-        self.__yaml_case = yaml_case
+    def __init__(self, yaml_case):
+        self.__yaml_case = TestCase(**yaml_case)
 
-    @classmethod
     def file_data_exit(
-            cls,
-            yaml_data: Dict,
+            self,
             file_data) -> None:
         """判断上传文件时，data参数是否存在"""
         # 兼容又要上传文件，又要上传其他类型参数
         try:
-            for key, value in yaml_data[YAMLDate.DATA.value]['data'].items():
+            for key, value in self.__yaml_case.data['data'].items():
                 file_data[key] = value
         except KeyError:
             ...
@@ -105,13 +103,10 @@ class RequestControl:
 
         return request_data, header
 
-    @classmethod
-    def file_prams_exit(
-            cls,
-            yaml_data: Dict) -> Dict:
+    def file_prams_exit(self) -> Dict:
         """判断上传文件接口，文件参数是否存在"""
         try:
-            params = yaml_data[YAMLDate.DATA.value]['params']
+            params = self.__yaml_case.data['params']
         except KeyError:
             params = None
         return params
@@ -133,31 +128,27 @@ class RequestControl:
         except AttributeError:
             return 0.00
 
-    @classmethod
     def upload_file(
-            cls,
-            yaml_data: Dict) -> Tuple:
+            self) -> Tuple:
         """
         判断处理上传文件
-        :param yaml_data:
         :return:
         """
         # 处理上传多个文件的情况
-        yaml_data = ast.literal_eval(cache_regular(str(yaml_data)))
         _files = []
         file_data = {}
         # 兼容又要上传文件，又要上传其他类型参数
-        cls.file_data_exit(yaml_data, file_data)
-        for key, value in yaml_data[YAMLDate.DATA.value]['file'].items():
+        self.file_data_exit(file_data)
+        for key, value in self.__yaml_case.data['file'].items():
             file_path = ConfigHandler.file_path + value
             file_data[key] = (value, open(file_path, 'rb'), 'application/octet-stream')
             _files.append(file_data)
             # allure中展示该附件
             allure_attach(source=file_path, name=value, extension=value)
-        multipart = cls.multipart_data(file_data)
-        yaml_data[YAMLDate.HEADER.value]['Content-Type'] = multipart.content_type
-        params_data = cls.file_prams_exit(yaml_data)
-        return multipart, params_data, yaml_data
+        multipart = self.multipart_data(file_data)
+        self.__yaml_case.headers['Content-Type'] = multipart.content_type
+        params_data = self.file_prams_exit()
+        return multipart, params_data, self.__yaml_case
 
     def request_type_for_json(
             self,
@@ -165,13 +156,12 @@ class RequestControl:
             method: Text,
             **kwargs):
         """ 判断请求类型为json格式 """
-        yaml_data = ast.literal_eval(cache_regular(str(self.__yaml_case)))
         _headers = self.check_headers_str_null(headers)
-        _data = yaml_data.data
+        _data = self.__yaml_case.data
 
         res = requests.request(
             method=method,
-            url=yaml_data.url,
+            url=self.__yaml_case.url,
             json=_data,
             data={},
             headers=_headers,
@@ -230,19 +220,16 @@ class RequestControl:
 
     def request_type_for_file(
             self,
-            yaml_data: Dict,
             method: Text,
-            headers: Union[Dict, None],
             **kwargs):
         """处理 requestType 为 file 类型"""
-        yaml_data = ast.literal_eval(cache_regular(str(yaml_data)))
-        multipart = self.upload_file(yaml_data)
+        multipart = self.upload_file()
         yaml_data = multipart[2]
-        _headers = multipart[2][YAMLDate.HEADER.value]
+        _headers = multipart[2].headers
         _headers = self.check_headers_str_null(_headers)
         res = requests.request(
             method=method,
-            url=yaml_data[YAMLDate.URL.value],
+            url=yaml_data.url,
             data=multipart[0],
             params=multipart[1],
             headers=_headers,
@@ -253,17 +240,19 @@ class RequestControl:
 
     def request_type_for_data(
             self,
-            yaml_data: Dict,
             headers: Dict,
             method: Text,
             **kwargs):
         """判断 requestType 为 data 类型"""
-        yaml_data = ast.literal_eval(cache_regular(str(yaml_data)))
-        data = yaml_data[YAMLDate.DATA.value]
-        _data, _headers = self.multipart_in_headers(data, headers)
+        data = self.__yaml_case.data
+        _data, _headers = self.multipart_in_headers(
+            ast.literal_eval(cache_regular(str(data))),
+            headers
+        )
+        print(_data)
         res = requests.request(
             method=method,
-            url=yaml_data[YAMLDate.URL.value],
+            url=self.__yaml_case.url,
             data=_data,
             headers=_headers,
             verify=False,
@@ -281,17 +270,15 @@ class RequestControl:
 
     def request_type_for_export(
             self,
-            yaml_data: Dict,
             headers: Dict,
             method: Text,
             **kwargs):
         """判断 requestType 为 export 导出类型"""
-        yaml_data = ast.literal_eval(cache_regular(str(yaml_data)))
         _headers = self.check_headers_str_null(headers)
-        _data = yaml_data[YAMLDate.DATA.value]
+        _data = self.__yaml_case.data
         res = requests.request(
             method=method,
-            url=yaml_data[YAMLDate.URL.value],
+            url=self.__yaml_case.url,
             json=_data,
             headers=_headers,
             verify=False,
@@ -336,7 +323,7 @@ class RequestControl:
             self,
             res,
             yaml_data: "TestCase",
-    ) -> Dict:
+    ) -> "ResponseData":
         _data = {
             "url": res.url,
             "is_run": yaml_data.is_run,
@@ -359,7 +346,7 @@ class RequestControl:
             "body": yaml_data.data
         }
         # 抽离出通用模块，判断 http_request 方法中的一些数据校验
-        return _data
+        return ResponseData(**_data)
 
     @classmethod
     def api_allure_step(
@@ -400,7 +387,7 @@ class RequestControl:
             RequestType.NONE.value: self.request_type_for_none,
             RequestType.PARAMS.value: self.request_type_for_params,
             RequestType.FILE.value: self.request_type_for_file,
-            RequestType.DATA.value:  self.request_type_for_data,
+            RequestType.DATA.value: self.request_type_for_data,
             RequestType.EXPORT.value: self.request_type_for_export
         }
 
@@ -424,12 +411,12 @@ class RequestControl:
                 yaml_data=self.__yaml_case)
 
             self.api_allure_step(
-                headers=_res_data['headers'],
-                method=_res_data['method'],
-                data=_res_data['body'],
-                assert_data=_res_data['assert'],
-                res_time=_res_data['res_time'],
-                status_code=_res_data['status_code']
+                headers=str(_res_data.headers),
+                method=_res_data.method,
+                data=str(_res_data.body),
+                assert_data=str(_res_data.assert_data),
+                res_time=str(_res_data.res_time),
+                status_code=str(_res_data.status_code)
             )
             # 将当前请求数据存入缓存中
             SetCurrentRequestCache(
@@ -440,8 +427,3 @@ class RequestControl:
 
             return _res_data
 
-
-if __name__ == '__main__':
-    from utils.other_tools.models import TearDown, SendRequest
-    a = TestCase(url='https://www.wanandroid.com/lg/collect/addtool/json', method='POST', detail='新增收藏网址接口', assert_data = {'errorCode': {'jsonpath': '$.errorCode', 'type': '==', 'value': 0, 'AssertType': None}}, headers={'cookie': '$cache{login_cookie}'}, requestType='PARAMS', is_run=None, data={'name': '自动化', 'link': 'https://gitee.com/yu_xiao_qi/pytest-auto-api2'}, dependence_case=False, dependence_case_data=None, sql=None, setup_sql=None, status_code=None, teardown_sql=None, teardown=[TearDown(case_id='collect_delete_tool_01', param_prepare=None, send_request=[SendRequest(dependent_type='response', jsonpath='$.data.id', cache_data=None, set_cache=None, replace_key='$.data.id')])], current_request_set_cache=None, sleep=None)
-    RequestControl(a).http_request()

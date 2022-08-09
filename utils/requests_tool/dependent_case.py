@@ -206,7 +206,7 @@ class DependentCase:
                                 # 判断依赖数据类型, 依赖 request 中的数据
                                 elif i.dependent_type == DependentType.REQUEST.value:
                                     self.dependent_handler(
-                                        data=res.request_body,
+                                        data=res.body,
                                         _jsonpath=_jsonpath,
                                         set_value=_set_value,
                                         replace_key=_replace_key,

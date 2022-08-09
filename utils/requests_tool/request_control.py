@@ -41,7 +41,8 @@ class RequestControl:
         """判断上传文件时，data参数是否存在"""
         # 兼容又要上传文件，又要上传其他类型参数
         try:
-            for key, value in self.__yaml_case.data['data'].items():
+            _data = self.__yaml_case.data
+            for key, value in ast.literal_eval(cache_regular(str(_data)))['data'].items():
                 file_data[key] = value
         except KeyError:
             ...
@@ -139,13 +140,15 @@ class RequestControl:
         file_data = {}
         # 兼容又要上传文件，又要上传其他类型参数
         self.file_data_exit(file_data)
-        for key, value in self.__yaml_case.data['file'].items():
+        _data = self.__yaml_case.data
+        for key, value in ast.literal_eval(cache_regular(str(_data)))['file'].items():
             file_path = ConfigHandler.file_path + value
             file_data[key] = (value, open(file_path, 'rb'), 'application/octet-stream')
             _files.append(file_data)
             # allure中展示该附件
             allure_attach(source=file_path, name=value, extension=value)
         multipart = self.multipart_data(file_data)
+        # ast.literal_eval(cache_regular(str(_headers)))['Content-Type'] = multipart.content_type
         self.__yaml_case.headers['Content-Type'] = multipart.content_type
         params_data = self.file_prams_exit()
         return multipart, params_data, self.__yaml_case
@@ -158,11 +161,11 @@ class RequestControl:
         """ 判断请求类型为json格式 """
         _headers = self.check_headers_str_null(headers)
         _data = self.__yaml_case.data
-
+        _url = self.__yaml_case.url
         res = requests.request(
             method=method,
-            url=self.__yaml_case.url,
-            json=_data,
+            url=cache_regular(str(_url)),
+            json=ast.literal_eval(cache_regular(str(_data))),
             data={},
             headers=_headers,
             verify=False,
@@ -178,9 +181,10 @@ class RequestControl:
             **kwargs) -> object:
         """判断 requestType 为 None"""
         _headers = self.check_headers_str_null(headers)
+        _url = self.__yaml_case.url
         res = requests.request(
             method=method,
-            url=self.__yaml_case.url,
+            url=cache_regular(_url),
             data=None,
             headers=_headers,
             verify=False,
@@ -210,10 +214,10 @@ class RequestControl:
         _headers = self.check_headers_str_null(headers)
         res = requests.request(
             method=method,
-            url=url,
+            url=cache_regular(url),
             headers=_headers,
             verify=False,
-            data=_data,
+            data={},
             params=None,
             **kwargs)
         return res
@@ -221,6 +225,7 @@ class RequestControl:
     def request_type_for_file(
             self,
             method: Text,
+            headers,
             **kwargs):
         """处理 requestType 为 file 类型"""
         multipart = self.upload_file()
@@ -229,10 +234,10 @@ class RequestControl:
         _headers = self.check_headers_str_null(_headers)
         res = requests.request(
             method=method,
-            url=yaml_data.url,
+            url=cache_regular(yaml_data.url),
             data=multipart[0],
             params=multipart[1],
-            headers=_headers,
+            headers=ast.literal_eval(cache_regular(str(_headers))),
             verify=False,
             **kwargs
         )
@@ -249,10 +254,10 @@ class RequestControl:
             ast.literal_eval(cache_regular(str(data))),
             headers
         )
-        print(_data)
+        _url = self.__yaml_case.url
         res = requests.request(
             method=method,
-            url=self.__yaml_case.url,
+            url=cache_regular(_url),
             data=_data,
             headers=_headers,
             verify=False,
@@ -276,10 +281,11 @@ class RequestControl:
         """判断 requestType 为 export 导出类型"""
         _headers = self.check_headers_str_null(headers)
         _data = self.__yaml_case.data
+        _url = self.__yaml_case.url
         res = requests.request(
             method=method,
-            url=self.__yaml_case.url,
-            json=_data,
+            url=cache_regular(_url),
+            json=ast.literal_eval(cache_regular(str(_data))),
             headers=_headers,
             verify=False,
             stream=False,
@@ -324,6 +330,7 @@ class RequestControl:
             res,
             yaml_data: "TestCase",
     ) -> "ResponseData":
+        data = ast.literal_eval(cache_regular(str(yaml_data.data)))
         _data = {
             "url": res.url,
             "is_run": yaml_data.is_run,
@@ -331,7 +338,7 @@ class RequestControl:
             "response_data": res.text,
             # 这个用于日志专用，判断如果是get请求，直接打印url
             "request_body": self._request_body_handler(
-                yaml_data.data, yaml_data.requestType
+                data, yaml_data.requestType
             ),
             "method": res.request.method,
             "sql_data": self._sql_data_handler(sql_data=yaml_data.sql, res=res),
@@ -343,7 +350,7 @@ class RequestControl:
             "status_code": res.status_code,
             "teardown": yaml_data.teardown,
             "teardown_sql": yaml_data.teardown_sql,
-            "body": yaml_data.data
+            "body": data
         }
         # 抽离出通用模块，判断 http_request 方法中的一些数据校验
         return ResponseData(**_data)

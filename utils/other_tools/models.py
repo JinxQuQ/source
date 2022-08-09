@@ -120,7 +120,7 @@ class TestCase(BaseModel):
     setup_sql: List = None
     status_code: Optional[int] = None
     teardown_sql: Optional[List] = None
-    teardown: List["TearDown"] = None
+    teardown: Union[List["TearDown"], None] = None
     current_request_set_cache: Optional[List["CurrentRequestSetCache"]]
     sleep: Optional[Union[int, float]]
 
@@ -130,7 +130,7 @@ class ResponseData(BaseModel):
     is_run: Union[None, bool]
     detail: Text
     response_data: Text
-    request_body: Union[Dict, None]
+    request_body: Union[None, Dict]
     method: Text
     sql_data: Dict
     yaml_data: "TestCase"

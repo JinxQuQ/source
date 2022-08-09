@@ -8,15 +8,15 @@
 
 
 class MyBaseFailure(Exception):
-    ...
+    pass
 
 
 class JsonpathExtractionFailed(MyBaseFailure):
-    ...
+    pass
 
 
 class NotFoundError(MyBaseFailure):
-    ...
+    pass
 
 
 class FileNotFound(FileNotFoundError, NotFoundError):

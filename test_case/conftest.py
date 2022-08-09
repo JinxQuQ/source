@@ -78,12 +78,6 @@ def work_login_init():
     Cache('login_cookie').set_caches(cookies)
 
 
-@pytest.fixture(scope="class")
-def get_env(request):
-    project_url = request.config.getoption("--project_url")
-    return project_url
-
-
 def pytest_collection_modifyitems(items):
     """
     测试用例收集完成时，将收集到的 item 的 name 和 node_id 的中文显示在控制台上

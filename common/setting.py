@@ -4,7 +4,7 @@
 # @Author : 余少琪
 
 import os
-from utils.times_tool.time_control import now_time_day
+import time
 
 
 def replace_path(path):
@@ -20,7 +20,6 @@ def generate_path(name: str):
 
 
 class ConfigHandler:
-
     # 用例路径
     case_path = generate_path("test_case$")
     # 测试用例数据路径
@@ -33,10 +32,10 @@ class ConfigHandler:
     config_path = generate_path('common$config.yaml')
 
     log_path = generate_path('logs$log.log')
-
-    info_log_path = generate_path(f'logs$info-{now_time_day()}.log')
-    error_log_path = generate_path(f'logs$error-{now_time_day()}.log')
-    warning_log_path = generate_path(f'logs$warning-{now_time_day()}.log')
+    now_time_day = time.strftime("%Y-%m-%d", time.localtime())
+    info_log_path = generate_path(f'logs$info-{now_time_day}.log')
+    error_log_path = generate_path(f'logs$error-{now_time_day}.log')
+    warning_log_path = generate_path(f'logs$warning-{now_time_day}.log')
 
     file_path = generate_path('Files$')
 

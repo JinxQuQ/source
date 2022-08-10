@@ -35,14 +35,13 @@ def write_testcase_file(allure_epic, allure_feature, class_title,
         :return:
         """
     conf_data = GetYamlData(ConfigHandler.config_path).get_yaml_data()
-    author = conf_data['TesterName']
+    # author = conf_data['TesterName']
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     real_time_update_test_cases = conf_data['real_time_update_test_cases']
 
     page = f'''#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Time   : {now}
-# @Author : {author}
 
 
 import allure

@@ -10,12 +10,12 @@ import json
 from typing import Text, Dict, Any, Union
 from jsonpath import jsonpath
 from utils.other_tools.models import AssertMethod
-from utils.other_tools.get_conf_data import sql_switch
 from utils.logging_tool.log_control import ERROR, WARNING
 from utils.read_files_tools.regular_control import cache_regular
 from utils.other_tools.models import load_module_functions
 from utils.assertion import assert_type
 from utils.other_tools.exceptions import JsonpathExtractionFailed, SqlNotFound, AssertTypeError
+from utils import config
 
 
 class Assert:
@@ -69,12 +69,12 @@ class Assert:
         :return:
         """
         # 判断数据库为开关为关闭状态
-        if sql_switch() is False:
+        if config.mysql_db.switch is False:
             WARNING.logger.warning(
                 "检测到数据库状态为关闭状态，程序已为您跳过此断言，断言值:%s", values
             )
         # 数据库开关为开启
-        if sql_switch():
+        if config.mysql_db.switch:
             # 走正常SQL断言逻辑
             if sql_data != {'sql': None}:
                 res_sql_data = jsonpath(sql_data, assert_value)

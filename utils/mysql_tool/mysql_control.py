@@ -11,11 +11,9 @@ import decimal
 from warnings import filterwarnings
 import pymysql
 from typing import List, Union, Text, Dict
-from common.setting import ConfigHandler
+from utils import config
 from utils.logging_tool.log_control import ERROR
 from utils.read_files_tools.regular_control import sql_regular
-from utils.read_files_tools.yaml_control import GetYamlData
-from utils.other_tools.get_conf_data import sql_switch
 from utils.read_files_tools.regular_control import cache_regular
 from utils.other_tools.exceptions import DataAcquisitionFailed, ValueTypeError
 
@@ -25,19 +23,17 @@ filterwarnings("ignore", category=pymysql.Warning)
 
 class MysqlDB:
     """ mysql 封装 """
-    if sql_switch():
+    if config.mysql_db.switch:
 
         def __init__(self):
-            self.config = GetYamlData(ConfigHandler.config_path)
-            self.read_mysql_config = self.config.get_yaml_data()['MySqlDB']
 
             try:
                 # 建立数据库连接
                 self.conn = pymysql.connect(
-                    host=self.read_mysql_config['host'],
-                    user=self.read_mysql_config['user'],
-                    password=self.read_mysql_config['password'],
-                    port=self.read_mysql_config['port']
+                    host=config.mysql_db.host,
+                    user=config.mysql_db.user,
+                    password=config.mysql_db.password,
+                    port=config.mysql_db.port
                 )
 
                 # 使用 cursor 方法获取操作游标，得到一个可以执行sql语句，并且操作结果为字典返回的游标

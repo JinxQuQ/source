@@ -9,13 +9,13 @@ from jsonpath import jsonpath
 from utils.cache_process.cache_control import Cache
 from utils.requests_tool.request_control import RequestControl
 from utils.mysql_tool.mysql_control import SetUpMySQL
-from utils.other_tools.get_conf_data import sql_switch
 from utils.read_files_tools.regular_control import regular, cache_regular
 from utils.other_tools.jsonpath_date_replace import jsonpath_replace
 from utils.logging_tool.log_control import WARNING
 from utils.other_tools.models import DependentType
 from utils.other_tools.models import TestCase, DependentCaseData, DependentData
 from utils.other_tools.exceptions import ValueNotFoundError
+from utils import config
 
 
 class DependentCase:
@@ -111,7 +111,7 @@ class DependentCase:
         """
         # 判断依赖数据类型，依赖 sql中的数据
         if setup_sql is not None:
-            if sql_switch():
+            if config.mysql_db.switch:
                 setup_sql = ast.literal_eval(cache_regular(str(setup_sql)))
                 sql_data = SetUpMySQL().setup_sql_data(sql=setup_sql)
                 dependent_data = dependence_case_data.dependent_data

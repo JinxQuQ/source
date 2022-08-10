@@ -7,14 +7,12 @@
 """
 
 import requests
-from common.setting import ConfigHandler
-from utils.read_files_tools.yaml_control import GetYamlData
 from utils.logging_tool.log_control import ERROR
 from utils.other_tools.allure_data.allure_report_data import TestMetrics, AllureFileClean
 from utils.times_tool.time_control import now_time
 from utils.other_tools.get_local_ip import get_host_ip
-from utils.other_tools.get_conf_data import tester_name
 from utils.other_tools.exceptions import SendMessageError, ValueTypeError
+from utils import config
 
 
 class WeChatSend:
@@ -24,8 +22,6 @@ class WeChatSend:
 
     def __init__(self, metrics: TestMetrics):
         self.metrics = metrics
-        self.wechat_data = GetYamlData(ConfigHandler.config_path).get_yaml_data()['WeChat']
-        self.curl = self.wechat_data['webhook']
         self.headers = {"Content-Type": "application/json"}
 
     def send_text(self, content, mentioned_mobile_list=None):
@@ -43,7 +39,7 @@ class WeChatSend:
             if len(mentioned_mobile_list) >= 1:
                 for i in mentioned_mobile_list:
                     if isinstance(i, str):
-                        res = requests.post(url=self.curl, json=_data, headers=self.headers)
+                        res = requests.post(url=config.wechat.webhook, json=_data, headers=self.headers)
                         if res.json()['errcode'] != 0:
                             ERROR.logger.error(res.json())
                             raise SendMessageError("企业微信「文本类型」消息发送失败")
@@ -60,7 +56,7 @@ class WeChatSend:
         :return:
         """
         _data = {"msgtype": "markdown", "markdown": {"content": content}}
-        res = requests.post(url=self.curl, json=_data, headers=self.headers)
+        res = requests.post(url=config.wechat.webhook, json=_data, headers=self.headers)
         if res.json()['errcode'] != 0:
             ERROR.logger.error(res.json())
             raise SendMessageError("企业微信「MarkDown类型」消息发送失败")
@@ -69,7 +65,7 @@ class WeChatSend:
         """
         先将文件上传到临时媒体库
         """
-        key = self.curl.split("key=")[1]
+        key = config.wechat.webhook.split("key=")[1]
         url = f"https://qyapi.weixin.qq.com/cgi-bin/webhook/upload_media?key={key}&type=file"
         data = {"file": open(file, "rb")}
         res = requests.post(url, files=data).json()
@@ -82,16 +78,16 @@ class WeChatSend:
         """
 
         _data = {"msgtype": "file", "file": {"media_id": self._upload_file(file)}}
-        res = requests.post(url=self.curl, json=_data, headers=self.headers)
+        res = requests.post(url=config.wechat.webhook, json=_data, headers=self.headers)
         if res.json()['errcode'] != 0:
             ERROR.logger.error(res.json())
             raise SendMessageError("企业微信「file类型」消息发送失败")
 
     def send_wechat_notification(self):
         """ 发送企业微信通知 """
-        text = f"""【{0}自动化通知】
+        text = f"""【{config.project_name}自动化通知】
                                     >测试环境：<font color=\"info\">TEST</font>
-                                    >测试负责人：@{tester_name}
+                                    >测试负责人：@{config.tester_name}
                                     >
                                     > **执行结果**
                                     ><font color=\"info\">成  功  率  : {self.metrics.pass_rate}%</font>

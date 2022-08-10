@@ -69,7 +69,6 @@ class AllureFileClean:
                 run_case_data["pass_rate"] = 0.0
             # 收集用例运行时长
             run_case_data['time'] = _time if run_case_data['total'] == 0 else round(_time['duration'] / 1000, 2)
-            print(TestMetrics(**run_case_data))
             return TestMetrics(**run_case_data)
         except FileNotFoundError as exc:
             raise FileNotFoundError(

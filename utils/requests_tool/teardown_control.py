@@ -15,11 +15,11 @@ from utils.requests_tool.request_control import RequestControl
 from utils.read_files_tools.regular_control import cache_regular, sql_regular, regular
 from utils.other_tools.jsonpath_date_replace import jsonpath_replace
 from utils.mysql_tool.mysql_control import MysqlDB
-from utils.other_tools.get_conf_data import sql_switch
 from utils.logging_tool.log_control import WARNING
 from utils.cache_process.cache_control import Cache
 from utils.other_tools.models import ResponseData, TearDown, SendRequest, ParamPrepare
 from utils.other_tools.exceptions import JsonpathExtractionFailed, ValueNotFoundError
+from utils import config
 
 
 class TearDownHandler:
@@ -304,7 +304,7 @@ class TearDownHandler:
         _response_data = self._res.response_data
         if sql_data is not None:
             for i in sql_data:
-                if sql_switch():
+                if config.mysql_db.switch:
                     _sql_data = sql_regular(value=i, res=json.loads(_response_data))
                     MysqlDB().execute(_sql_data)
                 else:

@@ -7,10 +7,8 @@ import time
 import datetime
 import requests
 import urllib3
-from common.setting import ConfigHandler
-from utils.read_files_tools.yaml_control import GetYamlData
 from utils.other_tools.allure_data.allure_report_data import TestMetrics
-
+from utils import config
 
 urllib3.disable_warnings()
 
@@ -33,13 +31,6 @@ class FeiShuTalkChatBot:
     """飞书机器人通知"""
     def __init__(self, metrics: TestMetrics):
         self.metrics = metrics
-        self.dev_config = ConfigHandler()
-        # 从yaml文件中获取钉钉配置信息
-        self.name = GetYamlData(ConfigHandler.config_path).get_yaml_data()['ProjectName'][0]
-        self.test_name = GetYamlData(ConfigHandler.config_path).get_yaml_data()['TesterName']
-        self.host = GetYamlData(ConfigHandler.config_path).get_yaml_data()['Env']
-        self.tester = GetYamlData(ConfigHandler.config_path).get_yaml_data()
-        self.get_lark_talk = GetYamlData(self.dev_config.config_path).get_yaml_data()['FeiShuTalk']
 
     def send_text(self, msg: str):
         """
@@ -56,11 +47,6 @@ class FeiShuTalkChatBot:
 
         logging.debug('text类型：%s', data)
         return self.post()
-
-    def webhook(self):
-        """ 获取 webhook """
-        webhook = self.get_lark_talk["webhook"]
-        return webhook
 
     def post(self):
         """
@@ -94,7 +80,7 @@ class FeiShuTalkChatBot:
                                 },
                                 {
                                     "tag": "text",
-                                    "text": f"{self.test_name}"
+                                    "text": f"{config.tester_name}"
                                 }
                             ],
                             [
@@ -104,7 +90,7 @@ class FeiShuTalkChatBot:
                                 },
                                 {
                                     "tag": "text",
-                                    "text": f"{str(self.host)}"
+                                    "text": f"{config.env}"
                                 }
                             ],
                             [{
@@ -169,7 +155,7 @@ class FeiShuTalkChatBot:
 
         post_data = json.dumps(rich_text)
         response = requests.post(
-                self.webhook(),
+                config.lark.webhook,
                 headers=headers,
                 data=post_data,
                 verify=False
@@ -190,5 +176,5 @@ class FeiShuTalkChatBot:
                         }
                     }
             logging.error("消息发送失败，自动通知：%s", error_data)
-            requests.post(self.webhook(), headers=headers, data=json.dumps(error_data))
+            requests.post(config.lark.webhook, headers=headers, data=json.dumps(error_data))
         return result

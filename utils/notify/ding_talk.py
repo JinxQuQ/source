@@ -12,11 +12,9 @@ import time
 import urllib.parse
 from typing import Any, Text
 from dingtalkchatbot.chatbot import DingtalkChatbot, FeedLink
-from utils.read_files_tools.yaml_control import GetYamlData
 from utils.other_tools.get_local_ip import get_host_ip
 from utils.other_tools.allure_data.allure_report_data import AllureFileClean, TestMetrics
-from utils.other_tools.get_conf_data import project_name, tester_name
-from common.setting import ConfigHandler
+from utils import config
 
 
 class DingTalkSendMsg:
@@ -25,10 +23,8 @@ class DingTalkSendMsg:
         self.metrics = metrics
         self.timeStamp = str(round(time.time() * 1000))
         self.sign = self.get_sign()
-        self.dev_config = ConfigHandler()
         # 从yaml文件中获取钉钉配置信息
-        self.get_ding_talk = GetYamlData(self.dev_config.config_path).get_yaml_data()['DingTalk']
-        self.webhook = self.get_ding_talk["webhook"] + "&timestamp=" + self.timeStamp + "&sign=" + self.sign
+        self.webhook = config.ding_talk.webhook + "&timestamp=" + self.timeStamp + "&sign=" + self.sign
 
         # 获取 webhook地址
         self.xiao_ding = DingtalkChatbot(self.webhook)
@@ -38,10 +34,9 @@ class DingTalkSendMsg:
         根据时间戳 + "sign" 生成密钥
         :return:
         """
-        secret = GetYamlData(ConfigHandler().config_path).get_yaml_data()['DingTalk']['secret']
-        string_to_sign = f'{self.timeStamp}\n{secret}'.encode('utf-8')
+        string_to_sign = f'{self.timeStamp}\n{config.ding_talk.secret}'.encode('utf-8')
         hmac_code = hmac.new(
-            secret.encode('utf-8'),
+            config.ding_talk.secret.encode('utf-8'),
             string_to_sign,
             digestmod=hashlib.sha256).digest()
 
@@ -133,10 +128,10 @@ class DingTalkSendMsg:
         is_at_all = False
         if self.metrics.failed + self.metrics.broken > 0:
             is_at_all = True
-        text = f"#### {project_name}自动化通知  " \
-               f"\n\n>Python脚本任务: {project_name}" \
+        text = f"#### {config.project_name}自动化通知  " \
+               f"\n\n>Python脚本任务: {config.project_name}" \
                f"\n\n>环境: TEST\n\n>" \
-               f"执行人: {tester_name}" \
+               f"执行人: {config.tester_name}" \
                f"\n\n>执行结果: {self.metrics.pass_rate}% " \
                f"\n\n>总用例数: {self.metrics.total} " \
                f"\n\n>成功用例数: {self.metrics.passed}" \

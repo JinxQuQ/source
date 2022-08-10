@@ -6,17 +6,14 @@ import os
 import traceback
 import pytest
 from utils.other_tools.models import NotificationType
-from common.setting import ConfigHandler
-from utils.other_tools.get_conf_data import project_name, get_excel_report_switch
 from utils.other_tools.allure_data.allure_report_data import AllureFileClean
 from utils.logging_tool.log_control import INFO
-from utils.other_tools.get_conf_data import get_notification_type
 from utils.notify.wechat_send import WeChatSend
 from utils.notify.ding_talk import DingTalkSendMsg
 from utils.notify.send_mail import SendEmail
 from utils.notify.lark import FeiShuTalkChatBot
-from utils.read_files_tools.clean_files import del_file
 from utils.other_tools.allure_data.error_case_excel import ErrorCaseExcel
+from utils import config
 
 
 def run():
@@ -31,10 +28,8 @@ def run():
              \\__,_| .__/|_/_/   \\_\\__,_|\\__\\___/|_|\\___||___/\\__|
                   |_|
                   开始执行{}项目...
-                """.format(project_name)
+                """.format(config.project_name)
         )
-
-        # del_file(ConfigHandler.cache_path)
 
         # 判断现有的测试用例，如果未生成测试代码，则自动生成
         # TestCaseAutomaticGeneration().get_case_automatic()
@@ -62,10 +57,10 @@ def run():
             NotificationType.FEI_SHU.value: FeiShuTalkChatBot(allure_data).post
         }
 
-        if get_notification_type() != NotificationType.DEFAULT.value:
-            notification_mapping.get(get_notification_type())()
+        if config.notification_type != NotificationType.DEFAULT.value:
+            notification_mapping.get(config.notification_type)()
 
-        if get_excel_report_switch():
+        if config.excel_report:
             ErrorCaseExcel().write_case()
 
         # 程序运行之后，自动启动报告，如果不想启动报告，可注释这段代码

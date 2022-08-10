@@ -107,21 +107,21 @@ class Context:
         return host
 
     @classmethod
-    def merchant_host(cls) -> str:
+    def app_host(cls) -> str:
         """获取app的host"""
         from utils.read_files_tools.yaml_control import GetYamlData
         from common.setting import ConfigHandler
 
         # 从配置文件conf.yaml 文件中获取到域名，然后使用正则替换
         host = GetYamlData(ConfigHandler.config_path) \
-            .get_yaml_data()['merchant_host']
+            .get_yaml_data()['app_host']
         return host
 
 
 def sql_json(js_path, res):
     """ 提取 sql中的 json 数据 """
     _json_data = jsonpath(res, js_path)[0]
-    if _json_data is not False:
+    if _json_data is False:
         raise ValueError(f"sql中的jsonpath获取失败 {res}, {js_path}")
     return jsonpath(res, js_path)[0]
 

@@ -17,13 +17,12 @@ from common.setting import ConfigHandler
 from utils.other_tools.models import RequestType
 from utils.logging_tool.log_decorator import log_decorator
 from utils.mysql_tool.mysql_control import AssertExecution
-from utils.other_tools.get_conf_data import sql_switch
 from utils.logging_tool.run_time_decorator import execution_duration
 from utils.other_tools.allure_data.allure_tools import allure_step, allure_step_no, allure_attach
 from utils.read_files_tools.regular_control import cache_regular
 from utils.requests_tool.set_current_request_cache import SetCurrentRequestCache
 from utils.other_tools.models import TestCase, ResponseData
-
+from utils import config
 # from utils.requests_tool.encryption_algorithm_control import encryption
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -315,7 +314,7 @@ class RequestControl:
     def _sql_data_handler(cls, sql_data, res):
         """处理 sql 参数 """
         # 判断数据库开关，开启状态，则返回对应的数据
-        if sql_switch() and sql_data is not None:
+        if config.mysql_db.switch and sql_data is not None:
             sql_data = AssertExecution().assert_execution(
                 sql=sql_data,
                 resp=res.json()
@@ -341,7 +340,7 @@ class RequestControl:
                 data, yaml_data.requestType
             ),
             "method": res.request.method,
-            "sql_data": self._sql_data_handler(sql_data=yaml_data.sql, res=res),
+            "sql_data": self._sql_data_handler(sql_data=ast.literal_eval(cache_regular(str(yaml_data.sql))), res=res),
             "yaml_data": yaml_data,
             "headers": res.request.headers,
             "cookie": res.cookies,

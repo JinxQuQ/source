@@ -6,10 +6,10 @@
 """
 
 from typing import Union, Text, Dict
-from utils.other_tools.get_conf_data import sql_switch
 from utils.read_files_tools.yaml_control import GetYamlData
 from utils.other_tools.models import TestCase
 from utils.other_tools.exceptions import ValueNotFoundError
+from utils import config
 
 
 class CaseData:
@@ -259,9 +259,9 @@ class CaseData:
                 # 判断当用例中设置的需要依赖用例，但是dependence_case_data下方没有填写依赖的数据，异常提示
                 if _dependence_case_data is None:
                     raise ValueNotFoundError(f"dependence_case_data 依赖数据中缺少依赖相关数据！"
-                                     f"如有填写，请检查缩进是否正确"
-                                     f"用例ID: {case_id}"
-                                     f"用例路径: {self.file_path}")
+                                             f"如有填写，请检查缩进是否正确"
+                                             f"用例ID: {case_id}"
+                                             f"用例路径: {self.file_path}")
 
                 return _dependence_case_data
             except KeyError as exc:
@@ -331,7 +331,7 @@ class CaseData:
         try:
             _sql = case_data['sql']
             # 判断数据库开关为开启状态，并且sql不为空
-            if sql_switch() and _sql is None:
+            if config.mysql_db.switch and _sql is None:
                 return None
             return case_data['sql']
         except KeyError as exc:

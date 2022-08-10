@@ -144,6 +144,46 @@ class ResponseData(BaseModel):
     body: Union[Dict, None] = None
 
 
+class DingTalk(BaseModel):
+    webhook: Union[Text, None]
+    secret: Union[Text, None]
+
+
+class MySqlDB(BaseModel):
+    switch: bool = False
+    host: Union[Text, None] = None
+    user: Union[Text, None] = None
+    password: Union[Text, None] = None
+    port: Union[int, None] = 3306
+
+
+class Webhook(BaseModel):
+    webhook: Union[Text, None]
+
+
+class Email(BaseModel):
+    send_user: Union[Text, None]
+    email_host: Union[Text, None]
+    stamp_key: Union[Text, None]
+    # 收件人
+    send_list: Union[Text, None]
+
+
+class Config(BaseModel):
+    project_name: Text
+    env: Text
+    tester_name: Text
+    notification_type: int = 0
+    excel_report: bool
+    ding_talk: "DingTalk"
+    mysql_db: "MySqlDB"
+    mirror_source: Text
+    wechat: "Webhook"
+    email: "Email"
+    lark: "Webhook"
+    real_time_update_test_cases: bool = False
+
+
 @unique
 class AllureAttachmentType(Enum):
     """

@@ -222,5 +222,5 @@ class Counter:
 
 
 addons = [
-    Counter(["http://work.test.feng-go.com/", "http://merchant.test.feng-go.com"])
+    Counter(["https://www.wanandroid.com"])
     ]

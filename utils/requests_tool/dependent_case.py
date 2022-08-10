@@ -253,4 +253,3 @@ class DependentCase:
                 _new_data += ' = ' + str(value)
 
                 exec(_new_data)
-

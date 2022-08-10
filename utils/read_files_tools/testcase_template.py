@@ -14,6 +14,7 @@ from utils.read_files_tools.yaml_control import GetYamlData
 from common.setting import ConfigHandler
 from utils.other_tools.exceptions import ValueNotFoundError
 
+
 def write_case(case_path, page):
     """ 写入用例数据 """
     with open(case_path, 'w', encoding="utf-8") as file:

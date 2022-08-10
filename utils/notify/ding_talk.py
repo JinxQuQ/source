@@ -22,12 +22,12 @@ class DingTalkSendMsg:
     def __init__(self, metrics: TestMetrics):
         self.metrics = metrics
         self.timeStamp = str(round(time.time() * 1000))
-        self.sign = self.get_sign()
-        # 从yaml文件中获取钉钉配置信息
-        self.webhook = config.ding_talk.webhook + "&timestamp=" + self.timeStamp + "&sign=" + self.sign
 
-        # 获取 webhook地址
-        self.xiao_ding = DingtalkChatbot(self.webhook)
+    def xiao_ding(self):
+        sign = self.get_sign()
+        # 从yaml文件中获取钉钉配置信息
+        webhook = config.ding_talk.webhook + "&timestamp=" + self.timeStamp + "&sign=" + sign
+        return DingtalkChatbot(webhook)
 
     def get_sign(self) -> Text:
         """
@@ -55,10 +55,10 @@ class DingTalkSendMsg:
         :return:
         """
         if not mobiles:
-            self.xiao_ding.send_text(msg=msg, is_at_all=True)
+            self.xiao_ding().send_text(msg=msg, is_at_all=True)
         else:
             if isinstance(mobiles, list):
-                self.xiao_ding.send_text(msg=msg, at_mobiles=mobiles)
+                self.xiao_ding().send_text(msg=msg, at_mobiles=mobiles)
             else:
                 raise TypeError("mobiles类型错误 不是list类型.")
 
@@ -73,7 +73,7 @@ class DingTalkSendMsg:
         发送link通知
         :return:
         """
-        self.xiao_ding.send_link(
+        self.xiao_ding().send_link(
                 title=title,
                 text=text,
                 message_url=message_url,
@@ -97,10 +97,10 @@ class DingTalkSendMsg:
         """
 
         if mobiles is None:
-            self.xiao_ding.send_markdown(title=title, text=msg, is_at_all=is_at_all)
+            self.xiao_ding().send_markdown(title=title, text=msg, is_at_all=is_at_all)
         else:
             if isinstance(mobiles, list):
-                self.xiao_ding.send_markdown(title=title, text=msg, at_mobiles=mobiles)
+                self.xiao_ding().send_markdown(title=title, text=msg, at_mobiles=mobiles)
             else:
                 raise TypeError("mobiles类型错误 不是list类型.")
 
@@ -120,7 +120,7 @@ class DingTalkSendMsg:
     def send_feed_link(self, *arg) -> None:
         """发送 feed_lik """
 
-        self.xiao_ding.send_feed_card(list(arg))
+        self.xiao_ding().send_feed_card(list(arg))
 
     def send_ding_notification(self):
         """ 发送钉钉报告通知 """

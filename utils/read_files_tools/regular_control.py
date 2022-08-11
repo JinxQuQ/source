@@ -1,7 +1,7 @@
 """
 Desc : 自定义函数调用
 # @Time : 2022/4/2 9:32 上午
-# @Author : liuYunWin
+# @Author : 余少琪
 """
 import re
 import datetime
@@ -97,25 +97,17 @@ class Context:
 
     @classmethod
     def host(cls) -> str:
-        """ 获取接口域名 """
-        from utils.read_files_tools.yaml_control import GetYamlData
-        from common.setting import ConfigHandler
+        from utils import config
 
-        # 从配置文件conf.yaml 文件中获取到域名，然后使用正则替换
-        host = GetYamlData(ConfigHandler.config_path) \
-            .get_yaml_data()['host']
-        return host
+        """ 获取接口域名 """
+        return config.host
 
     @classmethod
     def app_host(cls) -> str:
-        """获取app的host"""
-        from utils.read_files_tools.yaml_control import GetYamlData
-        from common.setting import ConfigHandler
+        from utils import config
 
-        # 从配置文件conf.yaml 文件中获取到域名，然后使用正则替换
-        host = GetYamlData(ConfigHandler.config_path) \
-            .get_yaml_data()['app_host']
-        return host
+        """获取app的host"""
+        return config.app_host
 
 
 def sql_json(js_path, res):
@@ -206,3 +198,8 @@ def regular(target):
     except AttributeError:
         ERROR.logger.error("未找到对应的替换的数据, 请检查数据是否正确 %s", target)
         raise
+
+
+if __name__ == '__main__':
+    a = "${{host()}} aaa"
+    b = regular(a)

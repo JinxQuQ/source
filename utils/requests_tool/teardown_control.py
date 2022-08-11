@@ -306,6 +306,6 @@ class TearDownHandler:
             for i in sql_data:
                 if config.mysql_db.switch:
                     _sql_data = sql_regular(value=i, res=json.loads(_response_data))
-                    MysqlDB().execute(_sql_data)
+                    MysqlDB().execute(cache_regular(_sql_data))
                 else:
                     WARNING.logger.warning("程序中检查到您数据库开关为关闭状态，已为您跳过删除sql: %s", i)

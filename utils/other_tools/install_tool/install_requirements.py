@@ -10,9 +10,9 @@
 import os
 import chardet
 from common.setting import ConfigHandler
-from utils.other_tools.get_os_sep import get_os_sep
-from utils.other_tools.get_conf_data import get_mirror_url
 from utils.logging_tool.log_control import INFO
+from utils import config
+
 os.system("pip3 install chardet")
 
 
@@ -22,10 +22,10 @@ class InstallRequirements:
     def __init__(self):
         self.version_library_comparisons_path = ConfigHandler.util_install_path \
                                                 + "version_library_comparisons.txt"
-        self.requirements_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))\
-                                 + get_os_sep() + "requirements.txt"
+        self.requirements_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) \
+                                 + os.sep + "requirements.txt"
 
-        self.mirror_url = get_mirror_url()
+        self.mirror_url = config.mirror_source
         # 初始化时，获取最新的版本库
 
         # os.system("pip freeze > {0}".format(self.requirements_path))

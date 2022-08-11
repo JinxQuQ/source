@@ -87,12 +87,32 @@ def pytest_collection_modifyitems(items):
         item.name = item.name.encode("utf-8").decode("unicode_escape")
         item._nodeid = item.nodeid.encode("utf-8").decode("unicode_escape")
 
+    # 期望用例顺序
+    print("收集到的测试用例:%s" % items)
+    appoint_items = ["test_get_user_info", "test_collect_addtool", "test_Cart_List", "test_ADD", "test_Guest_ADD",
+                     "test_Clear_Cart_Item"]
 
-# 定义单个标签
+    # 指定运行顺序
+    run_items = []
+    for i in appoint_items:
+        for item in items:
+            module_item = item.name.split("[")[0]
+            if i == module_item:
+                run_items.append(item)
+
+    for i in run_items:
+        run_index = run_items.index(i)
+        items_index = items.index(i)
+
+        if run_index != items_index:
+            n_data = items[run_index]
+            run_index = items.index(n_data)
+            items[items_index], items[run_index] = items[run_index], items[items_index]
+
+
 def pytest_configure(config):
-    config.addinivalue_line(
-        "markers", "smoke"
-    )
+    config.addinivalue_line("markers", 'smoke')
+    config.addinivalue_line("markers", '回归测试')
 
 
 @pytest.fixture(scope="function", autouse=True)

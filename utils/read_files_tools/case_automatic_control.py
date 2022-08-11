@@ -9,7 +9,6 @@ from typing import Text, Dict
 from common.setting import ConfigHandler
 from utils.read_files_tools.testcase_template import write_testcase_file
 from utils.read_files_tools.yaml_control import GetYamlData
-from utils.other_tools.get_os_sep import get_os_sep
 from utils.read_files_tools.get_all_files_path import get_all_files
 from utils.other_tools.exceptions import ValueNotFoundError
 
@@ -51,10 +50,10 @@ class TestCaseAutomaticGeneration:
         """
 
         # 这里通过“\\” 符号进行分割，提取出来文件名称
-        path = self.file_name(file_path).split(get_os_sep())
+        path = self.file_name(file_path).split(os.sep)
         # 判断生成的 testcase 文件名称，需要以test_ 开头
         case_name = path[-1] = path[-1].replace(path[-1], "test_" + path[-1])
-        new_name = get_os_sep().join(path)
+        new_name = os.sep.join(path)
         return ConfigHandler.case_path + new_name, case_name
 
     def get_test_class_title(self, file_path: Text) -> Text:

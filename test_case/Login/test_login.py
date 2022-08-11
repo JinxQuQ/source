@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time   : 2022-08-08 14:33:21
-# @Author : 七月
+# @Time   : 2022-08-11 10:26:59
 
 
 import allure
@@ -33,7 +32,6 @@ class TestLogin:
         TearDownHandler(res).teardown_handle()
         Assert(in_data['assert_data']).assert_equality(response_data=res.response_data,
                                                        sql_data=res.sql_data, status_code=res.status_code)
-
 
 
 if __name__ == '__main__':

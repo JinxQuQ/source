@@ -76,7 +76,6 @@ class Test{class_title}:
                                                        sql_data=res.sql_data, status_code=res.status_code)
 
 
-
 if __name__ == '__main__':
     pytest.main(['{file_name}', '-s', '-W', 'ignore:Module already imported:pytest.PytestWarning'])
 '''

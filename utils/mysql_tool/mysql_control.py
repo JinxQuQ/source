@@ -139,11 +139,11 @@ class AssertExecution(MysqlDB):
 
     def assert_execution(self, sql: list, resp) -> dict:
         """
-                执行 sql, 负责处理 yaml 文件中的断言需要执行多条 sql 的场景，最终会将所有数据以对象形式返回
-                :param resp: 接口响应数据
-                :param sql: sql
-                :return:
-                """
+         执行 sql, 负责处理 yaml 文件中的断言需要执行多条 sql 的场景，最终会将所有数据以对象形式返回
+        :param resp: 接口响应数据
+        :param sql: sql
+        :return:
+        """
         try:
             if isinstance(sql, list):
 

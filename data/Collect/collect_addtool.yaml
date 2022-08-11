@@ -30,6 +30,7 @@ collect_addtool_01:
         type: ==
         value: 0
         AssertType:
+        message: "errorCode 断言为 0"
     sql:
     teardown:
       - case_id: collect_delete_tool_01

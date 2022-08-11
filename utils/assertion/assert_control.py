@@ -58,7 +58,8 @@ class Assert:
             assert_value: Any,
             key: Text,
             values: Any,
-            resp_data: Dict) -> None:
+            resp_data: Dict,
+            message: Text) -> None:
         """
 
         :param sql_data: 测试用例中的sql
@@ -66,6 +67,7 @@ class Assert:
         :param key:
         :param values:
         :param resp_data: 预期结果
+        :param message: 预期结果
         :return:
         """
         # 判断数据库为开关为关闭状态
@@ -87,7 +89,7 @@ class Assert:
                 # 判断mysql查询出来的数据类型如果是bytes类型，转换成str类型
                 res_sql_data = self.res_sql_data_bytes(res_sql_data[0])
                 name = AssertMethod(self.assert_data[key]['type']).name
-                self.functions_mapping[name](resp_data[0], res_sql_data)
+                self.functions_mapping[name](resp_data[0], res_sql_data, str(message))
 
             # 判断当用例走的数据数据库断言，但是用例中未填写SQL
             else:
@@ -100,7 +102,9 @@ class Assert:
             assert_value: Any,
             key: Text,
             values: Dict,
-            resp_data: Any) -> None:
+            resp_data: Any,
+            message: Text
+    ) -> None:
         """处理断言类型"""
         # 判断断言类型
         if assert_types == 'SQL':
@@ -109,14 +113,23 @@ class Assert:
                 assert_value=assert_value,
                 key=key,
                 values=values,
-                resp_data=resp_data)
+                resp_data=resp_data,
+                message=message
+            )
 
         # 判断assertType为空的情况下，则走响应断言
         elif assert_types is None:
             name = AssertMethod(self.assert_data[key]['type']).name
-            self.functions_mapping[name](resp_data[0], assert_value)
+            self.functions_mapping[name](resp_data[0], assert_value, message)
         else:
             raise AssertTypeError("断言失败，目前只支持数据库断言和响应断言")
+
+    @classmethod
+    def _message(cls, value):
+        _message = ""
+        if jsonpath(obj=value, expr="$.message") is not False:
+            _message = value['message']
+        return _message
 
     def assert_equality(
             self,
@@ -135,7 +148,7 @@ class Assert:
                     assert_types = self.assert_data[key]['AssertType']
                     # 从yaml获取jsonpath，拿到对象的接口响应数据
                     resp_data = jsonpath(json.loads(response_data), assert_jsonpath)
-
+                    message = self._message(value=values)
                     # jsonpath 如果数据获取失败，会返回False，判断获取成功才会执行如下代码
                     if resp_data is not False:
                         # 判断断言类型
@@ -145,7 +158,9 @@ class Assert:
                             assert_value=assert_value,
                             key=key,
                             values=values,
-                            resp_data=resp_data)
+                            resp_data=resp_data,
+                            message=message
+                        )
                     else:
                         ERROR.logger.error("JsonPath值获取失败 %s ", assert_jsonpath)
                         raise JsonpathExtractionFailed(f"JsonPath值获取失败 {assert_jsonpath}")

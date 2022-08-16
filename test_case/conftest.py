@@ -8,12 +8,12 @@ import allure
 import requests
 from common.setting import ConfigHandler
 from utils.read_files_tools.get_yaml_data_analysis import CaseData
-from utils.cache_process.cache_control import Cache
 from utils.read_files_tools.get_all_files_path import get_all_files
 from utils.logging_tool.log_control import INFO, ERROR, WARNING
 from utils.other_tools.models import TestCase
 from utils.read_files_tools.clean_files import del_file
 from utils.other_tools.allure_data.allure_tools import allure_step, allure_step_no
+from utils import CacheHandler, _cache_config
 
 
 @pytest.fixture(scope="session", autouse=False)
@@ -29,7 +29,7 @@ def write_case_process():
     :return:
     """
 
-    case_data = {}
+    # case_data = {}
     # 循环拿到所有存放用例的文件路径
     for i in get_all_files(file_path=ConfigHandler.data_path, yaml_data_switch=True):
         # 循环读取文件中的数据
@@ -39,15 +39,16 @@ def write_case_process():
             for case in case_process:
                 for k, v in case.items():
                     # 判断 case_id 是否已存在
-                    case_id_exit = k in case_data.keys()
+                    case_id_exit = k in _cache_config.keys()
                     # 如果case_id 不存在，则将用例写入缓存池中
                     if case_id_exit is False:
-                        case_data[k] = v
+                        CacheHandler.update_cache(cache_name=k, value=v)
+                        # case_data[k] = v
                     # 当 case_id 为 True 存在时，则跑出异常
                     elif case_id_exit is True:
                         raise ValueError(f"case_id: {k} 存在重复项, 请修改case_id\n"
                                          f"文件路径: {i}")
-    Cache('case_process').set_caches(case_data)
+    # CacheHandler.update_cache(cache_name='case_process', value=case_data)
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -74,8 +75,7 @@ def work_login_init():
         # 拿到登录的cookie内容，cookie拿到的是字典类型，转换成对应的格式
         cookies += _cookie
         # 将登录接口中的cookie写入缓存中，其中login_cookie是缓存名称
-
-    Cache('login_cookie').set_caches(cookies)
+    CacheHandler.update_cache(cache_name='login_cookie', value=cookies)
 
 
 def pytest_collection_modifyitems(items):

@@ -10,8 +10,8 @@
 import json
 from typing import Text
 from jsonpath import jsonpath
-from utils.cache_process.cache_control import Cache
 from utils.other_tools.exceptions import ValueNotFoundError
+from utils import CacheHandler
 
 
 class SetCurrentRequestCache:
@@ -37,7 +37,8 @@ class SetCurrentRequestCache:
             jsonpath_value
         )
         if _request_data is not False:
-            Cache(cache_name).set_caches(_request_data[0])
+            CacheHandler.update_cache(cache_name=cache_name, value=_request_data[0])
+            # Cache(cache_name).set_caches(_request_data[0])
         else:
             raise ValueNotFoundError(
                 "缓存设置失败，程序中未检测到需要缓存的数据。"
@@ -53,7 +54,8 @@ class SetCurrentRequestCache:
         """将响应结果存入缓存"""
         _response_data = jsonpath(json.loads(self.response_data), jsonpath_value)
         if _response_data is not False:
-            Cache(cache_name).set_caches(_response_data[0])
+            CacheHandler.update_cache(cache_name=cache_name, value=_response_data[0])
+            # Cache(cache_name).set_caches(_response_data[0])
         else:
             raise ValueNotFoundError("缓存设置失败，程序中未检测到需要缓存的数据。"
                                      f"请求参数: {self.response_data}"

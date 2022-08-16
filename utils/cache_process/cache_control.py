@@ -70,7 +70,3 @@ class Cache:
         for i in list_dir:
             # 循环删除文件夹下得所有内容
             os.remove(cache_path + i)
-
-
-if __name__ == '__main__':
-    Cache(filename=None).clean_all_cache()

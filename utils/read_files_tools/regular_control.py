@@ -10,7 +10,6 @@ from datetime import date, timedelta, datetime
 from jsonpath import jsonpath
 from faker import Faker
 from utils.logging_tool.log_control import ERROR
-from utils.cache_process.cache_control import Cache
 
 
 class Context:
@@ -136,6 +135,8 @@ def sql_regular(value, res=None):
 
 
 def cache_regular(value):
+    from utils import CacheHandler
+
     """
     通过正则的方式，读取缓存中的内容
     例：$cache{login_init}
@@ -157,9 +158,10 @@ def cache_regular(value):
                 r'\$cache\{' + regular_data.replace('$', "\$").replace('[', '\[') + r'\}'
             )
         try:
-            cache_data = Cache(regular_data).get_cache()
+            # cache_data = Cache(regular_data).get_cache()
+            cache_data = CacheHandler.get_cache(regular_data)
             # 使用sub方法，替换已经拿到的内容
-            value = re.sub(pattern, cache_data, value)
+            value = re.sub(pattern, str(cache_data), value)
         except Exception:
             pass
     return value

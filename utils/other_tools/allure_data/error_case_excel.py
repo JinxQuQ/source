@@ -37,6 +37,7 @@ class ErrorTestCase:
                 # 收集执行失败的用例数据
                 if date['status'] == 'failed' or date['status'] == 'broken':
                     files.append(date)
+        print(files)
         return files
 
     @classmethod
@@ -80,7 +81,7 @@ class ErrorTestCase:
             _url = self.get_parameters(test_case)['url']
         else:
             # 否则拿请求步骤的数据，因为如果设计到依赖，会获取多组，因此我们只取最后一组数据内容
-            _url = self.get_test_stage(test_case)[-8]['name'][7:]
+            _url = self.get_test_stage(test_case)[-7]['name'][7:]
         return _url
 
     def get_method(self, test_case):
@@ -92,7 +93,7 @@ class ErrorTestCase:
         if test_case['testStage']['status'] == 'broken':
             _method = self.get_parameters(test_case)['method']
         else:
-            _method = self.get_test_stage(test_case)[-7]['name'][6:]
+            _method = self.get_test_stage(test_case)[-6]['name'][6:]
         return _method
 
     def get_headers(self, test_case):
@@ -104,7 +105,7 @@ class ErrorTestCase:
             _headers = self.get_parameters(test_case)['headers']
         else:
             # 如果用例请求成功，则从allure附件中获取请求头部信息
-            _headers_attachment = self.get_test_stage(test_case)[-6]['attachments'][0]['source']
+            _headers_attachment = self.get_test_stage(test_case)[-5]['attachments'][0]['source']
             path = ConfigHandler.report_html_attachments_path + _headers_attachment
             with open(path, 'r', encoding='utf-8') as file:
                 _headers = json.load(file)
@@ -127,7 +128,7 @@ class ErrorTestCase:
         if test_case['testStage']['status'] == 'broken':
             _case_data = self.get_parameters(test_case)['data']
         else:
-            _case_data_attachments = self.get_test_stage(test_case)[-5]['attachments'][0]['source']
+            _case_data_attachments = self.get_test_stage(test_case)[-4]['attachments'][0]['source']
             path = ConfigHandler.report_html_attachments_path + _case_data_attachments
             with open(path, 'r', encoding='utf-8') as file:
                 _case_data = json.load(file)
@@ -157,7 +158,7 @@ class ErrorTestCase:
         @param test_case:
         @return:
         """
-        assert_data = self.get_parameters(test_case)['assert']
+        assert_data = self.get_parameters(test_case)['assert_data']
         return assert_data
 
     @classmethod

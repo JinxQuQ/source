@@ -357,21 +357,24 @@ class RequestControl:
     @classmethod
     def api_allure_step(
             cls,
+            *,
+            url: Text,
             headers: Text,
             method: Text,
             data: Text,
             assert_data: Text,
-            status_code: Text,
-            res_time: Text
+            res_time: Text,
+            res: Text
     ) -> None:
         """ 在allure中记录请求数据 """
-        _status_code = str(status_code)
+        allure_step_no(f"请求URL: {url}")
         allure_step_no(f"请求方式: {method}")
         allure_step("请求头: ", headers)
         allure_step("请求数据: ", data)
         allure_step("预期数据: ", assert_data)
         _res_time = res_time
         allure_step_no(f"响应耗时(ms): {str(_res_time)}")
+        allure_step("响应结果: ", res)
 
     @log_decorator(True)
     @execution_duration(3000)
@@ -417,12 +420,13 @@ class RequestControl:
                 yaml_data=self.__yaml_case)
 
             self.api_allure_step(
+                url=_res_data.url,
                 headers=str(_res_data.headers),
                 method=_res_data.method,
                 data=str(_res_data.body),
                 assert_data=str(_res_data.assert_data),
                 res_time=str(_res_data.res_time),
-                status_code=str(_res_data.status_code)
+                res=_res_data.response_data
             )
             # 将当前请求数据存入缓存中
             SetCurrentRequestCache(

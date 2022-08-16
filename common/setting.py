@@ -25,9 +25,6 @@ class ConfigHandler:
     # 测试用例数据路径
     data_path = generate_path('data$')
 
-    cache_path = generate_path('Cache$')
-    if not os.path.exists(cache_path):
-        os.mkdir(cache_path)
     common_path = generate_path('common$')
     config_path = generate_path('common$config.yaml')
 

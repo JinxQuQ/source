@@ -61,6 +61,7 @@ collect_addtool_02:
     # 是否执行，空或者 true 都会执行
     is_run:
     data:
+
       name: 自动生成收藏网址${{random_int()}}
       link: https://gitee.com/yu_xiao_qi/pytest-auto-api2
     # 是否有依赖业务，为空或者false则表示没有
@@ -82,3 +83,4 @@ collect_addtool_02:
         value: '请先登录！'
         AssertType:
     sql:
+

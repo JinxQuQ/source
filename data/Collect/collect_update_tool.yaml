@@ -16,11 +16,11 @@ collect_update_tool_01:
     # 请求的数据，是 params 还是 json、或者file、data
     requestType: data
     # 是否执行，空或者 true 都会执行
-    is_run: False
+    is_run: True
     data:
       name: 自动化编辑网址名称
       link: https://gitee.com/yu_xiao_qi/pytest-auto-api2
-      id: $cache{collect_update_tool_01_id}
+      id:
     # 是否有依赖业务，为空或者false则表示没有
     dependence_case: True
     # 依赖的数据
@@ -29,7 +29,7 @@ collect_update_tool_01:
         dependent_data:
           - dependent_type: response
             jsonpath: $.data.id
-            set_cache: collect_update_tool_01_id
+            replace_key: $.data.id
     assert:
       # 断言接口状态码
       errorCode:

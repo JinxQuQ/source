@@ -50,7 +50,7 @@ email:
   send_user: 1603453211@qq.com
   email_host: smtp.qq.com
   # 自己到QQ邮箱中配置stamp_key
-  stamp_key:
+  stamp_key: rzuabbobadbuhadc
   # 收件人改成自己的邮箱
   send_list: 1603453211@qq.com
 

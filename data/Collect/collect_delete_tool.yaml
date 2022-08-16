@@ -19,6 +19,7 @@ collect_delete_tool_01:
     is_run:
     data:
       id: $cache{collect_delete_tool_01_id}
+      id2: 2
     dependence_case: True
     # 依赖的数据
     dependence_case_data:

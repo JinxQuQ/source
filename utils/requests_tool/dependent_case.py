@@ -6,7 +6,6 @@ import ast
 import json
 from typing import Text, Dict, Union, List
 from jsonpath import jsonpath
-from utils.cache_process.cache_control import Cache
 from utils.requests_tool.request_control import RequestControl
 from utils.mysql_tool.mysql_control import SetUpMySQL
 from utils.read_files_tools.regular_control import regular, cache_regular
@@ -15,14 +14,14 @@ from utils.logging_tool.log_control import WARNING
 from utils.other_tools.models import DependentType
 from utils.other_tools.models import TestCase, DependentCaseData, DependentData
 from utils.other_tools.exceptions import ValueNotFoundError
-from utils import config
+from utils import config, CacheHandler
 
 
 class DependentCase:
     """ 处理依赖相关的业务 """
 
     def __init__(self, dependent_yaml_case: TestCase):
-        self.__dependent_case = dependent_yaml_case
+        self.__yaml_case = dependent_yaml_case
 
     @classmethod
     def get_cache(cls, case_id: Text) -> Dict:
@@ -31,7 +30,7 @@ class DependentCase:
         :param case_id:
         :return: case_id_01
         """
-        _case_data = ast.literal_eval(Cache('case_process').get_cache())[case_id]
+        _case_data = CacheHandler.get_cache(case_id)
         return _case_data
 
     @classmethod
@@ -92,7 +91,7 @@ class DependentCase:
         """
 
         if "$url_param" in replace_key:
-            _url = self.__dependent_case.url.replace(replace_key, str(jsonpath_data[0]))
+            _url = self.__yaml_case.url.replace(replace_key, str(jsonpath_data[0]))
             jsonpath_dates['$.url'] = _url
         else:
             jsonpath_dates[replace_key] = jsonpath_data[0]
@@ -121,7 +120,8 @@ class DependentCase:
                     _set_value = self.set_cache_value(i)
                     _replace_key = self.replace_key(i)
                     if _set_value is not None:
-                        Cache(_set_value).set_caches(jsonpath_data[0])
+                        CacheHandler.update_cache(cache_name=_set_value, value=jsonpath_data[0])
+                        # Cache(_set_value).set_caches(jsonpath_data[0])
                     if _replace_key is not None:
                         jsonpath_dates[_replace_key] = jsonpath_data[0]
                         self.url_replace(
@@ -147,7 +147,8 @@ class DependentCase:
             _jsonpath
         )
         if set_value is not None:
-            Cache(set_value).set_caches(jsonpath_data[0])
+            CacheHandler.update_cache(cache_name=set_value, value=jsonpath_data[0])
+            # Cache(set_value).set_caches(jsonpath_data[0])
         if replace_key is not None:
             if dependent_type == 0:
                 jsonpath_dates[replace_key] = jsonpath_data[0]
@@ -161,10 +162,10 @@ class DependentCase:
         """
 
         # 获取用例中的dependent_type值，判断该用例是否需要执行依赖
-        _dependent_type = self.__dependent_case.dependence_case
+        _dependent_type = self.__yaml_case.dependence_case
         # 获取依赖用例数据
-        _dependence_case_dates = self.__dependent_case.dependence_case_data
-        _setup_sql = self.__dependent_case.setup_sql
+        _dependence_case_dates = self.__yaml_case.dependence_case_data
+        _setup_sql = self.__yaml_case.setup_sql
         # 判断是否有依赖
         if _dependent_type is True:
             # 读取依赖相关的用例数据
@@ -189,7 +190,7 @@ class DependentCase:
 
                                 _case_id = dependence_case_data.case_id
                                 _jsonpath = i.jsonpath
-                                _request_data = self.__dependent_case.data
+                                _request_data = self.__yaml_case.data
                                 _replace_key = self.replace_key(i)
                                 _set_value = self.set_cache_value(i)
                                 # 判断依赖数据类型, 依赖 response 中的数据
@@ -239,7 +240,7 @@ class DependentCase:
         jsonpath 和 依赖的数据,进行替换
         :return:
         """
-        _dependent_data = DependentCase(self.__dependent_case).is_dependent()
+        _dependent_data = DependentCase(self.__yaml_case).is_dependent()
         _new_data = None
         # 判断有依赖
         if _dependent_data is not None and _dependent_data is not False:
@@ -248,8 +249,9 @@ class DependentCase:
                 # 通过jsonpath判断出需要替换数据的位置
                 _change_data = key.split(".")
                 # jsonpath 数据解析
-                _new_data = jsonpath_replace(change_data=_change_data, key_name='self.__yaml_case')
-                # 最终提取到的数据,转换成 yaml_data[xxx][xxx]
+                # 不要删 这个yaml_case
+                yaml_case = self.__yaml_case
+                _new_data = jsonpath_replace(change_data=_change_data, key_name='yaml_case')
+                # 最终提取到的数据,转换成 __yaml_case.data
                 _new_data += ' = ' + str(value)
-
                 exec(_new_data)

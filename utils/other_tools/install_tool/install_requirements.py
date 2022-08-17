@@ -11,7 +11,7 @@ import os
 import chardet
 from common.setting import ConfigHandler
 from utils.logging_tool.log_control import INFO
-from utils import config
+from utils.other_tools.models import config
 
 os.system("pip3 install chardet")
 

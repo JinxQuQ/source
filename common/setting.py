@@ -27,7 +27,7 @@ class ConfigHandler:
 
     common_path = generate_path('common$')
     config_path = generate_path('common$config.yaml')
-
+    cache_path = generate_path('$cache')
     log_path = generate_path('logs$log.log')
     now_time_day = time.strftime("%Y-%m-%d", time.localtime())
     info_log_path = generate_path(f'logs$info-{now_time_day}.log')

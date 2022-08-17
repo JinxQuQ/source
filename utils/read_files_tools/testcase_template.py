@@ -21,8 +21,8 @@ def write_case(case_path, page):
         file.write(page)
 
 
-def write_testcase_file(allure_epic, allure_feature, class_title,
-                        func_title, case_path, yaml_path, file_name, allure_story):
+def write_testcase_file(*, allure_epic, allure_feature, class_title,
+                        func_title, case_path, case_ids, file_name, allure_story):
     """
 
         :param allure_story:
@@ -32,11 +32,10 @@ def write_testcase_file(allure_epic, allure_feature, class_title,
         :param class_title: 类名称
         :param func_title: 函数名称
         :param case_path: case 路径
-        :param yaml_path: yaml 文件路径
+        :param case_ids: 用例ID
         :return:
         """
     conf_data = GetYamlData(ConfigHandler.config_path).get_yaml_data()
-    # author = conf_data['TesterName']
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     real_time_update_test_cases = conf_data['real_time_update_test_cases']
 
@@ -47,15 +46,15 @@ def write_testcase_file(allure_epic, allure_feature, class_title,
 
 import allure
 import pytest
-from common.setting import ConfigHandler
-from utils.read_files_tools.get_yaml_data_analysis import CaseData
+from utils.read_files_tools.get_yaml_data_analysis import GetTestCase
 from utils.assertion.assert_control import Assert
 from utils.requests_tool.request_control import RequestControl
 from utils.read_files_tools.regular_control import regular
 from utils.requests_tool.teardown_control import TearDownHandler
 
 
-TestData = CaseData(ConfigHandler.data_path + r'{yaml_path}').case_process()
+case_id = {case_ids}
+TestData = GetTestCase.case_data(case_id)
 re_data = regular(str(TestData))
 
 

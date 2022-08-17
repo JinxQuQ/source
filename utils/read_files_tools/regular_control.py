@@ -97,14 +97,12 @@ class Context:
     @classmethod
     def host(cls) -> str:
         from utils import config
-
         """ 获取接口域名 """
         return config.host
 
     @classmethod
     def app_host(cls) -> str:
         from utils import config
-
         """获取app的host"""
         return config.app_host
 
@@ -135,7 +133,7 @@ def sql_regular(value, res=None):
 
 
 def cache_regular(value):
-    from utils import CacheHandler
+    from utils.cache_process.cache_control import CacheHandler
 
     """
     通过正则的方式，读取缓存中的内容

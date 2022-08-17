@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time   : 2022-08-11 10:26:59
+# @Time   : 2022-08-17 10:12:54
 
 
 import allure
 import pytest
-from common.setting import ConfigHandler
-from utils.read_files_tools.get_yaml_data_analysis import CaseData
+from utils.read_files_tools.get_yaml_data_analysis import GetTestCase
 from utils.assertion.assert_control import Assert
 from utils.requests_tool.request_control import RequestControl
 from utils.read_files_tools.regular_control import regular
 from utils.requests_tool.teardown_control import TearDownHandler
 
 
-TestData = CaseData(ConfigHandler.data_path + r'Collect/collect_update_tool.yaml').case_process()
+case_id = ['collect_update_tool_01']
+TestData = GetTestCase.case_data(case_id)
 re_data = regular(str(TestData))
 
 

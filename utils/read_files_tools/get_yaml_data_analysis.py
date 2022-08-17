@@ -5,10 +5,11 @@
 # @Author : 余少琪
 """
 
-from typing import Union, Text, Dict
+from typing import Union, Text, Dict, List
 from utils.read_files_tools.yaml_control import GetYamlData
 from utils.other_tools.models import TestCase
 from utils.other_tools.exceptions import ValueNotFoundError
+from utils.cache_process.cache_control import CacheHandler
 from utils import config
 
 
@@ -382,3 +383,15 @@ class CaseData:
             return _sleep_time
         except KeyError:
             return None
+
+
+class GetTestCase:
+
+    @staticmethod
+    def case_data(case_id_lists: List):
+        case_lists = []
+        for i in case_id_lists:
+            _data = CacheHandler.get_cache(i)
+            case_lists.append(_data)
+
+        return case_lists

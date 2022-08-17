@@ -18,7 +18,8 @@ from utils.mysql_tool.mysql_control import MysqlDB
 from utils.logging_tool.log_control import WARNING
 from utils.other_tools.models import ResponseData, TearDown, SendRequest, ParamPrepare
 from utils.other_tools.exceptions import JsonpathExtractionFailed, ValueNotFoundError
-from utils import config, CacheHandler
+from utils.cache_process.cache_control import CacheHandler
+from utils import config
 
 
 class TearDownHandler:

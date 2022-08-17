@@ -49,6 +49,7 @@ def run():
                    """
 
         os.system(r"allure generate ./report/tmp -o ./report/html --clean")
+
         allure_data = AllureFileClean().get_case_count()
         notification_mapping = {
             NotificationType.DING_TALK.value: DingTalkSendMsg(allure_data).send_ding_notification,

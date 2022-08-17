@@ -7,48 +7,18 @@ import time
 import allure
 import requests
 from common.setting import ConfigHandler
-from utils.read_files_tools.get_yaml_data_analysis import CaseData
-from utils.read_files_tools.get_all_files_path import get_all_files
+
 from utils.logging_tool.log_control import INFO, ERROR, WARNING
 from utils.other_tools.models import TestCase
 from utils.read_files_tools.clean_files import del_file
 from utils.other_tools.allure_data.allure_tools import allure_step, allure_step_no
-from utils import CacheHandler, _cache_config
+from utils.cache_process.cache_control import CacheHandler
 
 
 @pytest.fixture(scope="session", autouse=False)
 def clear_report():
     """如clean命名无法删除报告，这里手动删除"""
     del_file(ConfigHandler.report_path)
-
-
-@pytest.fixture(scope="session", autouse=True)
-def write_case_process():
-    """
-    获取所有用例，写入用例池中
-    :return:
-    """
-
-    # case_data = {}
-    # 循环拿到所有存放用例的文件路径
-    for i in get_all_files(file_path=ConfigHandler.data_path, yaml_data_switch=True):
-        # 循环读取文件中的数据
-        case_process = CaseData(i).case_process(case_id_switch=True)
-        if case_process is not None:
-            # 转换数据类型
-            for case in case_process:
-                for k, v in case.items():
-                    # 判断 case_id 是否已存在
-                    case_id_exit = k in _cache_config.keys()
-                    # 如果case_id 不存在，则将用例写入缓存池中
-                    if case_id_exit is False:
-                        CacheHandler.update_cache(cache_name=k, value=v)
-                        # case_data[k] = v
-                    # 当 case_id 为 True 存在时，则跑出异常
-                    elif case_id_exit is True:
-                        raise ValueError(f"case_id: {k} 存在重复项, 请修改case_id\n"
-                                         f"文件路径: {i}")
-    # CacheHandler.update_cache(cache_name='case_process', value=case_data)
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -88,7 +58,7 @@ def pytest_collection_modifyitems(items):
         item._nodeid = item.nodeid.encode("utf-8").decode("unicode_escape")
 
     # 期望用例顺序
-    print("收集到的测试用例:%s" % items)
+    # print("收集到的测试用例:%s" % items)
     appoint_items = ["test_get_user_info", "test_collect_addtool", "test_Cart_List", "test_ADD", "test_Guest_ADD",
                      "test_Clear_Cart_Item"]
 

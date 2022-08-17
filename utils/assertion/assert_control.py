@@ -25,9 +25,8 @@ class Assert:
         self.assert_data = ast.literal_eval(cache_regular(str(assert_data)))
         self.functions_mapping = load_module_functions(assert_type)
 
-    @classmethod
+    @staticmethod
     def _check_params(
-            cls,
             response_data: Text,
             sql_data: Union[Dict, None]) -> bool:
         """
@@ -45,8 +44,8 @@ class Assert:
                 )
         return True
 
-    @classmethod
-    def res_sql_data_bytes(cls, res_sql_data: Any) -> Text:
+    @staticmethod
+    def res_sql_data_bytes(res_sql_data: Any) -> Text:
         """ 处理 mysql查询出来的数据类型如果是bytes类型，转换成str类型 """
         if isinstance(res_sql_data, bytes):
             res_sql_data = res_sql_data.decode('utf=8')

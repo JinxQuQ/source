@@ -11,7 +11,7 @@ import json
 from typing import Text
 from jsonpath import jsonpath
 from utils.other_tools.exceptions import ValueNotFoundError
-from utils import CacheHandler
+from utils.cache_process.cache_control import CacheHandler
 
 
 class SetCurrentRequestCache:

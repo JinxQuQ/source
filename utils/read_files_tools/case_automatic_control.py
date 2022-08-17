@@ -16,13 +16,13 @@ from utils.other_tools.exceptions import ValueNotFoundError
 class TestCaseAutomaticGeneration:
     """自动生成自动化测试中的test_case代码"""
 
-    @classmethod
-    def case_date_path(cls) -> Text:
+    @staticmethod
+    def case_date_path() -> Text:
         """返回 yaml 用例文件路径"""
         return ConfigHandler.data_path
 
-    @classmethod
-    def case_path(cls) -> Text:
+    @staticmethod
+    def case_path() -> Text:
         """ 存放用例代码路径"""
         return ConfigHandler.case_path
 
@@ -73,8 +73,8 @@ class TestCaseAutomaticGeneration:
 
         return _class_name
 
-    @classmethod
-    def error_message(cls, param_name, file_path):
+    @staticmethod
+    def error_message(param_name, file_path):
         """
         用例中填写不正确的相关提示
         :return:
@@ -94,8 +94,8 @@ class TestCaseAutomaticGeneration:
         _file_name = os.path.split(self.file_name(file_path))[1][:-3]
         return _file_name
 
-    @classmethod
-    def allure_epic(cls, case_data: Dict, file_path) -> Text:
+    @staticmethod
+    def allure_epic(case_data: Dict, file_path) -> Text:
         """
         用于 allure 报告装饰器中的内容 @allure.epic("项目名称")
         :param file_path: 用例路径
@@ -105,13 +105,13 @@ class TestCaseAutomaticGeneration:
         try:
             return case_data['case_common']['allureEpic']
         except KeyError as exc:
-            raise ValueNotFoundError(cls.error_message(
+            raise ValueNotFoundError(TestCaseAutomaticGeneration.error_message(
                 param_name="allureEpic",
                 file_path=file_path
             )) from exc
 
-    @classmethod
-    def allure_feature(cls, case_data: Dict, file_path) -> Text:
+    @staticmethod
+    def allure_feature(case_data: Dict, file_path) -> Text:
         """
         用于 allure 报告装饰器中的内容 @allure.feature("模块名称")
         :param file_path:
@@ -121,13 +121,13 @@ class TestCaseAutomaticGeneration:
         try:
             return case_data['case_common']['allureFeature']
         except KeyError as exc:
-            raise ValueNotFoundError(cls.error_message(
+            raise ValueNotFoundError(TestCaseAutomaticGeneration.error_message(
                 param_name="allureFeature",
                 file_path=file_path
             )) from exc
 
-    @classmethod
-    def allure_story(cls, case_data: Dict, file_path) -> Text:
+    @staticmethod
+    def allure_story(case_data: Dict, file_path) -> Text:
         """
         用于 allure 报告装饰器中的内容  @allure.story("测试功能")
         :param file_path:
@@ -137,7 +137,7 @@ class TestCaseAutomaticGeneration:
         try:
             return case_data['case_common']['allureStory']
         except KeyError as exc:
-            raise ValueNotFoundError(cls.error_message(
+            raise ValueNotFoundError(TestCaseAutomaticGeneration.error_message(
                 param_name="allureStory",
                 file_path=file_path
             )) from exc
@@ -149,6 +149,19 @@ class TestCaseAutomaticGeneration:
         _case_dir_path = os.path.split(self.get_case_path(file_path)[0])[0]
         if not os.path.exists(_case_dir_path):
             os.makedirs(_case_dir_path)
+
+    @staticmethod
+    def case_ids(test_case):
+        """
+        获取用例 ID
+        :param test_case: 测试用例内容
+        :return:
+        """
+        ids = []
+        for k, v in test_case.items():
+            if k != "case_common":
+                ids.append(k)
+        return ids
 
     def yaml_path(self, file_path: Text) -> Text:
         """
@@ -171,13 +184,14 @@ class TestCaseAutomaticGeneration:
                 # 判断用例需要用的文件夹路径是否存在，不存在则创建
                 self.mk_dir(file)
                 yaml_case_process = GetYamlData(file).get_yaml_data()
+                self.case_ids(yaml_case_process)
                 write_testcase_file(
                     allure_epic=self.allure_epic(case_data=yaml_case_process, file_path=file),
                     allure_feature=self.allure_feature(yaml_case_process, file_path=file),
                     class_title=self.get_test_class_title(file),
                     func_title=self.func_title(file),
                     case_path=self.get_case_path(file)[0],
-                    yaml_path=self.yaml_path(file),
+                    case_ids=self.case_ids(yaml_case_process),
                     file_name=self.get_case_path(file)[1],
                     allure_story=self.allure_story(case_data=yaml_case_process, file_path=file)
                     )

@@ -14,7 +14,8 @@ from utils.logging_tool.log_control import WARNING
 from utils.other_tools.models import DependentType
 from utils.other_tools.models import TestCase, DependentCaseData, DependentData
 from utils.other_tools.exceptions import ValueNotFoundError
-from utils import config, CacheHandler
+from utils.cache_process.cache_control import CacheHandler
+from utils import config
 
 
 class DependentCase:

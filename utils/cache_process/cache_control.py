@@ -17,10 +17,10 @@ class Cache:
     def __init__(self, filename: Union[Text, None]) -> None:
         # 如果filename不为空，则操作指定文件内容
         if filename:
-            self.path = ConfigHandler().cache_path + filename
+            self.path = ConfigHandler.cache_path + filename
         # 如果filename为None，则操作所有文件内容
         else:
-            self.path = ConfigHandler().cache_path
+            self.path = ConfigHandler.cache_path
 
     def set_cache(self, key: Text, value: Any) -> None:
         """
@@ -70,3 +70,16 @@ class Cache:
         for i in list_dir:
             # 循环删除文件夹下得所有内容
             os.remove(cache_path + i)
+
+
+_cache_config = {}
+
+
+class CacheHandler:
+    @staticmethod
+    def get_cache(cache_data):
+        return _cache_config[cache_data]
+
+    @staticmethod
+    def update_cache(*, cache_name, value):
+        _cache_config[cache_name] = value

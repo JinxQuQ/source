@@ -10,6 +10,7 @@ import urllib3
 from utils.other_tools.allure_data.allure_report_data import TestMetrics
 from utils import config
 
+
 urllib3.disable_warnings()
 
 try:

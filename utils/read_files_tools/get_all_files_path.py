@@ -17,7 +17,6 @@ def get_all_files(file_path, yaml_data_switch=False) -> list:
     filename = []
     # 获取所有文件下的子文件名称
     for root, dirs, files in os.walk(file_path):
-        print(root, dirs, files)
         for _file_path in files:
             path = os.path.join(root, _file_path)
             if yaml_data_switch:
@@ -26,8 +25,3 @@ def get_all_files(file_path, yaml_data_switch=False) -> list:
             else:
                 filename.append(path)
     return filename
-
-
-if __name__ == '__main__':
-    a = get_all_files(r'D:\work_code\pytest-auto-api2\data')
-    print(a)

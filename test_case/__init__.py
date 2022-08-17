@@ -1,4 +1,7 @@
-
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Time   : 2022/3/28 15:28
+# @Author : 余少琪
 from common.setting import ConfigHandler
 from utils.read_files_tools.get_yaml_data_analysis import CaseData
 from utils.read_files_tools.get_all_files_path import get_all_files
@@ -10,8 +13,7 @@ def write_case_process():
     获取所有用例，写入用例池中
     :return:
     """
-    print("先自动运行呀")
-    # case_data = {}
+
     # 循环拿到所有存放用例的文件路径
     for i in get_all_files(file_path=ConfigHandler.data_path, yaml_data_switch=True):
         # 循环读取文件中的数据

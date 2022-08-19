@@ -38,13 +38,6 @@
 * 自定义拓展字段: 如用例中需要生成的随机数据，可直接调用
 * 多线程执行
 
-## 联系方式
-
-因为微信群二维码，有效期只有15天，如果有遇到的问题的同学，可以先加微信：being_chaoren
-
-加微信的朋友，需备注是从Gitee上看到的加的好友，加上之后，会将你们拉入一个自动化测试微信交流群
-
-![img.png](Files/image/wechat.png)
 
 ## 目录结构
 
@@ -146,8 +139,11 @@
 ## 安装教程
 
 首先，执行本框架之后，需要搭建好 python、jdk、 allure环境
+
 搭建python教程：[http://c.biancheng.net/view/4161.html](http://c.biancheng.net/view/4161.html)
+
 搭建jdk环境：[https://www.cnblogs.com/zll-wyf/p/15095664.html](https://www.cnblogs.com/zll-wyf/p/15095664.html)
+
 安装allure：[https://blog.csdn.net/m0_49225959/article/details/117194318](https://blog.csdn.net/m0_49225959/article/details/117194318)
 
 
@@ -175,9 +171,13 @@
 
 ### 创建用例步骤
 1、在data文件夹下方创建相关的yaml用例
+
 2、写完之后，需要执行 utils\readFilesUtils\caseAutomaticControl.py 这个文件，生成自动化代码
+
 3、执行caseAutomaticControl.py文件之后，会发现，在test_case层新增该条用例的对应代码，可直接执行该用例调试
+
 4、当所有接口都编写好之后，可以直接运行run.py主程序，执行所有自动化接口
+
 
 下面我们来看一下，如何创建用例
 
@@ -579,7 +579,8 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
         # 请求登录接口
         res = requests.post(url=url, data=data, verify=True, headers=headers).json()
         token = res['response']['token']
-        Cache("work_login_init").set_caches(token)
+
+        CacheHandler.update_cache(cache_name='work_login_init', value=token)
 
 这里在编写用例的时候，token 填写我们所编写的缓存名称即可。
 ![img.png](Files/image/img.png)
@@ -612,7 +613,7 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
             # 拿到登录的cookie内容，cookie拿到的是字典类型，转换成对应的格式
             cookies += _cookie
             # 将登录接口中的cookie写入缓存中，其中login_cookie是缓存名称
-            Cache('login_cookie').set_caches(cookies) 
+            CacheHandler.update_cache(cache_name='login_cookie', value=cookies)
 
 和token一样，我们如果用例的请求头中依赖cookie, cookie中的值，直接写我们存入缓存中的名称即可
 

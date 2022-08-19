@@ -76,7 +76,6 @@ class Counter:
                     self.yaml_cases(cases)
                 except FileNotFoundError:
                     os.makedirs(self.file)
-
                 self.counter += 1
 
     @classmethod

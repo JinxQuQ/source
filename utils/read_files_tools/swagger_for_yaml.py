@@ -124,7 +124,7 @@ class SwaggerForYaml:
         for key, value in _api_data.items():
             for k, v in value.items():
                 yaml_data = {
-                    "common": {"allureEpic": self.get_allure_epic(), "allureFeature": self.get_allure_feature(v),
+                    "case_common": {"allureEpic": self.get_allure_epic(), "allureFeature": self.get_allure_feature(v),
                                "allureStory": self.get_allure_story(v)},
                     self.get_case_id(key): {
                         "host": "${{host()}}", "url": key, "method": k, "detail": self.get_detail(v),

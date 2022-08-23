@@ -9,7 +9,7 @@
 """
 import os
 import chardet
-from common.setting import ConfigHandler
+from common.setting import ensure_path_sep
 from utils.logging_tool.log_control import INFO
 from utils import config
 
@@ -20,7 +20,7 @@ class InstallRequirements:
     """ 自动识别安装最新的依赖库 """
 
     def __init__(self):
-        self.version_library_comparisons_path = ConfigHandler.util_install_path \
+        self.version_library_comparisons_path = ensure_path_sep("\\utils\\other_tools\\install_tool\\") \
                                                 + "version_library_comparisons.txt"
         self.requirements_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) \
                                  + os.sep + "requirements.txt"

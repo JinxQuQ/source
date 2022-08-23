@@ -9,7 +9,7 @@ import json
 
 import xlrd
 from xlutils.copy import copy
-from common.setting import ConfigHandler
+from common.setting import ensure_path_sep
 
 
 def get_excel_data(sheet_name: str, case_name: any) -> list:
@@ -21,7 +21,7 @@ def get_excel_data(sheet_name: str, case_name: any) -> list:
     """
     res_list = []
 
-    excel_dire = ConfigHandler.data_path + 'TestLogin.xls'
+    excel_dire = ensure_path_sep("\\data\\TestLogin.xls")
     work_book = xlrd.open_workbook(excel_dire, formatting_info=True)
 
     # 打开对应的子表

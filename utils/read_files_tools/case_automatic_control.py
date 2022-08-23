@@ -6,7 +6,7 @@
 """
 import os
 from typing import Text, Dict
-from common.setting import ConfigHandler
+from common.setting import ensure_path_sep
 from utils.read_files_tools.testcase_template import write_testcase_file
 from utils.read_files_tools.yaml_control import GetYamlData
 from utils.read_files_tools.get_all_files_path import get_all_files
@@ -19,12 +19,12 @@ class TestCaseAutomaticGeneration:
     @staticmethod
     def case_date_path() -> Text:
         """返回 yaml 用例文件路径"""
-        return ConfigHandler.data_path
+        return ensure_path_sep("\\data")
 
     @staticmethod
     def case_path() -> Text:
         """ 存放用例代码路径"""
-        return ConfigHandler.case_path
+        return ensure_path_sep("\\test_case")
 
     def file_name(self, file: Text) -> Text:
         """
@@ -54,7 +54,7 @@ class TestCaseAutomaticGeneration:
         # 判断生成的 testcase 文件名称，需要以test_ 开头
         case_name = path[-1] = path[-1].replace(path[-1], "test_" + path[-1])
         new_name = os.sep.join(path)
-        return ConfigHandler.case_path + new_name, case_name
+        return ensure_path_sep("\\test_case" + new_name), case_name
 
     def get_test_class_title(self, file_path: Text) -> Text:
         """
@@ -176,7 +176,7 @@ class TestCaseAutomaticGeneration:
 
     def get_case_automatic(self) -> None:
         """ 自动生成 测试代码"""
-        file_path = get_all_files(file_path=ConfigHandler.data_path, yaml_data_switch=True)
+        file_path = get_all_files(file_path=ensure_path_sep("\\data"), yaml_data_switch=True)
 
         for file in file_path:
             # 判断代理拦截的yaml文件，不生成test_case代码

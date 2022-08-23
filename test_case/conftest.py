@@ -6,7 +6,7 @@ import pytest
 import time
 import allure
 import requests
-from common.setting import ConfigHandler
+from common.setting import ensure_path_sep
 
 from utils.logging_tool.log_control import INFO, ERROR, WARNING
 from utils.other_tools.models import TestCase
@@ -18,7 +18,7 @@ from utils.cache_process.cache_control import CacheHandler
 @pytest.fixture(scope="session", autouse=False)
 def clear_report():
     """如clean命名无法删除报告，这里手动删除"""
-    del_file(ConfigHandler.report_path)
+    del_file(ensure_path_sep("\\report"))
 
 
 @pytest.fixture(scope="session", autouse=True)

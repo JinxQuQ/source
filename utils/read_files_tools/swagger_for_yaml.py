@@ -6,7 +6,7 @@
 """
 import json
 from jsonpath import jsonpath
-from common.setting import ConfigHandler
+from common.setting import ensure_path_sep
 from typing import Dict
 from ruamel import yaml
 import os
@@ -95,7 +95,7 @@ class SwaggerForYaml:
         :return:
         """
 
-        _file_path = ConfigHandler.data_path + file_path[1:].replace("/", os.sep) + '.yaml'
+        _file_path = ensure_path_sep("\\data\\" + file_path[1:].replace("/", os.sep) + '.yaml')
         _file = _file_path.split(os.sep)[:-1]
         _dir_path = ''
         for i in _file:

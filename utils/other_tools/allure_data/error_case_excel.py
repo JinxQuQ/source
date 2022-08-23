@@ -12,7 +12,7 @@ import json
 import shutil
 import ast
 import xlwings
-from common.setting import ConfigHandler
+from common.setting import ensure_path_sep
 from utils.read_files_tools.get_all_files_path import get_all_files
 from utils.notify.wechat_send import WeChatSend
 from utils.other_tools.allure_data.allure_report_data import AllureFileClean
@@ -22,7 +22,7 @@ from utils.other_tools.allure_data.allure_report_data import AllureFileClean
 class ErrorTestCase:
     """ 收集错误的excel """
     def __init__(self):
-        self.test_case_path = ConfigHandler.report_html_test_case_path
+        self.test_case_path = ensure_path_sep("\\report\\html\\data\\test-cases\\")
 
     def get_error_case_data(self):
         """
@@ -106,7 +106,7 @@ class ErrorTestCase:
         else:
             # 如果用例请求成功，则从allure附件中获取请求头部信息
             _headers_attachment = self.get_test_stage(test_case)[-5]['attachments'][0]['source']
-            path = ConfigHandler.report_html_attachments_path + _headers_attachment
+            path = ensure_path_sep("\\report\\html\\data\\attachments\\" + _headers_attachment)
             with open(path, 'r', encoding='utf-8') as file:
                 _headers = json.load(file)
         return _headers
@@ -129,7 +129,7 @@ class ErrorTestCase:
             _case_data = self.get_parameters(test_case)['data']
         else:
             _case_data_attachments = self.get_test_stage(test_case)[-4]['attachments'][0]['source']
-            path = ConfigHandler.report_html_attachments_path + _case_data_attachments
+            path = ensure_path_sep("\\report\\html\\data\\attachments\\" + _case_data_attachments)
             with open(path, 'r', encoding='utf-8') as file:
                 _case_data = json.load(file)
         return _case_data
@@ -174,7 +174,7 @@ class ErrorTestCase:
             try:
                 res_data_attachments = \
                     test_case['testStage']['steps'][-1]['attachments'][0]['source']
-                path = ConfigHandler.report_html_attachments_path + res_data_attachments
+                path = ensure_path_sep("\\report\\html\\data\\attachments\\" + res_data_attachments)
                 with open(path, 'r', encoding='utf-8') as file:
                     _res_date = json.load(file)
             except FileNotFoundError:
@@ -207,8 +207,8 @@ class ErrorTestCase:
 class ErrorCaseExcel:
     """ 收集运行失败的用例，整理成excel报告 """
     def __init__(self):
-        _excel_template = ConfigHandler.excel_template + "自动化异常测试用例.xlsx"
-        self._file_path = ConfigHandler.file_path + "自动化异常测试用例.xlsx"
+        _excel_template = ensure_path_sep("\\utils\\other_tools\\allure_data\\自动化异常测试用例.xlsx")
+        self._file_path = ensure_path_sep("\\Files\\" + "自动化异常测试用例.xlsx")
         # if os.path.exists(self._file_path):
         #     os.remove(self._file_path)
 

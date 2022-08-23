@@ -8,7 +8,7 @@
 
 import json
 from typing import List, Text
-from common.setting import ConfigHandler, replace_path
+from common.setting import ensure_path_sep
 from utils.read_files_tools.get_all_files_path import get_all_files
 from utils.other_tools.models import TestMetrics
 
@@ -21,7 +21,7 @@ class AllureFileClean:
         """ 获取所有 allure 报告中执行用例的情况"""
         # 将所有数据都收集到files中
         files = []
-        for i in get_all_files(ConfigHandler.report_path + '/html/data/test-cases'):
+        for i in get_all_files(ensure_path_sep("\\report\\html\\data\\test-cases")):
             with open(i, 'r', encoding='utf-8') as file:
                 date = json.load(file)
                 files.append(date)
@@ -51,7 +51,7 @@ class AllureFileClean:
     def get_case_count(cls) -> "TestMetrics":
         """ 统计用例数量 """
         try:
-            file_name = ConfigHandler.report_path + replace_path('$html$widgets$summary.json')
+            file_name = ensure_path_sep("\\report\\html\\widgets\\summary.json")
             with open(file_name, 'r', encoding='utf-8') as file:
                 data = json.load(file)
             _case_count = data['statistic']

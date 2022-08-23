@@ -13,7 +13,7 @@ from typing import Tuple, Dict, Union, Text
 import requests
 import urllib3
 from requests_toolbelt import MultipartEncoder
-from common.setting import ConfigHandler
+from common.setting import ensure_path_sep
 from utils.other_tools.models import RequestType
 from utils.logging_tool.log_decorator import log_decorator
 from utils.mysql_tool.mysql_control import AssertExecution
@@ -141,7 +141,7 @@ class RequestControl:
         self.file_data_exit(file_data)
         _data = self.__yaml_case.data
         for key, value in ast.literal_eval(cache_regular(str(_data)))['file'].items():
-            file_path = ConfigHandler.file_path + value
+            file_path = ensure_path_sep("\\Files\\" + value)
             file_data[key] = (value, open(file_path, 'rb'), 'application/octet-stream')
             _files.append(file_data)
             # allure中展示该附件
@@ -290,7 +290,7 @@ class RequestControl:
             stream=False,
             data={},
             **kwargs)
-        filepath = os.path.join(ConfigHandler.file_path, self.get_export_api_filename(res))  # 拼接路径
+        filepath = os.path.join(ensure_path_sep("\\Files\\"), self.get_export_api_filename(res))  # 拼接路径
         if res.status_code == 200:
             if res.text:  # 判断文件内容是否为空
                 with open(filepath, 'wb') as file:

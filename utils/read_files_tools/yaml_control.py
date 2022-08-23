@@ -15,7 +15,7 @@ class GetYamlData:
     """ 获取 yaml 文件中的数据 """
 
     def __init__(self, file_dir):
-        self.file_dir = file_dir
+        self.file_dir = str(file_dir)
 
     def get_yaml_data(self) -> dict:
         """

@@ -11,7 +11,7 @@
 import datetime
 import os
 from utils.read_files_tools.yaml_control import GetYamlData
-from common.setting import ConfigHandler
+from common.setting import ensure_path_sep
 from utils.other_tools.exceptions import ValueNotFoundError
 
 
@@ -35,7 +35,7 @@ def write_testcase_file(*, allure_epic, allure_feature, class_title,
         :param case_ids: 用例ID
         :return:
         """
-    conf_data = GetYamlData(ConfigHandler.config_path).get_yaml_data()
+    conf_data = GetYamlData(ensure_path_sep("\\common\\config.yaml")).get_yaml_data()
     now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     real_time_update_test_cases = conf_data['real_time_update_test_cases']
 

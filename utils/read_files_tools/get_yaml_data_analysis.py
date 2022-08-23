@@ -11,6 +11,7 @@ from utils.other_tools.models import TestCase
 from utils.other_tools.exceptions import ValueNotFoundError
 from utils.cache_process.cache_control import CacheHandler
 from utils import config
+import os
 
 
 class CaseData:
@@ -20,6 +21,12 @@ class CaseData:
 
     def __init__(self, file_path):
         self.file_path = file_path
+
+    def __new__(cls, file_path):
+        if os.path.exists(file_path) is True:
+            return object.__new__(cls)
+        else:
+            raise FileNotFoundError("用例地址未找到")
 
     def case_process(
             self,
@@ -395,3 +402,8 @@ class GetTestCase:
             case_lists.append(_data)
 
         return case_lists
+
+
+if __name__ == '__main__':
+    a = CaseData(r'D:\work_code\pytest-auto-api2\data\Collect\collect_addtool.yaml').case_process()
+    print(a)

@@ -3,6 +3,7 @@
 # @Time   : 2022/3/29 15:01
 # @Author : 余少琪
 import os
+import sys
 import traceback
 import pytest
 from utils.other_tools.models import NotificationType
@@ -34,8 +35,9 @@ def run():
         # 判断现有的测试用例，如果未生成测试代码，则自动生成
         # TestCaseAutomaticGeneration().get_case_automatic()
 
-        pytest.main(['', '-s', '-W', 'ignore:Module already imported:pytest.PytestWarning',
+        pytest.main(['-s', '-W', 'ignore:Module already imported:pytest.PytestWarning',
                      '--alluredir', './report/tmp', "--clean-alluredir"])
+
         """
                    --reruns: 失败重跑次数
                    --count: 重复执行次数

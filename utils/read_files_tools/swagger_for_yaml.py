@@ -127,7 +127,7 @@ class SwaggerForYaml:
                     "common": {"allureEpic": self.get_allure_epic(), "allureFeature": self.get_allure_feature(v),
                                "allureStory": self.get_allure_story(v)},
                     self.get_case_id(key): {
-                        "host": "${{host}}", "url": key, "method": k, "detail": self.get_detail(v),
+                        "host": "${{host()}}", "url": key, "method": k, "detail": self.get_detail(v),
                         "headers": self.get_headers(v), "requestType": self.get_request_type(v, self.get_headers(v)),
                         "is_run": None, "data": self.get_case_data(v), "dependence_case": False,
                         "assert": {"status_code": 200}, "sql": None}}

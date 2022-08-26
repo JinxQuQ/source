@@ -76,9 +76,9 @@ class LogHandler:
 
 
 now_time_day = time.strftime("%Y-%m-%d", time.localtime())
-INFO = LogHandler(ensure_path_sep("\\logs\\info-{now_time_day}.log"), level='info')
-ERROR = LogHandler(ensure_path_sep("\\logs\\error-{now_time_day}.log"), level='error')
-WARNING = LogHandler(ensure_path_sep('\\logs\\warning-{now_time_day}.log'))
+INFO = LogHandler(ensure_path_sep(f"\\logs\\info-{now_time_day}.log"), level='info')
+ERROR = LogHandler(ensure_path_sep(f"\\logs\\error-{now_time_day}.log"), level='error')
+WARNING = LogHandler(ensure_path_sep(f'\\logs\\warning-{now_time_day}.log'))
 
 if __name__ == '__main__':
     ERROR.logger.error("测试")

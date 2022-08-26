@@ -81,7 +81,10 @@ class SwaggerForYaml:
         if jsonpath(obj=value, expr="$.parameters") is not False:
             _parameters = value['parameters']
             for i in _parameters:
-                _dict[i['name']] = None
+                if i['in'] == 'header':
+                    ...
+                else:
+                    _dict[i['name']] = None
         else:
             return None
         return _dict
@@ -111,21 +114,25 @@ class SwaggerForYaml:
     @classmethod
     def get_headers(cls, value):
         """ 获取请求头 """
+        _headers = {}
         if jsonpath(obj=value, expr="$.consumes") is not False:
             _headers = {"Content-Type": value['consumes'][0]}
-            return _headers
+        if jsonpath(obj=value, expr="$.parameters") is not False:
+            for i in value['parameters']:
+                if i['in'] == 'header':
+                    _headers[i['name']] = None
         else:
-            return None
+            _headers = None
+        return _headers
 
     def write_yaml_handler(self):
 
         _api_data = self._data['paths']
-        # num = len(Counter(self._data['paths']).items())
         for key, value in _api_data.items():
             for k, v in value.items():
                 yaml_data = {
                     "case_common": {"allureEpic": self.get_allure_epic(), "allureFeature": self.get_allure_feature(v),
-                               "allureStory": self.get_allure_story(v)},
+                                    "allureStory": self.get_allure_story(v)},
                     self.get_case_id(key): {
                         "host": "${{host()}}", "url": key, "method": k, "detail": self.get_detail(v),
                         "headers": self.get_headers(v), "requestType": self.get_request_type(v, self.get_headers(v)),

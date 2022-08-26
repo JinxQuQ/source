@@ -53,7 +53,7 @@ class CaseData:
                     'dependence_case_data': self.get_dependence_case_data(key, values),
                     "current_request_set_cache": self.get_current_request_set_cache(values),
                     "sql": self.get_sql(key, values),
-                    "assert": self.get_assert(key, values),
+                    "assert_data": self.get_assert(key, values),
                     "setup_sql": self.setup_sql(values),
                     "teardown": self.tear_down(values),
                     "teardown_sql": self.teardown_sql(values),

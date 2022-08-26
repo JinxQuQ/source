@@ -77,7 +77,7 @@ class Context:
         计算当前时间
         :return:
         """
-        now_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        now_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         return now_time
 
     @classmethod

@@ -344,7 +344,7 @@ class RequestControl:
             "yaml_data": yaml_data,
             "headers": res.request.headers,
             "cookie": res.cookies,
-            "assert": yaml_data.assert_data,
+            "assert_data": yaml_data.assert_data,
             "res_time": self.response_elapsed_total_seconds(res),
             "status_code": res.status_code,
             "teardown": yaml_data.teardown,

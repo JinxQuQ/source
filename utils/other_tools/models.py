@@ -108,7 +108,8 @@ class TestCase(BaseModel):
     url: Text
     method: Text
     detail: Text
-    assert_data: Union[Dict, Text] = Field([], alias="assert")
+    # assert_data: Union[Dict, Text] = Field(..., alias="assert")
+    assert_data: Union[Dict, Text]
     headers: Union[None, Dict, Text] = {}
     requestType: Text
     is_run: Union[None, bool] = None
@@ -135,7 +136,7 @@ class ResponseData(BaseModel):
     yaml_data: "TestCase"
     headers: Dict
     cookie: Dict
-    assert_data: List = Field([], alias="assert")
+    assert_data: Dict
     res_time: Union[int, float]
     status_code: int
     teardown: List["TearDown"] = None

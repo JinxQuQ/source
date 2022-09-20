@@ -75,7 +75,8 @@ class DependentData(BaseModel):
 
 class DependentCaseData(BaseModel):
     case_id: Text
-    dependent_data: List[DependentData]
+    # dependent_data: List[DependentData]
+    dependent_data: Union[None, List[DependentData]] = None
 
 
 class ParamPrepare(BaseModel):
@@ -113,7 +114,7 @@ class TestCase(BaseModel):
     headers: Union[None, Dict, Text] = {}
     requestType: Text
     is_run: Union[None, bool] = None
-    data: Union[Dict, None, Text] = None
+    data: Union[Dict, None, Text, List] = None
     dependence_case: Union[None, bool] = False
     dependence_case_data: Optional[Union[None, List["DependentCaseData"], Text]] = None
     sql: List = None

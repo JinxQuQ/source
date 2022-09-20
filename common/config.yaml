@@ -45,14 +45,17 @@ wechat:
   webhook: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=22748687-fa3b-4e48-a5d7-0502cef422b4
 
 
-### 邮箱必填，需要全部都配置好，程序运行失败时，会发送邮件通知
+### 邮箱必填，需要全部都配置好，程序运行失败时，会发送邮件通知!!!!
+### 邮箱必填，需要全部都配置好，程序运行失败时，会发送邮件通知!!!!
+### 邮箱必填，需要全部都配置好，程序运行失败时，会发送邮件通知!!!!
+### 重要的事情说三遍
 email:
-  send_user: 1603453211@qq.com
+  send_user:
   email_host: smtp.qq.com
   # 自己到QQ邮箱中配置stamp_key
-  stamp_key: rzuabbobadbuhadc
+  stamp_key:
   # 收件人改成自己的邮箱
-  send_list: 1603453211@qq.com
+  send_list:
 
 # 飞书通知
 lark:

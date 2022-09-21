@@ -131,7 +131,7 @@ class ResponseData(BaseModel):
     is_run: Union[None, bool]
     detail: Text
     response_data: Text
-    request_body: Union[None, Dict]
+    request_body: Union[None, Dict, List]
     method: Text
     sql_data: Dict
     yaml_data: "TestCase"
@@ -142,7 +142,7 @@ class ResponseData(BaseModel):
     status_code: int
     teardown: List["TearDown"] = None
     teardown_sql: Union[None, List]
-    body: Union[Dict, None] = None
+    body: Union[Dict, None, List] = None
 
 
 class DingTalk(BaseModel):

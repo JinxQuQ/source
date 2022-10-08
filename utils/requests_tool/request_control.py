@@ -400,8 +400,9 @@ class RequestControl:
             RequestType.EXPORT.value: self.request_type_for_export
         }
 
+        is_run = ast.literal_eval(cache_regular(str(self.__yaml_case.is_run)))
         # 判断用例是否执行
-        if self.__yaml_case.is_run is True or self.__yaml_case.is_run is None:
+        if is_run is True or is_run is None:
             # 处理多业务逻辑
             if dependent_switch is True:
                 DependentCase(self.__yaml_case).get_dependent_data()

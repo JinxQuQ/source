@@ -6,8 +6,9 @@ import pytest
 import time
 import allure
 import requests
+import ast
 from common.setting import ensure_path_sep
-
+from utils.requests_tool.request_control import cache_regular
 from utils.logging_tool.log_control import INFO, ERROR, WARNING
 from utils.other_tools.models import TestCase
 from utils.read_files_tools.clean_files import del_file
@@ -89,7 +90,7 @@ def pytest_configure(config):
 def case_skip(in_data):
     """处理跳过用例"""
     in_data = TestCase(**in_data)
-    if in_data.is_run is False:
+    if ast.literal_eval(cache_regular(str(in_data.is_run))) is False:
         allure.dynamic.title(in_data.detail)
         allure_step_no(f"请求URL: {in_data.is_run}")
         allure_step_no(f"请求方式: {in_data.method}")

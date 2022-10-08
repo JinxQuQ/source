@@ -113,7 +113,7 @@ class TestCase(BaseModel):
     assert_data: Union[Dict, Text]
     headers: Union[None, Dict, Text] = {}
     requestType: Text
-    is_run: Union[None, bool] = None
+    is_run: Union[None, bool, Text] = None
     data: Union[Dict, None, Text, List] = None
     dependence_case: Union[None, bool] = False
     dependence_case_data: Optional[Union[None, List["DependentCaseData"], Text]] = None
@@ -128,7 +128,7 @@ class TestCase(BaseModel):
 
 class ResponseData(BaseModel):
     url: Text
-    is_run: Union[None, bool]
+    is_run: Union[None, bool, Text]
     detail: Text
     response_data: Text
     request_body: Union[None, Dict, List]

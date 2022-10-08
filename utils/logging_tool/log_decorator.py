@@ -6,7 +6,9 @@
 日志装饰器，控制程序日志输入，默认为 True
 如设置 False，则程序不会打印日志
 """
+import ast
 from functools import wraps
+from utils.read_files_tools.regular_control import cache_regular
 from utils.logging_tool.log_control import INFO, ERROR
 
 
@@ -34,7 +36,7 @@ def log_decorator(switch: bool):
                                f"接口响应时长: {res.res_time} ms\n" \
                                f"Http状态码: {res.status_code}\n" \
                                "====================================================="
-                _is_run = res.is_run
+                _is_run = ast.literal_eval(cache_regular(str(res.is_run)))
                 # 判断正常打印的日志，控制台输出绿色
                 if _is_run in (True, None) and res.status_code == 200:
                     INFO.logger.info(_log_msg)

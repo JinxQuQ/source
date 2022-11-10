@@ -55,7 +55,7 @@ class FeiShuTalkChatBot:
     :return: 返回消息发送结果
     """
         rich_text = {
-            "email": "fanlv@bytedance.com",
+            "email": "1603453211@qq.com",
             "msg_type": "post",
             "content": {
                 "post": {

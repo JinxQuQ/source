@@ -148,8 +148,10 @@ class DependentCase:
             _jsonpath
         )
         if set_value is not None:
-            CacheHandler.update_cache(cache_name=set_value, value=jsonpath_data[0])
-            # Cache(set_value).set_caches(jsonpath_data[0])
+            if len(jsonpath_data) > 1:
+                CacheHandler.update_cache(cache_name=set_value, value=jsonpath_data)
+            else:
+                CacheHandler.update_cache(cache_name=set_value, value=jsonpath_data[0])
         if replace_key is not None:
             if dependent_type == 0:
                 jsonpath_dates[replace_key] = jsonpath_data[0]

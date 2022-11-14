@@ -114,7 +114,7 @@ class TestCase(BaseModel):
     headers: Union[None, Dict, Text] = {}
     requestType: Text
     is_run: Union[None, bool, Text] = None
-    data: Union[Dict, None, Text, List] = None
+    data: Any = None
     dependence_case: Union[None, bool] = False
     dependence_case_data: Optional[Union[None, List["DependentCaseData"], Text]] = None
     sql: List = None
@@ -131,7 +131,7 @@ class ResponseData(BaseModel):
     is_run: Union[None, bool, Text]
     detail: Text
     response_data: Text
-    request_body: Union[None, Dict, List]
+    request_body: Any
     method: Text
     sql_data: Dict
     yaml_data: "TestCase"
@@ -142,7 +142,7 @@ class ResponseData(BaseModel):
     status_code: int
     teardown: List["TearDown"] = None
     teardown_sql: Union[None, List]
-    body: Union[Dict, None, List] = None
+    body: Any
 
 
 class DingTalk(BaseModel):

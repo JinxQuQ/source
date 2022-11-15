@@ -150,7 +150,8 @@ def cache_regular(value):
         if any(i in regular_data for i in value_types) is True:
             value_types = regular_data.split(":")[0]
             regular_data = regular_data.split(":")[1]
-            pattern = re.compile(r'\'\$cache{' + value_types.split(":")[0] + r'(.*?)}\'')
+            # pattern = re.compile(r'\'\$cache{' + value_types.split(":")[0] + r'(.*?)}\'')
+            pattern = re.compile(r'\'\$cache\{' + value_types.split(":")[0] + ":" + regular_data + r'\}\'')
         else:
             pattern = re.compile(
                 r'\$cache\{' + regular_data.replace('$', "\$").replace('[', '\[') + r'\}'

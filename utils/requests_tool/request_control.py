@@ -149,7 +149,7 @@ class RequestControl:
         multipart = self.multipart_data(file_data)
         # ast.literal_eval(cache_regular(str(_headers)))['Content-Type'] = multipart.content_type
         self.__yaml_case.headers['Content-Type'] = multipart.content_type
-        params_data = self.file_prams_exit()
+        params_data = ast.literal_eval(cache_regular(str(self.file_prams_exit())))
         return multipart, params_data, self.__yaml_case
 
     def request_type_for_json(

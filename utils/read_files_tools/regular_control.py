@@ -199,6 +199,9 @@ def regular(target):
     except AttributeError:
         ERROR.logger.error("未找到对应的替换的数据, 请检查数据是否正确 %s", target)
         raise
+    except IndexError:
+        ERROR.logger.error("yaml中的 ${{}} 函数方法不正确，正确语法实例：${{get_time()}}")
+        raise
 
 
 if __name__ == '__main__':

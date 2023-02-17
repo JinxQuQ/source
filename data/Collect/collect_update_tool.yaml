@@ -56,5 +56,52 @@ collect_update_tool_01:
             replace_key: $.data.id
 
 
+ApplyVerifyCode_01:
+    host: ${{host}}
+    url: /api/v1/merchant/apply/verifyCode
+    method: GET
+    detail: 校验已经审核通过的供应商手机号码
+    headers:
+      Content-Type: application/json;charset=UTF-8
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: params
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      mobile: 18811111111
+      authCode: 123456
+      name: $cache{username}
+      # 是否有依赖业务，为空或者false则表示没有
+    dependence_case: True
+        # 依赖的数据
+    dependence_case_data:
+      - case_id: self
+        dependent_data:
+          - dependent_type: sqlData
+            jsonpath: $.username
+            set_cache: username
+
+    assert:
+      code:
+        jsonpath: $.code
+        type: ==
+        value: 200
+        AssertType:
+      applyId:
+        jsonpath: $.data[0].applyId
+        type: ==
+        value: $.applyId
+        AssertType: SQL
+      applyStatus:
+        jsonpath: $.data[0].applyStatus
+        type: ==
+        value: $.applyStatus
+        AssertType: SQL
+
+    sql:
+      - select a.apply_id as applyId, a.to_status as applyStatus, a.sub_biz_type as subBizType, a.operator_name as operatorName, a.operator_user_id as operatorUserId, b.apply_type as applyType from test_obp_midware.apply_operate_log as a inner join test_obp_midware.apply as b on a.apply_id = b.id where b.id = $json($.data[0].applyId)$ order by a.id desc limit 1;
+    setup_sql:
+     - SELECT * FROM test_obp_user.user_biz_info where user_id = '300000405'
+
 
 

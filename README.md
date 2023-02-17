@@ -528,7 +528,7 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
 
 ### 请求用例时参数需要从数据库中提取
 
-![img.png](Files/image/img2.png)
+![img_1.png](sql_params.png)
 
 如上图所示，用例中的 dependent_type 需要填写成 sqlData。
 当你的依赖类型为 sqlData 数据库的数据时，那么下方就需要再加一个 setup_sql 的参数，下方填写需要用到的sql语句
@@ -550,6 +550,7 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
         data:
           mobile: 18811111111
           authCode: 123456
+          name: $cache{username}
           # 是否有依赖业务，为空或者false则表示没有
         dependence_case: True
             # 依赖的数据
@@ -558,7 +559,7 @@ get请求我们 requestType 写的是 params ，这样发送请求时，我们�
             dependent_data:
               - dependent_type: sqlData
                 jsonpath: $.username
-                replace_key: $.data.mobile
+                set_cache: username
     
         assert:
           code:

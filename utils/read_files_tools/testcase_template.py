@@ -71,8 +71,11 @@ class Test{class_title}:
         """
         res = RequestControl(in_data).http_request()
         TearDownHandler(res).teardown_handle()
-        Assert(in_data['assert_data']).assert_equality(response_data=res.response_data,
-                                                       sql_data=res.sql_data, status_code=res.status_code)
+        Assert(assert_data=in_data['assert_data'],
+               sql_data=res.sql_data,
+               request_data=res.body,
+               response_data=res.response_data,
+               status_code=res.status_code).assert_type_handle()
 
 
 if __name__ == '__main__':

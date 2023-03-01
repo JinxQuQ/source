@@ -18,152 +18,156 @@ from utils.other_tools.exceptions import JsonpathExtractionFailed, SqlNotFound, 
 from utils import config
 
 
-class Assert:
-    """ assert 模块封装 """
+class AssertUtil:
 
-    def __init__(self, assert_data: Dict):
-        self.assert_data = ast.literal_eval(cache_regular(str(assert_data)))
-        self.functions_mapping = load_module_functions(assert_type)
+    def __init__(self, assert_data, sql_data, request_data, response_data, status_code):
 
-    @staticmethod
-    def _check_params(
-            response_data: Text,
-            sql_data: Union[Dict, None]) -> bool:
-        """
-
-        :param response_data: 响应数据
-        :param sql_data: 数据库数据
-        :return:
-        """
-        if (response_data and sql_data) is not False:
-            if not isinstance(sql_data, dict):
-                raise ValueError(
-                    "断言失败，response_data、sql_data的数据类型必须要是字典类型，"
-                    "请检查接口对应的数据是否正确\n"
-                    f"sql_data: {sql_data}, 数据类型: {type(sql_data)}\n"
-                )
-        return True
+        self.response_data = response_data
+        self.request_data = request_data
+        self.sql_data = sql_data
+        self.assert_data = assert_data
+        self.sql_switch = config.mysql_db.switch
+        self.status_code = status_code
 
     @staticmethod
-    def res_sql_data_bytes(res_sql_data: Any) -> Text:
-        """ 处理 mysql查询出来的数据类型如果是bytes类型，转换成str类型 """
-        if isinstance(res_sql_data, bytes):
-            res_sql_data = res_sql_data.decode('utf=8')
-        return res_sql_data
+    def literal_eval(attr):
+        return ast.literal_eval(cache_regular(str(attr)))
 
-    def sql_switch_handle(
-            self,
-            sql_data: Dict,
-            assert_value: Any,
-            key: Text,
-            values: Any,
-            resp_data: Dict,
-            message: Text) -> None:
+    @property
+    def get_assert_data(self):
+        assert self.assert_data is not None, (
+                "'%s' should either include a `assert_data` attribute, "
+                % self.__class__.__name__
+        )
+        return ast.literal_eval(cache_regular(str(self.assert_data)))
+
+    @property
+    def get_type(self):
+        assert 'type' in self.get_assert_data.keys(), (
+            " 断言数据: '%s' 中缺少 `type` 属性 " % self.get_assert_data
+        )
+
+        # 获取断言类型对应的枚举值
+        name = AssertMethod(self.get_assert_data.get("type")).name
+        return name
+
+    @property
+    def get_value(self):
+        assert 'value' in self.get_assert_data.keys(), (
+            " 断言数据: '%s' 中缺少 `value` 属性 " % self.get_assert_data
+        )
+        return self.get_assert_data.get("value")
+
+    @property
+    def get_jsonpath(self):
+        assert 'jsonpath' in self.get_assert_data.keys(), (
+            " 断言数据: '%s' 中缺少 `jsonpath` 属性 " % self.get_assert_data
+        )
+        return self.get_assert_data.get("jsonpath")
+
+    @property
+    def get_assert_type(self):
+        assert 'AssertType' in self.get_assert_data.keys(), (
+            " 断言数据: '%s' 中缺少 `AssertType` 属性 " % self.get_assert_data
+        )
+        return self.get_assert_data.get("AssertType")
+
+    @property
+    def get_message(self):
         """
-
-        :param sql_data: 测试用例中的sql
-        :param assert_value: 断言内容
-        :param key:
-        :param values:
-        :param resp_data: 预期结果
-        :param message: 预期结果
+        获取断言描述，如果未填写，则返回 `None`
         :return:
         """
-        # 判断数据库为开关为关闭状态
-        if config.mysql_db.switch is False:
+        return self.get_assert_data.get("message", None)
+
+    @property
+    def get_sql_data(self):
+
+        # 判断数据库开关为开启，并需要数据库断言的情况下，未编写sql，则抛异常
+        if self.sql_switch_handle:
+            assert self.sql_data != {'sql': None}, (
+                "请在用例中添加您要查询的SQL语句。"
+            )
+
+        # 处理 mysql查询出来的数据类型如果是bytes类型，转换成str类型
+        if isinstance(self.sql_data, bytes):
+            return self.sql_data.decode('utf=8')
+
+        sql_data = jsonpath(self.sql_data, self.get_value)
+        assert sql_data is not False, (
+            f"数据库断言数据提取失败，提取对象: {self.sql_data} , 当前语法: {self.get_value}"
+        )
+        return sql_data
+
+    @staticmethod
+    def functions_mapping():
+        return load_module_functions(assert_type)
+
+    @property
+    def get_response_data(self):
+        return json.loads(self.response_data)
+
+    @property
+    def sql_switch_handle(self):
+        """
+        判断数据库开关，如果未开启，则打印断言部分的数据
+        :return:
+        """
+        if self.sql_switch is False:
             WARNING.logger.warning(
-                "检测到数据库状态为关闭状态，程序已为您跳过此断言，断言值:%s", values
+                "检测到数据库状态为关闭状态，程序已为您跳过此断言，断言值:%s" % self.get_assert_data
             )
-        # 数据库开关为开启
-        if config.mysql_db.switch:
-            # 走正常SQL断言逻辑
-            if sql_data != {'sql': None}:
-                res_sql_data = jsonpath(sql_data, assert_value)
-                if res_sql_data is False:
-                    raise JsonpathExtractionFailed(
-                        f"数据库断言内容jsonpath提取失败， 当前jsonpath内容: {assert_value}\n"
-                        f"数据库返回内容: {sql_data}"
-                    )
+        return self.sql_switch
 
-                # 判断mysql查询出来的数据类型如果是bytes类型，转换成str类型
-                res_sql_data = self.res_sql_data_bytes(res_sql_data[0])
-                name = AssertMethod(self.assert_data[key]['type']).name
-                self.functions_mapping[name](resp_data[0], res_sql_data, str(message))
+    def _assert(self, check_value: Any, expect_value: Any, message: Text = ""):
 
-            # 判断当用例走的数据数据库断言，但是用例中未填写SQL
-            else:
-                raise SqlNotFound("请在用例中添加您要查询的SQL语句。")
+        self.functions_mapping()[self.get_type](check_value, expect_value, str(message))
 
-    def assert_type_handle(
-            self,
-            assert_types: Union[Text, None],
-            sql_data: Union[Dict, None],
-            assert_value: Any,
-            key: Text,
-            values: Dict,
-            resp_data: Any,
-            message: Text
-    ) -> None:
-        """处理断言类型"""
-        # 判断断言类型
-        if assert_types == 'SQL':
-            self.sql_switch_handle(
-                sql_data=sql_data,
-                assert_value=assert_value,
-                key=key,
-                values=values,
-                resp_data=resp_data,
-                message=message
-            )
+    @property
+    def _assert_resp_data(self):
+        resp_data = jsonpath(self.get_response_data, self.get_jsonpath)
+        assert resp_data is not False, (
+            f"jsonpath数据提取失败，提取对象: {self.get_response_data} , 当前语法: {self.get_jsonpath}"
+        )
+        return resp_data
 
-        # 判断assertType为空的情况下，则走响应断言
-        elif assert_types is None:
-            name = AssertMethod(self.assert_data[key]['type']).name
-            self.functions_mapping[name](resp_data[0], assert_value, message)
+    @property
+    def _assert_request_data(self):
+        req_data = jsonpath(self.request_data, self.get_jsonpath)
+        assert req_data is not False, (
+            f"jsonpath数据提取失败，提取对象: {self.request_data} , 当前语法: {self.get_jsonpath}"
+        )
+        return req_data
+
+    def assert_type_handle(self):
+        # 判断请求参数数据库断言
+        if self.get_assert_type == "R_SQL":
+            self._assert(self._assert_request_data[0], self.get_sql_data[0], self.get_message)
+
+        # 判断请求参数为响应数据库断言
+        elif self.get_assert_type == "SQL" or self.get_assert_type == "D_SQL":
+            self._assert(self._assert_resp_data[0], self.get_sql_data[0], self.get_message)
+
+        # 判断非数据库断言类型
+        elif self.get_assert_type is None:
+            self._assert(self._assert_resp_data[0], self.get_value, self.get_message)
         else:
             raise AssertTypeError("断言失败，目前只支持数据库断言和响应断言")
 
-    @classmethod
-    def _message(cls, value):
-        _message = ""
-        if jsonpath(obj=value, expr="$.message") is not False:
-            _message = value['message']
-        return _message
 
-    def assert_equality(
-            self,
-            response_data: Text,
-            sql_data: Dict,
-            status_code: int) -> None:
-        """  assert 断言处理 """
-        # 判断数据类型
-        if self._check_params(response_data, sql_data) is not False:
-            for key, values in self.assert_data.items():
-                if key == "status_code":
-                    assert status_code == values
-                else:
-                    assert_value = self.assert_data[key]['value']  # 获取 yaml 文件中的期望value值
-                    assert_jsonpath = self.assert_data[key]['jsonpath']  # 获取到 yaml断言中的jsonpath的数据
-                    assert_types = self.assert_data[key]['AssertType']
-                    # 从yaml获取jsonpath，拿到对象的接口响应数据
-                    resp_data = jsonpath(json.loads(response_data), assert_jsonpath)
-                    message = self._message(value=values)
-                    # jsonpath 如果数据获取失败，会返回False，判断获取成功才会执行如下代码
-                    if resp_data is not False:
-                        # 判断断言类型
-                        self.assert_type_handle(
-                            assert_types=assert_types,
-                            sql_data=sql_data,
-                            assert_value=assert_value,
-                            key=key,
-                            values=values,
-                            resp_data=resp_data,
-                            message=message
-                        )
-                    else:
-                        ERROR.logger.error("JsonPath值获取失败 %s ", assert_jsonpath)
-                        raise JsonpathExtractionFailed(f"JsonPath值获取失败 {assert_jsonpath}")
+class Assert(AssertUtil):
 
+    def assert_data_list(self):
+        assert_list = []
+        for k, v in self.assert_data.items():
+            if k == "status_code":
+                assert self.status_code == v, "响应状态码断言失败"
+            else:
+                assert_list.append(v)
+        return assert_list
 
-if __name__ == '__main__':
-    pass
+    def assert_type_handle(self):
+        for i in self.assert_data_list():
+            self.assert_data = i
+            super().assert_type_handle()
+

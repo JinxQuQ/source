@@ -38,6 +38,36 @@ class RequestType(Enum):
     NONE = "NONE"
 
 
+class TestCaseEnum(Enum):
+    URL = ("url", True)
+    HOST = ("host", True)
+    METHOD = ("method", True)
+    DETAIL = ("detail", True)
+    IS_RUN = ("is_run", True)
+    HEADERS = ("headers", True)
+    REQUEST_TYPE = ("requestType", True)
+    DATA = ("data", True)
+    DE_CASE = ("dependence_case", True)
+    DE_CASE_DATA = ("dependence_case_data", False)
+    CURRENT_RE_SET_CACHE = ("current_request_set_cache", False)
+    SQL = ("sql", False)
+    ASSERT_DATA = ("assert", True)
+    SETUP_SQL = ("setup_sql", False)
+    TEARDOWN = ("teardown", False)
+    TEARDOWN_SQL = ("teardown_sql", False)
+    SLEEP = ("sleep", False)
+
+
+class Method(Enum):
+    GET = "GET"
+    POST = "POST"
+    PUT = "PUT"
+    PATCH = "PATCH"
+    DELETE = "DELETE"
+    HEAD = "HEAD"
+    OPTION = "OPTION"
+
+
 def load_module_functions(module) -> Dict[Text, Callable]:
     """ 获取 module中方法的名称和所在的内存地址 """
     module_functions = {}

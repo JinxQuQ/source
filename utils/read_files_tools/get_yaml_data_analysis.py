@@ -35,14 +35,15 @@ class CaseDataCheck:
         )
 
     def check_params_exit(self):
-        for enum in list(TestCaseEnum.value2member_map_.keys()):
+        for enum in list(TestCaseEnum._value2member_map_.keys()):
             if enum[1]:
                 self._assert(enum[0])
 
     def check_params_right(self, enum_name, attr):
-        assert attr.upper() in enum_name.member_names_, (
+        _member_names_ = enum_name._member_names_
+        assert attr.upper() in _member_names_, (
             f"用例ID为 {self.case_id} 的用例中 {attr} 填写不正确，"
-            f"当前框架中只支持 {enum_name.member_names_} 类型."
+            f"当前框架中只支持 {_member_names_} 类型."
             f"如需新增 method 类型，请联系管理员."
             f"当前用例文件路径：{self.file_path}"
         )

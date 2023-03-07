@@ -97,7 +97,9 @@ class AssertUtil:
         assert sql_data is not False, (
             f"数据库断言数据提取失败，提取对象: {self.sql_data} , 当前语法: {self.get_value}"
         )
-        return sql_data
+        if len(sql_data) > 1:
+            return sql_data
+        return sql_data[0]
 
     @staticmethod
     def functions_mapping():
@@ -129,7 +131,9 @@ class AssertUtil:
         assert resp_data is not False, (
             f"jsonpath数据提取失败，提取对象: {self.get_response_data} , 当前语法: {self.get_jsonpath}"
         )
-        return resp_data
+        if len(resp_data) > 1:
+            return resp_data
+        return resp_data[0]
 
     @property
     def _assert_request_data(self):
@@ -137,20 +141,22 @@ class AssertUtil:
         assert req_data is not False, (
             f"jsonpath数据提取失败，提取对象: {self.request_data} , 当前语法: {self.get_jsonpath}"
         )
-        return req_data
+        if len(req_data) > 1:
+            return req_data
+        return req_data[0]
 
     def assert_type_handle(self):
         # 判断请求参数数据库断言
         if self.get_assert_type == "R_SQL":
-            self._assert(self._assert_request_data[0], self.get_sql_data[0], self.get_message)
+            self._assert(self._assert_request_data, self.get_sql_data, self.get_message)
 
         # 判断请求参数为响应数据库断言
         elif self.get_assert_type == "SQL" or self.get_assert_type == "D_SQL":
-            self._assert(self._assert_resp_data[0], self.get_sql_data[0], self.get_message)
+            self._assert(self._assert_resp_data, self.get_sql_data, self.get_message)
 
         # 判断非数据库断言类型
         elif self.get_assert_type is None:
-            self._assert(self._assert_resp_data[0], self.get_value, self.get_message)
+            self._assert(self._assert_resp_data, self.get_value, self.get_message)
         else:
             raise AssertTypeError("断言失败，目前只支持数据库断言和响应断言")
 

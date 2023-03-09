@@ -7,11 +7,11 @@ from pydantic import BaseModel, Field
 
 class NotificationType(Enum):
     """ 自动化通知方式 """
-    DEFAULT = 0
-    DING_TALK = 1
-    WECHAT = 2
-    EMAIL = 3
-    FEI_SHU = 4
+    DEFAULT = '0'
+    DING_TALK = '1'
+    WECHAT = '2'
+    EMAIL = '3'
+    FEI_SHU = '4'
 
 
 @dataclass
@@ -204,7 +204,7 @@ class Config(BaseModel):
     project_name: Text
     env: Text
     tester_name: Text
-    notification_type: int = 0
+    notification_type: Text = '0'
     excel_report: bool
     ding_talk: "DingTalk"
     mysql_db: "MySqlDB"

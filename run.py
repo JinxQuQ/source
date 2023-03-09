@@ -61,7 +61,9 @@ def run():
         }
 
         if config.notification_type != NotificationType.DEFAULT.value:
-            notification_mapping.get(config.notification_type)()
+            notify_type = config.notification_type.split(",")
+            for i in notify_type:
+                notification_mapping.get(i.lstrip(""))()
 
         if config.excel_report:
             ErrorCaseExcel().write_case()
@@ -79,3 +81,4 @@ def run():
 
 if __name__ == '__main__':
     run()
+

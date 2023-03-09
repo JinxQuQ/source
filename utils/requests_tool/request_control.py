@@ -42,7 +42,10 @@ class RequestControl:
         try:
             _data = self.__yaml_case.data
             for key, value in ast.literal_eval(cache_regular(str(_data)))['data'].items():
-                file_data[key] = value
+                if "multipart/form-data" in str(self.__yaml_case.headers.values()):
+                    file_data[key] = str(value)
+                else:
+                    file_data[key] = value
         except KeyError:
             ...
 

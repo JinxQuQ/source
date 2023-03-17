@@ -50,7 +50,7 @@ class GetYamlData:
             flag = 0
             for line in lines:
                 left_str = line.split(":")[0]
-                if key == left_str and '#' not in line:
+                if key == left_str.lstrip() and '#' not in line:
                     newline = f"{left_str}: {value}"
                     line = newline
                     file.write(f'{line}\n')

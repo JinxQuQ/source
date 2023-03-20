@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time   : 2023-03-01 14:52:12
+# @Time   : 2023-03-20 13:55:04
 
 
 import allure
@@ -38,4 +38,4 @@ class TestCollectToolList:
 
 
 if __name__ == '__main__':
-    pytest.main(['test_collect_tool_list.py', '-s', '-W', 'ignore:Module already imported:pytest.PytestWarning'])
+    pytest.main(['test_test_collect_tool_list.py', '-s', '-W', 'ignore:Module already imported:pytest.PytestWarning'])
